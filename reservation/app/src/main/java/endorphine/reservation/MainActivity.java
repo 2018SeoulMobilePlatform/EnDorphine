@@ -11,13 +11,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener
-, ReservationFragment.OnFragmentInteractionListener{
+{
 
     private TextView mTextMessage;
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-        
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
