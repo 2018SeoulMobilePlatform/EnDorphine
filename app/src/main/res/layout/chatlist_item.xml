@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="text"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:gravity="center_vertical"
             android:layout_weight = "2"/>
 
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="text"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:layout_weight = "1"/>
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="text"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:layout_weight = "1"/>
     </LinearLayout>
 

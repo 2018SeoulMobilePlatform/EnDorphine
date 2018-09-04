@@ -1,6 +1,7 @@
 package endorphine.icampyou;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,7 +46,8 @@ public class ChattingList_Fragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"냥냥",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(getActivity(),Chat_Content.class);
+                startActivity(intent);
             }
         });
 

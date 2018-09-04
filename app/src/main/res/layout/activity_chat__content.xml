@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Chat_Content">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_chattinglist"
+        android:name="endorphine.icampyou.ChattingList_Fragment"
+        android:layout_weight="1"
+        tools:layout="@layout/activity_chat__content" />
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <TextView
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="사용자"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_weight = "2"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/need"
+            android:text="빌리고 싶은 물건 "
+            android:textSize="15dp"/>
+        <EditText
+            android:width="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/write_need"
+            android:textSize="15dp"
+            android:background="#667788"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lettable"
+            android:text="빌려줄 수 있는 물건 "
+            android:textSize="15dp"/>
+        <EditText
+            android:width="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/write_lettable"
+            android:textSize="15dp"
+            android:background="#667788"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_chat_content"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:text="Save"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="350dp"
+        />
+</LinearLayout>
