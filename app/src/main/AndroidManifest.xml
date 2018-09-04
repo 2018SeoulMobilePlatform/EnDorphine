@@ -27,7 +27,8 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".NaviActivity"
             android:label="@string/title_activity_navi"

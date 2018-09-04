@@ -14,7 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home"></string>
     <string name="title_guide">안내</string>
     <string name="title_reservation">예약</string>
     <string name="title_home">홈</string>
