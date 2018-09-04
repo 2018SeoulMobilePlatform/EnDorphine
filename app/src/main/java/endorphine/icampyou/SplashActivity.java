@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         // 메인 액티비티 실행
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 }
