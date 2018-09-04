@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,6 @@ public class ChattingList_Fragment extends Fragment {
     List<Chat_Item> chatItems;
     ListView chat_listview;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,6 +38,16 @@ public class ChattingList_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,null);
+
+        Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
+        add_chatlist_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getActivity(),"냥냥",Toast.LENGTH_LONG).show();
+            }
+        });
 
         chatItems = new ArrayList<Chat_Item>();
 
@@ -54,16 +66,11 @@ public class ChattingList_Fragment extends Fragment {
         ChatList_Adapter chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
         chat_listview.setAdapter(chatList_adapter);
 
-//        String[] chat_items = {"이다인","박지호","허진규","전세영","최재성","임석호","주영준","김예진"};
-//
-//        ListView listView = (ListView) view.findViewById(R.id.chat_listview);
-//
-//        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,chat_items);
-//
-//        listView.setAdapter(listViewAdapter);
-
         return view;
     }
+
+
+
 
 
 }

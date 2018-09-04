@@ -20,4 +20,13 @@
             android:transcriptMode="alwaysScroll"/>
     </FrameLayout>
 
+    <Button
+        android:id="@+id/make_chatlist_button"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:text="add"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="300dp"
+      />
+
 </LinearLayout>
