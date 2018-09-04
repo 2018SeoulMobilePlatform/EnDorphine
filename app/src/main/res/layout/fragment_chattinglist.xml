@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background = "#AAFFAA">
+    android:background = "#FFFFFF">
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <ListView
             android:id="@+id/chat_listview"
-            android:listSelector="#00000000"
-            android:cacheColorHint="#00000000"
+            android:listSelector="#778899"
+            android:cacheColorHint="#778899"
+            android:dividerHeight="1dp"
             android:divider="#000000"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
