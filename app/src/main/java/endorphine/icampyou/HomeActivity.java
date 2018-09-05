@@ -22,9 +22,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // fragment 객체들
     private GuideFragment1 guideFragment1;
     private ReservationFragment1 reservationFragment1;
-
-    // 실험용 텍스트뷰
-    private TextView mTextMessage;
+    private ExchangeFragment1 exchangeFragment1;
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -42,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_exchange:
+                    setFragment(3);
                     return true;
                 case R.id.navigation_event:
                     //mTextMessage.setText(R.string.title_event);
@@ -59,11 +58,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // fragment 객체 생성
         guideFragment1 = new GuideFragment1();
         reservationFragment1 = new ReservationFragment1();
+        exchangeFragment1 = new ExchangeFragment1();
 
         setFragment(0);
 
         // Bottom Navigation
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -94,23 +93,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.navi, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -156,6 +143,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case 1:
                 // 예약 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, reservationFragment1);
+                fragmentTransaction.commit();
+                break;
+            case 3:
+                // 교환 프래그먼트1로 변경
+                fragmentTransaction.replace(R.id.main_frame, exchangeFragment1);
                 fragmentTransaction.commit();
                 break;
             default: break;
