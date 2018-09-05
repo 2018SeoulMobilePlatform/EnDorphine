@@ -19,6 +19,10 @@ android {
     }
 }
 
+repositories{
+    jcenter()
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -31,4 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.android.support:support-annotations:27.1.1'
+    compile 'com.android.support:appcompat-v7:26.1.0' // Version 23+ is Required
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
 }

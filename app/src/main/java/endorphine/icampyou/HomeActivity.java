@@ -2,6 +2,9 @@ package endorphine.icampyou;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,8 +14,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ExchangeFragment1;
@@ -40,6 +50,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.navigation_guide:
                     // 프래그먼트 변경
                     setFragment(0);
+                    // 임의로 QR 코드 설정
+                    generateRQCode("이것은QR코드");
                     return true;
                 case R.id.navigation_reservation:
                     setFragment(1);
@@ -70,13 +82,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         exchangeFragment1 = new ExchangeFragment1();
         homeFragment1 = new HomeFragment1();
         eventFragment1 = new EventFragment1();
-
+        // 디폴트 프래그먼트 홈화면으로 설정
         setFragment(2);
 
         // Bottom Navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
 
         // Navigation Drawer
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -173,5 +186,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             default: break;
         }
     }
+
+    // QR코드 생성
+    public void generateRQCode(String contents) {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            Bitmap bitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+            if(bitmap != null) {
+                ((ImageView)findViewById(R.id.qrcode)).setImageBitmap(bitmap);
+            }
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // QR코드 이미지 비트맵으로 변환
+    public static Bitmap toBitmap(BitMatrix matrix) {
+        int height = matrix.getHeight();
+        int width = matrix.getWidth();
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
+            }
+        }
+        return bmp;
+    }
+
+
 
 }

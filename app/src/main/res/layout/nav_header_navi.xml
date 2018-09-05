@@ -12,6 +12,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <!-- 옆구리 네비게이션 바 헤더 UI-->
+
+    <!-- 프로필 이미지 -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -19,17 +22,25 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
+    <!-- 닉네임 -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
+        android:text="다콩이"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
+    <!-- 예약한 캠핑장 이름, 날짜-->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="난지 캠핑장\n2018-07-18 ~ 2018-07-20" />
 
+    <ImageView
+        android:id="@+id/qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        />
 </LinearLayout>
