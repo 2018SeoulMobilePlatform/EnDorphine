@@ -8,6 +8,10 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
+/**
+ * 하단 네비게이션 바 아이템 5개 이상이어도 범위 일정하도록 도와주는 Helper 클래스
+ */
+
 public class BottomNavigationViewHelper {
     @SuppressLint("RestrictedApi")
     public static void removeShiftMode(BottomNavigationView view) {
