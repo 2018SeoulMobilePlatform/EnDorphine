@@ -1,5 +1,8 @@
 package endorphine.icampyou;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +21,11 @@ import android.view.View;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    // fragment 교체를 위한 변수들
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    // fragment 객체들
+    private GuideFragment1 guideFragment1;
 
     private TextView mTextMessage;
 
@@ -50,6 +58,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // fragment 객체 생성
+        guideFragment1 = new GuideFragment1();
+        setFragment(0);
 
         // Bottom Navigation
         mTextMessage = (TextView) findViewById(R.id.message);
@@ -126,6 +138,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /*
+     num을 인자로 받아서 num에 맞는 fragment 교체하는 메소드
+     */
+    public void setFragment(int num){
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        switch (num){
+            case 0:
+                fragmentTransaction.replace(R.id.main_frame, guideFragment1);
+                fragmentTransaction.commit();
+                break;
+            default: break;
+        }
     }
 
 }

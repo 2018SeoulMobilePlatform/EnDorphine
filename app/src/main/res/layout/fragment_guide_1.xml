@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="endorphine.icampyou.GuideFragment1">
+
+    <Button
+        android:id="@+id/nanji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="50dp"
+        android:text="난지" />
+    <Button
+        android:id="@+id/choansan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="50dp"
+        android:text="초안산"/>
+    <Button
+        android:id="@+id/jungrang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="50dp"
+        android:text="중랑" />
+    <Button
+        android:id="@+id/gangdong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="50dp"
+        android:text="강동" />
+
+</LinearLayout>

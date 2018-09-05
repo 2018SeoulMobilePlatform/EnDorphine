@@ -19,11 +19,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!-- 상단 툴바 -->
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme.AppBarOverlay">
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -32,11 +32,14 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </android.support.design.widget.AppBarLayout>
 
-            <LinearLayout
+            <!-- fragment 영역-->
+            <FrameLayout
+                android:id="@+id/main_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#AAD">
+
                 <TextView
                     android:id="@+id/message"
                     android:layout_width="wrap_content"
@@ -48,8 +51,10 @@
                     android:textSize="50dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </LinearLayout>
 
+            </FrameLayout>
+
+            <!-- 하단 네비게이션 바 -->
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/navigation"
                 android:layout_width="match_parent"
@@ -64,7 +69,6 @@
                 app:menu="@menu/navigation" />
         </LinearLayout>
 
-
     </RelativeLayout>
 
     <!--
@@ -73,6 +77,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 -->
+
+    <!-- 옆구리 네비게이션 바 활성화 됐을 때 View -->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
