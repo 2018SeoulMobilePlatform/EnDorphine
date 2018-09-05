@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="endorphine.icampyou.GuideFragment1">
+    tools:context="endorphine.icampyou.GuideMenu.GuideFragment1">
 
     <Button
         android:id="@+id/nanji"

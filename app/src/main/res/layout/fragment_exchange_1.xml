@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="endorphine.icampyou.ExchangeFragment1"
+    tools:context="endorphine.icampyou.ExchangeMenu.ExchangeFragment1"
     android:background="#FFFFFF">
 
     <TextView

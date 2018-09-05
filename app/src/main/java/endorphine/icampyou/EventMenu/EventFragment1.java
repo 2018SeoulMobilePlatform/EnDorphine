@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.EventMenu;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.R;
 
 /**
  * 이벤트 프래그먼트1 클래스

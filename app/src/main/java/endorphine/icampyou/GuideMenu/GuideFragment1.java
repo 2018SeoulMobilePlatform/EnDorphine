@@ -1,12 +1,14 @@
-package endorphine.icampyou;
+package endorphine.icampyou.GuideMenu;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.R;
+import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
 /*
     안내 프래그먼트 첫번째 화면

@@ -13,7 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+import endorphine.icampyou.EventMenu.EventFragment1;
+import endorphine.icampyou.ExchangeMenu.ExchangeFragment1;
+import endorphine.icampyou.GuideMenu.GuideFragment1;
+import endorphine.icampyou.HomeMenu.HomeFragment1;
+import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     // fragment 교체를 위한 변수들
