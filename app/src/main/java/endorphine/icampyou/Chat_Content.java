@@ -199,6 +199,7 @@ public class Chat_Content extends AppCompatActivity {
         try{
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
+
             bitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
 
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(copyFile)));

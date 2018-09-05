@@ -23,46 +23,36 @@
             android:layout_weight = "2"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
         <TextView
-            android:width="300dp"
-            android:layout_width="match_parent"
+            android:width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/need"
             android:text="빌리고 싶은 물건 "
             android:textSize="15dp"/>
         <EditText
-            android:width="300dp"
-            android:layout_width="match_parent"
+            android:width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/write_need"
             android:textSize="15dp"
             android:background="#667788"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
         <TextView
-            android:width="300dp"
-            android:layout_width="match_parent"
+            android:width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lettable"
             android:text="빌려줄 수 있는 물건 "
             android:textSize="15dp"/>
         <EditText
-            android:width="300dp"
-            android:layout_width="match_parent"
+            android:width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/write_lettable"
             android:textSize="15dp"
             android:background="#667788"/>
-        </LinearLayout>
+
         <ImageView
             android:id="@+id/user_image"
             android:layout_width="100dp"

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -68,8 +69,25 @@ public class ChattingList_Fragment extends Fragment {
         ChatList_Adapter chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
         chat_listview.setAdapter(chatList_adapter);
 
+        chat_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
+                Toast.makeText(getActivity() ,chatItems.get(position).getUser_id(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+        chat_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+                Toast.makeText(getActivity() ,"앙 길게 눌렀띠",Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
         return view;
     }
+
+
 
 
 
