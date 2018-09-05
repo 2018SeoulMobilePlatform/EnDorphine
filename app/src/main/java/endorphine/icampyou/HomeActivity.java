@@ -26,28 +26,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FragmentTransaction fragmentTransaction;
     // fragment 객체들
     private GuideFragment1 guideFragment1;
+    private ReservationFragment1 reservationFragment1;
 
+    // 실험용 텍스트뷰
     private TextView mTextMessage;
 
+    // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_guide:
-                    mTextMessage.setText(R.string.title_guide);
+                    // 프래그먼트 변경
+                    setFragment(0);
                     return true;
                 case R.id.navigation_reservation:
-                    mTextMessage.setText(R.string.title_reservation);
+                    setFragment(1);
                     return true;
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_exchange:
-                    mTextMessage.setText(R.string.title_exchange);
                     return true;
                 case R.id.navigation_event:
-                    mTextMessage.setText(R.string.title_event);
+                    //mTextMessage.setText(R.string.title_event);
                     return true;
             }
             return false;
@@ -61,6 +63,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // fragment 객체 생성
         guideFragment1 = new GuideFragment1();
+        reservationFragment1 = new ReservationFragment1();
+
         setFragment(0);
 
         // Bottom Navigation
@@ -144,12 +148,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
      num을 인자로 받아서 num에 맞는 fragment 교체하는 메소드
      */
     public void setFragment(int num){
+        // fragmentTransactions는 fagment 변경할 때마다 초기화해야 에러가 나지 않는다.
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
         switch (num){
             case 0:
+                // 안내 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, guideFragment1);
+                fragmentTransaction.commit();
+                break;
+            case 1:
+                // 예약 프래그먼트1로 변경
+                fragmentTransaction.replace(R.id.main_frame, reservationFragment1);
                 fragmentTransaction.commit();
                 break;
             default: break;
