@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private GuideFragment1 guideFragment1;
     private ReservationFragment1 reservationFragment1;
     private ExchangeFragment1 exchangeFragment1;
+    private HomeFragment1 homeFragment1;
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     setFragment(1);
                     return true;
                 case R.id.navigation_home:
+                    setFragment(2);
                     return true;
                 case R.id.navigation_exchange:
                     setFragment(3);
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         guideFragment1 = new GuideFragment1();
         reservationFragment1 = new ReservationFragment1();
         exchangeFragment1 = new ExchangeFragment1();
+        homeFragment1 = new HomeFragment1();
 
         setFragment(0);
 
@@ -143,6 +146,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case 1:
                 // 예약 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, reservationFragment1);
+                fragmentTransaction.commit();
+                break;
+            case 2:
+                // 홈 프래그먼트1로 변경
+                fragmentTransaction.replace(R.id.main_frame, homeFragment1);
                 fragmentTransaction.commit();
                 break;
             case 3:
