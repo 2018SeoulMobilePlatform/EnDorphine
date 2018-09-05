@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ReservationFragment1 reservationFragment1;
     private ExchangeFragment1 exchangeFragment1;
     private HomeFragment1 homeFragment1;
+    private EventFragment1 eventFragment1;
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     setFragment(3);
                     return true;
                 case R.id.navigation_event:
+                    setFragment(4);
                     //mTextMessage.setText(R.string.title_event);
                     return true;
             }
@@ -62,8 +64,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         reservationFragment1 = new ReservationFragment1();
         exchangeFragment1 = new ExchangeFragment1();
         homeFragment1 = new HomeFragment1();
+        eventFragment1 = new EventFragment1();
 
-        setFragment(0);
+        setFragment(2);
 
         // Bottom Navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -158,6 +161,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.replace(R.id.main_frame, exchangeFragment1);
                 fragmentTransaction.commit();
                 break;
+            case 4:
+                // 이벤트 프래그먼트1로 변경
+                fragmentTransaction.replace(R.id.main_frame, eventFragment1);
+                fragmentTransaction.commit();
             default: break;
         }
     }
