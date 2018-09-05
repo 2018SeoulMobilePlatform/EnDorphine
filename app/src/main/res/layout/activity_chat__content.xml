@@ -59,6 +59,17 @@
             android:id="@+id/write_lettable"
             android:textSize="15dp"
             android:background="#667788"/>
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"/>
+        <Button
+            android:id="@+id/select_img_btn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Select Image"
+           android:textSize="15dp"/>
     </LinearLayout>
 
     <Button
