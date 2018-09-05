@@ -10,15 +10,16 @@
     android:paddingTop="5dp"
     app:layout_behavior="5dp"
     android:orientation="vertical"
+    android:id="@+id/main"
     tools:context="endorphine.icampyou.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_chattinglist"
-        android:name="endorphine.icampyou.ChattingList_Fragment"
-        android:layout_weight="1"
-        tools:layout="@layout/activity_main" />
+    <!--<fragment-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height=""-->
+        <!--android:id="@+id/fragment"-->
+        <!--android:name="endorphine.icampyou.ChattingList_Fragment"-->
+        <!--android:layout_weight="1"-->
+        <!--tools:layout="@layout/activity_main" />-->
 
 </LinearLayout>
