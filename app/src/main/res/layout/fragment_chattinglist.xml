@@ -6,6 +6,29 @@
     android:orientation="vertical"
     android:background = "#FFFFFF">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:src="@drawable/search"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:paddingLeft="5dp"
+                android:layout_margin="5dp"
+                android:hint="검색"
+                android:background="@drawable/rounded_edittext"
+                android:textColor="#FFFFFF"
+                 />
+    </LinearLayout>
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -14,17 +37,17 @@
             android:listSelector="#778899"
             android:cacheColorHint="#778899"
             android:dividerHeight="1dp"
-            android:divider="#000000"
+            android:divider="#FFFFFF"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:transcriptMode="alwaysScroll"/>
     </FrameLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/make_chatlist_button"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:text="Add"
+        android:src="@drawable/plus_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="300dp"
         android:layout_marginTop="300dp"
       />

@@ -9,8 +9,8 @@
 
     <!-- Pictures -->
     <array name="need_pics">
-        <item>@drawable/inbox</item>
-        <item>@drawable/outbox</item>
+        <item>@drawable/pig</item>
+        <item>@drawable/snake</item>
     </array>
 
     <!-- Status -->

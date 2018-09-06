@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,9 @@ public class ChattingList_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
 
-        Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
+
+
+        ImageButton add_chatlist_btn = (ImageButton) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -116,11 +119,4 @@ public class ChattingList_Fragment extends Fragment {
 
         return view;
     }
-
-
-
-
-
-
-
 }

@@ -44,7 +44,6 @@ public class ChatList_Adapter extends BaseAdapter {
         TextView lettable_thing;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;

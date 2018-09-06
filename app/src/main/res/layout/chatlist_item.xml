@@ -9,15 +9,17 @@
     <ImageView
         android:id="@+id/need_pic"
         android:layout_width="50dp"
-        android:layout_height="70dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_weight="1"/>
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:paddingLeft="10dp"
         android:layout_weight="4">
 
         <TextView
@@ -26,8 +28,9 @@
             android:layout_height="wrap_content"
             android:text="text"
             android:textSize="15dp"
+            android:textStyle="bold"
             android:gravity="center_vertical"
-            android:layout_weight = "2"/>
+            android:layout_weight = "3"/>
 
         <TextView
             android:id="@+id/need_thing"
@@ -35,6 +38,7 @@
             android:layout_height="wrap_content"
             android:text="text"
             android:textSize="10dp"
+            android:paddingLeft ="5dp"
             android:layout_weight = "1"/>
 
         <TextView
@@ -42,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="text"
+            android:paddingLeft ="5dp"
             android:textSize="10dp"
             android:layout_weight = "1"/>
     </LinearLayout>
