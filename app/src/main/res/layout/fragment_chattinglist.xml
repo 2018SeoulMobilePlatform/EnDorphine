@@ -9,26 +9,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edittext"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
+
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:padding="5dp"
             android:src="@drawable/search"/>
 
         <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:paddingLeft="5dp"
-                android:layout_margin="5dp"
-                android:hint="검색"
-                android:background="@drawable/rounded_edittext"
-                android:textColor="#FFFFFF"
-                 />
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft= "10dp"
+            android:layout_gravity="center"
+            android:hint="Search"/>
     </LinearLayout>
+    
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:padding="5dp"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:maxLength="35"-->
+        <!--android:singleLine="true"-->
+        <!--android:hint="검색"-->
+        <!--android:background="@drawable/rounded_edittext"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--/>-->
+<!--</LinearLayout>-->
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -43,7 +63,7 @@
             android:transcriptMode="alwaysScroll"/>
     </FrameLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/make_chatlist_button"
         android:src="@drawable/plus_button"
         android:layout_width="48dp"

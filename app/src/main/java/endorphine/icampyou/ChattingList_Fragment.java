@@ -48,7 +48,7 @@ public class ChattingList_Fragment extends Fragment {
 
 
 
-        ImageButton add_chatlist_btn = (ImageButton) view.findViewById(R.id.make_chatlist_button);
+        Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
