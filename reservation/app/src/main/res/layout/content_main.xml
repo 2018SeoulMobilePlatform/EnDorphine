@@ -10,13 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/content_main">
 
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titles_fragment"
         android:name="endorphine.reservation.TitlesFragment"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/content_main" />
+
 
 </RelativeLayout>

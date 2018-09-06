@@ -9,14 +9,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context="com.recipes4dev.examples.fragmenttitlesdetailsexample1.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titles_fragment"
-        android:name="endorphine.reservation.TitlesFragment"
+        android:name="com.recipes4dev.examples.fragmenttitlesdetailsexample1.TitlesFragment"
         tools:layout="@layout/activity_main" />
 
 </RelativeLayout>

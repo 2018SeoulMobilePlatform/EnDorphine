@@ -1,61 +1,64 @@
 package endorphine.reservation;
 
-import android.net.Uri;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements TitlesFragment.OnTitleSelectedListener
 {
-
-    private TextView mTextMessage;
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragment = new HomeFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_reservation:
-                    fragment = new ReservationFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
+    final String[][] contents = new String[3][2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadFragment(new HomeFragment());
+        contents[0][0] = "Title-1";
+        contents[0][1] = "this is Details of Title-1";
+        contents[1][0] = "Title-2";
+        contents[1][1] = "this is Details of Title-2";
+        contents[2][0] = "Title-3";
+        contents[2][1] = "this is Details of Title-3";
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList());
+        adapter.add(contents[0][0]);
+        adapter.add(contents[1][0]);
+        adapter.add(contents[2][0]);
+
+        TitlesFragment titlesFragment = (TitlesFragment)getSupportFragmentManager().findFragmentById(R.id.titles_fragment);
+        titlesFragment.setListAdapter(adapter);
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    @Override
+    public void onTitleSelected(int position)
+    {
+        if (getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) &&
+                getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            DetailsFragment fr = new DetailsFragment();
+            Bundle args = new Bundle();
+            args.putString("title", contents[position][0]);
+            args.putString("details", contents[position][1]);
+            fr.setArguments(args);
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.replace(R.id.details_container, fr);
+            fragmentTransaction.commit();
+        } else {
+            Intent intent = new Intent();
+            intent.setClass(this, DetailsActivity.class);
+            intent.putExtra("title", contents[position][0]);
+            intent.putExtra("details", contents[position][1]);
+
+            startActivity(intent);
+        }
+
     }
 
 }
