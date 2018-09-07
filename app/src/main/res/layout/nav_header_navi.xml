@@ -37,10 +37,12 @@
         android:layout_height="wrap_content"
         android:text="난지 캠핑장\n2018-07-18 ~ 2018-07-20" />
 
+    <!-- 입장권 대신하는 QR코드 -->
     <ImageView
         android:id="@+id/qrcode"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:layout_margin="10dp"
+        android:background="#FFFFFF"
         />
 </LinearLayout>

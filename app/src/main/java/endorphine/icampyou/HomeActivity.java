@@ -30,7 +30,7 @@ import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     // fragment 교체를 위한 변수들
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -85,13 +85,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // 디폴트 프래그먼트 홈화면으로 설정
         setFragment(2);
 
-        // Bottom Navigation
+        // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
 
-        // Navigation Drawer
+        // Navigation Drawer (옆구리 네비게이션 바)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -115,16 +115,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navi, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
+
+    // 옆구리 네비게이션 바 아이템 클릭 이벤트
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -153,12 +177,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     /*
      num을 인자로 받아서 num에 맞는 fragment 교체하는 메소드
      */
-    public void setFragment(int num){
-        // fragmentTransactions는 fagment 변경할 때마다 초기화해야 에러가 나지 않는다.
+    public void setFragment(int num) {
+        // fragmentTransaction은 fragment 변경할 때마다 초기화해야 에러가 나지 않는다.
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        switch (num){
+        switch (num) {
             case 0:
                 // 안내 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, guideFragment1);
@@ -183,7 +207,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // 이벤트 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, eventFragment1);
                 fragmentTransaction.commit();
-            default: break;
+            default:
+                break;
         }
     }
 
@@ -192,9 +217,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             Bitmap bitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
-            if(bitmap != null) {
-                ((ImageView)findViewById(R.id.qrcode)).setImageBitmap(bitmap);
-            }
+            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -212,7 +235,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return bmp;
     }
-
-
 
 }

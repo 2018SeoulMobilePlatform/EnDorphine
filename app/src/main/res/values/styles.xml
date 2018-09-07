@@ -17,8 +17,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- 상단 툴바 -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MyTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
+    </style>
+    <style name="ActionButtonOverflowStyle" parent="android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/qrcode</item>
+    </style>
 
 </resources>
