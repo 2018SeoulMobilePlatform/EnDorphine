@@ -56,6 +56,7 @@ public class ChatMessage_Adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -82,6 +83,7 @@ public class ChatMessage_Adapter extends BaseAdapter {
             holder.viewLeft = viewLeft;
             holder.viewRight = viewRight;
             convertView.setTag(holder);
+
         } else{
             holder = (CustomHolder) convertView.getTag();
             text = holder.m_TextView;

@@ -112,37 +112,56 @@ public class Chat_Content extends AppCompatActivity {
     public void selectAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-
         intent.setType("image/*");
-
         startActivityForResult(intent,FROM_ALBUM);
     }
 
-    public void takePhoto(){
-        String state = Environment.getExternalStorageState();
+    public void takePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //사진인테트 호출
+        startActivityForResult(takePictureIntent,FROM_CAMERA);
+//        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
+//            File photoFile = null;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            if (photoFile != null) {
+//                Uri providerURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", photoFile); //프로바이드 생성
+//                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI); //사진저장경로 불러옴
+//
+//                this.startActivityForResult(takePictureIntent, FROM_CAMERA); //엑티비티 사진저장
+//            } else {
+//                Toast.makeText(this, "저장공간이 접근 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//        }
 
-        if(Environment.MEDIA_MOUNTED.equals(state)){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(intent.resolveActivity(getPackageManager())!=null){
-                File photoFile = null;
-                try{
-                    photoFile = createImageFile();
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-                if(photoFile!=null){
-                    Uri providerURI = FileProvider.getUriForFile(Chat_Content.this,"endorphine.icampyou.provider",photoFile);
-                    imgUri = providerURI;
-                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, providerURI);
-                    startActivityForResult(intent,FROM_CAMERA);
-                }
-            }
 
-        }else{
-            Log.v("알림", "저장공간에 접근 불가능");
-            return;
-        }
+//        String state = Environment.getExternalStorageState();
+//
+//        if(Environment.MEDIA_MOUNTED.equals(state)){
+//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            if(intent.resolveActivity(getPackageManager())!=null){
+//                File photoFile = null;
+//                try{
+//                    photoFile = createImageFile();
+//                }
+//                catch (IOException e){
+//                    e.printStackTrace();
+//                }
+//                if(photoFile!=null){
+//                    Uri providerURI = FileProvider.getUriForFile(this,"endorphine.icampyou.provider",photoFile);
+//                    //imgUri = providerURI;
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,providerURI);
+//                    //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                    startActivityForResult(intent,FROM_CAMERA);
+//                }
+//            }
+//        }else{
+//            Log.e("알림", "저장공간에 접근 불가능");
+//            return;
+//        }
     }
 
     public File createImageFile() throws IOException{
@@ -150,10 +169,10 @@ public class Chat_Content extends AppCompatActivity {
         File imageFile= null;
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "ireh");
         if(!storageDir.exists()){
-            Log.v("알림","storageDir 존재 x " + storageDir.toString());
+            Log.e("알림","storageDir 존재 x " + storageDir.toString());
             storageDir.mkdirs();
         }
-        Log.v("알림","storageDir 존재함 " + storageDir.toString());
+        Log.e("알림","storageDir 존재함 " + storageDir.toString());
         imageFile = new File(storageDir,imgFileName);
         mCurrentPhotoPath = imageFile.getAbsolutePath();
         return imageFile;
@@ -165,16 +184,16 @@ public class Chat_Content extends AppCompatActivity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
-        Log.e("냥냥냥","냥냥냥");
         Toast.makeText(this,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
     }
 
     @Override
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("resutl 값:",String.valueOf(resultCode));
+        Log.e("resultCode",resultCode+"");
+        Log.e("requsetCode",requestCode+"");
+        Log.e("data",data+"");
 
         if(resultCode != RESULT_OK){
             return;
@@ -189,12 +208,11 @@ public class Chat_Content extends AppCompatActivity {
                         albumFile = createImageFile();
                         photoURI = data.getData();
                         albumURI = Uri.fromFile(albumFile);
-                        galleryAddPic();
                         m_userPhoto.setImageURI(photoURI);
                         //cropImage();
                     }catch (Exception e){
                         e.printStackTrace();
-                        Log.v("알림","앨범에서 가져오기 에러");
+                        Log.e("알림","앨범에서 가져오기 에러");
                     }
                 }
                 break;
@@ -202,9 +220,9 @@ public class Chat_Content extends AppCompatActivity {
             //카메라 촬영
             case FROM_CAMERA : {
                 try{
-                    Log.v("알림", "FROM_CAMERA 처리");
-                    galleryAddPic();
-                    m_userPhoto.setImageURI(imgUri);
+                    Log.e("알림", "FROM_CAMERA 처리");
+                    Bitmap bm = (Bitmap) data.getExtras().get("data");
+                    m_userPhoto.setImageBitmap(bm);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

@@ -14,8 +14,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="center"
             android:padding="5dp"
             android:src="@drawable/search"/>
@@ -45,8 +45,8 @@
 
     <Button
         android:id="@+id/make_chatlist_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/rounded_button"
         android:layout_marginLeft="320dp"
         android:layout_marginTop = "280dp"

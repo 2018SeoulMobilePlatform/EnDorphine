@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#912345"
     >
 
     <LinearLayout
@@ -27,26 +28,31 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#2F4F4F"
+        android:background="#e1ea"
         android:layout_below="@id/im1"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/camera"
+            android:paddingLeft="5dp"
             />
         <EditText
             android:hint="메세지를 입력하세요"
             android:id="@+id/editText1"
             android:inputType="textMultiLine"
             android:maxLines="4"
-            android:layout_width="200dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/send_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전 송" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="#ffff"
+            android:text="전송" />
 
     </LinearLayout>
 </LinearLayout>
