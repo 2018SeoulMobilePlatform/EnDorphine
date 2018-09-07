@@ -4,75 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat_Content">
+    tools:context=".Chat_Content"
+    android:orientation="vertical">
 
     <LinearLayout
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <TextView
-            android:id="@+id/user"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="사용자"
-            android:textSize="20dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:layout_weight = "2"/>
 
-
-        <TextView
-            android:width="200dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/need"
-            android:text="빌리고 싶은 물건 "
-            android:textSize="15dp"/>
-        <EditText
-            android:width="200dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/write_need"
-            android:textSize="15dp"
-            android:background="#667788"/>
-
-        <TextView
-            android:width="200dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lettable"
-            android:text="빌려줄 수 있는 물건 "
-            android:textSize="15dp"/>
-        <EditText
-            android:width="200dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/write_lettable"
-            android:textSize="15dp"
-            android:background="#667788"/>
+        <!--<TextView-->
+        <!--android:id="@+id/user"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="사용자"-->
+        <!--android:textSize="20dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:layout_weight = "2"/>-->
 
         <ImageView
             android:id="@+id/user_image"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:adjustViewBounds="true"
-            android:background="#668583"/>
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFF"
+            android:layout_marginTop="100dp"
+            android:onClick="put_image"/>
+
         <Button
             android:id="@+id/select_img_btn"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
             android:text="Select Image"
-           android:textSize="15dp"/>
+            android:textSize="15dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_edittext"
+            android:onClick="put_image"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/need"
+                android:width="130dp"
+                android:text="빌리고 싶은 물건"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
+            <EditText
+                android:width="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/write_need"
+                android:textSize="10dp"
+                android:background="#abcdef" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lettable"
+                android:width="130dp"
+                android:text="빌려줄 수 있는 물건"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+            <EditText
+                android:width="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/write_lettable"
+                android:textSize="10dp"
+                android:background="#667788"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
         android:id="@+id/save_chat_content"
-        android:layout_width="70dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_gravity="center_horizontal"
         android:text="Save"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="450dp"
         />
 </LinearLayout>

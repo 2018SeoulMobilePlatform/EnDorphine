@@ -46,8 +46,6 @@ public class ChattingList_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
 
-
-
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -118,5 +116,12 @@ public class ChattingList_Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    //게시물 생성에서 받아온 데이터로 리스트 뷰 생성
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

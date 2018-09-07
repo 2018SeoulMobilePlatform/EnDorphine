@@ -52,42 +52,6 @@ public class Chat_Content extends AppCompatActivity {
 
         m_userPhoto = (ImageView) findViewById(R.id.user_image);
 
-        Button select_Image = (Button)findViewById(R.id.select_img_btn);
-        select_Image.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                id_view = v.getId();
-                if(v.getId() == R.id.select_img_btn){
-                    DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            takePhoto();
-                        }
-                    };
-                    DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            selectAlbum();
-                        }
-                    };
-
-                    DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    };
-
-                    new AlertDialog.Builder(Chat_Content.this)
-                            .setTitle("업로드할 이미지 선택")
-                            .setPositiveButton("사진 촬영",cameraListener)
-                            .setNeutralButton("앨번 선택",albumListener)
-                            .setNegativeButton("취소",cancelListener).show();
-                }
-            }
-
-        });
-
         Button save_chat_content = (Button) findViewById(R.id.save_chat_content);
 
         final EditText need_thing = (EditText)findViewById(R.id.write_need);
@@ -119,6 +83,7 @@ public class Chat_Content extends AppCompatActivity {
     public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //사진인테트 호출
         startActivityForResult(takePictureIntent,FROM_CAMERA);
+
 //        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
 //            File photoFile = null;
 //            try {
@@ -153,7 +118,7 @@ public class Chat_Content extends AppCompatActivity {
 //                if(photoFile!=null){
 //                    Uri providerURI = FileProvider.getUriForFile(this,"endorphine.icampyou.provider",photoFile);
 //                    //imgUri = providerURI;
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,providerURI);
+//                    //intent.putExtra(MediaStore.EXTRA_OUTPUT,providerURI);
 //                    //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 //                    startActivityForResult(intent,FROM_CAMERA);
 //                }
@@ -228,9 +193,37 @@ public class Chat_Content extends AppCompatActivity {
                 }
                 break;
             }
-
         }
+    }
 
+
+    //이미지 넣을 자리랑 버튼 눌를 시 실행하는 이벤트 함수
+    public void put_image(View view){
+        DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                takePhoto();
+            }
+        };
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectAlbum();
+            }
+        };
+
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        };
+
+        new AlertDialog.Builder(Chat_Content.this)
+                .setTitle("업로드할 이미지 선택")
+                .setPositiveButton("사진 촬영",cameraListener)
+                .setNeutralButton("앨번 선택",albumListener)
+                .setNegativeButton("취소",cancelListener).show();
     }
 
 }
