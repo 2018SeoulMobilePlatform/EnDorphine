@@ -28,21 +28,25 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="다콩이"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textSize="21dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#000000"/>
 
     <!-- 예약한 캠핑장 이름, 날짜-->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="난지 캠핑장\n2018-07-18 ~ 2018-07-20" />
+        android:text="난지 캠핑장\n2018-07-18 ~ 2018-07-20"
+        android:textColor="#5D5D5D"/>
 
     <!-- 입장권 대신하는 QR코드 -->
     <ImageView
         android:id="@+id/qrcode"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_margin="10dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="0dp"
+        android:src="@drawable/qrcode_no"
         />
 </LinearLayout>
