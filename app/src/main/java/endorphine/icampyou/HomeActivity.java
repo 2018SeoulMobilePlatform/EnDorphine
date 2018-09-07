@@ -2,6 +2,7 @@ package endorphine.icampyou;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -34,12 +35,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // fragment 교체를 위한 변수들
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    // fragment 객체들
+    // fragment 모음
     private GuideFragment1 guideFragment1;
     private ReservationFragment1 reservationFragment1;
     private ExchangeFragment1 exchangeFragment1;
     private HomeFragment1 homeFragment1;
     private EventFragment1 eventFragment1;
+    // intent 모음
+    private Intent qrcodePopupIntent;
+    // qr코드 비트맵
+    private Bitmap qrcodeBitmap;
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -85,6 +90,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // 디폴트 프래그먼트 홈화면으로 설정
         setFragment(2);
 
+        // intent 설정하기
+        qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
+
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
@@ -124,29 +132,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        return super.onOptionsItemSelected(item);
 //    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navi, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     // 옆구리 네비게이션 바 아이템 클릭 이벤트
     @SuppressWarnings("StatementWithEmptyBody")
@@ -216,8 +201,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void generateRQCode(String contents) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
-            Bitmap bitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
-            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(bitmap);
+            qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(qrcodeBitmap);
+            qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -236,4 +222,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return bmp;
     }
 
+    // 상단에 QR코드 아이콘 생성하는 메소드
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navi, menu);
+        return true;
+    }
+
+    // 상단 QR코드 클릭이벤트
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            // QR코드 팝업창 띄우기
+            startActivity(qrcodePopupIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
