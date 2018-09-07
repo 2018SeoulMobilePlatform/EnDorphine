@@ -1,5 +1,6 @@
 package endorphine.icampyou.GuideMenu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.MainActivity;
+import endorphine.icampyou.NanjiGuideActivity;
 import endorphine.icampyou.R;
 import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
@@ -44,7 +47,8 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nanji:
-                startFragment(getFragmentManager(), ReservationFragment1.class);
+                startActivity(new Intent(getActivity(), NanjiGuideActivity.class));
+                //startFragment(getFragmentManager(), ReservationFragment1.class);
                 break;
             default:
                 break;
