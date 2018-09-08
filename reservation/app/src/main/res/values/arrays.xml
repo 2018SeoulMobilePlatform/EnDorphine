@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="question">
+        <item>1박 2일</item>
+        <item>2박 3일</item>
+        <item>3박 4일</item>
+    </string-array>
+
+</resources>

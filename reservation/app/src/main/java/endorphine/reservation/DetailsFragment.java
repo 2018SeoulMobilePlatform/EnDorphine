@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+
 public class DetailsFragment extends Fragment {
+
+    public DetailsFragment()
+    {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,9 +24,6 @@ public class DetailsFragment extends Fragment {
 
         TextView titleTextView = (TextView) view.findViewById(R.id.selectedTitle);
         titleTextView.setText(args.getString("title"));
-
-        TextView detailsTextView = (TextView) view.findViewById(R.id.detailsText);
-        detailsTextView.setText(args.getString("details"));
 
         return view;
     }

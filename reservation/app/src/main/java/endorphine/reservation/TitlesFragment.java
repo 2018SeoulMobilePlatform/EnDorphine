@@ -11,6 +11,9 @@ import android.widget.ListView;
 
 public class TitlesFragment extends ListFragment {
 
+    public TitlesFragment()
+    {}
+
     public interface OnTitleSelectedListener {
         public void onTitleSelected(int position);
     }

@@ -12,27 +12,31 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TitlesFragment.OnTitleSelectedListener
 {
-    final String[][] contents = new String[3][2];
+    final String[][] contents = new String[6][2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contents[0][0] = "Title-1";
-        contents[0][1] = "this is Details of Title-1";
-        contents[1][0] = "Title-2";
-        contents[1][1] = "this is Details of Title-2";
-        contents[2][0] = "Title-3";
-        contents[2][1] = "this is Details of Title-3";
+        contents[0][0] = "난지 캠핑장";
+        contents[1][0] = "노을 캠핑장";
+        contents[2][0] = "서울대공원 캠핑장";
+        contents[3][0] = "중랑 캠핑장";
+        contents[4][0] = "강동 캠핑장";
+        contents[5][0] = "초안산 캠핑장";
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList());
         adapter.add(contents[0][0]);
         adapter.add(contents[1][0]);
         adapter.add(contents[2][0]);
+        adapter.add(contents[3][0]);
+        adapter.add(contents[4][0]);
+        adapter.add(contents[5][0]);
 
         TitlesFragment titlesFragment = (TitlesFragment)getSupportFragmentManager().findFragmentById(R.id.titles_fragment);
         titlesFragment.setListAdapter(adapter);
+
     }
 
     @Override
@@ -40,25 +44,24 @@ public class MainActivity extends AppCompatActivity implements TitlesFragment.On
     {
         if (getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) &&
                 getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            DetailsFragment fr = new DetailsFragment();
-            Bundle args = new Bundle();
-            args.putString("title", contents[position][0]);
-            args.putString("details", contents[position][1]);
-            fr.setArguments(args);
-
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.details_container, fr);
-            fragmentTransaction.commit();
-        } else {
+//            DetailsFragment fr = new DetailsFragment();
+//            Bundle args = new Bundle();
+//            args.putString("title", contents[position][0]);
+//            args.putString("details", contents[position][1]);
+//            fr.setArguments(args);
+//
+//            FragmentManager fm = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//            fragmentTransaction.replace(R.id.details_container, fr);
+//            fragmentTransaction.commit();
+        }
+        else {
             Intent intent = new Intent();
             intent.setClass(this, DetailsActivity.class);
             intent.putExtra("title", contents[position][0]);
-            intent.putExtra("details", contents[position][1]);
 
             startActivity(intent);
         }
-
     }
 
 }
