@@ -278,7 +278,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
         <TextView
-            android:text="저장"
+            android:text="다음"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

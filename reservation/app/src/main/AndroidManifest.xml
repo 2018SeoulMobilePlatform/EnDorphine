@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailsActivity"
+        <activity android:name=".CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".DetailsActivity"></activity>
 
     </application>
 

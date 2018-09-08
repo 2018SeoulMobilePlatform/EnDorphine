@@ -3,8 +3,6 @@ package endorphine.reservation;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TitlesFragment.On
         }
         else {
             Intent intent = new Intent();
-            intent.setClass(this, DetailsActivity.class);
+            intent.setClass(this, CalenderActivity.class);
             intent.putExtra("title", contents[position][0]);
 
             startActivity(intent);
