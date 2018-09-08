@@ -73,7 +73,8 @@ public class ChatList_Adapter extends BaseAdapter {
 
             Chat_Item chat_pos = chatItems.get(position);
 
-            holder.need_pic.setImageResource(chat_pos.getNeed_pic_id());
+            //holder.need_pic.setImageResource(chat_pos.getNeed_pic_id());
+            holder.need_pic.setImageBitmap(chat_pos.getImage());
             holder.user_id.setText(chat_pos.getUser_id());
             holder.need_thing.setText(chat_pos.getNeed_thing());
             holder.lettable_thing.setText(chat_pos.getLettable_thing());

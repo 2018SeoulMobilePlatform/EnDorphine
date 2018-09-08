@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -66,13 +69,16 @@ public class Chat_Content extends AppCompatActivity {
                    Toast.makeText(Chat_Content.this,"입력이 비어있습니다.",Toast.LENGTH_LONG).show();
                 }
                 else{
-//                    Intent intent = new Intent(Chat_Content.this,MainActivity.class);
-//                    intent.putExtra("user","허진규");
-//                    intent.putExtra("need",need_thing.getText().toString());
-//                    intent.putExtra("lettable",lettable_thing.getText().toString());
-//                    startActivity(intent);
-
                     Intent returnIntent = new Intent();
+
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable)m_userPhoto.getDrawable();
+                    Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    tempBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                    byte[] bytes = stream.toByteArray();
+
+                    returnIntent.putExtra("image",bytes);
                     returnIntent.putExtra("user","허진규");
                     returnIntent.putExtra("need",need_thing.getText().toString());
                     returnIntent.putExtra("lettable",lettable_thing.getText().toString());

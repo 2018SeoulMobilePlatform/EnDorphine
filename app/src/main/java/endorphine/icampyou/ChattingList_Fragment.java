@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,10 +37,6 @@ public class ChattingList_Fragment extends Fragment {
     String[] need_things;
     String[] lettable_things;
 
-    String pass_user;
-    String pass_need;
-    String pass_lettable;
-
     List<Chat_Item> chatItems;
     ListView chat_listview;
 
@@ -49,15 +47,12 @@ public class ChattingList_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Log.e("onCreatView","냥ㅋㅋ");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
-
-        Log.e("onCreatView","냥냥");
 
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
@@ -76,12 +71,6 @@ public class ChattingList_Fragment extends Fragment {
         user_ids = getResources().getStringArray(R.array.user_ids);
         need_things = getResources().getStringArray(R.array.need_things);
         lettable_things = getResources().getStringArray(R.array.lettable_things);
-
-        for(int i=0;i<user_ids.length;i++){
-            Chat_Item chat_item = new Chat_Item(need_pics.getResourceId(i,-1),user_ids[i],
-                    need_things[i],lettable_things[i]);
-            chatItems.add(chat_item);
-        }
 
         chat_listview = (ListView) view.findViewById(R.id.chat_listview);
         chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
@@ -127,21 +116,6 @@ public class ChattingList_Fragment extends Fragment {
                 return true;
             }
         });
-
-//        Bundle args =getArguments();
-//        if(args != null) {
-//            Log.e("user", getArguments().getString("user"));
-//            Log.e("need", getArguments().getString("need"));
-//            Log.e("lettable", getArguments().getString("lettable"));
-//            Chat_Item chat_item = new Chat_Item(need_pics.getResourceId(0,-1)
-//                    ,getArguments().getString("user"),
-//                    getArguments().getString("need"),
-//                    getArguments().getString("lettable"));
-//            chatList_adapter.add(chat_item);
-//            chatList_adapter.notifyDataSetChanged();
-//        }
-
-
         return view;
     }
 
@@ -151,13 +125,10 @@ public class ChattingList_Fragment extends Fragment {
         String pass_user = data.getStringExtra("user");
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
-        Log.e("user1",pass_user);
-        Log.e("need2",pass_need);
-        Log.e("lettable3",pass_lettable);
-        Chat_Item chat_item = new Chat_Item(need_pics.getResourceId(0,-1)
-                ,pass_user,
-                pass_need,
-                pass_lettable);
+        byte[] image_byte = data.getByteArrayExtra("image");
+        Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
+        Chat_Item chat_item = new Chat_Item(pass_user, pass_need, pass_lettable);
+        chat_item.setImage(pass_image);
         chatList_adapter.add(chat_item);
         chat_listview.setAdapter(chatList_adapter);
     }
