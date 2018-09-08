@@ -2,32 +2,37 @@ package endorphine.icampyou;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChatList_Adapter extends BaseAdapter {
+public class ChatList_Adapter extends BaseAdapter implements Filterable{
 
     Context context;
-    List<Chat_Item> chatItems;
+    ArrayList<Chat_Item> chatItems;
 
-    public ChatList_Adapter(Context _context, List<Chat_Item> _chatItems){
+    private ArrayList<Chat_Item> filteredItemList;
+    Filter listFilter;
+
+    public ChatList_Adapter(Context _context){
         this.context = _context;
-        this.chatItems = _chatItems;
+        chatItems = new ArrayList<Chat_Item>();
+        filteredItemList = chatItems;
     }
 
-    public void add(Chat_Item chat_item){
-        chatItems.add(chat_item);
-        for(int i=0;i<chatItems.size();i++){
-            Log.e("이다인ㅇ멍청이",chatItems.get(i).toString());
-        }
+    public void add(Bitmap pass_image, String pass_user, String pass_need, String pass_lettable){
+        chatItems.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable));
     }
 
     public void remove(int _position){
@@ -46,7 +51,15 @@ public class ChatList_Adapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return chatItems.indexOf(getItem(position));
+        return position;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(listFilter == null){
+            listFilter = new ListFilter();
+        }
+        return listFilter;
     }
 
     private class ViewHolder{
@@ -73,7 +86,6 @@ public class ChatList_Adapter extends BaseAdapter {
 
             Chat_Item chat_pos = chatItems.get(position);
 
-            //holder.need_pic.setImageResource(chat_pos.getNeed_pic_id());
             holder.need_pic.setImageBitmap(chat_pos.getImage());
             holder.user_id.setText(chat_pos.getUser_id());
             holder.need_thing.setText(chat_pos.getNeed_thing());
@@ -85,5 +97,42 @@ public class ChatList_Adapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    private class ListFilter extends  Filter{
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            if(constraint == null || constraint.length() ==0 ){
+                results.values = chatItems;
+                results.count = chatItems.size();
+            } else{
+                ArrayList<Chat_Item> itemList = new ArrayList<Chat_Item>();
+
+                for(Chat_Item item : chatItems){
+                    if(item.getUser_id().toUpperCase().contains(constraint.toString().toUpperCase()) ||
+                            item.getNeed_thing().toUpperCase().contains(constraint.toString().toUpperCase()) ||
+                            item.getLettable_thing().toUpperCase().contains(constraint.toString().toUpperCase())){
+                        itemList.add(item);
+                    }
+                }
+                results.values = itemList;
+                results.count = itemList.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredItemList = (ArrayList<Chat_Item>) results.values;
+
+            if(results.count > 0){
+                notifyDataSetChanged();
+            } else{
+                notifyDataSetInvalidated();
+            }
+        }
     }
 }

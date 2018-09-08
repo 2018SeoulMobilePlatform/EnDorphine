@@ -60,19 +60,20 @@ public class Chat_Content extends AppCompatActivity {
         final EditText need_thing = (EditText)findViewById(R.id.write_need);
         final EditText lettable_thing = (EditText)findViewById(R.id.write_lettable);
 
+
         save_chat_content.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if(need_thing.length() ==0 && lettable_thing.length() ==0){
+                BitmapDrawable bitmapDrawable = (BitmapDrawable)m_userPhoto.getDrawable();
+                Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
+                if(need_thing.length() ==0 && lettable_thing.length() ==0 || bitmapDrawable == null){
                    Toast.makeText(Chat_Content.this,"입력이 비어있습니다.",Toast.LENGTH_LONG).show();
                 }
                 else{
                     Intent returnIntent = new Intent();
-
-                    BitmapDrawable bitmapDrawable = (BitmapDrawable)m_userPhoto.getDrawable();
-                    Bitmap tempBitmap = bitmapDrawable.getBitmap();
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     tempBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);

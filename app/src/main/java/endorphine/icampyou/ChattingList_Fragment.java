@@ -12,7 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,17 +35,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class ChattingList_Fragment extends Fragment {
 
-    TypedArray need_pics;
-    String[] user_ids;
-    String[] need_things;
-    String[] lettable_things;
+    private EditText editSearch;
 
-    List<Chat_Item> chatItems;
     ListView chat_listview;
+    ArrayList<Chat_Item> copy_list;
 
     final int save_info = 1;
 
-    static ChatList_Adapter chatList_adapter;
+    ChatList_Adapter chatList_adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -65,15 +65,9 @@ public class ChattingList_Fragment extends Fragment {
             }
         });
 
-        chatItems = new ArrayList<Chat_Item>();
-
-        need_pics = getResources().obtainTypedArray(R.array.need_pics);
-        user_ids = getResources().getStringArray(R.array.user_ids);
-        need_things = getResources().getStringArray(R.array.need_things);
-        lettable_things = getResources().getStringArray(R.array.lettable_things);
+        chatList_adapter = new ChatList_Adapter(getActivity());
 
         chat_listview = (ListView) view.findViewById(R.id.chat_listview);
-        chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
         chat_listview.setAdapter(chatList_adapter);
 
         //채팅방 들어가기
@@ -96,8 +90,8 @@ public class ChattingList_Fragment extends Fragment {
                 DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chatItems.remove(position);
-                        chatList_adapter.notifyDataSetChanged();
+                        chatList_adapter.remove(position);
+                        chat_listview.setAdapter(chatList_adapter);
                     }
                 };
 
@@ -116,6 +110,32 @@ public class ChattingList_Fragment extends Fragment {
                 return true;
             }
         });
+        copy_list = new ArrayList<>();
+
+        editSearch = (EditText)view.findViewById(R.id.search);
+        editSearch.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString();
+                if(filterText.length() > 0){
+                    chat_listview.setFilterText(filterText);
+                } else{
+                    chat_listview.clearTextFilter();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -127,9 +147,11 @@ public class ChattingList_Fragment extends Fragment {
         String pass_lettable = data.getStringExtra("lettable");
         byte[] image_byte = data.getByteArrayExtra("image");
         Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        Chat_Item chat_item = new Chat_Item(pass_user, pass_need, pass_lettable);
-        chat_item.setImage(pass_image);
-        chatList_adapter.add(chat_item);
+        Chat_Item chat_item = new Chat_Item(pass_image,pass_user, pass_need, pass_lettable);
+
+        chatList_adapter.add(pass_image,pass_user,pass_need,pass_lettable);
+        copy_list.clear();
+        copy_list.addAll(chatList_adapter.chatItems);
         chat_listview.setAdapter(chatList_adapter);
     }
 }
