@@ -62,12 +62,23 @@ public class Chat_Content extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
                 if(need_thing.length() ==0 && lettable_thing.length() ==0){
                    Toast.makeText(Chat_Content.this,"입력이 비어있습니다.",Toast.LENGTH_LONG).show();
                 }
                 else{
+//                    Intent intent = new Intent(Chat_Content.this,MainActivity.class);
+//                    intent.putExtra("user","허진규");
+//                    intent.putExtra("need",need_thing.getText().toString());
+//                    intent.putExtra("lettable",lettable_thing.getText().toString());
+//                    startActivity(intent);
 
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("user","허진규");
+                    returnIntent.putExtra("need",need_thing.getText().toString());
+                    returnIntent.putExtra("lettable",lettable_thing.getText().toString());
+                    setResult(1,returnIntent);
+                    finish();
+                    Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -186,8 +197,8 @@ public class Chat_Content extends AppCompatActivity {
             case FROM_CAMERA : {
                 try{
                     Log.e("알림", "FROM_CAMERA 처리");
-                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    m_userPhoto.setImageBitmap(bm);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    m_userPhoto.setImageBitmap(bitmap);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

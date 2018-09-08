@@ -3,6 +3,7 @@ package endorphine.icampyou;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,20 @@ public class ChatList_Adapter extends BaseAdapter {
     Context context;
     List<Chat_Item> chatItems;
 
-    ChatList_Adapter(Context _context, List<Chat_Item> _chatItems){
+    public ChatList_Adapter(Context _context, List<Chat_Item> _chatItems){
         this.context = _context;
         this.chatItems = _chatItems;
+    }
+
+    public void add(Chat_Item chat_item){
+        chatItems.add(chat_item);
+        for(int i=0;i<chatItems.size();i++){
+            Log.e("이다인ㅇ멍청이",chatItems.get(i).toString());
+        }
+    }
+
+    public void remove(int _position){
+        chatItems.remove(_position);
     }
 
     @Override

@@ -26,6 +26,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ChattingList_Fragment extends Fragment {
 
     TypedArray need_pics;
@@ -33,18 +35,29 @@ public class ChattingList_Fragment extends Fragment {
     String[] need_things;
     String[] lettable_things;
 
+    String pass_user;
+    String pass_need;
+    String pass_lettable;
+
     List<Chat_Item> chatItems;
     ListView chat_listview;
+
+    final int save_info = 1;
+
+    static ChatList_Adapter chatList_adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Log.e("onCreatView","냥ㅋㅋ");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
+
+        Log.e("onCreatView","냥냥");
 
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
@@ -53,7 +66,7 @@ public class ChattingList_Fragment extends Fragment {
             public void onClick(View v)
             {
                 Intent intent=new Intent(getActivity(),Chat_Content.class);
-                startActivity(intent);
+                startActivityForResult(intent,save_info);
             }
         });
 
@@ -71,7 +84,7 @@ public class ChattingList_Fragment extends Fragment {
         }
 
         chat_listview = (ListView) view.findViewById(R.id.chat_listview);
-        final ChatList_Adapter chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
+        chatList_adapter = new ChatList_Adapter(getActivity(),chatItems);
         chat_listview.setAdapter(chatList_adapter);
 
         //채팅방 들어가기
@@ -115,13 +128,37 @@ public class ChattingList_Fragment extends Fragment {
             }
         });
 
+//        Bundle args =getArguments();
+//        if(args != null) {
+//            Log.e("user", getArguments().getString("user"));
+//            Log.e("need", getArguments().getString("need"));
+//            Log.e("lettable", getArguments().getString("lettable"));
+//            Chat_Item chat_item = new Chat_Item(need_pics.getResourceId(0,-1)
+//                    ,getArguments().getString("user"),
+//                    getArguments().getString("need"),
+//                    getArguments().getString("lettable"));
+//            chatList_adapter.add(chat_item);
+//            chatList_adapter.notifyDataSetChanged();
+//        }
+
+
         return view;
     }
 
-    //게시물 생성에서 받아온 데이터로 리스트 뷰 생성
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        String pass_user = data.getStringExtra("user");
+        String pass_need =data.getStringExtra("need");
+        String pass_lettable = data.getStringExtra("lettable");
+        Log.e("user1",pass_user);
+        Log.e("need2",pass_need);
+        Log.e("lettable3",pass_lettable);
+        Chat_Item chat_item = new Chat_Item(need_pics.getResourceId(0,-1)
+                ,pass_user,
+                pass_need,
+                pass_lettable);
+        chatList_adapter.add(chat_item);
+        chat_listview.setAdapter(chatList_adapter);
     }
 }

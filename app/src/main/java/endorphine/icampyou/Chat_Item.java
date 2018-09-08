@@ -13,6 +13,11 @@ public class Chat_Item {
         this.lettable_thing = _lettable_thing;
     }
 
+    @Override
+    public String toString(){
+        return "("+user_id+","+need_thing+","+lettable_thing+")";
+    }
+
     public int getNeed_pic_id(){
         return need_pic_id;
     }
