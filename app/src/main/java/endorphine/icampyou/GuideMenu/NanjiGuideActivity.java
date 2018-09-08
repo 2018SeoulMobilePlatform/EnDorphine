@@ -1,8 +1,7 @@
-package endorphine.icampyou;
+package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 import android.app.Activity;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -10,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TabHost;
-import android.widget.TabWidget;
+
+import endorphine.icampyou.R;
 
 public class NanjiGuideActivity extends Activity {
 
@@ -35,8 +36,8 @@ public class NanjiGuideActivity extends Activity {
 
         // ImageViews = 동그라미들
         pointImages = new ImageView[pageViews.size()];
-        // view_pics.xml 설정
-        viewLayout = (ViewGroup) inflater.inflate(R.layout.view_pics, null);
+        // activity_nanji_guide.xml 설정
+        viewLayout = (ViewGroup) inflater.inflate(R.layout.activity_nanji_guide, null);
 
         // viewPoints = 동그라미 점들 있는 view, viewPager = 사진 페이지 부분 view
         viewPoints = (ViewGroup) viewLayout.findViewById(R.id.viewGroup);
@@ -66,33 +67,31 @@ public class NanjiGuideActivity extends Activity {
         viewPager.setAdapter(new GuidePageAdapter(pageViews, this));
         viewPager.setOnPageChangeListener(new GuidePageChangeListener(pointImages));
 
-//        // 이미지뷰에 사진 넣기
-//        ((ImageView) findViewById(R.id.nanji_picture01)).setImageBitmap(R.drawable.nanji_1);
-//        ((ImageView) findViewById(R.id.nanji_picture02)).setImageBitmap(R.drawable.nanji_2);
-//        ((ImageView) findViewById(R.id.nanji_picture03)).setImageBitmap(R.drawable.nanji_3);
-
-
         // 탭 호스트에 탭 추가
-        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1) ;
-        tabHost1.setup() ;
+        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
+        tabHost1.setup();
 
         // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
-        TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1") ;
-        ts1.setContent(R.id.content1) ;
-        ts1.setIndicator("정보") ;
-        tabHost1.addTab(ts1)  ;
+        TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1");
+        ts1.setContent(R.id.content1);
+        ts1.setIndicator("정보");
+        tabHost1.addTab(ts1);
 
         // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
-        TabHost.TabSpec ts2 = tabHost1.newTabSpec("Tab Spec 2") ;
-        ts2.setContent(R.id.content2) ;
-        ts2.setIndicator("후기") ;
-        tabHost1.addTab(ts2) ;
+        TabHost.TabSpec ts2 = tabHost1.newTabSpec("Tab Spec 2");
+        ts2.setContent(R.id.content2);
+        ts2.setIndicator("후기");
+        tabHost1.addTab(ts2);
 
         // 세 번째 Tab. (탭 표시 텍스트:"TAB 3"), (페이지 뷰:"content3")
-        TabHost.TabSpec ts3 = tabHost1.newTabSpec("Tab Spec 3") ;
-        ts3.setContent(R.id.content3) ;
-        ts3.setIndicator("위치") ;
-        tabHost1.addTab(ts3) ;
+        TabHost.TabSpec ts3 = tabHost1.newTabSpec("Tab Spec 3");
+        ts3.setContent(R.id.content3);
+        ts3.setIndicator("위치");
+        tabHost1.addTab(ts3);
 
+        // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
+        ScrollView scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
+        scrollView.setFocusableInTouchMode(true);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
     }
 }

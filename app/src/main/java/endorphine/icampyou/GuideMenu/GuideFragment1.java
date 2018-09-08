@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import endorphine.icampyou.BaseFragment;
-import endorphine.icampyou.MainActivity;
-import endorphine.icampyou.NanjiGuideActivity;
 import endorphine.icampyou.R;
-import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
 /*
     안내 프래그먼트 첫번째 화면

@@ -34,7 +34,7 @@
         <activity
             android:name=".QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".NanjiGuideActivity"></activity>
+        <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
     </application>
 
 </manifest>

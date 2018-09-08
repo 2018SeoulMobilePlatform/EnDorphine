@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 
