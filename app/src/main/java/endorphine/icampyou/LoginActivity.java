@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
 
@@ -98,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
             // 세션 연결이 실패했을때
-            // 어쩔때 실패되는지는 테스트를 안해보았음 ㅜㅜ
 
         }
     }

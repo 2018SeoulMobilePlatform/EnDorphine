@@ -1,10 +1,95 @@
+<<<<<<< HEAD
 #!/usr/bin/env sh
+=======
+#!/usr/bin/env bash
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
 
 ##############################################################################
 ##
 ##  Gradle start up script for UN*X
 ##
 ##############################################################################
+
+<<<<<<< HEAD
+# Attempt to set APP_HOME
+# Resolve links: $0 may be a link
+PRG="$0"
+# Need this for relative symlinks.
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`"/$link"
+    fi
+done
+SAVED="`pwd`"
+cd "`dirname \"$PRG\"`/" >/dev/null
+APP_HOME="`pwd -P`"
+cd "$SAVED" >/dev/null
+=======
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS=""
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
+
+APP_NAME="Gradle"
+APP_BASE_NAME=`basename "$0"`
+
+<<<<<<< HEAD
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS=""
+
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD="maximum"
+
+warn () {
+    echo "$*"
+}
+
+die () {
+=======
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD="maximum"
+
+warn ( ) {
+    echo "$*"
+}
+
+die ( ) {
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
+    echo
+    echo "$*"
+    echo
+    exit 1
+}
+
+# OS specific support (must be 'true' or 'false').
+cygwin=false
+msys=false
+darwin=false
+<<<<<<< HEAD
+nonstop=false
+=======
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
+case "`uname`" in
+  CYGWIN* )
+    cygwin=true
+    ;;
+  Darwin* )
+    darwin=true
+    ;;
+  MINGW* )
+    msys=true
+    ;;
+<<<<<<< HEAD
+  NONSTOP* )
+    nonstop=true
+    ;;
+esac
+
+=======
+esac
 
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
@@ -24,46 +109,7 @@ cd "`dirname \"$PRG\"`/" >/dev/null
 APP_HOME="`pwd -P`"
 cd "$SAVED" >/dev/null
 
-APP_NAME="Gradle"
-APP_BASE_NAME=`basename "$0"`
-
-# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS=""
-
-# Use the maximum available, or set MAX_FD != -1 to use that value.
-MAX_FD="maximum"
-
-warn () {
-    echo "$*"
-}
-
-die () {
-    echo
-    echo "$*"
-    echo
-    exit 1
-}
-
-# OS specific support (must be 'true' or 'false').
-cygwin=false
-msys=false
-darwin=false
-nonstop=false
-case "`uname`" in
-  CYGWIN* )
-    cygwin=true
-    ;;
-  Darwin* )
-    darwin=true
-    ;;
-  MINGW* )
-    msys=true
-    ;;
-  NONSTOP* )
-    nonstop=true
-    ;;
-esac
-
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 # Determine the Java command to use to start the JVM.
@@ -89,7 +135,11 @@ location of your Java installation."
 fi
 
 # Increase the maximum file descriptors if we can.
+<<<<<<< HEAD
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
+=======
+if [ "$cygwin" = "false" -a "$darwin" = "false" ] ; then
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
     MAX_FD_LIMIT=`ulimit -H -n`
     if [ $? -eq 0 ] ; then
         if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ] ; then
@@ -154,6 +204,7 @@ if $cygwin ; then
     esac
 fi
 
+<<<<<<< HEAD
 # Escape application args
 save () {
     for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
@@ -170,3 +221,13 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
 fi
 
 exec "$JAVACMD" "$@"
+=======
+# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
+function splitJvmOpts() {
+    JVM_OPTS=("$@")
+}
+eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
+JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
+
+exec "$JAVACMD" "${JVM_OPTS[@]}" -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+>>>>>>> 6fcc24986bb47f873ea72c8228660a8b06b00858
