@@ -32,6 +32,12 @@
             android:hint="Search"/>
     </LinearLayout>
 
+    <TabWidget
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TabWidget>
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">

@@ -214,7 +214,6 @@ public class Chat_Content extends AppCompatActivity {
         }
     }
 
-
     //이미지 넣을 자리랑 버튼 눌를 시 실행하는 이벤트 함수
     public void put_image(View view){
         DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {

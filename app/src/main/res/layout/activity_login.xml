@@ -39,20 +39,25 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:background="@drawable/rounded_login"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="80dp"
         android:textColor="#FFFFFF"
         android:textAlignment="center"
         android:hint="Email Address"
         android:textSize="20dp"
+        android:maxLength="20"
+        android:maxLines="1"
         android:layout_gravity="center_horizontal"/>
 
     <EditText
+        android:inputType="textPassword"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:background="@drawable/rounded_login"
         android:textColor="#FFFFFF"
+        android:maxLines="1"
         android:layout_marginTop="10dp"
         android:hint="PassWord"
+        android:maxLength="20"
         android:textAlignment="center"
         android:textSize="20dp"
         android:layout_gravity="center_horizontal"/>
@@ -62,7 +67,7 @@
         android:layout_height="60dp"
         android:textColor="#FFFFFF"
         android:background="@drawable/rounded_login_button"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="Login"
         android:textAlignment="center"
         android:layout_gravity="center_horizontal"
@@ -70,17 +75,18 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="30dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Password"
+            android:text="ID/Password"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:textSize="25dp"/>
+            android:textSize="25dp"
+            android:onClick="find_userInfo"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -89,7 +95,8 @@
             android:textColor="#FFFFFF"
             android:layout_marginRight="10dp"
             android:textStyle="bold"
-            android:textSize="25dp"/>
+            android:textSize="25dp"
+            android:onClick="register_userInfo"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -103,6 +110,6 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="30dp" />
 
 </LinearLayout>

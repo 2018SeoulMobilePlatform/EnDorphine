@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -133,4 +134,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //사용자 아이디,패스워드 찾기
+    public void find_userInfo(View view){
+
+    }
+
+    //사용자 아이디 등록하기
+    public void register_userInfo(View view){
+        
+    }
 }
