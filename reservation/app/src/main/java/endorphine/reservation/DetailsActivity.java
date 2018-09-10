@@ -2,12 +2,13 @@ package endorphine.reservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import static endorphine.reservation.CalenderActivity.RESULT_SELECT_END_VIEW_DATE;
@@ -15,33 +16,32 @@ import static endorphine.reservation.CalenderActivity.RESULT_SELECT_START_VIEW_D
 
 public class DetailsActivity extends AppCompatActivity {
 
-    ArrayAdapter<CharSequence> sAdapter;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details_fragment);
+        setContentView(R.layout.details_activity);
 
-        final CheckBox cb1 = (CheckBox) findViewById(R.id.checkBox1);
-        final CheckBox cb2 = (CheckBox) findViewById(R.id.checkBox2);
-        final CheckBox cb3 = (CheckBox) findViewById(R.id.checkBox3);
-        final CheckBox cb4 = (CheckBox) findViewById(R.id.checkBox4);
-        final CheckBox cb5 = (CheckBox) findViewById(R.id.checkBox5);
-        final CheckBox cb6 = (CheckBox) findViewById(R.id.checkBox6);
-        final CheckBox cb7 = (CheckBox) findViewById(R.id.checkBox7);
-        final CheckBox cb8 = (CheckBox) findViewById(R.id.checkBox8);
-        final CheckBox cb9 = (CheckBox) findViewById(R.id.checkBox9);
+        final RadioButton cb1 = (RadioButton) findViewById(R.id.checkBox1);
+        final RadioButton cb2 = (RadioButton) findViewById(R.id.checkBox2);
+        final RadioButton cb3 = (RadioButton) findViewById(R.id.checkBox3);
+        final RadioButton cb4 = (RadioButton) findViewById(R.id.checkBox4);
+        final RadioButton cb5 = (RadioButton) findViewById(R.id.checkBox5);
+        final RadioButton cb6 = (RadioButton) findViewById(R.id.checkBox6);
+        final RadioButton cb7 = (RadioButton) findViewById(R.id.checkBox7);
+        final RadioButton cb8 = (RadioButton) findViewById(R.id.checkBox8);
+        final RadioButton cb9 = (RadioButton) findViewById(R.id.checkBox9);
 
         Intent intent = new Intent(this.getIntent());
 
-        String startDate = intent.getStringExtra(RESULT_SELECT_START_VIEW_DATE);
-        String endDate = intent.getStringExtra(RESULT_SELECT_END_VIEW_DATE);
+        final String startDate = intent.getStringExtra(RESULT_SELECT_START_VIEW_DATE);
+        final String endDate = intent.getStringExtra(RESULT_SELECT_END_VIEW_DATE);
         TextView periodTextView = (TextView) findViewById(R.id.period);
         periodTextView.setText(startDate + "~" + endDate);
 
         TextView campingTextView = (TextView) findViewById(R.id.selectedTitle);
         campingTextView.setText(intent.getExtras().getString("camping_name"));
+
+        final String campName = intent.getExtras().getString("camping_name");
 
         Log.e("DetailsActivity",intent.getStringExtra("camping_name"));
         if(!intent.getExtras().getString("camping_name").equals("난지 캠핑장"))
@@ -100,7 +100,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         TextView b = (TextView) findViewById(R.id.button1);
-        final TextView tv = (TextView) findViewById(R.id.textView2);
+
 
         b.setOnClickListener(new View.OnClickListener() {
 
@@ -111,10 +111,30 @@ public class DetailsActivity extends AppCompatActivity {
                 if (cb2.isChecked() == true) result += cb2.getText().toString();
                 if (cb3.isChecked() == true) result += cb3.getText().toString();
                 if (cb4.isChecked() == true) result += cb4.getText().toString();
-                tv.setText("선택결과:" + result);
+                if (cb5.isChecked() == true) result += cb5.getText().toString();
+                if (cb6.isChecked() == true) result += cb6.getText().toString();
+                if (cb7.isChecked() == true) result += cb7.getText().toString();
+                if (cb8.isChecked() == true) result += cb8.getText().toString();
+                if (cb9.isChecked() == true) result += cb9.getText().toString();
 
+                Log.e("DetailsActivity","1");
+
+                ConfirmFragment confirmFragment = new ConfirmFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("tent", result);
+                bundle.putString("period", startDate + "~" + endDate);
+                bundle.putString("camp_name", campName);
+                confirmFragment.setArguments(bundle);
+                Log.e("DetailsActivity","2");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.details, confirmFragment);
+                fragmentTransaction.commit();
+                Log.e("DetailsActivity","3");
             } // end onClick
 
         }); // end setOnClickListener
+
+
     }
 }

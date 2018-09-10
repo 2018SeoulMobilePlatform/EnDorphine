@@ -38,28 +38,14 @@ public class MainActivity extends AppCompatActivity implements TitlesFragment.On
     }
 
     @Override
-    public void onTitleSelected(int position)
-    {
-        if (getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE) &&
-                getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            DetailsFragment fr = new DetailsFragment();
-//            Bundle args = new Bundle();
-//            args.putString("title", contents[position][0]);
-//            args.putString("details", contents[position][1]);
-//            fr.setArguments(args);
-//
-//            FragmentManager fm = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//            fragmentTransaction.replace(R.id.details_container, fr);
-//            fragmentTransaction.commit();
-        }
-        else {
-            Intent intent = new Intent();
-            intent.setClass(this, CalenderActivity.class);
-            intent.putExtra("title", contents[position][0]);
+    public void onTitleSelected(int position) {
 
-            startActivity(intent);
-        }
+        Intent intent = new Intent();
+        intent.setClass(this, CalenderActivity.class);
+        intent.putExtra("title", contents[position][0]);
+
+        startActivity(intent);
+
     }
 
 }
