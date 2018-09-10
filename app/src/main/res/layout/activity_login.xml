@@ -58,6 +58,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <Button
+        android:id="@+id/login_button"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:textColor="#FFFFFF"
