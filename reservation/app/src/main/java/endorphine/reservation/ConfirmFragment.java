@@ -1,6 +1,7 @@
 package endorphine.reservation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -60,6 +61,15 @@ public class ConfirmFragment extends Fragment {
         campNameView.setText(campName);
         tentView.setText(tent);
         periodView.setText(period);
+
+        TextView confirm = (TextView) view.findViewById(R.id.confirm);
+
+        confirm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
