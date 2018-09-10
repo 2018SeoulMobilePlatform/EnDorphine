@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class ChatMessage_Adapter extends BaseAdapter {
 
+    //메세지 내용 클래스
     public class MessageContents{
         String msg;
         int type;
@@ -25,6 +26,7 @@ public class ChatMessage_Adapter extends BaseAdapter {
         }
     }
 
+    //메세지 목록 변수 선언
     private ArrayList<MessageContents> m_message_list;
 
     public ChatMessage_Adapter(){
@@ -60,8 +62,8 @@ public class ChatMessage_Adapter extends BaseAdapter {
         final int pos = position;
         final Context context = parent.getContext();
 
-        TextView text =null;
         CustomHolder holder = null;
+        TextView text =null;
         LinearLayout layout = null;
         View viewRight = null;
         View viewLeft = null;
@@ -95,12 +97,12 @@ public class ChatMessage_Adapter extends BaseAdapter {
         text.setText(m_message_list.get(position).msg);
 
         if( m_message_list.get(position).type == 0 ) {
-            text.setBackgroundResource(R.drawable.inbox);
+            text.setBackgroundResource(R.drawable.inboxx);
             layout.setGravity(Gravity.LEFT);
             viewRight.setVisibility(View.GONE);
             viewLeft.setVisibility(View.GONE);
         }else if(m_message_list.get(position).type == 1){
-            text.setBackgroundResource(R.drawable.outbox);
+            text.setBackgroundResource(R.drawable.outboxx);
             layout.setGravity(Gravity.RIGHT);
             viewRight.setVisibility(View.GONE);
             viewLeft.setVisibility(View.GONE);

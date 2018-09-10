@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatList_Adapter extends BaseAdapter implements Filterable{
-
     Context context;
     ArrayList<Chat_Item> chatItems;
 
@@ -32,7 +32,12 @@ public class ChatList_Adapter extends BaseAdapter implements Filterable{
     }
 
     public void add(Bitmap pass_image, String pass_user, String pass_need, String pass_lettable){
-        chatItems.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable));
+        Chat_Item item = new Chat_Item();
+        item.setImage(pass_image);
+        item.setUser_id(pass_user);
+        item.setNeed_thing(pass_need);
+        item.setLettable_thing(pass_lettable);
+        chatItems.add(item);
     }
 
     public void remove(int _position){
@@ -135,4 +140,22 @@ public class ChatList_Adapter extends BaseAdapter implements Filterable{
             }
         }
     }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        chatItems.clear();
+        if (charText.length() == 0) {
+            chatItems.addAll(filteredItemList);
+        }
+        else
+        {
+            for (Chat_Item wp : filteredItemList) {
+                if (wp.getUser_id().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    chatItems.add(wp);
+                }
+            }
+        }
+        notifyDataSetInvalidated();
+    }
+
 }

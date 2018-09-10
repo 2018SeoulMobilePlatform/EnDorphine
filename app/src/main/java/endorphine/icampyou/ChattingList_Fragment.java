@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,12 +38,10 @@ public class ChattingList_Fragment extends Fragment {
 
     private EditText editSearch;
 
-    ListView chat_listview;
-    ArrayList<Chat_Item> copy_list;
-
     final int save_info = 1;
 
-    ChatList_Adapter chatList_adapter;
+    ListView listView = null;
+    ChatList_Adapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -65,13 +64,18 @@ public class ChattingList_Fragment extends Fragment {
             }
         });
 
-        chatList_adapter = new ChatList_Adapter(getActivity());
+        adapter = new ChatList_Adapter(getActivity());
 
-        chat_listview = (ListView) view.findViewById(R.id.chat_listview);
-        chat_listview.setAdapter(chatList_adapter);
+        adapter.add(null,"seyoung","nani","sibal");
+        adapter.add(null,"jiwon","nani","sibal");
+        adapter.add(null,"beach","on","sex");
+
+
+        listView = (ListView) view.findViewById(R.id.chat_listview);
+        listView.setAdapter(adapter);
 
         //채팅방 들어가기
-        chat_listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
                 ChattingMessage_Fragment message_fragment = new ChattingMessage_Fragment();
@@ -83,15 +87,15 @@ public class ChattingList_Fragment extends Fragment {
         });
 
         //채팅 목록 삭제
-        chat_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long arg3) {
 
                 DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chatList_adapter.remove(position);
-                        chat_listview.setAdapter(chatList_adapter);
+                        adapter.remove(position);
+                        listView.setAdapter(adapter);
                     }
                 };
 
@@ -110,10 +114,15 @@ public class ChattingList_Fragment extends Fragment {
                 return true;
             }
         });
-        copy_list = new ArrayList<>();
 
         editSearch = (EditText)view.findViewById(R.id.search);
         editSearch.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void afterTextChanged(Editable edit) {
+                //String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                //adapter.filter(text);
+            }
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -121,19 +130,11 @@ public class ChattingList_Fragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence text, int start, int before, int count) {
 
             }
 
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString();
-                if(filterText.length() > 0){
-                    chat_listview.setFilterText(filterText);
-                } else{
-                    chat_listview.clearTextFilter();
-                }
-            }
+
         });
 
         return view;
@@ -147,11 +148,7 @@ public class ChattingList_Fragment extends Fragment {
         String pass_lettable = data.getStringExtra("lettable");
         byte[] image_byte = data.getByteArrayExtra("image");
         Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        Chat_Item chat_item = new Chat_Item(pass_image,pass_user, pass_need, pass_lettable);
-
-        chatList_adapter.add(pass_image,pass_user,pass_need,pass_lettable);
-        copy_list.clear();
-        copy_list.addAll(chatList_adapter.chatItems);
-        chat_listview.setAdapter(chatList_adapter);
+        adapter.add(pass_image,pass_user,pass_need,pass_lettable);
+        listView.setAdapter(adapter);
     }
 }

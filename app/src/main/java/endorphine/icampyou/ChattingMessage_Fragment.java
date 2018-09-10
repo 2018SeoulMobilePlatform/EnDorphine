@@ -24,6 +24,8 @@ public class ChattingMessage_Fragment extends Fragment {
 
         final EditText send_message = (EditText)view.findViewById(R.id.editText1);
 
+        m_chatmessage_adapter.add("냥냥",0);
+
         view.findViewById(R.id.send_btn).setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -35,7 +37,6 @@ public class ChattingMessage_Fragment extends Fragment {
                     send_message.setText("");
                     m_chatmessage_adapter.notifyDataSetChanged();
                 }
-
             }
         });
 

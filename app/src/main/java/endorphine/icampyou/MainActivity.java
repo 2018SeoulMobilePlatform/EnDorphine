@@ -20,24 +20,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        ChattingList_Fragment chattingList_fragment = new ChattingList_Fragment();
+        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
 
-        if(intent.getStringExtra("user") != null){
-            pass_user = intent.getStringExtra("user");
-            pass_need = intent.getStringExtra("need");
-            pass_lettable = intent.getStringExtra("lettable");
+//        Intent intent = getIntent();
+//        ChattingList_Fragment chattingList_fragment = new ChattingList_Fragment();
 
-            Bundle bundle = new Bundle();
-            bundle.putString("user",pass_user);
-            bundle.putString("need",pass_need);
-            bundle.putString("lettable",pass_lettable);
-            chattingList_fragment.setArguments(bundle);
-        }
+//        if(intent.getStringExtra("user") != null){
+//            pass_user = intent.getStringExtra("user");
+//            pass_need = intent.getStringExtra("need");
+//            pass_lettable = intent.getStringExtra("lettable");
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString("user",pass_user);
+//            bundle.putString("need",pass_need);
+//            bundle.putString("lettable",pass_lettable);
+//            chattingList_fragment.setArguments(bundle);
+//        }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main, chattingList_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.main, chattingList_fragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
     }
 }
