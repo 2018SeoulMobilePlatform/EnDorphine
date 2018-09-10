@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
 
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
-
     }
 
     private void getHashKey(){

@@ -20,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+//        startActivity(intent);
 
 //        Intent intent = getIntent();
-//        ChattingList_Fragment chattingList_fragment = new ChattingList_Fragment();
+        ChattingList_Fragment chattingList_fragment = new ChattingList_Fragment();
 
 //        if(intent.getStringExtra("user") != null){
 //            pass_user = intent.getStringExtra("user");
@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 //            chattingList_fragment.setArguments(bundle);
 //        }
 
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.main, chattingList_fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main, chattingList_fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
