@@ -45,4 +45,7 @@ dependencies {
 
     //서버
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    //원 모양의 ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="@drawable/camp_night">
+    android:background="@drawable/camp_night"
+    android:id="@+id/login">
 
     <TextView
         android:layout_height="wrap_content"
@@ -95,15 +96,15 @@
             android:textColor="#FFFFFF"
             android:layout_marginRight="10dp"
             android:textStyle="bold"
-            android:textSize="25dp"
-            android:onClick="register_userInfo"/>
+            android:textSize="25dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="#FFFFFF"
             android:text="Register"
             android:textStyle="bold"
-            android:textSize="25dp"/>
+            android:textSize="25dp"
+            android:onClick="register_userInfo"/>
     </LinearLayout>
 
     <com.kakao.usermgmt.LoginButton

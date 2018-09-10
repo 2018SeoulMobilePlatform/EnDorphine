@@ -16,7 +16,7 @@ public class FindUserInfo_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_find_userinfo,container,false);
-
+        getActivity().getActionBar().hide();
         return view;
     }
 }

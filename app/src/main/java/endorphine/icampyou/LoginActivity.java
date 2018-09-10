@@ -3,12 +3,14 @@ package endorphine.icampyou;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -28,9 +30,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.fragment_register_userinfo);
 
         getSupportActionBar().hide();
+
 
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
@@ -136,11 +139,23 @@ public class LoginActivity extends AppCompatActivity {
 
     //사용자 아이디,패스워드 찾기
     public void find_userInfo(View view){
-
+        Log.e("찾기","냥냥");
+        FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
+        replaceFragment(findUserInfo_fragment);
     }
 
     //사용자 아이디 등록하기
     public void register_userInfo(View view){
-        
+        Log.e("로그인","냥냥");
+        RegisterUserInfo_Fragment registerUserInfo_fragment = new RegisterUserInfo_Fragment();
+        replaceFragment(registerUserInfo_fragment);
+    }
+
+    // 프레그 먼트로 이동
+    public void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.login, fragment);
+        fragmentTransaction.commit();
     }
 }
