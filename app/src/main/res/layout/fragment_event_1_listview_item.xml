@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="10dp"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/event_image"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#DAD9FF"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/event_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="대학생 난지 캠핑장 이용시 몽골텐트 15% 할인"
+        android:textSize="18dp"
+        android:textColor="#4C4C4C"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/event_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2018.09.01 ~ 2018.09.30"
+        android:textSize="13dp"
+        android:textColor="#8C8C8C"/>
+</LinearLayout>

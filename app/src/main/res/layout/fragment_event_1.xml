@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D5D5D5"
+    android:orientation="vertical"
+    tools:context="endorphine.icampyou.EventMenu.EventFragment1">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="이벤트"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:textSize="21dp"-->
+        <!--android:textAlignment="center"-->
+        <!--android:padding="5dp"/>-->
+
+    <ListView
+        android:id="@+id/event_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:divider="#D5D5D5"
+        android:dividerHeight="10.5dp"
+        android:padding="10dp"/>
+
+</LinearLayout>
