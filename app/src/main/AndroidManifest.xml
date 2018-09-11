@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name=".Chat_Content"
+            android:name=".ExchangeMenu.Chat_Content"
             android:exported="true"></activity>
 
         <provider
@@ -46,7 +46,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Login.LoginActivity">
             </activity>
 
         <meta-data
@@ -59,7 +59,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".QrcodePopupActivity"
+            android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
 

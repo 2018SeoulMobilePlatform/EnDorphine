@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -26,9 +24,11 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import endorphine.icampyou.EventMenu.EventFragment1;
+import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.ExchangeMenu.ExchangeFragment1;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment1;
+import endorphine.icampyou.QRcode.QrcodePopupActivity;
 import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // fragment 모음
     private GuideFragment1 guideFragment1;
     private ReservationFragment1 reservationFragment1;
-    private ExchangeFragment1 exchangeFragment1;
+    private ChattingList_Fragment chattingList_fragment;
     private HomeFragment1 homeFragment1;
     private EventFragment1 eventFragment1;
     // intent 모음
@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // fragment 객체 생성
         guideFragment1 = new GuideFragment1();
         reservationFragment1 = new ReservationFragment1();
-        exchangeFragment1 = new ExchangeFragment1();
+        chattingList_fragment = new ChattingList_Fragment();
         homeFragment1 = new HomeFragment1();
         eventFragment1 = new EventFragment1();
         // 디폴트 프래그먼트 홈화면으로 설정
@@ -187,7 +187,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 3:
                 // 교환 프래그먼트1로 변경
-                fragmentTransaction.replace(R.id.main_frame, exchangeFragment1);
+                fragmentTransaction.replace(R.id.main_frame, chattingList_fragment);
                 fragmentTransaction.commit();
                 break;
             case 4:

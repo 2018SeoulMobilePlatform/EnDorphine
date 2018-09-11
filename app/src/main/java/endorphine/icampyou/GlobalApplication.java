@@ -5,6 +5,8 @@ import android.app.Application;
 
 import com.kakao.auth.KakaoSDK;
 
+import endorphine.icampyou.Login.KakaoSDKAdapter;
+
 public class GlobalApplication extends Application{
     private static volatile GlobalApplication obj = null;
     private static volatile Activity currentActivity = null;

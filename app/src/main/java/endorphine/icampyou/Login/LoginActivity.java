@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.Login;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -27,6 +27,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import endorphine.icampyou.GuideMenu.NanjiGuideActivity;
+import endorphine.icampyou.HomeActivity;
+import endorphine.icampyou.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,6 +1,5 @@
-package endorphine.icampyou;
+package endorphine.icampyou.EventMenu;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import endorphine.icampyou.R;
 
 public class EventListViewAdapter extends BaseAdapter {
 
