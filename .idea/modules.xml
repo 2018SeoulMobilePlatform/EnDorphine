@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\android_project\SeoulMobilePlatForm\EnDorphine.iml" filepath="C:\android_project\SeoulMobilePlatForm\EnDorphine.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SeoulMobilePlatForm.iml" filepath="$PROJECT_DIR$/SeoulMobilePlatForm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnDorphine.iml" filepath="$PROJECT_DIR$/EnDorphine.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
