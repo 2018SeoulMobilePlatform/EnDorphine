@@ -3,12 +3,8 @@ package endorphine.reservation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -28,8 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CalenderActivity extends AppCompatActivity implements DatePickerController{
-
-    ArrayAdapter<CharSequence>  sAdapter;
 
     public final static String EXTRA_FLAG = "FLAG";
     public final static String EXTRA_IS_BOOIKNG = "IS_BOOING";
