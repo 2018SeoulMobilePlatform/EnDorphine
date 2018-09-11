@@ -56,5 +56,4 @@ public class RegisterUserInfo_Fragment extends Fragment {
 
         return view;
     }
-
 }

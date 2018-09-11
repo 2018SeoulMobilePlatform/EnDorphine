@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,22 @@ public class ChattingList_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
 
+//        // 탭 호스트에 탭 추가
+//        TabHost tabHost = (TabHost)view.findViewById(R.id.tabHost_listview);
+//        tabHost.setup();
+//
+//        // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
+//        TabHost.TabSpec ts1 = tabHost.newTabSpec("Tab Spec 1");
+//        ts1.setContent(R.id.chatlist1);
+//        ts1.setIndicator("Camp ChatList");
+//        tabHost.addTab(ts1);
+//
+//        // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
+//        TabHost.TabSpec ts2 = tabHost.newTabSpec("Tab Spec 2");
+//        ts2.setContent(R.id.chatlist2);
+//        ts2.setIndicator("My ChatList");
+//        tabHost.addTab(ts2);
+
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -64,14 +81,10 @@ public class ChattingList_Fragment extends Fragment {
             }
         });
 
+
         adapter = new ChatList_Adapter(getActivity());
 
-        adapter.add(null,"seyoung","nani","sibal");
-        adapter.add(null,"jiwon","nani","sibal");
-        adapter.add(null,"beach","on","sex");
-
-
-        listView = (ListView) view.findViewById(R.id.chat_listview);
+        listView = (ListView) view.findViewById(R.id.camp_chat_listview);
         listView.setAdapter(adapter);
 
         //채팅방 들어가기
@@ -133,10 +146,7 @@ public class ChattingList_Fragment extends Fragment {
             public void onTextChanged(CharSequence text, int start, int before, int count) {
 
             }
-
-
         });
-
         return view;
     }
 
