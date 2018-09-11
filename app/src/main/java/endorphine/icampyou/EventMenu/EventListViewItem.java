@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.EventMenu;
 
 import android.widget.ListView;
 

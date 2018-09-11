@@ -31,7 +31,7 @@
                     android:background="#FFFFFF"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:title="@string/app_name"
-                    app:titleTextColor="#000000"
+                    app:titleTextColor="@color/colorPrimary"
                     app:titleMarginStart="100dp"
                 />
             </android.support.design.widget.AppBarLayout>

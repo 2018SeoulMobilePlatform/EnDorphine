@@ -25,10 +25,18 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
+<<<<<<< HEAD
+=======
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8
         </activity>
 
         <activity
-            android:name=".Chat_Content"
+            android:name=".ExchangeMenu.Chat_Content"
             android:exported="true"></activity>
 
         <provider
@@ -41,9 +49,14 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+<<<<<<< HEAD
         <activity android:name=".LoginActivity">
 
         </activity>
+=======
+        <activity android:name=".Login.LoginActivity">
+            </activity>
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -62,7 +75,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".QrcodePopupActivity"
+            android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
 

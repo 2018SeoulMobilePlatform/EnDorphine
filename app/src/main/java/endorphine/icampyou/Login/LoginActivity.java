@@ -1,16 +1,22 @@
-package endorphine.icampyou;
+package endorphine.icampyou.Login;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -23,9 +29,16 @@ import com.kakao.util.exception.KakaoException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class LoginActivity extends AppCompatActivity {
+import endorphine.icampyou.FindUserInfo_Fragment;
+import endorphine.icampyou.GuideMenu.NanjiGuideActivity;
+import endorphine.icampyou.HomeActivity;
+import endorphine.icampyou.R;
+import endorphine.icampyou.RegisterUserInfo_Fragment;
 
-    SessionCallback callback;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private SessionCallback callback;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,22 @@ public class LoginActivity extends AppCompatActivity {
 
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
+
+        loginButton = (Button)findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login_button:
+                // 홈 액티비티 실행
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     private void getHashKey(){

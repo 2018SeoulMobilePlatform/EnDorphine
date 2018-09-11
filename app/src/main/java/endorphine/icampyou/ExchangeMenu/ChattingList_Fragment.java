@@ -1,41 +1,34 @@
-package endorphine.icampyou;
+package endorphine.icampyou.ExchangeMenu;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
+<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+=======
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.R;
 
-import static android.app.Activity.RESULT_OK;
-
-public class ChattingList_Fragment extends Fragment {
+public class ChattingList_Fragment extends BaseFragment {
 
     private EditText editSearch;
 
@@ -81,21 +74,23 @@ public class ChattingList_Fragment extends Fragment {
             }
         });
 
+<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
 
         adapter = new ChatList_Adapter(getActivity());
 
         listView = (ListView) view.findViewById(R.id.camp_chat_listview);
+=======
+        adapter = new ChatList_Adapter(getActivity());
+
+        listView = (ListView) view.findViewById(R.id.chat_listview);
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
         listView.setAdapter(adapter);
 
         //채팅방 들어가기
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
-                ChattingMessage_Fragment message_fragment = new ChattingMessage_Fragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main,message_fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                startFragment(getFragmentManager(),ChattingMessage_Fragment.class);
             }
         });
 

@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.QRcode;
 
 /**
  * QR 코드 포맷

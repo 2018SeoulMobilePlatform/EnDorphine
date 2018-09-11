@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.ExchangeMenu;
 
 import android.content.Context;
 import android.os.Message;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import endorphine.icampyou.R;
 
 public class ChatMessage_Adapter extends BaseAdapter {
 
