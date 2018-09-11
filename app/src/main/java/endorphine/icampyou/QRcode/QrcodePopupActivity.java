@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.QRcode;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import endorphine.icampyou.R;
 
 public class QrcodePopupActivity extends Activity {
     ImageView imageView;

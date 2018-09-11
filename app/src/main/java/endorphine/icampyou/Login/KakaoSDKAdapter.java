@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.Login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,8 @@ import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
+
+import endorphine.icampyou.GlobalApplication;
 
 public class KakaoSDKAdapter extends KakaoAdapter {
     /**
@@ -21,7 +23,7 @@ public class KakaoSDKAdapter extends KakaoAdapter {
         return new ISessionConfig() {
             @Override
             public AuthType[] getAuthTypes() {
-                return new AuthType[] {AuthType.KAKAO_ACCOUNT};
+                return new AuthType[] {AuthType.KAKAO_LOGIN_ALL};
             }
 
             @Override

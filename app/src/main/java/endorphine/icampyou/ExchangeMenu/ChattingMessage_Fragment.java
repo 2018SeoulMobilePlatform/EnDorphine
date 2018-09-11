@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.ExchangeMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class ChattingMessage_Fragment extends Fragment {
+import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
+import endorphine.icampyou.R;
+
+public class ChattingMessage_Fragment extends BaseFragment {
 
     ListView m_chatMessage_listView;
     ChatMessage_Adapter m_chatmessage_adapter;
+    View view;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chatmessage,container,false);
+        view = inflater.inflate(R.layout.fragment_chatmessage,container,false);
 
         m_chatmessage_adapter = new ChatMessage_Adapter();
         m_chatMessage_listView = (ListView)view.findViewById(R.id.chatmessage_listView);
