@@ -43,4 +43,9 @@ dependencies {
     //카카오 로그인 sdk를 사용하기 위해 필요.
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
 
+    //서버
+    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    //원 모양의 ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

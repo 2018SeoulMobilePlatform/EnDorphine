@@ -32,19 +32,135 @@
             android:hint="Search"/>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/chat_listview"
-            android:listSelector="#778899"
-            android:cacheColorHint="#778899"
-            android:dividerHeight="1dp"
-            android:divider="#FFFFFF"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:transcriptMode="alwaysScroll"/>
-    </FrameLayout>
+    <TabHost
+        android:id="@+id/tabHost_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@+id/taps_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/chatlist1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffc916"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ListView
+                            android:id="@+id/camp_chat_listview"
+                            android:listSelector="#778899"
+                            android:cacheColorHint="#778899"
+                            android:dividerHeight="1dp"
+                            android:divider="#FFFFFF"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:transcriptMode="alwaysScroll"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/chatlist2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#da8200"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ListView
+                            android:id="@+id/my_chat_listview"
+                            android:listSelector="#778899"
+                            android:cacheColorHint="#778899"
+                            android:dividerHeight="1dp"
+                            android:divider="#FFFFFF"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:transcriptMode="alwaysScroll"/>
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <!--<TabHost-->
+        <!--android:id="@+id/taphost_chatlist"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#FFFFFF">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical">-->
+            <!--<TabWidget-->
+                <!--android:id="@+id/tap_chatlist"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</TabWidget>-->
+
+
+                <!--<FrameLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<ListView-->
+                        <!--android:id="@+id/chat_listview"-->
+                        <!--android:listSelector="#778899"-->
+                        <!--android:cacheColorHint="#778899"-->
+                        <!--android:dividerHeight="1dp"-->
+                        <!--android:divider="#FFFFFF"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:transcriptMode="alwaysScroll">-->
+                    <!--</ListView>-->
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<ListView-->
+                            <!--android:id="@+id/my_chat_listview"-->
+                            <!--android:listSelector="#778899"-->
+                            <!--android:cacheColorHint="#778899"-->
+                            <!--android:dividerHeight="1dp"-->
+                            <!--android:divider="#FFFFFF"-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:transcriptMode="alwaysScroll">-->
+                        <!--</ListView>-->
+                    <!--</LinearLayout>-->
+
+
+            <!--</FrameLayout>-->
+        <!--</LinearLayout>-->
+    <!--</TabHost>-->
 
     <Button
         android:id="@+id/make_chatlist_button"

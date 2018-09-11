@@ -18,6 +18,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
+import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
+=======
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
 
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
@@ -41,6 +47,22 @@ public class ChattingList_Fragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
 
+//        // 탭 호스트에 탭 추가
+//        TabHost tabHost = (TabHost)view.findViewById(R.id.tabHost_listview);
+//        tabHost.setup();
+//
+//        // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
+//        TabHost.TabSpec ts1 = tabHost.newTabSpec("Tab Spec 1");
+//        ts1.setContent(R.id.chatlist1);
+//        ts1.setIndicator("Camp ChatList");
+//        tabHost.addTab(ts1);
+//
+//        // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
+//        TabHost.TabSpec ts2 = tabHost.newTabSpec("Tab Spec 2");
+//        ts2.setContent(R.id.chatlist2);
+//        ts2.setIndicator("My ChatList");
+//        tabHost.addTab(ts2);
+
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -52,9 +74,16 @@ public class ChattingList_Fragment extends BaseFragment {
             }
         });
 
+<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
+
+        adapter = new ChatList_Adapter(getActivity());
+
+        listView = (ListView) view.findViewById(R.id.camp_chat_listview);
+=======
         adapter = new ChatList_Adapter(getActivity());
 
         listView = (ListView) view.findViewById(R.id.chat_listview);
+>>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
         listView.setAdapter(adapter);
 
         //채팅방 들어가기
@@ -112,10 +141,7 @@ public class ChattingList_Fragment extends BaseFragment {
             public void onTextChanged(CharSequence text, int start, int before, int count) {
 
             }
-
-
         });
-
         return view;
     }
 
