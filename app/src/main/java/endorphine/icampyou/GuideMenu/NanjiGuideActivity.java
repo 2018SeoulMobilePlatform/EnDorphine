@@ -2,19 +2,22 @@ package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 
+import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
-public class NanjiGuideActivity extends Activity {
+public class NanjiGuideActivity extends Activity implements View.OnClickListener{
 
     private ArrayList<View> pageViews;    // 사진 View
     private ImageView pointImage;        // 동그라미 포인트
@@ -22,6 +25,7 @@ public class NanjiGuideActivity extends Activity {
     private ViewGroup viewLayout;         // 레이아웃
     private ViewGroup viewPoints;       // 동그라미 포인트들
     private ViewPager viewPager;        // 사진들
+    private Button reservationButton;   // 예약 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,5 +97,13 @@ public class NanjiGuideActivity extends Activity {
         ScrollView scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
         scrollView.setFocusableInTouchMode(true);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+
+        // 예약 버튼 설정
+        reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

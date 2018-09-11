@@ -4,12 +4,7 @@
     <item
         android:id="@+id/navigation_guide"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_guide"/>
-
-    <item
-        android:id="@+id/navigation_reservation"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_reservation" />
+        android:title="@string/title_reservation"/>
 
     <item
         android:id="@+id/navigation_home"

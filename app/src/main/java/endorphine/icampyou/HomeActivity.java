@@ -54,12 +54,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()) {
                 case R.id.navigation_guide:
                     // 프래그먼트 변경
-                    setFragment(0);
+                    setFragment(1);
                     // 임의로 QR 코드 설정
                     generateRQCode("이것은QR코드");
-                    return true;
-                case R.id.navigation_reservation:
-                    setFragment(1);
                     return true;
                 case R.id.navigation_home:
                     setFragment(2);
@@ -170,14 +167,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction = fragmentManager.beginTransaction();
 
         switch (num) {
-            case 0:
-                // 안내 프래그먼트1로 변경
-                fragmentTransaction.replace(R.id.main_frame, guideFragment1);
-                fragmentTransaction.commit();
-                break;
             case 1:
                 // 예약 프래그먼트1로 변경
-                fragmentTransaction.replace(R.id.main_frame, reservationFragment1);
+                fragmentTransaction.replace(R.id.main_frame, guideFragment1);
                 fragmentTransaction.commit();
                 break;
             case 2:

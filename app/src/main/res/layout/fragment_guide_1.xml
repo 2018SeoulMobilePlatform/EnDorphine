@@ -5,33 +5,41 @@
     android:orientation="vertical"
     tools:context="endorphine.icampyou.GuideMenu.GuideFragment1">
 
-    <Button
+    <ImageView
         android:id="@+id/nanji"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_weight="1"
-        android:textSize="50dp"
-        android:text="난지" />
-    <Button
+        android:src="@drawable/menu_nanji"/>
+    <ImageView
         android:id="@+id/choansan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="50dp"
-        android:text="초안산"/>
-    <Button
+        android:src="@drawable/menu_choansan"/>
+    <ImageView
         android:id="@+id/jungrang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="50dp"
-        android:text="중랑" />
-    <Button
+        android:src="@drawable/menu_junglang" />
+    <ImageView
         android:id="@+id/gangdong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="50dp"
-        android:text="강동" />
+        android:src="@drawable/menu_gangdong"/>
+    <ImageView
+        android:id="@+id/noeul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/menu_noeul"/>
+    <ImageView
+        android:id="@+id/seoul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/menu_seoul"/>
 
 </LinearLayout>
