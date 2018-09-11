@@ -1,4 +1,4 @@
-package endorphine.reservation;
+package endorphine.icampyou;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import static endorphine.reservation.CalenderActivity.RESULT_SELECT_END_VIEW_DATE;
-import static endorphine.reservation.CalenderActivity.RESULT_SELECT_START_VIEW_DATE;
+import static endorphine.icampyou.CalenderActivity.RESULT_SELECT_END_VIEW_DATE;
+import static endorphine.icampyou.CalenderActivity.RESULT_SELECT_START_VIEW_DATE;
 
 public class DetailsActivity extends AppCompatActivity {
 

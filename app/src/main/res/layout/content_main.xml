@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titles_fragment"
-        android:name="endorphine.reservation.TitlesFragment"
+        android:name="endorphine.icampyou.TitlesFragment"
         tools:layout="@layout/content_main" />
 
 

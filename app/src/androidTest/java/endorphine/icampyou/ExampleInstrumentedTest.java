@@ -1,4 +1,4 @@
-package endorphine.reservation;
+package endorphine.icampyou;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("endorphine.reservation", appContext.getPackageName());
+        assertEquals("endorphine.icampyou", appContext.getPackageName());
     }
 }

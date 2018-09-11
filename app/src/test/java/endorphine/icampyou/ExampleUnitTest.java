@@ -1,4 +1,4 @@
-package endorphine.reservation;
+package endorphine.icampyou;
 
 import org.junit.Test;
 
