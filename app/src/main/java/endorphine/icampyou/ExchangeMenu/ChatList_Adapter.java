@@ -1,57 +1,52 @@
 package endorphine.icampyou.ExchangeMenu;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
-import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.R;
 
-public class ChatList_Adapter extends BaseAdapter implements Filterable{
-    Context context;
-    ArrayList<Chat_Item> chatItems;
+public class ChatList_Adapter extends BaseAdapter{
 
-    private ArrayList<Chat_Item> filteredItemList;
-    Filter listFilter;
+    //채팅 목록 리스트 변수 선언
+    private ArrayList<Chat_Item> m_chatlist;
 
-    public ChatList_Adapter(Context _context){
-        this.context = _context;
-        chatItems = new ArrayList<Chat_Item>();
-        filteredItemList = chatItems;
+    public ChatList_Adapter(ArrayList<Chat_Item> _m_chatlist){
+        this.m_chatlist = _m_chatlist;
     }
 
-    public void add(Bitmap pass_image, String pass_user, String pass_need, String pass_lettable){
-        Chat_Item item = new Chat_Item();
-        item.setImage(pass_image);
-        item.setUser_id(pass_user);
-        item.setNeed_thing(pass_need);
-        item.setLettable_thing(pass_lettable);
-        chatItems.add(item);
+    public void add(Bitmap image,String user,String need, String lettable, String camping_name){
+        m_chatlist.add(new Chat_Item(image,user,need,lettable,camping_name));
     }
 
     public void remove(int _position){
-        chatItems.remove(_position);
+        m_chatlist.remove(_position);
+    }
+
+    public void updateItemList(ArrayList<Chat_Item> newlist) {
+        m_chatlist.clear();
+        m_chatlist.addAll(newlist);
+        this.notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return chatItems.size();
+        return m_chatlist.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return chatItems.get(position);
+        return m_chatlist.get(position);
     }
 
     @Override
@@ -60,102 +55,57 @@ public class ChatList_Adapter extends BaseAdapter implements Filterable{
     }
 
     @Override
-    public Filter getFilter() {
-        if(listFilter == null){
-            listFilter = new ListFilter();
-        }
-        return listFilter;
-    }
-
-    private class ViewHolder{
-        ImageView need_pic;
-        TextView user_id;
-        TextView need_thing;
-        TextView lettable_thing;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
 
-        LayoutInflater minflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        final int pos = position;
+        final Context context = parent.getContext();
+
+        CustomHolder holder = null;
+        ImageView _image = null;
+        TextView _user = null;
+        TextView _need = null;
+        TextView _lettable = null;
+        TextView _camp = null;
 
         if(convertView == null){
-            convertView = minflater.inflate(R.layout.chatlist_item,null);
-            holder = new ViewHolder();
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.chatlist_item,parent,false);
 
-            holder.need_pic = (ImageView)convertView.findViewById(R.id.need_pic);
-            holder.user_id = (TextView) convertView.findViewById(R.id.user_id);
-            holder.need_thing = (TextView) convertView.findViewById(R.id.need_thing);
-            holder.lettable_thing = (TextView)convertView.findViewById(R.id.lettable_thing);
+            holder = new CustomHolder();
 
-            Chat_Item chat_pos = chatItems.get(position);
+            holder.image = (ImageView) convertView.findViewById(R.id.need_pic);
+            holder.user = (TextView) convertView.findViewById(R.id.user_id);
+            holder.need = (TextView) convertView.findViewById(R.id.need_thing);
+            holder.lettable = (TextView)convertView.findViewById(R.id.lettable_thing);
+            holder.camp = (TextView)convertView.findViewById(R.id.camping_name);
 
-            holder.need_pic.setImageBitmap(chat_pos.getImage());
-            holder.user_id.setText(chat_pos.getUser_id());
-            holder.need_thing.setText(chat_pos.getNeed_thing());
-            holder.lettable_thing.setText(chat_pos.getLettable_thing());
+            Chat_Item chat_item = m_chatlist.get(position);
+
+            holder.image.setImageBitmap(chat_item.getImage());
+            holder.user.setText(chat_item.getUser_id());
+            holder.need.setText(chat_item.getNeed_thing());
+            holder.lettable.setText(chat_item.getLettable_thing());
+            holder.camp.setText(chat_item.getCamping_name());
 
             convertView.setTag(holder);
+
         } else{
-            holder = (ViewHolder) convertView.getTag();
+            holder = (CustomHolder) convertView.getTag();
+            _image = holder.image;
+            _user = holder.user;
+            _need = holder.need;
+            _lettable = holder.lettable;
+            _camp = holder.camp;
         }
 
         return convertView;
     }
 
-    private class ListFilter extends  Filter{
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if(constraint == null || constraint.length() ==0 ){
-                results.values = chatItems;
-                results.count = chatItems.size();
-            } else{
-                ArrayList<Chat_Item> itemList = new ArrayList<Chat_Item>();
-
-                for(Chat_Item item : chatItems){
-                    if(item.getUser_id().toUpperCase().contains(constraint.toString().toUpperCase()) ||
-                            item.getNeed_thing().toUpperCase().contains(constraint.toString().toUpperCase()) ||
-                            item.getLettable_thing().toUpperCase().contains(constraint.toString().toUpperCase())){
-                        itemList.add(item);
-                    }
-                }
-                results.values = itemList;
-                results.count = itemList.size();
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredItemList = (ArrayList<Chat_Item>) results.values;
-
-            if(results.count > 0){
-                notifyDataSetChanged();
-            } else{
-                notifyDataSetInvalidated();
-            }
-        }
+    private class CustomHolder{
+        ImageView image;
+        TextView user;
+        TextView need;
+        TextView lettable;
+        TextView camp;
     }
-
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        chatItems.clear();
-        if (charText.length() == 0) {
-            chatItems.addAll(filteredItemList);
-        }
-        else
-        {
-            for (Chat_Item wp : filteredItemList) {
-                if (wp.getUser_id().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    chatItems.add(wp);
-                }
-            }
-        }
-        notifyDataSetInvalidated();
-    }
-
 }

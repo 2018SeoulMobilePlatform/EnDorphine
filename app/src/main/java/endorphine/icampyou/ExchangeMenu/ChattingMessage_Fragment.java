@@ -36,7 +36,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
     Socket mSocket = null;
     {
         try {
-            mSocket = IO.socket("http://192.168.1.67:5000");
+            mSocket = IO.socket("ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000");
         } catch (URISyntaxException e) {}
     }
 

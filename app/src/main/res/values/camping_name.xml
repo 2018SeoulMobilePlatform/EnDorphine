@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="camp_kind">
+        <item>캠핑장을 선택하세요.</item>
+        <item>초안산</item>
+        <item>난지</item>
+        <item></item>
+        <item>캠핑장을 선택하세요.</item>
+        <item>캠핑장을 선택하세요.</item>
+        <item>캠핑장을 선택하세요.</item>
+    </string-array>
+</resources>
