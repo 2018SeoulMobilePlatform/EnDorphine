@@ -30,6 +30,8 @@ import java.util.Locale;
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ChattingList_Fragment extends BaseFragment {
 
     private EditText editSearch;
@@ -82,10 +84,9 @@ public class ChattingList_Fragment extends BaseFragment {
 
         items = new ArrayList<>();
         copy = new ArrayList<>();
+
         items.add(new Chat_Item(null,"1","1","1","1"));
         items.add(new Chat_Item(null,"2","2","2","2"));
-        items.add(new Chat_Item(null,"3","3","3","3"));
-        items.add(new Chat_Item(null,"4","4","4","4"));
 
         copy.addAll(items);
         chatlist_listView =(ListView) view.findViewById(R.id.camp_chat_listview);
@@ -158,8 +159,13 @@ public class ChattingList_Fragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+
         Log.e("requestCode",String.valueOf(requestCode));
         Log.e("resultCode",String.valueOf(resultCode));
+
+        if(resultCode != RESULT_OK){
+            return ;
+        }
         String pass_user = data.getStringExtra("user");
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");

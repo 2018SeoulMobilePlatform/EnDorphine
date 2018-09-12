@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import endorphine.icampyou.BuildConfig;
 import endorphine.icampyou.R;
 
 public class Chat_Content extends AppCompatActivity {
@@ -50,7 +52,6 @@ public class Chat_Content extends AppCompatActivity {
         final EditText need_thing = (EditText)findViewById(R.id.write_need);
         final EditText lettable_thing = (EditText)findViewById(R.id.write_lettable);
 
-
         save_chat_content.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -73,7 +74,7 @@ public class Chat_Content extends AppCompatActivity {
                     returnIntent.putExtra("user","허진규");
                     returnIntent.putExtra("need",need_thing.getText().toString());
                     returnIntent.putExtra("lettable",lettable_thing.getText().toString());
-                    setResult(1,returnIntent);
+                    setResult(RESULT_OK,returnIntent);
                     finish();
                     Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
                 }
@@ -90,25 +91,23 @@ public class Chat_Content extends AppCompatActivity {
 
     public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //사진인테트 호출
-        startActivityForResult(takePictureIntent,FROM_CAMERA);
-
-//        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            if (photoFile != null) {
-//                Uri providerURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", photoFile); //프로바이드 생성
-//                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI); //사진저장경로 불러옴
-//
-//                this.startActivityForResult(takePictureIntent, FROM_CAMERA); //엑티비티 사진저장
-//            } else {
-//                Toast.makeText(this, "저장공간이 접근 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//        }
+        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (photoFile != null) {
+                Uri providerURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", photoFile); //프로바이드 생성
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI); //사진저장경로 불러옴
+                setResult(RESULT_OK,takePictureIntent);
+                this.startActivityForResult(takePictureIntent, FROM_CAMERA); //엑티비티 사진저장
+            } else {
+                Toast.makeText(this, "저장공간이 접근 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
 
 //        String state = Environment.getExternalStorageState();
@@ -231,6 +230,12 @@ public class Chat_Content extends AppCompatActivity {
                 .setPositiveButton("사진 촬영",cameraListener)
                 .setNeutralButton("앨번 선택",albumListener)
                 .setNegativeButton("취소",cancelListener).show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(0);
+        finish();
     }
 
 }
