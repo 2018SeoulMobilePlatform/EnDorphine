@@ -175,18 +175,13 @@
         android:visibility="visible"
         android:weightSum="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="0.2"
-            android:text="좋아요" />
 
         <Button
             android:id="@+id/reservation_button"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="0.8"
-            android:text="예약하기" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="예약하기"
+            android:background="@color/colorPrimary"/>
     </LinearLayout>
 
 </LinearLayout>

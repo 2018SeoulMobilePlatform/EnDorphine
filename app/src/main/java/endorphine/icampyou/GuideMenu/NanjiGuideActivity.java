@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 
+import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
 public class NanjiGuideActivity extends Activity implements View.OnClickListener{
@@ -25,7 +26,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     private ViewGroup viewLayout;         // 레이아웃
     private ViewGroup viewPoints;       // 동그라미 포인트들
     private ViewPager viewPager;        // 사진들
-    private Button reservationButton;
+    private Button reservationButton;   // 예약 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
