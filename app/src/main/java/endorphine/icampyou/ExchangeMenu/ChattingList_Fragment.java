@@ -18,12 +18,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-=======
->>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
 
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
@@ -74,16 +71,10 @@ public class ChattingList_Fragment extends BaseFragment {
             }
         });
 
-<<<<<<< HEAD:app/src/main/java/endorphine/icampyou/ChattingList_Fragment.java
 
         adapter = new ChatList_Adapter(getActivity());
 
         listView = (ListView) view.findViewById(R.id.camp_chat_listview);
-=======
-        adapter = new ChatList_Adapter(getActivity());
-
-        listView = (ListView) view.findViewById(R.id.chat_listview);
->>>>>>> 9ae8671cdfc6b5b51839038d0b43f20b76be2da8:app/src/main/java/endorphine/icampyou/ExchangeMenu/ChattingList_Fragment.java
         listView.setAdapter(adapter);
 
         //채팅방 들어가기
