@@ -1,0 +1,352 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_iv_back_btn_bg"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"/>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/iv_back_btn"
+                    android:src="@drawable/aricalendar_btn_back" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_reset_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"/>
+                <TextView
+                    android:text="재설정"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorTest"
+                    android:layout_marginRight="15dp"
+                    android:textSize="17sp"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/tv_reset" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_select_start_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:background="#ececec" />
+
+                        <TextView
+                            android:id="@+id/tv_start_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginLeft="15dp"
+                            android:text="-"
+                            android:textColor="@color/colorTest"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView40"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/tv_start_date"
+                            android:layout_alignLeft="@+id/tv_start_date"
+                            android:layout_alignStart="@+id/tv_start_date"
+                            android:layout_marginBottom="5dp"
+                            android:text="Start"
+                            android:textColor="#9b9b9b"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_select_end_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_end_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginLeft="16dp"
+                            android:text="-"
+                            android:textColor="@color/colorTest"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:background="#ececec" />
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/tv_end_date"
+                            android:layout_alignLeft="@+id/tv_end_date"
+                            android:layout_alignStart="@+id/tv_end_date"
+                            android:layout_marginBottom="5dp"
+                            android:text="End"
+                            android:textColor="#9b9b9b"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="37dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="11dp"
+                    android:weightSum="7"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="일"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="월"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="화"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="수"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="목"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="금"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="토"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="11sp"
+                            android:textColor="#414141" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d8d8d8"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.yongbeom.aircalendar.core.DayPickerView
+            android:id="@+id/pickerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            calendar:drawRoundRect="true" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_done_btn"
+        android:layout_width="270dp"
+        android:layout_height="48dp"
+        android:background="@color/colorTest"
+        android:layout_marginBottom="17dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:text="다음"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView34" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_checkout_select_info_popup"
+        android:background="#bf000000"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="308dp"
+            android:layout_height="160dp"
+            android:background="#ffffff">
+
+            <TextView
+                android:id="@+id/tv_popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="안내"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="30dp"/>
+
+            <TextView
+                android:id="@+id/tv_popup_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_popup_title"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textColor="#4a4a4a"
+                android:layout_marginTop="13dp"
+                android:text="날짜를 선택해주세요."/>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_popup_select_checkout_info_ok"
+                android:layout_width="220dp"
+                android:layout_height="42dp"
+                android:layout_marginBottom="14dp"
+                android:gravity="center"
+                android:background="@drawable/aircalendar_btn_style"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:text="확인"
+                    android:textSize="15sp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

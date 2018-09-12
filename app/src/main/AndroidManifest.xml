@@ -25,6 +25,11 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -49,22 +54,21 @@
             android:value="@string/kakao_app_key" />
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
-
+        <activity android:name=".GuideMenu.CalenderActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".GuideMenu.DetailsActivity"></activity>
     </application>
 
 </manifest>
