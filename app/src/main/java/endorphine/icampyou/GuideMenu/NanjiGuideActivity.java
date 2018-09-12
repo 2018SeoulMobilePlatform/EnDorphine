@@ -2,19 +2,22 @@ package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 
 import endorphine.icampyou.R;
 
-public class NanjiGuideActivity extends Activity {
+public class NanjiGuideActivity extends Activity implements View.OnClickListener{
 
     private ArrayList<View> pageViews;    // 사진 View
     private ImageView pointImage;        // 동그라미 포인트
@@ -22,6 +25,7 @@ public class NanjiGuideActivity extends Activity {
     private ViewGroup viewLayout;         // 레이아웃
     private ViewGroup viewPoints;       // 동그라미 포인트들
     private ViewPager viewPager;        // 사진들
+    private Button reservationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,5 +97,23 @@ public class NanjiGuideActivity extends Activity {
         ScrollView scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
         scrollView.setFocusableInTouchMode(true);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+
+        // 예약버튼
+        reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
+        reservationButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.reservation_button:
+                Log.e("NanjiGuideActivity", "이다인 ㅂㅅ");
+                Intent intent = new Intent();
+                intent.setClass(this, CalenderActivity.class);
+                intent.putExtra("title", "난지 캠핑장");
+
+                startActivity(intent);
+                break;
+        }
     }
 }
