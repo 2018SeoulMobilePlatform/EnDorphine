@@ -53,16 +53,22 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
-
+        <activity android:name=".GuideMenu.CalenderActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".GuideMenu.DetailsActivity"></activity>
     </application>
 
 </manifest>

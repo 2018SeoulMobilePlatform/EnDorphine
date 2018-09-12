@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/camp_registeruser">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Sing Up"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold"></TextView>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/round_user"
+        app:civ_border_width="2dp"
+        android:textAlignment="center"
+        app:civ_border_color="#FF000000"/>
+
+    <EditText
+        android:id="@+id/user_email"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:background="@drawable/rounded_login"
+        android:hint="Email Address"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:background="@drawable/rounded_login"
+        android:hint="PassWord"
+        android:textAlignment="center"
+        android:inputType="textPassword"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_login"
+        android:hint="Name"
+        android:textColorHint="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/user_nickname"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:background="@drawable/rounded_login"
+        android:hint="Nick Name"
+        android:textAlignment="center"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/user_phone"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_login"
+        android:hint="Phone Number"
+        android:textColorHint="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/register_user"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_login_button"
+        android:text="Confirm"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+
+</LinearLayout>

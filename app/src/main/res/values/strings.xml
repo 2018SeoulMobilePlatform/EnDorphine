@@ -1,30 +1,6 @@
 <resources>
     <string name="app_name">I CAMP U</string>
-
-    <!-- Names -->
-    <string-array name="user_ids">
-        <item>이다인</item>
-        <item>박지호</item>
-    </string-array>
-
-    <!-- Pictures -->
-    <array name="need_pics">
-        <item>@drawable/pig</item>
-        <item>@drawable/snake</item>
-    </array>
-
-    <!-- Status -->
-    <string-array name="need_things">
-        <item>빌리고 싶은 물건: 냄비</item>
-        <item>빌리고 싶은 물건: 김치</item>
-    </string-array>
-
-    <!-- contact type -->
-    <string-array name="lettable_things">
-        <item>빌려줄 수 있는 물건: 머가리</item>
-        <item>빌려줄 수 있는 물건: 냥냥이</item>
-    </string-array>
-
+    
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,12 +99,22 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         scrollView.setFocusableInTouchMode(true);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
 
-        // 예약 버튼 설정
+        // 예약버튼
         reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
+        reservationButton.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.reservation_button:
+                Log.e("NanjiGuideActivity", "이다인 ㅂㅅ");
+                Intent intent = new Intent();
+                intent.setClass(this, CalenderActivity.class);
+                intent.putExtra("title", "난지 캠핑장");
 
+                startActivity(intent);
+                break;
+        }
     }
 }

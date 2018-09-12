@@ -50,7 +50,6 @@ public class Chat_Content extends AppCompatActivity {
         final EditText need_thing = (EditText)findViewById(R.id.write_need);
         final EditText lettable_thing = (EditText)findViewById(R.id.write_lettable);
 
-
         save_chat_content.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -73,7 +72,7 @@ public class Chat_Content extends AppCompatActivity {
                     returnIntent.putExtra("user","허진규");
                     returnIntent.putExtra("need",need_thing.getText().toString());
                     returnIntent.putExtra("lettable",lettable_thing.getText().toString());
-                    setResult(1,returnIntent);
+                    setResult(RESULT_OK,returnIntent);
                     finish();
                     Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
                 }
@@ -204,7 +203,6 @@ public class Chat_Content extends AppCompatActivity {
         }
     }
 
-
     //이미지 넣을 자리랑 버튼 눌를 시 실행하는 이벤트 함수
     public void put_image(View view){
         DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
@@ -232,6 +230,12 @@ public class Chat_Content extends AppCompatActivity {
                 .setPositiveButton("사진 촬영",cameraListener)
                 .setNeutralButton("앨번 선택",albumListener)
                 .setNegativeButton("취소",cancelListener).show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(0);
+        finish();
     }
 
 }
