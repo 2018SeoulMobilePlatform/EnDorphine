@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,6 @@ public class ChattingList_Fragment extends BaseFragment {
     ArrayList<Chat_Item> items;
     ChatList_Adapter adapter;
     ListView chatlist_listView;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState){

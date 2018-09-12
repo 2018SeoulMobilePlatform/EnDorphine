@@ -12,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -35,6 +37,8 @@ public class Chat_Content extends AppCompatActivity {
     private int id_view;
     private String absolutePath;
 
+    Spinner camp_kind;
+
     //add
     String mCurrentPhotoPath;
 
@@ -42,6 +46,12 @@ public class Chat_Content extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat__content);
+
+        //콤보 박스
+        camp_kind = (Spinner) findViewById(R.id.camp_combobox);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.camp_kind, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        camp_kind.setAdapter(adapter);
 
         m_userPhoto = (ImageView) findViewById(R.id.user_image);
 
