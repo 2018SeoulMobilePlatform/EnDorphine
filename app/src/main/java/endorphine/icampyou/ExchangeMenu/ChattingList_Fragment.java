@@ -169,9 +169,10 @@ public class ChattingList_Fragment extends BaseFragment {
         String pass_user = data.getStringExtra("user");
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
+        String camp_name = data.getStringExtra("camp_name");
         byte[] image_byte = data.getByteArrayExtra("image");
         Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        adapter.add(pass_image,pass_user,pass_need,pass_lettable,"난징");
+        adapter.add(pass_image,pass_user,pass_need,pass_lettable,camp_name);
         chatlist_listView.setAdapter(adapter);
     }
 

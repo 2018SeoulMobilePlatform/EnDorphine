@@ -43,7 +43,7 @@
             android:id="@+id/editText1"
             android:inputType="textMultiLine"
             android:maxLines="4"
-            android:layout_width="330dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"/>
 
         <Button

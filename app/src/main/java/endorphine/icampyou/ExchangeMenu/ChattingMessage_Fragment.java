@@ -3,6 +3,7 @@ package endorphine.icampyou.ExchangeMenu;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
     Socket mSocket = null;
     {
         try {
-            mSocket = IO.socket("ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000");
+            mSocket = IO.socket("http://192.168.1.67:8000");
         } catch (URISyntaxException e) {}
     }
 
@@ -48,17 +49,24 @@ public class ChattingMessage_Fragment extends BaseFragment {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
-                    String username;
+                    Log.e("data",String.valueOf(data));
+                    String username1;
+                    String username2;
                     String message;
+                    Log.e("2","2");
                     try {
-                        username = data.getString("username");
+                        username1 = data.getString("username");
                         message = data.getString("message");
+                        Log.e("3","3");
                     } catch (JSONException e) {
+                        Log.e("4","4");
                         return;
                     }
 
                     // add the message to view
-                    m_chatmessage_adapter.add(message,1);
+                    Log.e("username1",username1);
+                    m_chatmessage_adapter.add(message,0);
+                    m_chatmessage_adapter.notifyDataSetChanged();
                 }
             });
         }
@@ -68,8 +76,9 @@ public class ChattingMessage_Fragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chatmessage,container,false);
 
-        mSocket.on("new message", onNewMessage);
+        mSocket.on("new_private_message", onNewMessage);
         mSocket.connect();
+        attemptLoginSignal();
 
         m_chatmessage_adapter = new ChatMessage_Adapter();
         m_chatMessage_listView = (ListView)view.findViewById(R.id.chatmessage_listView);
@@ -86,9 +95,10 @@ public class ChattingMessage_Fragment extends BaseFragment {
                 }
                 else{
                     m_chatmessage_adapter.add(send_message.getText().toString(),1);
+                    attemptSend();
                     send_message.setText("");
                     m_chatmessage_adapter.notifyDataSetChanged();
-                    attemptSend();
+
                 }
             }
         });
@@ -96,15 +106,35 @@ public class ChattingMessage_Fragment extends BaseFragment {
         return view;
     }
 
-    //채팅 전송
-    private void attemptSend() {
-        String message = send_message.getText().toString().trim();
-        if (TextUtils.isEmpty(message)) {
+    //로그인했다는 표시
+    private void attemptLoginSignal(){
+        String user_id = "홍길동";
+        if (TextUtils.isEmpty(user_id)) {
             return;
         }
+        mSocket.emit("username",user_id);
+    }
 
-        send_message.setText("");
-        mSocket.emit("username", "seyoung babu");
+    //채팅 전송
+    private void attemptSend() {
+        String message = send_message.getText().toString();
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("to_username", "홍길동");
+            data.put("from_username","홍길동");
+            data.put("message", message);
+            mSocket.emit("private_message", data);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+//        if (TextUtils.isEmpty(message)) {
+//            return;
+//        }
+//
+//        send_message.setText("");
+//        mSocket.emit("private_message", "seyoung babu");
     }
 
     @Override

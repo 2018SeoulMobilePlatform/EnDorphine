@@ -41,7 +41,6 @@ public class RegisterUserInfo_Fragment extends Fragment {
             }
         });
 
-
         email_editText = (EditText)view.findViewById(R.id.user_email);
         password_editText = (EditText)view.findViewById(R.id.password);
         name_editText = (EditText)view.findViewById(R.id.user_name);

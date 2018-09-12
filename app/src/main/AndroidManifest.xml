@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".GlobalApplication"
@@ -33,8 +36,7 @@
         </activity>
 
         <activity
-            android:name=".ExchangeMenu.Chat_Content"
-            android:exported="true"></activity>
+            android:name=".ExchangeMenu.Chat_Content"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

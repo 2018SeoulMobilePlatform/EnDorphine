@@ -1,12 +1,20 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +30,8 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import endorphine.icampyou.R;
 
@@ -68,7 +78,12 @@ public class Chat_Content extends AppCompatActivity {
                 BitmapDrawable bitmapDrawable = (BitmapDrawable)m_userPhoto.getDrawable();
                 Bitmap tempBitmap = bitmapDrawable.getBitmap();
 
-                if(need_thing.length() ==0 && lettable_thing.length() ==0 || bitmapDrawable == null){
+                String camp_name = null;
+                if(camp_kind.getSelectedItemPosition() != 0 ){
+                    camp_name = camp_kind.getSelectedItem().toString();
+                }
+
+                if(need_thing.length() ==0 && lettable_thing.length() ==0 || bitmapDrawable == null || camp_name == null){
                    Toast.makeText(Chat_Content.this,"입력이 비어있습니다.",Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -82,6 +97,8 @@ public class Chat_Content extends AppCompatActivity {
                     returnIntent.putExtra("user","허진규");
                     returnIntent.putExtra("need",need_thing.getText().toString());
                     returnIntent.putExtra("lettable",lettable_thing.getText().toString());
+                    returnIntent.putExtra("camp_name",camp_name);
+
                     setResult(RESULT_OK,returnIntent);
                     finish();
                     Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
@@ -89,6 +106,8 @@ public class Chat_Content extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void selectAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -98,52 +117,26 @@ public class Chat_Content extends AppCompatActivity {
     }
 
     public void takePhoto() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //사진인테트 호출
-        startActivityForResult(takePictureIntent,FROM_CAMERA);
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //사진인테트 호출
+//        startActivityForResult(takePictureIntent,FROM_CAMERA);
 
-//        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            if (photoFile != null) {
-//                Uri providerURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", photoFile); //프로바이드 생성
-//                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI); //사진저장경로 불러옴
-//
-//                this.startActivityForResult(takePictureIntent, FROM_CAMERA); //엑티비티 사진저장
-//            } else {
-//                Toast.makeText(this, "저장공간이 접근 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//        }
-
-
-//        String state = Environment.getExternalStorageState();
-//
-//        if(Environment.MEDIA_MOUNTED.equals(state)){
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if(intent.resolveActivity(getPackageManager())!=null){
-//                File photoFile = null;
-//                try{
-//                    photoFile = createImageFile();
-//                }
-//                catch (IOException e){
-//                    e.printStackTrace();
-//                }
-//                if(photoFile!=null){
-//                    Uri providerURI = FileProvider.getUriForFile(this,"endorphine.icampyou.provider",photoFile);
-//                    //imgUri = providerURI;
-//                    //intent.putExtra(MediaStore.EXTRA_OUTPUT,providerURI);
-//                    //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                    startActivityForResult(intent,FROM_CAMERA);
-//                }
-//            }
-//        }else{
-//            Log.e("알림", "저장공간에 접근 불가능");
-//            return;
-//        }
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intents
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.provider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, FROM_CAMERA);
+            }
+        }
     }
 
     public File createImageFile() throws IOException{
@@ -246,6 +239,50 @@ public class Chat_Content extends AppCompatActivity {
     public void onBackPressed(){
         setResult(0);
         finish();
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
