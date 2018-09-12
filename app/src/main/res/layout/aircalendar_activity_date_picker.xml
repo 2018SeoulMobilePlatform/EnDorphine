@@ -269,24 +269,46 @@
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/rl_done_btn"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
-        android:background="@color/colorTest"
-        android:layout_marginBottom="17dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-        <TextView
-            android:text="다음"
-            android:layout_width="wrap_content"
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_done_btn"-->
+        <!--android:layout_width="270dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="@color/colorTest"-->
+        <!--android:layout_marginBottom="17dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true">-->
+        <!--<TextView-->
+            <!--android:text="다음"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:id="@+id/textView34" />-->
+    <!--</RelativeLayout>-->
+    <!-- 다음 버튼 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:scrollbars="none"
+        android:visibility="visible"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/rl_done_btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:textColor="#ffffff"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/textView34" />
-    </RelativeLayout>
+            android:text="다음"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimary"/>
+    </LinearLayout>
+
+    <!-- /다음 버튼 -->
 
 
     <RelativeLayout
@@ -331,7 +353,7 @@
                 android:layout_height="42dp"
                 android:layout_marginBottom="14dp"
                 android:gravity="center"
-                android:background="@drawable/aircalendar_btn_style"
+                android:background="@color/colorPrimary"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true">
 

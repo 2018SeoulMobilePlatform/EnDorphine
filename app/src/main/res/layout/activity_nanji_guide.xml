@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="서울특별시 마포구 상암동 495-81"
+                android:textColor="#B9B9B9"
                 android:textAlignment="center"
                 android:textSize="13dp" />
 
@@ -90,6 +91,11 @@
 
             <!-- /캠핑장 이름 + 별점 -->
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tag_nanji"
+                android:adjustViewBounds="true"/>
 
             <!-- 상세정보 탭 -->
             <TabHost
@@ -120,13 +126,20 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="600dp"
-                                android:background="#FFC19E"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="TAB CONTENT 1" />
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/guide_nanji"
+                                android:adjustViewBounds="true"
+                                android:background="@color/colorPrimary"
+                                />
+                            <!--<TextView-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="600dp"-->
+                                <!--android:background="#FFFFFF"-->
+                                <!--android:gravity="center"-->
+                                <!--android:padding="8dp"-->
+                                <!--android:text="TAB CONTENT 1" />-->
                         </LinearLayout>
 
                         <!-- 두 번째 페이지. content2 -->
@@ -135,14 +148,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="#B7F0B1"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:text="TAB CONTENT 2" />
+                            
+                            <!--<TextView-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="#B7F0B1"-->
+                                <!--android:gravity="center"-->
+                                <!--android:padding="8dp"-->
+                                <!--android:text="TAB CONTENT 2" />-->
                         </LinearLayout>
 
                         <!-- 세 번째 페이지. content3 -->
@@ -166,6 +179,7 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- 예약 버튼 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -175,13 +189,13 @@
         android:visibility="visible"
         android:weightSum="1">
 
-
         <Button
             android:id="@+id/reservation_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="예약하기"
+            android:text="예약"
+            android:textColor="#FFFFFF"
             android:background="@color/colorPrimary"/>
     </LinearLayout>
-
+    <!-- /예약 버튼 -->
 </LinearLayout>

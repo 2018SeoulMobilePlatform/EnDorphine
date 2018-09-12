@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +57,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     private TextView tv_start_date;
     private TextView tv_end_date;
     private TextView tv_popup_msg;
-    private RelativeLayout rl_done_btn;
+    private Button rl_done_btn;
     private RelativeLayout rl_reset_btn;
     private RelativeLayout rl_popup_select_checkout_info_ok;
     private RelativeLayout rl_checkout_select_info_popup;

@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     // 프래그먼트 변경
                     setFragment(1);
                     // 임의로 QR 코드 설정
-                    generateRQCode("이것은QR코드");
+                    generateRQCode("QR코드");
                     return true;
                 case R.id.navigation_home:
                     setFragment(2);
