@@ -5,41 +5,69 @@
     android:orientation="vertical"
     tools:context="endorphine.icampyou.GuideMenu.GuideFragment1">
 
-    <ImageView
-        android:id="@+id/nanji"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:src="@drawable/menu_nanji"/>
-    <ImageView
-        android:id="@+id/choansan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/menu_choansan"/>
-    <ImageView
-        android:id="@+id/jungrang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/menu_junglang" />
-    <ImageView
-        android:id="@+id/gangdong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/menu_gangdong"/>
-    <ImageView
-        android:id="@+id/noeul"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/menu_noeul"/>
-    <ImageView
-        android:id="@+id/seoul"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/menu_seoul"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/nanji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                android:src="@drawable/menu_nanji"
+                android:adjustViewBounds="true"/>
+            <ImageView
+                android:id="@+id/seoul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_seoul"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/noeul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_noeul"
+                android:adjustViewBounds="true"/>
+
+            <ImageView
+                android:id="@+id/jungrang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_junglang"
+                android:adjustViewBounds="true"/>
+
+
+            <ImageView
+                android:id="@+id/choansan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_choansan"
+                android:adjustViewBounds="true"/>
+
+
+            <ImageView
+                android:id="@+id/gangdong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_gangdong"
+                android:adjustViewBounds="true"/>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
