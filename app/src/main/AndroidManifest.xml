@@ -34,7 +34,8 @@
         </activity>
 
         <activity
-            android:name=".ExchangeMenu.Chat_Content"></activity>
+            android:name=".ExchangeMenu.Chat_Content"
+            ></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -45,7 +45,6 @@
                 android:text="냥냥냥냥냥ㄴ"
                 android:textSize="13dp"
                 android:textStyle="bold"/>
-
         </LinearLayout>
 
         <TextView

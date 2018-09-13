@@ -40,7 +40,6 @@ public class ChattingList_Fragment extends BaseFragment {
     final int save_info = 1;
 
     ArrayList<Chat_Item> copy;
-    ArrayList<Chat_Item> items;
     ChatList_Adapter adapter;
     ListView chatlist_listView;
 
@@ -70,6 +69,8 @@ public class ChattingList_Fragment extends BaseFragment {
         ts2.setIndicator("나의 채팅");
         tabHost1.addTab(ts2);
 
+        listViewSetting(view);
+
         //채팅방 목록 생성하는 버튼
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
@@ -81,19 +82,6 @@ public class ChattingList_Fragment extends BaseFragment {
                 startActivityForResult(intent,save_info);
             }
         });
-
-        items = new ArrayList<>();
-        copy = new ArrayList<>();
-
-        items.add(new Chat_Item(null,"1","1","1","1"));
-        items.add(new Chat_Item(null,"2","2","2","2"));
-
-        copy.addAll(items);
-        chatlist_listView =(ListView) view.findViewById(R.id.camp_chat_listview);
-
-        adapter = new ChatList_Adapter(items);
-
-        chatlist_listView.setAdapter(adapter);
 
         //채팅방 들어가기
         chatlist_listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -112,9 +100,9 @@ public class ChattingList_Fragment extends BaseFragment {
                 DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.e("position",String.valueOf(position));
-                        items.remove(position);
-                        chatlist_listView.setAdapter(adapter);
+                        copy.remove(position);
+                        adapter.removeItem(position);
+                        adapter.notifyDataSetChanged();
                     }
                 };
 
@@ -160,31 +148,43 @@ public class ChattingList_Fragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
 
-        Log.e("requestCode",String.valueOf(requestCode));
-        Log.e("resultCode",String.valueOf(resultCode));
-
         if(resultCode != RESULT_OK){
             return ;
         }
+
         String pass_user = data.getStringExtra("user");
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
         String camp_name = data.getStringExtra("camp_name");
         byte[] image_byte = data.getByteArrayExtra("image");
         Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        adapter.add(pass_image,pass_user,pass_need,pass_lettable,camp_name);
+        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
+        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
+        adapter.addItem(addItem);
+        adapter.notifyDataSetChanged();
+    }
+
+    //리스트 뷰 세팅
+    private void listViewSetting(View view){
+        chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
+        adapter = new ChatList_Adapter();
         chatlist_listView.setAdapter(adapter);
+
+        copy = new ArrayList<>();
+
     }
 
     // 검색을 수행하는 메소드
     public void search(String charText) {
 
         // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        items.clear();
+        adapter.removeAllitem();
 
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length() == 0) {
-            items.addAll(copy);
+            for(Chat_Item mItem : copy){
+                adapter.addItem(mItem);
+            }
         }
         // 문자 입력을 할때..
         else
@@ -193,14 +193,15 @@ public class ChattingList_Fragment extends BaseFragment {
             for(int i = 0;i < copy.size(); i++)
             {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                if (copy.get(i).getUser_id().toLowerCase().contains(charText))
+                if (copy.get(i).getUser_id().toLowerCase().contains(charText) ||
+                        copy.get(i).getNeed_thing().toLowerCase().contains(charText))
                 {
                     // 검색된 데이터를 리스트에 추가한다.
-                    items.add(copy.get(i));
+                    adapter.addItem(copy.get(i));
                 }
             }
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        chatlist_listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

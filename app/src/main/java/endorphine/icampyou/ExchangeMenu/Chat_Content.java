@@ -84,7 +84,9 @@ public class Chat_Content extends AppCompatActivity {
             {
                 BitmapDrawable bitmapDrawable = (BitmapDrawable)m_userPhoto.getDrawable();
                 Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
                 String camp_name = null;
+
                 if(camp_kind.getSelectedItemPosition() != 0 ){
                     camp_name = camp_kind.getSelectedItem().toString();
                 }
@@ -96,17 +98,26 @@ public class Chat_Content extends AppCompatActivity {
                     Intent returnIntent = new Intent();
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    tempBitmap.compress(Bitmap.CompressFormat.PNG,20,stream);
+                    tempBitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
                     byte[] bytes = stream.toByteArray();
+
+                    //청소
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    tempBitmap.recycle();
 
                     returnIntent.putExtra("image",bytes);
                     returnIntent.putExtra("user","허진규");
                     returnIntent.putExtra("need",need_thing.getText().toString());
                     returnIntent.putExtra("lettable",lettable_thing.getText().toString());
                     returnIntent.putExtra("camp_name",camp_name);
-
                     setResult(RESULT_OK,returnIntent);
+
                     finish();
+
                     Toast.makeText(Chat_Content.this,"저장 완료",Toast.LENGTH_LONG).show();
                 }
             }
@@ -186,7 +197,6 @@ public class Chat_Content extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         setResult(0);
-        finish();
     }
 
     //권한 요청하기
@@ -345,6 +355,7 @@ public class Chat_Content extends AppCompatActivity {
         // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
         return Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix,true);
     }
+
 
     private String getRealPathFromURI(Uri contentUri){
         int column_index = 0;
