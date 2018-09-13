@@ -41,6 +41,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
         } catch (URISyntaxException e) {}
     }
 
+    //서버에서 전송 된다면
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
 
         @Override
@@ -49,22 +50,17 @@ public class ChattingMessage_Fragment extends BaseFragment {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
-                    Log.e("data",String.valueOf(data));
                     String username1;
                     String username2;
                     String message;
-                    Log.e("2","2");
                     try {
                         username1 = data.getString("username");
                         message = data.getString("message");
-                        Log.e("3","3");
                     } catch (JSONException e) {
-                        Log.e("4","4");
                         return;
                     }
 
                     // add the message to view
-                    Log.e("username1",username1);
                     m_chatmessage_adapter.add(message,0);
                     m_chatmessage_adapter.notifyDataSetChanged();
                 }
