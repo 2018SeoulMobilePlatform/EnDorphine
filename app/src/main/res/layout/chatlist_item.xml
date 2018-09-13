@@ -43,6 +43,7 @@
                 android:id="@+id/camping_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="camp_name"
                 android:textSize="13dp"
                 android:textStyle="bold"

@@ -1,5 +1,6 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -60,15 +62,15 @@ public class ChattingList_Fragment extends BaseFragment {
         tabHost1.setup();
 
         // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
-        TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1");
+        View tabView1 = createTabView(tabHost1.getContext(),"캠핑장 채팅");
+        TabHost.TabSpec ts1 = tabHost1.newTabSpec("캠핑장 채팅").setIndicator(tabView1);
         ts1.setContent(R.id.content1_chatlist);
-        ts1.setIndicator("캠핑장 채팅");
         tabHost1.addTab(ts1);
 
         // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
-        TabHost.TabSpec ts2 = tabHost1.newTabSpec("Tab Spec 2");
+        View tabView2 = createTabView(tabHost1.getContext(),"나의 채팅");
+        TabHost.TabSpec ts2 = tabHost1.newTabSpec("나의 채팅").setIndicator(tabView2);
         ts2.setContent(R.id.content2_chatlist);
-        ts2.setIndicator("나의 채팅");
         tabHost1.addTab(ts2);
 
         listViewSetting(view);
@@ -215,5 +217,28 @@ public class ChattingList_Fragment extends BaseFragment {
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         adapter.notifyDataSetChanged();
+    }
+
+    // Tab에 나타날 View를 구성
+    private View createTabView(final Context context, final String text)
+    {
+        // layoutinflater를 이용해 xml 리소스를 읽어옴
+        View view = LayoutInflater.from(context).inflate(R.layout.image_tab, null);
+        ImageView img;
+
+        if(text.equals("캠핑장 채팅"))
+        {
+            img = (ImageView) view.findViewById(R.id.tabs_image);
+            img.setImageDrawable(getResources().getDrawable(R.drawable.tent1));
+        }
+        else if(text.equals("나의 채팅"))
+        {
+            img = (ImageView)view.findViewById(R.id.tabs_image);
+            img.setImageDrawable(getResources().getDrawable(R.drawable.tent2));
+        }
+
+        TextView tv = (TextView) view.findViewById(R.id.tabs_text);
+        tv.setText(text);
+        return view;
     }
 }
