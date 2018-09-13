@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -39,11 +41,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private SessionCallback callback;
     private Button loginButton;
+    private TextView password_find_button;
+    private TextView register_user_button;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        password_find_button = findViewById(R.id.password_find_button);
+        register_user_button = findViewById(R.id.register_user_button);
+
+        password_find_button.setOnClickListener(this);
+        register_user_button.setOnClickListener(this);
 
         getSupportActionBar().hide();
 
@@ -61,6 +74,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // 홈 액티비티 실행
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
+                break;
+            case R.id.password_find_button:
+                FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.login, findUserInfo_fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                break;
+            case R.id.register_user_button:
+                RegisterUserInfo_Fragment registerUserInfo_fragment = new RegisterUserInfo_Fragment();
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.login, registerUserInfo_fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
                 break;
             default:
                 break;
@@ -163,27 +192,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.e("UserProfile", result.getId() + "");
             }
         });
-    }
-
-    //사용자 아이디,패스워드 찾기
-    public void find_userInfo(View view){
-        Log.e("찾기","냥냥");
-        FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
-        replaceFragment(findUserInfo_fragment);
-    }
-
-    //사용자 아이디 등록하기
-    public void register_userInfo(View view){
-        Log.e("로그인","냥냥");
-        RegisterUserInfo_Fragment registerUserInfo_fragment = new RegisterUserInfo_Fragment();
-        replaceFragment(registerUserInfo_fragment);
-    }
-
-    // 프레그 먼트로 이동
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.login, fragment);
-        fragmentTransaction.commit();
     }
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class RegisterUserInfo_Fragment extends Fragment {
+public class RegisterUserInfo_Fragment extends BaseFragment {
 
     String email;
     String password;
@@ -31,8 +31,6 @@ public class RegisterUserInfo_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register_userinfo,container,false);
-
-        getActivity().getActionBar().hide();
 
         Button register_btn = (Button)view.findViewById(R.id.register_user);
         register_btn.setOnClickListener(new View.OnClickListener(){
