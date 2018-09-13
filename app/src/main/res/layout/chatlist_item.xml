@@ -22,30 +22,28 @@
         android:orientation="vertical"
         android:paddingLeft="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="3">
+            android:gravity="center_vertical"
+            android:text="user_name"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_weight="2"/>
 
-            <TextView
-                android:id="@+id/user_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="text"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/camping_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="camp_name"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/camping_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="냥냥냥냥냥ㄴ"
-                android:textSize="13dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
 
         <TextView
             android:id="@+id/need_thing"
@@ -53,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="text"
+            android:text="need_thing"
             android:textSize="10dp" />
 
         <TextView
@@ -62,10 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:text="text"
+            android:text="lettable_thing"
             android:textSize="10dp" />
     </LinearLayout>
-
-
 
 </LinearLayout>
