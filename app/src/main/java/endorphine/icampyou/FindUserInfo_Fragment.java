@@ -2,6 +2,8 @@ package endorphine.icampyou;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,8 @@ public class FindUserInfo_Fragment extends BaseFragment {
         Button find_password = (Button)view.findViewById(R.id.find_password);
         find_password.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                //데이터베이스에서 비밀번호 찾아오기
+                //데이터베이스에서 비밀번호 찾아오기,로그인 화면으로
+
             }
         });
 

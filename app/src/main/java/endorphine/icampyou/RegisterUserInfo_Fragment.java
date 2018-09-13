@@ -35,7 +35,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         Button register_btn = (Button)view.findViewById(R.id.register_user);
         register_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                //데이터베이스에 유저 정보 저장
+                //데이터베이스에 유저 정보 저장, 화면 전환
             }
         });
 

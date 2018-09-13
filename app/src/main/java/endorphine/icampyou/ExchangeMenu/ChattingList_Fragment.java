@@ -25,6 +25,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -152,12 +154,22 @@ public class ChattingList_Fragment extends BaseFragment {
             return ;
         }
 
+        Bitmap pass_image =  null;
+        String filename = data.getStringExtra("image");
+        try {
+            FileInputStream stream = getActivity().openFileInput(filename);
+            pass_image = BitmapFactory.decodeStream(stream);
+            stream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String pass_user = data.getStringExtra("user");
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
         String camp_name = data.getStringExtra("camp_name");
-        byte[] image_byte = data.getByteArrayExtra("image");
-        Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
+//        byte[] image_byte = data.getByteArrayExtra("image");
+//        Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
         Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
         copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
         adapter.addItem(addItem);

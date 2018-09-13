@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -97,24 +98,32 @@ public class Chat_Content extends AppCompatActivity {
                 else{
                     Intent returnIntent = new Intent();
 
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    tempBitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
-                    byte[] bytes = stream.toByteArray();
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    tempBitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
+//                    byte[] bytes = stream.toByteArray();
 
-                    //청소
                     try {
+                        //Write file
+                        String filename = "bitmap.png";
+                        FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
+                        tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                        //Cleanup
                         stream.close();
-                    } catch (IOException e) {
+                        tempBitmap.recycle();
+
+                        //Pop intent
+                        returnIntent.putExtra("image", filename);
+                        returnIntent.putExtra("user","허진규");
+                        returnIntent.putExtra("need",need_thing.getText().toString());
+                        returnIntent.putExtra("lettable",lettable_thing.getText().toString());
+                        returnIntent.putExtra("camp_name",camp_name);
+                        setResult(RESULT_OK,returnIntent);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    tempBitmap.recycle();
 
-                    returnIntent.putExtra("image",bytes);
-                    returnIntent.putExtra("user","허진규");
-                    returnIntent.putExtra("need",need_thing.getText().toString());
-                    returnIntent.putExtra("lettable",lettable_thing.getText().toString());
-                    returnIntent.putExtra("camp_name",camp_name);
-                    setResult(RESULT_OK,returnIntent);
+                    //returnIntent.putExtra("image",bytes);
 
                     finish();
 
