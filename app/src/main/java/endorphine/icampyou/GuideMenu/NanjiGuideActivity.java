@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 
-import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
 public class NanjiGuideActivity extends Activity implements View.OnClickListener{
