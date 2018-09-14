@@ -6,6 +6,7 @@
         <item name="android:statusBarColor">#ffffff</item>
         <!--Status Bar 글자색깔-->
         <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
