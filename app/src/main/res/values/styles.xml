@@ -30,4 +30,9 @@
         <item name="android:src">@drawable/qrcode</item>
     </style>
 
+    <!-- 커스텀 별점 바 -->
+    <style name="CustomRatingStar" parent="Base.Widget.AppCompat.RatingBar.Small">
+        <item name="colorAccent">#F9BE4F</item>
+    </style>
+
 </resources>
