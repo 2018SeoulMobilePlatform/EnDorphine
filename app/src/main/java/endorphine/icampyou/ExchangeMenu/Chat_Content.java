@@ -98,10 +98,6 @@ public class Chat_Content extends AppCompatActivity {
                 else{
                     Intent returnIntent = new Intent();
 
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    tempBitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
-//                    byte[] bytes = stream.toByteArray();
-
                     try {
                         //Write file
                         String filename = "bitmap.png";
@@ -206,6 +202,7 @@ public class Chat_Content extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         setResult(0);
+        finish();
     }
 
     //권한 요청하기

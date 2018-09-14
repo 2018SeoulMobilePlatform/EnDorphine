@@ -50,6 +50,7 @@ public class ChatList_Adapter extends BaseAdapter{
         TextView camp = (TextView) convertView.findViewById(R.id.camping_name);
         TextView need = (TextView) convertView.findViewById(R.id.need_thing);
         TextView lettable = (TextView) convertView.findViewById(R.id.lettable_thing);
+        TextView time = (TextView) convertView.findViewById(R.id.time);
 
         Chat_Item item = (Chat_Item)getItem(position);
 
@@ -58,6 +59,7 @@ public class ChatList_Adapter extends BaseAdapter{
         camp.setText(item.getCamping_name());
         need.setText(item.getNeed_thing());
         lettable.setText(item.getLettable_thing());
+        time.setText(item.getTime());
 
         return convertView;
     }

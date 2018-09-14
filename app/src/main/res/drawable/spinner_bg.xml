@@ -1,0 +1,25 @@
+<?xml version="1.0"
+    encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:shape="rectangle" android:padding="8dp">
+                    <solid android:color="@color/colorAccent"/>
+                    <corners
+                        android:radius="4dp" />
+                    <padding android:bottom="3dp"
+                        android:left="3dp"
+                        android:right="5dp"
+                        android:top="3dp" />
+                </shape>
+            </item>
+            <!--<item>-->
+                <!--&lt;!&ndash;<bitmap android:gravity="center_vertical|right"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@drawable/tent1" />&ndash;&gt;-->
+                <!--&lt;!&ndash;// you can use any other image here, instead of default_holo_dark_am&ndash;&gt;-->
+            <!--</item>-->
+        </layer-list>
+    </item>
+</selector>
