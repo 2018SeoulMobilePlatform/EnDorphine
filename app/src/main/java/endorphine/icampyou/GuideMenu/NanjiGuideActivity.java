@@ -2,30 +2,24 @@ package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import endorphine.icampyou.EventMenu.EventListViewAdapter;
-import endorphine.icampyou.EventMenu.EventListViewItem;
-import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
 public class NanjiGuideActivity extends Activity implements View.OnClickListener{
@@ -89,34 +83,30 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         viewPager.setOnPageChangeListener(new GuidePageChangeListener(pointImages));
 
         // 탭 호스트에 탭 추가
-        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1);
-        tabHost1.setup();
+        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
 
         // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
-        TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1");
+        TabHost.TabSpec ts1 = tabHost.newTabSpec("Tab Spec 1");
         ts1.setContent(R.id.content1);
         ts1.setIndicator("정보");
-        tabHost1.addTab(ts1);
+        tabHost.addTab(ts1);
 
         // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
-        TabHost.TabSpec ts2 = tabHost1.newTabSpec("Tab Spec 2");
+        TabHost.TabSpec ts2 = tabHost.newTabSpec("Tab Spec 2");
         ts2.setContent(R.id.content2);
         ts2.setIndicator("후기");
-        tabHost1.addTab(ts2);
+        tabHost.addTab(ts2);
 
         // 세 번째 Tab. (탭 표시 텍스트:"TAB 3"), (페이지 뷰:"content3")
-        TabHost.TabSpec ts3 = tabHost1.newTabSpec("Tab Spec 3");
+        TabHost.TabSpec ts3 = tabHost.newTabSpec("Tab Spec 3");
         ts3.setContent(R.id.content3);
         ts3.setIndicator("위치");
-        tabHost1.addTab(ts3);
+        tabHost.addTab(ts3);
 
         // 예약버튼 이벤트 설정
         reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
         reservationButton.setOnClickListener(this);
-
-        // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
-        scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
-        upScroll();
 
         // 후기 리스트 설정
         reviewList = (ListView)findViewById(R.id.review_listView);
@@ -145,8 +135,10 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         // 후기작성버튼 설정
         reviewAddButton = findViewById(R.id.review_add_button);
 
-        // 스크롤 맨 위로
-        upScroll();
+        // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
+        scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
+        scrollView.setFocusableInTouchMode(true);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
     }
 
     // 예약버튼 클릭 이벤트 메소드
@@ -161,52 +153,4 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
                 break;
         }
     }
-
-    // 스크롤 맨 위로
-    public void upScroll(){
-        scrollView.setFocusableInTouchMode(true);
-        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-    }
-
-    // 리스트뷰 높이 자동 맞춤 메소드
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0,0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-    }
-
-    public void setListViewHeightBasedOnItems(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)  return;
-
-        int numberOfItems = listAdapter.getCount();
-
-        int totalItemsHeight = 0;
-        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-            View item = listAdapter.getView(itemPos, null, listView);
-            item.measure(0, 0);
-            totalItemsHeight += item.getMeasuredHeight();
-        }
-
-        int totalDividersHeight = listView.getDividerHeight() *  (numberOfItems - 1);
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalItemsHeight + totalDividersHeight;
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-
-
-    }
-
 }

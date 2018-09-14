@@ -9,7 +9,7 @@
 
     <!-- 상세정보 탭 -->
     <TabHost
-        android:id="@+id/tabHost1"
+        android:id="@+id/tabHost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -209,9 +209,10 @@
         <Button
             android:id="@+id/reservation_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:background="@color/colorPrimary"
             android:text="예약"
+            android:textSize="16dp"
             android:textColor="#FFFFFF" />
     </LinearLayout>
     <!-- /예약 버튼 -->

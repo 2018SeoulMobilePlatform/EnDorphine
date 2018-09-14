@@ -57,7 +57,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     private TextView tv_start_date;
     private TextView tv_end_date;
     private TextView tv_popup_msg;
-    private Button rl_done_btn;
+    private RelativeLayout rl_done_btn;
     private RelativeLayout rl_reset_btn;
     private RelativeLayout rl_popup_select_checkout_info_ok;
     private RelativeLayout rl_checkout_select_info_popup;
@@ -122,7 +122,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     }
 
     private void init(){
-
         rl_done_btn = findViewById(R.id.rl_done_btn);
         tv_start_date = findViewById(R.id.tv_start_date);
         tv_end_date = findViewById(R.id.tv_end_date);
