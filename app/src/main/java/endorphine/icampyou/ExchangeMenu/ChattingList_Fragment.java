@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -94,7 +95,6 @@ public class ChattingList_Fragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
                 startFragment(getFragmentManager(),ChattingMessage_Fragment.class);
-
             }
         });
 
@@ -147,6 +147,18 @@ public class ChattingList_Fragment extends BaseFragment {
 
             }
         });
+
+        //검색 텍스트 모두 지우기
+        ImageButton remove_allText_btn = (ImageButton)view.findViewById(R.id.remove_allText_button);
+        remove_allText_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                editSearch.setText("");
+            }
+        });
+
         return view;
     }
 
@@ -187,7 +199,6 @@ public class ChattingList_Fragment extends BaseFragment {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
         String time = simpleDateFormat.format(date);
-        Log.e("길이",String.valueOf(time.length()));
         String am_pm = time.substring(time.length()-2,time.length()-1);
         if(am_pm.equals("AM")){
             am_pm = "오전";
@@ -262,4 +273,5 @@ public class ChattingList_Fragment extends BaseFragment {
         tv.setText(text);
         return view;
     }
+
 }

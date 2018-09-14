@@ -17,23 +17,35 @@
         >
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:padding="10dp"
-            android:layout_weight="8"
+            android:padding="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:src="@drawable/search"/>
 
         <EditText
             android:id="@+id/search"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft= "10dp"
-            android:maxLines="5"
-            android:layout_weight="1"
+            android:paddingLeft= "5dp"
+            android:maxLines="1"
+            android:maxLength="20"
             android:layout_gravity="center"
             android:hint="Search"
+            android:layout_weight="200"
             android:textColorHint="#000000"/>
+
+        <ImageButton
+            android:id="@+id/remove_allText_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/erase"/>
     </LinearLayout>
 
     <TabHost
