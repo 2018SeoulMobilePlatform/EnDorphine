@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import endorphine.icampyou.R;
+import endorphine.icampyou.ReviewWriteActivity;
 
 public class NanjiGuideActivity extends Activity implements View.OnClickListener{
 
@@ -37,6 +38,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     private ScrollView scrollView;  // 스크롤뷰
     private LinearLayout layout;    // 두번째 후기 탭
     private FloatingActionButton reviewAddButton;   // 후기작성버튼
+    private Intent intent;  // 인텐트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,21 +136,29 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
 
         // 후기작성버튼 설정
         reviewAddButton = findViewById(R.id.review_add_button);
+        reviewAddButton.setOnClickListener(this);
 
         // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
         scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
         scrollView.setFocusableInTouchMode(true);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+
+        // 인텐트 설정
+        intent = new Intent();
     }
 
-    // 예약버튼 클릭 이벤트 메소드
+    // 버튼 클릭 이벤트 메소드
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.reservation_button:
                 // 예약 버튼 누르면 캘린더 액티비티 시작됨
-                Intent intent = new Intent();
                 intent.setClass(this, CalenderActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.review_add_button:
+                // 후기 작성 버튼 누르면 후기 작성 액티비티 시작됨
+                intent.setClass(this, ReviewWriteActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -1,9 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="endorphine.icampyou.ReviewWriteActivity">
+    android:layout_weight="1"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <!-- 별점 -->
+        <RatingBar
+            android:id="@+id/star_ratingbar"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:numStars="5"
+            android:rating="5"
+            android:stepSize="0.5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="터치로 캠핑장을 평가해주세요!"
+            android:textAlignment="center"
+            android:textColor="#747474"
+            android:textSize="13dp" />
+
+        <!-- 캠핑장 선택 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="캠핑장"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/camping_place_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:entries="@array/camping_place_arrays" />
+
+        <!-- 카메라 사진 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="사진"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark" />
+
+
+        <!-- 후기 작성란 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="후기"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border">
+
+            <EditText
+                android:id="@+id/review_content"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="3dp"
+                android:gravity="top"
+                android:hint="내용을 작성해주세요."
+                android:textSize="15dp"
+                android:background="@null"/>
+        </RelativeLayout>
+
+
+        <!-- 작성완료 버튼 -->
+        <Button
+            android:id="@+id/completing_review_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            android:background="@color/colorPrimary"
+            android:text="작성완료"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>

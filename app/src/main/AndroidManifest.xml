@@ -60,7 +60,8 @@
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".GuideMenu.DetailsActivity" />
-        <activity android:name=".ReviewWriteActivity"></activity>
+        <activity android:name=".ReviewWriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
