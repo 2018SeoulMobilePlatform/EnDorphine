@@ -83,7 +83,7 @@
                 android:paddingLeft="5dp"
                 android:text="#빌리고 싶은 물건"
                 android:textColor="#FF1237"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 android:textSize="10dp" />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 android:text="#빌려줄수 있는 물건"
                 android:textColor="#883212"
                 android:textSize="10dp"

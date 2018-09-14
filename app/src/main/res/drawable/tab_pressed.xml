@@ -12,8 +12,8 @@
                 android:top="15dp"
                 android:right="10dp"
                 android:bottom="15dp" />
-            <stroke android:width="2dp" android:color="#008d62" />
-            <solid android:color="#00000000" />
+            <stroke android:width="2dp" android:color="#13B9A5" />
+            <solid android:color="#13B9A5" />
         </shape>
     </item>
 </layer-list>

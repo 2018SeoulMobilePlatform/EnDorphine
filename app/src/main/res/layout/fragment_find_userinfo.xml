@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/camp_finduser">
+    android:background="@drawable/camp_finduser"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_marginTop="130dp">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,14 +20,15 @@
             android:textColor="#FFFFFF"
             android:text="Forgot Password?"
             android:textAlignment="center"
-            android:layout_gravity="center_horizontal">
+            android:layout_weight="1">
         </TextView>
 
         <EditText
             android:id="@+id/find_email"
             android:hint="Email Address"
-            android:textSize="20dp"
             android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
             android:maxLines="1"
@@ -41,6 +42,7 @@
             android:id="@+id/find_name2"
             android:hint="Name"
             android:textSize="20dp"
+            android:layout_weight="1"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
@@ -54,9 +56,10 @@
         <EditText
             android:id="@+id/find_phone"
             android:hint="Phone Number"
-            android:textSize="20dp"
             android:layout_marginTop="20dp"
+            android:textSize="20dp"
             android:maxLines="1"
+            android:layout_weight="1"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
@@ -69,9 +72,10 @@
             android:id="@+id/find_password"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/rounded_login_button"
             android:layout_marginTop="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_login_button"
             android:text="CONFIRM Password"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"

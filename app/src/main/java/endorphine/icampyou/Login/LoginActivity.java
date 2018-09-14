@@ -5,16 +5,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.app.FragmentManager;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,11 +26,8 @@ import com.kakao.util.exception.KakaoException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import endorphine.icampyou.FindUserInfo_Fragment;
-import endorphine.icampyou.GuideMenu.NanjiGuideActivity;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
-import endorphine.icampyou.RegisterUserInfo_Fragment;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

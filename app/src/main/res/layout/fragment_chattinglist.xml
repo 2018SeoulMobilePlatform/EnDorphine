@@ -34,8 +34,9 @@
             android:maxLength="20"
             android:layout_gravity="center"
             android:hint="Search"
+            android:textColor="#FFFFFF"
             android:layout_weight="200"
-            android:textColorHint="#000000"/>
+            android:textColorHint="#FFFFFF"/>
 
         <ImageButton
             android:id="@+id/remove_allText_button"
