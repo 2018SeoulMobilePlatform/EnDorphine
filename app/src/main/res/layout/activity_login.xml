@@ -4,88 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/camp_night"
     tools:context=".Login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:text="Welcome"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="40dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="Lorem ipusm dolor sit amet, consecteur adipiscing elit."
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="Donec auctor neque sed pretium luctus."
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            android:layout_weight="1"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
             android:background="@drawable/rounded_login"
-            android:hint="Email Address"
+            android:layout_marginTop="15dp"
+            android:hint="Email"
+            android:textAlignment="center"
             android:maxLength="20"
             android:maxLines="1"
-            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textColorHint="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_login"
+            android:layout_marginTop="15dp"
             android:hint="PassWord"
+            android:textAlignment="center"
             android:inputType="textPassword"
+            android:textColorHint="#FFFFFF"
             android:maxLength="20"
             android:maxLines="1"
-            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="300dp"
             android:layout_height="60dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
             android:background="@drawable/rounded_login_button"
             android:text="Login"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/password_find_button"
@@ -120,6 +128,8 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" />
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"/>
+
     </LinearLayout>
 </FrameLayout>
