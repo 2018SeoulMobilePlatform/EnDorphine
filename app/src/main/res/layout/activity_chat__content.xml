@@ -53,8 +53,6 @@
             android:id="@+id/need"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:text="#빌리고 싶은 물건"
             android:textSize="20dp"
@@ -71,7 +69,6 @@
             android:id="@+id/lettable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="#빌려줄 수 있는 물건"
             android:textSize="20dp"
@@ -87,11 +84,12 @@
         <Button
             android:id="@+id/save_chat_content"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:background="@drawable/rounded_login_button"
             android:text="Save"
+            android:textSize="15dp"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
