@@ -224,6 +224,7 @@ public class ChattingList_Fragment extends BaseFragment {
     {
         // layoutinflater를 이용해 xml 리소스를 읽어옴
         View view = LayoutInflater.from(context).inflate(R.layout.image_tab, null);
+
         ImageView img;
 
         if(text.equals("캠핑장 채팅"))

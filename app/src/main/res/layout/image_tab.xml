@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="10dip"
     android:orientation="horizontal"
-    android:background="@drawable/tap_color_selector">
+    android:background="@drawable/tab_indicator">
 
     <ImageView
         android:id="@+id/tabs_image"

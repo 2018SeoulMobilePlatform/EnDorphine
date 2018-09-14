@@ -28,11 +28,4 @@
         <item name="android:src">@drawable/qrcode</item>
     </style>
 
-    <!-- 텝 구성-->
-    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
-        <item name="tabBackground">@drawable/tap_color_selector</item>
-        <item name="tabIndicatorColor">#ff00ff</item>
-        <item name="tabIndicatorHeight">2dp</item>
-    </style>
-
 </resources>
