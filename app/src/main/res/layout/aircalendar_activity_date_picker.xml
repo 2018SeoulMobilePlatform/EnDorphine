@@ -287,8 +287,8 @@
             <!--android:layout_centerHorizontal="true"-->
             <!--android:id="@+id/textView34" />-->
     <!--</RelativeLayout>-->
-    <!-- 다음 버튼 -->
 
+    <!-- 다음 버튼 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

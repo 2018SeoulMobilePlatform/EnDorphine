@@ -2,19 +2,29 @@ package endorphine.icampyou.GuideMenu;
 
 import java.util.ArrayList;
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 
+import com.melnykov.fab.FloatingActionButton;
+
+import endorphine.icampyou.EventMenu.EventListViewAdapter;
+import endorphine.icampyou.EventMenu.EventListViewItem;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
@@ -27,6 +37,12 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     private ViewGroup viewPoints;       // 동그라미 포인트들
     private ViewPager viewPager;        // 사진들
     private Button reservationButton;   // 예약 버튼
+    private ListView reviewList;         // 후기 리스트
+    private ArrayList<ReviewListItem> reviewData;   // 후기 데이터
+    private ReviewListViewAdapter adapter;  //후기 리스트뷰 어댑터
+    private ScrollView scrollView;  // 스크롤뷰
+    private LinearLayout layout;    // 두번째 후기 탭
+    private FloatingActionButton reviewAddButton;   // 후기작성버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,27 +110,103 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         ts3.setIndicator("위치");
         tabHost1.addTab(ts3);
 
-        // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
-        ScrollView scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
-        scrollView.setFocusableInTouchMode(true);
-        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-
-        // 예약버튼
+        // 예약버튼 이벤트 설정
         reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
         reservationButton.setOnClickListener(this);
+
+        // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
+        scrollView = (ScrollView)findViewById(R.id.nanji_guide_scrollView);
+        upScroll();
+
+        // 후기 리스트 설정
+        reviewList = (ListView)findViewById(R.id.review_listView);
+
+        // 후기 데이터 설정
+        reviewData = new ArrayList<>();
+
+        // 후기 아이템들 추가
+        ReviewListItem review1 = new ReviewListItem(R.drawable.user_icon,"이다콩","★★★☆☆",R.drawable.nanji_1);
+        ReviewListItem review2 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
+        ReviewListItem review3 = new ReviewListItem(R.drawable.user_icon,"박다콩","★★★☆☆",0);
+        ReviewListItem review4 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
+        ReviewListItem review5 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
+        ReviewListItem review6 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
+        reviewData.add(review1);
+        reviewData.add(review2);
+        reviewData.add(review3);
+        reviewData.add(review4);
+        reviewData.add(review5);
+        reviewData.add(review6);
+
+        // 어댑터로 후기 리스트에 아이템 뿌려주기
+        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+        reviewList.setAdapter(adapter);
+
+        // 후기작성버튼 설정
+        reviewAddButton = findViewById(R.id.review_add_button);
+
+        // 스크롤 맨 위로
+        upScroll();
     }
 
+    // 예약버튼 클릭 이벤트 메소드
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.reservation_button:
-                Log.e("NanjiGuideActivity", "이다인 ㅂㅅ");
+                // 예약 버튼 누르면 캘린더 액티비티 시작됨
                 Intent intent = new Intent();
                 intent.setClass(this, CalenderActivity.class);
-                intent.putExtra("title", "난지 캠핑장");
-
                 startActivity(intent);
                 break;
         }
     }
+
+    // 스크롤 맨 위로
+    public void upScroll(){
+        scrollView.setFocusableInTouchMode(true);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+    }
+
+    // 리스트뷰 높이 자동 맞춤 메소드
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0,0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+    public void setListViewHeightBasedOnItems(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)  return;
+
+        int numberOfItems = listAdapter.getCount();
+
+        int totalItemsHeight = 0;
+        for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+            View item = listAdapter.getView(itemPos, null, listView);
+            item.measure(0, 0);
+            totalItemsHeight += item.getMeasuredHeight();
+        }
+
+        int totalDividersHeight = listView.getDividerHeight() *  (numberOfItems - 1);
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalItemsHeight + totalDividersHeight;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+
+    }
+
 }
