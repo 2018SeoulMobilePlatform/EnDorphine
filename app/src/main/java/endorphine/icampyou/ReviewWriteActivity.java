@@ -1,5 +1,6 @@
 package endorphine.icampyou;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,17 +12,20 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import endorphine.icampyou.GuideMenu.NanjiGuideActivity;
+
 /**
  * 후기 작성 페이지
  */
 public class ReviewWriteActivity extends AppCompatActivity implements View.OnClickListener{
+
+    Intent intent;
 
     RatingBar ratingBar;    // 별점 바
     Spinner campingPlaceSpinner;    // 캠핑장 선택바
     ImageView reviewImageView;  // 후기사진 이미지뷰
     EditText reviewEditText;    // 후기 내용
     Button completingReviewButton;  // 작성완료 버튼
-
     float starNum;  // 별점
     String campingPlace;    // 캠핑장 이름
     int reviewImage; // 후기 사진
@@ -49,19 +53,29 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                 // 현재 설정값 저장
                 setReviewValue();
                 // 인텐트로 리뷰한테 값 보내기
-
+                putIntent();
+                startActivity(intent);
+                finish();
                 break;
         }
     }
 
     public void setReviewValue(){
         // 별점 가져오기
-        starNum = ratingBar.getRating();
+        starNum = (float)ratingBar.getRating();
         // 캠핑장 이름 가져오기
         campingPlace = campingPlaceSpinner.getSelectedItem().toString();
         // 후기 사진 가져오기...(어케하는지 모르긔)
         reviewImage = 0;
         // 후기 내용 가져오기
         reviewContent = reviewEditText.getText().toString();
+    }
+
+    public void putIntent(){
+        intent = new Intent(this, NanjiGuideActivity.class);
+        intent.putExtra("star",(float)starNum);
+        intent.putExtra("camping_place",campingPlace);
+        intent.putExtra("review_content",reviewContent);
+        intent.putExtra("review_image",reviewImage);
     }
 }

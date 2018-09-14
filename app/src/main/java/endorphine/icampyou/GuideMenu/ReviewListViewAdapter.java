@@ -1,10 +1,12 @@
 package endorphine.icampyou.GuideMenu;
 
+import android.media.Rating;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,8 +25,9 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
     private ImageView profileImage;
     private TextView nickName;
-    private TextView star;
+    private RatingBar star;
     private ImageView reviewImage;
+    private TextView reviewContent;
 
     // 생성자
     public ReviewListViewAdapter(LayoutInflater inflater, int layout, ArrayList<ReviewListItem> reviewData){
@@ -54,11 +57,14 @@ public class ReviewListViewAdapter extends BaseAdapter {
         nickName=(TextView)convertView.findViewById(R.id.review_nickname);
         nickName.setText(reviewListItem.getNickName());
 
-        star = (TextView)convertView.findViewById(R.id.review_star);
-        star.setText(reviewListItem.getStar());
+        star = (RatingBar)convertView.findViewById(R.id.review_star);
+        star.setRating(reviewListItem.getStar());
 
         reviewImage = (ImageView)convertView.findViewById(R.id.review_image);
         reviewImage.setImageResource(reviewListItem.getReviewImage());
+
+        reviewContent = convertView.findViewById(R.id.review_content);
+        reviewContent.setText(reviewListItem.getReviewContent());
 
         return convertView;
     }

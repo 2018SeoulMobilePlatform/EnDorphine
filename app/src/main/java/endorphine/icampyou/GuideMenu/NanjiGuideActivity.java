@@ -38,14 +38,17 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     private ScrollView scrollView;  // 스크롤뷰
     private LinearLayout layout;    // 두번째 후기 탭
     private FloatingActionButton reviewAddButton;   // 후기작성버튼
+    private int userIcon;   // 유저 아이콘 이미지
+    private String nickName;    // 유저 닉네임
     private Intent intent;  // 인텐트
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // 페이지뷰에 사진 페이지 저장
-        LayoutInflater inflater = getLayoutInflater();
+        inflater = getLayoutInflater();
         pageViews = new ArrayList<View>();
         pageViews.add(inflater.inflate(R.layout.page01, null));
         pageViews.add(inflater.inflate(R.layout.page02, null));
@@ -116,19 +119,15 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         // 후기 데이터 설정
         reviewData = new ArrayList<>();
 
+        // 유저 아이콘이랑 닉네임 설정
+        userIcon = R.drawable.user_icon;
+        nickName = "김다콩";
+
         // 후기 아이템들 추가
-        ReviewListItem review1 = new ReviewListItem(R.drawable.user_icon,"이다콩","★★★☆☆",R.drawable.nanji_1);
-        ReviewListItem review2 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
-        ReviewListItem review3 = new ReviewListItem(R.drawable.user_icon,"박다콩","★★★☆☆",0);
-        ReviewListItem review4 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
-        ReviewListItem review5 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
-        ReviewListItem review6 = new ReviewListItem(R.drawable.user_icon,"김다콩","★★★☆☆",R.drawable.nanji_2);
-        reviewData.add(review1);
-        reviewData.add(review2);
-        reviewData.add(review3);
-        reviewData.add(review4);
-        reviewData.add(review5);
-        reviewData.add(review6);
+        addReviewList(R.drawable.user_icon,"이다콩",3,R.drawable.nanji_1,"짱좋");
+        addReviewList(R.drawable.user_icon,"김다콩",4,R.drawable.nanji_2,"너무너무너무좋아용>ㅁ<");
+        addReviewList(R.drawable.user_icon,"박다콩",(float)2.5,0,"시설이 깨끗해요");
+        addReviewList(R.drawable.user_icon,"김다콩",(float)3.5,R.drawable.nanji_2,"친구들이랑 재밌게 놀았뜸");
 
         // 어댑터로 후기 리스트에 아이템 뿌려주기
         adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
@@ -162,5 +161,36 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
                 startActivity(intent);
                 break;
         }
+    }
+
+    // 리뷰 액티비티 갔다가 끝나면 여기로
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        float starNum;
+        String campingPlace;
+        String reviewContent;
+        int reviewImage;
+
+        intent = getIntent();
+
+        if(intent.getStringExtra("review_content") != null){
+            // 인텐트로 리뷰 값 받아오기
+            starNum = intent.getFloatExtra("star",0);
+            campingPlace = intent.getStringExtra("camping_place");
+            reviewContent = intent.getStringExtra("review_content");
+            reviewImage = intent.getIntExtra("review_image",0);
+            // 리스트에 추가하기
+            addReviewList(userIcon, nickName, starNum, reviewImage, reviewContent);
+            adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+            reviewList.setAdapter(adapter);
+        }
+    }
+
+    // 후기 리스트에 아이템 추가하는 메소드
+    private void addReviewList(int userIcon, String nickName, float star, int reviewImage, String reviewContent){
+        ReviewListItem reviewItem = new ReviewListItem(userIcon, nickName, star, reviewImage, reviewContent);
+        reviewData.add(reviewItem);
     }
 }

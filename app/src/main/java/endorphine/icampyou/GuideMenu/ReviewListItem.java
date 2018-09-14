@@ -10,15 +10,17 @@ public class ReviewListItem {
 
     private int profileImage; // 프로필 이미지
     private String nickName;  // 유저 닉네임
-    private String star;  // 별점
+    private float star;  // 별점
     private int reviewImage;    //리뷰 이미지
+    private String reviewContent;   // 리뷰 내용
 
     // 생성자
-    public ReviewListItem(int profileImage, String nickName, String star, int reviewImage) {
+    public ReviewListItem(int profileImage, String nickName, float star, int reviewImage, String reviewContent) {
         this.profileImage = profileImage;
         this.nickName = nickName;
         this.star = star;
         this.reviewImage = reviewImage;
+        this.reviewContent = reviewContent;
     }
 
     // 각 변수들 get 메소드
@@ -30,11 +32,13 @@ public class ReviewListItem {
         return nickName;
     }
 
-    public String getStar() {
+    public float getStar() {
         return star;
     }
 
     public int getReviewImage() {
         return reviewImage;
     }
+
+    public String getReviewContent() {return reviewContent;}
 }
