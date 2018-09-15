@@ -115,8 +115,7 @@
                                         android:padding="5dp"
                                         android:text="난지 캠핑장"
                                         android:textColor="#5A4D44"
-                                        android:textSize="21dp"
-                                        android:textStyle="bold" />
+                                        android:textSize="21dp" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -136,8 +135,7 @@
                                             android:background="#FFFFFF"
                                             android:text="서울특별시 마포구 상암동 495-81"
                                             android:textColor="#B9B9B9"
-                                            android:textSize="14dp"
-                                            android:textStyle="bold" />
+                                            android:textSize="14dp" />
                                     </LinearLayout>
                                 </LinearLayout>
                                 <!-- 총 별점, 변경 불가-->

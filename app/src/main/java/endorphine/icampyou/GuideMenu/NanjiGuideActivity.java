@@ -178,6 +178,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
             case R.id.reservation_button:
                 // 예약 버튼 누르면 캘린더 액티비티 시작됨
                 intent.setClass(this, CalenderActivity.class);
+                intent.putExtra("title", "난지 캠핑장");
                 startActivity(intent);
                 break;
             case R.id.review_add_button:
