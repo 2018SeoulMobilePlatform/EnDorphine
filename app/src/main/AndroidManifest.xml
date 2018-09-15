@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
     package="endorphine.icampyou">
-
-     //사용자 권한
+    //사용자 권한
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -14,14 +13,12 @@
 
     <application
         android:name=".GlobalApplication"
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme.StatusBar">
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -31,10 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ExchangeMenu.Chat_Content"
-            android:exported="true"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,29 +42,27 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".Login.LoginActivity">
-            </activity>
+        <activity android:name=".Login.LoginActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".MainActivity">
-
-        </activity>
-
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".GuideMenu.NanjiGuideActivity"></activity>
-        <activity android:name=".GuideMenu.CalenderActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".GuideMenu.DetailsActivity"></activity>
+        <activity android:name=".GuideMenu.NanjiGuideActivity" />
+        <activity
+            android:name=".GuideMenu.CalenderActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".GuideMenu.DetailsActivity" />
+        <activity android:name=".ReviewWriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

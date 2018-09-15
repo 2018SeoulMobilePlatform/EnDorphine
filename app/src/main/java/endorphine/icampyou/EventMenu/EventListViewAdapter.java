@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import endorphine.icampyou.R;
 
+/**
+ * 이벤트 리스트뷰 어댑터 클래스
+ */
 public class EventListViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;

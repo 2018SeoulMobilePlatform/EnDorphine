@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="2dp"
+    android:padding="1dp"
     >
     
     <ImageView
@@ -18,55 +18,112 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="4"
         android:orientation="vertical"
+        android:layout_weight="4"
         android:paddingLeft="10dp">
 
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="3">
+            android:layout_weight="2">
 
             <TextView
                 android:id="@+id/user_id"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="text"
+                android:layout_gravity="center_vertical"
+                android:text="user_name"
                 android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="4"/>
 
-            <TextView
-                android:id="@+id/camping_name"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="냥냥냥냥냥ㄴ"
-                android:textSize="13dp"
-                android:textStyle="bold"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/camping_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="camp_name"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:paddingRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="time"
+                    android:textSize="13dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:paddingRight="5dp"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/need_thing"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:text="text"
-            android:textSize="10dp" />
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/lettable_thing"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="#빌리고 싶은 물건"
+                android:textColor="#FF1237"
+                android:textStyle="bold"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/need_thing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="need_thing"
+
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:text="text"
-            android:textSize="10dp" />
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"
+                android:text="#빌려줄수 있는 물건"
+                android:textColor="#883212"
+                android:textSize="10dp"
+                />
+
+            <TextView
+                android:id="@+id/lettable_thing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="lettable_thing"
+                android:textSize="10dp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
-
-
 
 </LinearLayout>

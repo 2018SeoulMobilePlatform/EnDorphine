@@ -2,6 +2,7 @@ package endorphine.icampyou;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -56,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     // 프래그먼트 변경
                     setFragment(1);
                     // 임의로 QR 코드 설정
-                    generateRQCode("이것은QR코드");
+                    generateRQCode("QR코드");
                     return true;
                 case R.id.navigation_home:
                     setFragment(2);
@@ -106,7 +108,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         //int color = getResources().getColor(getResources().getIdentifier("black","color",getPackageName()));
-        toggle.getDrawerArrowDrawable().setColor(Color.BLACK);
+
+        // 상단에 토글 아이콘 색상 변경
+        int color = ContextCompat.getColor(getBaseContext(), R.color.colorPrimary);
+        toggle.getDrawerArrowDrawable().setColor(color);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

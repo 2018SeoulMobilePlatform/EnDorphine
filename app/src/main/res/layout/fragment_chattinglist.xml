@@ -13,29 +13,47 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edittext"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:padding="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:src="@drawable/search"/>
 
         <EditText
             android:id="@+id/search"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft= "10dp"
+            android:paddingLeft= "5dp"
             android:maxLines="1"
+            android:maxLength="20"
             android:layout_gravity="center"
-            android:hint="Search"/>
+            android:hint="Search"
+            android:textColor="#FFFFFF"
+            android:layout_weight="200"
+            android:textColorHint="#FFFFFF"/>
+
+        <ImageButton
+            android:id="@+id/remove_allText_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/erase"/>
     </LinearLayout>
 
     <TabHost
         android:id="@+id/tapHost_chatlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/Base.Widget.Design.TabLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,40 +63,45 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            
+                android:layout_height="match_parent">
+
                 <LinearLayout
                     android:id="@+id/content1_chatlist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
                         <ListView
                             android:id="@+id/camp_chat_listview"
                             android:listSelector="#778899"
                             android:cacheColorHint="#778899"
                             android:dividerHeight="1dp"
-                            android:divider="#FFFFFF"
+                            android:divider="#000000"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:transcriptMode="alwaysScroll"/>
                     </FrameLayout>
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        android:visibility="visible"
                         android:gravity="right"
-                        android:layout_marginTop="220dp"
                         android:layout_marginRight="30dp"
-                        >
+                        android:layout_marginBottom="30dp"
+                        android:weightSum="1">
 
                         <Button
                             android:id="@+id/make_chatlist_button"
@@ -88,10 +111,10 @@
                             android:text="+"
                             android:textSize="30dp"
                             android:textColor="#fff" />
-
-                    </RelativeLayout>
-
+                    </LinearLayout>
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/content2_chatlist"
@@ -107,19 +130,19 @@
                         android:padding="8dp"
                         android:text="TAB CONTENT 2" />
 
-                    <!--<FrameLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content">-->
-                        <!--<ListView-->
-                            <!--android:id="@+id/my_chat_listview"-->
-                            <!--android:listSelector="#778899"-->
-                            <!--android:cacheColorHint="#778899"-->
-                            <!--android:dividerHeight="1dp"-->
-                            <!--android:divider="#FFFFFF"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:transcriptMode="alwaysScroll"/>-->
-                    <!--</FrameLayout>-->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ListView
+                            android:id="@+id/my_chat_listview"
+                            android:listSelector="#778899"
+                            android:cacheColorHint="#778899"
+                            android:dividerHeight="1dp"
+                            android:divider="#000000"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:transcriptMode="alwaysScroll"/>
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -128,6 +151,7 @@
         </LinearLayout>
 
     </TabHost>
+
 
 
 
