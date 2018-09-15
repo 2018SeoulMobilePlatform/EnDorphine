@@ -1,13 +1,132 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="endorphine.icampyou.HomeMenu.HomeFragment1"
     android:background="#FFFFFF">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="홈화면" />
+    <ImageView android:id="@+id/animationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
 
-</FrameLayout>
+    <TextView
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+
+        android:text="Temperature"
+
+        android:id="@+id/tem"
+
+        android:layout_below="@+id/tvLongtitude"
+
+        android:layout_alignParentStart="true"
+
+        android:layout_marginTop="46dp" />
+
+
+
+    <Button
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:text="getWeather"
+
+        android:id="@+id/getWeatherBtn"
+
+        android:onClick="getWeather"
+
+        android:layout_alignBottom="@+id/tem"
+
+        android:layout_alignParentEnd="true" />
+
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:textAppearance="?android:attr/textAppearanceMedium"
+
+        android:text="latitude"
+
+        android:id="@+id/tvLatitude"
+
+        android:layout_marginTop="27dp"
+
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentStart="true" />
+
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:textAppearance="?android:attr/textAppearanceMedium"
+
+        android:text="longtitude"
+
+        android:id="@+id/tvLongtitude"
+
+        android:layout_marginRight="62dp"
+
+        android:layout_marginTop="30dp"
+
+        android:layout_below="@+id/lat"
+
+        android:layout_alignParentStart="true" />
+
+
+
+    <EditText
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:id="@+id/lat"
+
+        android:width="100dp"
+
+        android:layout_marginRight="62dp"
+
+        android:layout_alignBottom="@+id/tvLatitude"
+
+        android:layout_toEndOf="@+id/tvLatitude"
+
+        android:layout_marginStart="36dp" />
+
+
+
+    <EditText
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:width="100dp"
+
+        android:id="@+id/lon"
+
+        android:layout_marginRight="62dp"
+
+        android:layout_alignBottom="@+id/tvLongtitude"
+
+        android:layout_alignStart="@+id/lat" />
+
+
+</LinearLayout>
