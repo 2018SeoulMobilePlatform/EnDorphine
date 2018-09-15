@@ -129,6 +129,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
             }
         });
 
+
         // 예약버튼 이벤트 설정
         reservationButton = (Button)viewLayout.findViewById(R.id.reservation_button);
         reservationButton.setOnClickListener(this);

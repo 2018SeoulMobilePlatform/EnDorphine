@@ -47,5 +47,5 @@ dependencies {
     //원 모양의 ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //플로팅액션 버튼
-    compile 'com.melnykov:floatingactionbutton:1.3.0'
+    implementation 'com.melnykov:floatingactionbutton:1.3.0'
 }
