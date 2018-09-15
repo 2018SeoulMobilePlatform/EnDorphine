@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="camping_place_arrays">
+        <item>캠핑장을 선택해주세요.</item>
+        <item >강동캠핑장</item>
+        <item >난지캠핑장</item>
+        <item >노을캠핑장</item>
+        <item >서울대공원캠핑장</item>
+        <item >중랑캠핑장</item>
+        <item >초안산캠핑장</item>
+    </string-array>
+</resources>

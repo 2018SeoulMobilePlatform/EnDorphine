@@ -12,7 +12,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:divider="#FFFFFF"
+            android:dividerHeight="2dp">
 
             <ImageView
                 android:id="@+id/nanji"
@@ -21,7 +23,13 @@
                 android:layout_weight="1"
                 android:scaleType="fitXY"
                 android:src="@drawable/menu_nanji"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:background="#FFFFFF"/>
+
             <ImageView
                 android:id="@+id/seoul"
                 android:layout_width="match_parent"
@@ -29,6 +37,11 @@
                 android:layout_weight="1"
                 android:src="@drawable/menu_seoul"
                 android:adjustViewBounds="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:background="#FFFFFF"/>
 
             <ImageView
                 android:id="@+id/noeul"
@@ -37,6 +50,11 @@
                 android:layout_weight="1"
                 android:src="@drawable/menu_noeul"
                 android:adjustViewBounds="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:background="#FFFFFF"/>
 
             <ImageView
                 android:id="@+id/jungrang"
@@ -46,6 +64,11 @@
                 android:src="@drawable/menu_junglang"
                 android:adjustViewBounds="true"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:background="#FFFFFF"/>
 
             <ImageView
                 android:id="@+id/choansan"
@@ -55,6 +78,11 @@
                 android:src="@drawable/menu_choansan"
                 android:adjustViewBounds="true"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:background="#FFFFFF"/>
 
             <ImageView
                 android:id="@+id/gangdong"

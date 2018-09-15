@@ -23,7 +23,8 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:background="#FFFFFF">
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -67,7 +68,7 @@
         layout="@layout/app_bar_navi"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
--->
+        -->
 
     <!--
      옆구리 네비게이션 바 활성화 됐을 때 View -->
