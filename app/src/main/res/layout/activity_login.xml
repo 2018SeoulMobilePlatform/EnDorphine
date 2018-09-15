@@ -1,117 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Login.LoginActivity"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="@drawable/camp_night"
-    android:id="@+id/login">
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="40dp"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="100dp"
-        android:textStyle="bold"
-        android:text="Welcome"/>
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="10dp"
-        android:textColor="#FFFFFF"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:text="Lorem ipusm dolor sit amet, consecteur adipiscing elit."/>
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="10dp"
-        android:textAlignment="center"
-        android:text="Donec auctor neque sed pretium luctus."/>
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:background="@drawable/rounded_login"
-        android:layout_marginTop="80dp"
-        android:textColor="#FFFFFF"
-        android:textAlignment="center"
-        android:hint="Email Address"
-        android:textSize="20dp"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:layout_gravity="center_horizontal"/>
-
-    <EditText
-        android:inputType="textPassword"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:background="@drawable/rounded_login"
-        android:textColor="#FFFFFF"
-        android:maxLines="1"
-        android:layout_marginTop="10dp"
-        android:hint="PassWord"
-        android:maxLength="20"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:layout_gravity="center_horizontal"/>
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/rounded_login_button"
-        android:layout_marginTop="30dp"
-        android:text="Login"
-        android:textAlignment="center"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20dp"/>
+    tools:context=".Login.LoginActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp">
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="ID/Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
+            android:textSize="40dp"
             android:textStyle="bold"
-            android:textSize="25dp"
-            android:onClick="find_userInfo"/>
+            android:layout_weight="1"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="|"
-            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Lorem ipusm dolor sit amet, consecteur adipiscing elit."
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:layout_marginRight="10dp"
-            android:textStyle="bold"
-            android:textSize="25dp" />
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donec auctor neque sed pretium luctus."
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:text="Register"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:onClick="register_userInfo"/>
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_login"
+            android:layout_marginTop="15dp"
+            android:hint="Email"
+            android:textAlignment="center"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_login"
+            android:layout_marginTop="15dp"
+            android:hint="PassWord"
+            android:textAlignment="center"
+            android:inputType="textPassword"
+            android:textColorHint="#FFFFFF"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_login_button"
+            android:text="Login"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/password_find_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Password"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="|"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/register_user_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Sing Up"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.kakao.usermgmt.LoginButton
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"/>
+
     </LinearLayout>
 
-    <com.kakao.usermgmt.LoginButton
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp" />
-
-</LinearLayout>
+</FrameLayout>
