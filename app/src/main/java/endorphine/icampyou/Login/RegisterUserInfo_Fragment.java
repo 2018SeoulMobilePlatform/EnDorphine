@@ -1,7 +1,6 @@
 package endorphine.icampyou.Login;
 
 import android.content.ContentValues;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,20 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.kakao.network.NetworkTask;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
-import endorphine.icampyou.RequestHttpURLConnection;
 
 public class RegisterUserInfo_Fragment extends BaseFragment {
-
-    String email;
-    String password;
-    String name;
-    String nickName;
-    String phoneNumber;
 
     EditText email_editText;
     EditText password_editText;
@@ -37,13 +36,6 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        // URL 설정
-        String url = "ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
-
-        // AsyncTask를 통해 HttpURLConnection 수행
-        NetworkTask networkTask = new NetworkTask(url,null);
-        networkTask.execute();
     }
 
     @Override
@@ -55,7 +47,31 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         Button register_btn = (Button)view.findViewById(R.id.register_user);
         register_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                //데이터베이스에 유저 정보 저장, 바로 홈 화면 전환
+                if(!exception.EmailException(email_editText.getText().toString()) ||
+                        !exception.UserNameException(name_editText.getText().toString()) ||
+                        !exception.UserNickNameException(nickName_editText.getText().toString()) ||
+                        !exception.UserPassWordExcepiton(password_editText.getText().toString()) ||
+                        !exception.UserPhoneException(phoneNumber_editText.getText().toString())){
+
+                    Toast.makeText(getActivity(),"올바른 입력이 필요합니다",Toast.LENGTH_LONG).show();
+                } else{
+                    // URL 설정
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
+
+                    //정보
+                    ArrayList<NameValuePair> info = null;
+                    try {
+                        info = makeDataType();
+                        endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,info);
+                        networkTask.execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    // AsyncTask를 통해 HttpURLConnection 수행
+                    Toast.makeText(getActivity(),"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
@@ -65,11 +81,6 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         nickName_editText = (EditText)view.findViewById(R.id.user_nickname);
         phoneNumber_editText = (EditText)view.findViewById(R.id.user_phone);
 
-        email = email_editText.getText().toString();
-        password = password_editText.getText().toString();
-        name = name_editText.getText().toString();
-        nickName = nickName_editText.getText().toString();
-        phoneNumber = phoneNumber_editText.getText().toString();
 
         //이메일 리스너
         email_editText.addTextChangedListener(new TextWatcher() {
@@ -206,35 +217,25 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         return view;
     }
 
-    public class NetworkTask extends AsyncTask<Void, Void, String> {
+    //POST 요청 할 때 데이터 형식 만들기
+    public ArrayList<NameValuePair> makeDataType() throws UnsupportedEncodingException {
 
-        private String url;
-        private ContentValues values;
+//        ContentValues info = new ContentValues();
+//
+//        info.put("id",email_editText.toString());
+//        info.put("password",password_editText.toString());
+//        info.put("name",name_editText.toString());
+//        info.put("nickname",nickName_editText.toString());
+//        info.put("phonenumber",phoneNumber_editText.toString());
 
-        public NetworkTask(String url, ContentValues values) {
+        ArrayList<NameValuePair> data = new ArrayList<>();
+        //Post방식으로 넘길 값들을 각각 지정을 해주어야 한다.
+        data.add(new BasicNameValuePair("id", URLDecoder.decode(email_editText.getText().toString(), "UTF-8")));
+        data.add(new BasicNameValuePair("password", URLDecoder.decode(password_editText.getText().toString(), "UTF-8")));
+        data.add(new BasicNameValuePair("name", URLDecoder.decode(name_editText.getText().toString(), "UTF-8")));
+        data.add(new BasicNameValuePair("nickname", URLDecoder.decode(nickName_editText.getText().toString(), "UTF-8")));
+        data.add(new BasicNameValuePair("phonenumber", URLDecoder.decode(phoneNumber_editText.getText().toString(), "UTF-8")));
 
-            this.url = url;
-            this.values = values;
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            String result; // 요청 결과를 저장할 변수.
-            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
-            result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-            Log.e("result",s);
-        }
+        return data;
     }
-
-
 }

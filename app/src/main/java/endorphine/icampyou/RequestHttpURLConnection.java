@@ -1,15 +1,28 @@
 package endorphine.icampyou;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Map;
+
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.client.ClientProtocolException;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class RequestHttpURLConnection {
 
@@ -34,9 +47,13 @@ public class RequestHttpURLConnection {
             String key;
             String value;
 
-            for(Map.Entry<String, Object> parameter : _params.valueSet()){
+            for (Map.Entry<String, Object> parameter : _params.valueSet()) {
                 key = parameter.getKey();
                 value = parameter.getValue().toString();
+
+
+                Log.e("key", parameter.getKey().toString());
+                Log.e("value", parameter.getValue().toString());
 
                 // 파라미터가 두개 이상일때, 파라미터 사이에 &를 붙인다.
                 if (isAnd)
@@ -49,6 +66,7 @@ public class RequestHttpURLConnection {
                     if (_params.size() >= 2)
                         isAnd = true;
             }
+
         }
 
         /**
@@ -57,6 +75,8 @@ public class RequestHttpURLConnection {
         try{
             URL url = new URL(_url);
             urlConn = (HttpURLConnection) url.openConnection();
+
+            Log.e("url",_url);
 
             // [2-1]. urlConn 설정.
             urlConn.setRequestMethod("POST"); // URL 요청에 대한 메소드 설정 : POST.
@@ -72,8 +92,10 @@ public class RequestHttpURLConnection {
 
             // [2-3]. 연결 요청 확인.
             // 실패 시 null을 리턴하고 메서드를 종료.
-            if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK)
+            if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK){
+                Log.e("실패","냥냥");
                 return null;
+            }
 
             // [2-4]. 읽어온 결과물 리턴.
             // 요청한 URL의 출력물을 BufferedReader로 받는다.
@@ -93,18 +115,54 @@ public class RequestHttpURLConnection {
                 page += line;
             }
 
+            Log.e("성공",page);
+
             return page;
 
         } catch (MalformedURLException e) { // for URL.
+            Log.e("실패","1");
             e.printStackTrace();
-        } catch (IOException e) { // for openConnection().
+        } catch (IOException e) { // for openConnection()
+            Log.e("실패","2");
             e.printStackTrace();
         } finally {
+            Log.e("실패","3");
             if (urlConn != null)
                 urlConn.disconnect();
         }
-
+        Log.e("실패","4");
         return null;
 
     }
+
+    //서버로 데이터 전달
+    public void select_doProcess(String url, ArrayList<NameValuePair> data) {
+
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+        ArrayList<NameValuePair> nameValues = data;
+
+        try {
+            //HttpPost에 넘길 값을들 Set해주기
+            post.setEntity(new UrlEncodedFormEntity(nameValues, "UTF-8"));
+
+        } catch (UnsupportedEncodingException ex) {
+            Log.e("Insert Log", ex.toString());
+        }
+
+        try {
+            //설정한 URL을 실행시키기
+            HttpResponse response = client.execute(post);
+            //통신 값을 받은 Log 생성. (200이 나오는지 확인할 것~) 200이 나오면 통신이 잘 되었다는 뜻!
+            Log.e("Insert Log", "response.getStatusCode:" + response.getStatusLine().getStatusCode());
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
