@@ -230,6 +230,7 @@ public class ChattingList_Fragment extends BaseFragment {
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
         adapter = new ChatList_Adapter();
+        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥","냥냥"));
         chatlist_listView.setAdapter(adapter);
 
         copy = new ArrayList<>();
