@@ -11,15 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class FindUserInfo_Fragment extends BaseFragment {
-
-
-    String findPassword_email;
-    String findPassword_name;
-    String findPassword_phone;
 
     EditText findPassword_email_editText;
     EditText findPassword_name_editText;
@@ -39,7 +38,18 @@ public class FindUserInfo_Fragment extends BaseFragment {
         find_password.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 //데이터베이스에서 비밀번호 찾아오기,로그인 화면으로
+                String url = "";
 
+                JSONObject data = null;
+
+                try {
+                    data = sendJSonData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,data, NetworkTask.USER_FIND_INFO);
+                networkTask.execute();
             }
         });
 
@@ -47,10 +57,18 @@ public class FindUserInfo_Fragment extends BaseFragment {
         findPassword_name_editText = (EditText)view.findViewById(R.id.find_name2);
         findPassword_phone_editText = (EditText)view.findViewById(R.id.find_phone);
 
-        findPassword_email = findPassword_email_editText.getText().toString();
-        findPassword_name = findPassword_name_editText.getText().toString();
-        findPassword_phone = findPassword_phone_editText.getText().toString();
-
         return view;
+    }
+
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData() throws JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("id", findPassword_email_editText.getText().toString());
+        jsonObject.accumulate("name", findPassword_name_editText.getText().toString());
+        jsonObject.accumulate("phonenumber", findPassword_phone_editText.getText().toString());
+
+        return jsonObject;
     }
 }

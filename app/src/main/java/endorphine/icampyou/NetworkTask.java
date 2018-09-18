@@ -1,6 +1,9 @@
 package endorphine.icampyou;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,13 +19,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     private String url;
     private JSONObject data;
 
+    //사용자 등록 경우
     public static final int USER_REGISTER = 1111;
+
+    //사용자 로그인 경우
     public static final int USER_LOGIN = 1112;
 
-    public static boolean CHECK_LOGIN = false;
+    //사용자 로그인 경우
+    public static final int USER_FIND_INFO = 1113;
 
     private int select;
     private Context context;
+    ProgressDialog asyncDialog;
 
     public NetworkTask(String url, JSONObject data,int ACTION){
         this.url = url;
@@ -35,8 +43,30 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.url = url;
         this.data = data;
         this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
     }
 
+    @Override
+    protected void onPreExecute() {
+        asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        switch (select){
+            case USER_REGISTER:
+                asyncDialog.setMessage("사용자 등록 중 입니다..");
+                break;
+            case USER_LOGIN:
+                asyncDialog.setMessage("로그인 중 입니다..");
+                break;
+            case USER_FIND_INFO:
+                asyncDialog.setMessage("사용자 정보를 찾는 중 입니다..");
+                break;
+                default:
+                    break;
+        }
+
+        // show dialog
+        asyncDialog.show();
+        super.onPreExecute();
+    }
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -44,17 +74,36 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, data);
 
-        Log.e("1","1");
-
-
-
         return result;
     }
 
     @Override
     protected void onPostExecute(String result) {
+        //다이얼로그 종료
+        asyncDialog.dismiss();
+
+        //경우에 따른 스위치문
         switch (select){
             case USER_REGISTER:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if(real_result.equals("id_fail")){
+                        Toast.makeText(context, "중복된 아이디가 존재합니다", Toast.LENGTH_LONG).show();
+                    } else if( real_result.equals("nickname_fail")){
+                        Toast.makeText(context, "중복된 닉네임이 존재합니다", Toast.LENGTH_LONG).show();
+                    } else if( real_result.equals("phonenumber_fail")){
+                        Toast.makeText(context, "중복된 핸드폰번호가 존재합니다", Toast.LENGTH_LONG).show();
+                    } else if( real_result.equals("success")){
+//                        FragmentManager fragmentManager =
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace();
+//                        fragmentTransaction.commit();
+                        Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case USER_LOGIN:
                 try {
@@ -65,13 +114,23 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity)context).finish();
                     } else {
+                        onCancelled();
                         Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
+            case USER_FIND_INFO:
+                break;
+                default:
+                    break;
         }
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
     }
 }
 

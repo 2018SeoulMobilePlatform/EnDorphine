@@ -84,15 +84,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 NetworkTask networkTask = new NetworkTask(this,url,jsonObject,NetworkTask.USER_LOGIN);
                 networkTask.execute();
 
-//                if(NetworkTask.CHECK_LOGIN){
-//                    // 홈 액티비티 실행
-//                    Log.e("냥냥","냥냥");
-//                    startActivity(new Intent(this, HomeActivity.class));
-//                    finish();
-//                } else{
-//                    Toast.makeText(this,"아이디와 비밀번호를 확인해주세요",Toast.LENGTH_LONG).show();
-//                }
-
                 break;
             case R.id.password_find_button:
                 FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
