@@ -1,7 +1,6 @@
 package endorphine.icampyou;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import endorphine.icampyou.GuideMenu.NanjiGuideActivity;
+import endorphine.icampyou.GuideMenu.GuideActivity;
 
 /**
  * 후기 작성 페이지
@@ -72,7 +70,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void putIntent(){
-        intent = new Intent(this, NanjiGuideActivity.class);
+        intent = new Intent(this, GuideActivity.class);
         intent.putExtra("star",(float)starNum);
         intent.putExtra("camping_place",campingPlace);
         intent.putExtra("review_content",reviewContent);

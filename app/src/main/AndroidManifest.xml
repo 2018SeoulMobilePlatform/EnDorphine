@@ -69,7 +69,6 @@
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".GuideMenu.NanjiGuideActivity" />
         <activity
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -92,6 +91,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+
+        <activity android:name=".GuideMenu.GuideActivity"></activity>
     </application>
 
 </manifest>
