@@ -1,45 +1,81 @@
 package endorphine.icampyou;
 
-import android.content.ContentValues;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.NameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
-    final int passData = 1;
-    final int getData = 2;
-
     private String url;
-    private ContentValues values;
-    private ArrayList<NameValuePair> data;
+    private JSONObject data;
 
-    public NetworkTask(String url,ArrayList<NameValuePair> _data) {
+    public static final int USER_REGISTER = 1111;
+    public static final int USER_LOGIN = 1112;
 
+    public static boolean CHECK_LOGIN = false;
+
+    private int select;
+    private Context context;
+
+    public NetworkTask(String url, JSONObject data,int ACTION){
         this.url = url;
-        this.values = values;
-        this.data = _data;
+        this.data = data;
+        this.select = ACTION;
     }
 
-    @Override
-    protected String doInBackground(Void... params) {
+    public NetworkTask(Context _context,String url, JSONObject data,int ACTION){
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+    }
 
-        String result; // 요청 결과를 저장할 변수.
+
+    @Override
+    protected String doInBackground(Void... voids) {
+        String result = null;
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
-        //result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
-        requestHttpURLConnection.select_doProcess(url,data);
-        return null;
+        result = requestHttpURLConnection.request(url, data);
+
+        Log.e("1","1");
+
+
+
+        return result;
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-
-        //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-//        Log.e("result", s);
+    protected void onPostExecute(String result) {
+        switch (select){
+            case USER_REGISTER:
+                break;
+            case USER_LOGIN:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        // 홈 액티비티 실행
+                        context.startActivity(new Intent(context, HomeActivity.class));
+                        ((Activity)context).finish();
+                    } else {
+                        Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }
+
+
+
+
 

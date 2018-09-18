@@ -44,6 +44,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/user_email_login"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
@@ -51,7 +52,7 @@
             android:layout_marginTop="15dp"
             android:hint="Email"
             android:textAlignment="center"
-            android:maxLength="20"
+            android:maxLength="25"
             android:maxLines="1"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
@@ -59,6 +60,7 @@
             android:layout_weight="1"/>
 
         <EditText
+            android:id="@+id/user_password_login"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"

@@ -12,7 +12,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -23,10 +25,14 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import endorphine.icampyou.HomeActivity;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
+    private EditText user_email_editText;
+    private EditText user_password_editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         password_find_button = findViewById(R.id.password_find_button);
         register_user_button = findViewById(R.id.register_user_button);
+
+        user_email_editText = findViewById(R.id.user_email_login);
+        user_password_editText = findViewById(R.id.user_password_login);
 
         password_find_button.setOnClickListener(this);
         register_user_button.setOnClickListener(this);
@@ -63,9 +74,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_button:
-                // 홈 액티비티 실행
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
+
+                //서버에서 로그인 정보 확인
+                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/login";
+
+                //서버에 보낼 아이디,비밀번호 데이터
+                JSONObject jsonObject = sendObject();
+
+                NetworkTask networkTask = new NetworkTask(this,url,jsonObject,NetworkTask.USER_LOGIN);
+                networkTask.execute();
+
+//                if(NetworkTask.CHECK_LOGIN){
+//                    // 홈 액티비티 실행
+//                    Log.e("냥냥","냥냥");
+//                    startActivity(new Intent(this, HomeActivity.class));
+//                    finish();
+//                } else{
+//                    Toast.makeText(this,"아이디와 비밀번호를 확인해주세요",Toast.LENGTH_LONG).show();
+//                }
+
                 break;
             case R.id.password_find_button:
                 FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
@@ -185,4 +212,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendObject(){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.accumulate("id",user_email_editText.getText().toString());
+            jsonObject.accumulate("password",user_password_editText.getText().toString());
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
 }

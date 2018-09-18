@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import java.util.Map;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class RegisterUserInfo_Fragment extends BaseFragment {
@@ -58,15 +62,16 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                     // URL 설정
                     String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
 
-                    //정보
-                    ArrayList<NameValuePair> info = null;
+                    JSONObject data = null;
+
                     try {
-                        info = makeDataType();
-                        endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,info);
-                        networkTask.execute();
-                    } catch (UnsupportedEncodingException e) {
+                        data = sendJSonData();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,data, NetworkTask.USER_REGISTER);
+                    networkTask.execute();
 
                     // AsyncTask를 통해 HttpURLConnection 수행
                     Toast.makeText(getActivity(),"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
@@ -217,25 +222,17 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         return view;
     }
 
-    //POST 요청 할 때 데이터 형식 만들기
-    public ArrayList<NameValuePair> makeDataType() throws UnsupportedEncodingException {
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData() throws JSONException{
 
-//        ContentValues info = new ContentValues();
-//
-//        info.put("id",email_editText.toString());
-//        info.put("password",password_editText.toString());
-//        info.put("name",name_editText.toString());
-//        info.put("nickname",nickName_editText.toString());
-//        info.put("phonenumber",phoneNumber_editText.toString());
+        JSONObject jsonObject = new JSONObject();
 
-        ArrayList<NameValuePair> data = new ArrayList<>();
-        //Post방식으로 넘길 값들을 각각 지정을 해주어야 한다.
-        data.add(new BasicNameValuePair("id", URLDecoder.decode(email_editText.getText().toString(), "UTF-8")));
-        data.add(new BasicNameValuePair("password", URLDecoder.decode(password_editText.getText().toString(), "UTF-8")));
-        data.add(new BasicNameValuePair("name", URLDecoder.decode(name_editText.getText().toString(), "UTF-8")));
-        data.add(new BasicNameValuePair("nickname", URLDecoder.decode(nickName_editText.getText().toString(), "UTF-8")));
-        data.add(new BasicNameValuePair("phonenumber", URLDecoder.decode(phoneNumber_editText.getText().toString(), "UTF-8")));
+        jsonObject.accumulate("id", email_editText.getText().toString());
+        jsonObject.accumulate("password", password_editText.getText().toString());
+        jsonObject.accumulate("name", name_editText.getText().toString());
+        jsonObject.accumulate("nickname", nickName_editText.getText().toString());
+        jsonObject.accumulate("phonenumber", phoneNumber_editText.getText().toString());
 
-        return data;
+        return jsonObject;
     }
 }
