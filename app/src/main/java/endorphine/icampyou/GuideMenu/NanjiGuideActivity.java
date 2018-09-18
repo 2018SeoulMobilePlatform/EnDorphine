@@ -20,12 +20,19 @@ import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 
 import endorphine.icampyou.R;
 import endorphine.icampyou.ReviewWriteActivity;
 
-public class NanjiGuideActivity extends Activity implements View.OnClickListener{
+public class NanjiGuideActivity extends Activity implements View.OnClickListener, OnMapReadyCallback{
 
     private ArrayList<View> pageViews;    // 사진 View
     private ImageView pointImage;        // 동그라미 포인트
@@ -46,6 +53,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     private LayoutInflater inflater;
     private RatingBar totalReviewStar;  // 총 별점평균
     private TextView totalReviewStarScore;  // 총 별점 평균 스코어
+    MapFragment mapFragment;    // 지도 프래그먼트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +177,10 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
         totalReviewStar = findViewById(R.id.review_total_star);
         totalReviewStarScore = findViewById(R.id.total_star_score);
         setTotalStarScore();
+
+        // 구글맵 연동
+        mapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     // 버튼 클릭 이벤트 메소드
@@ -231,5 +243,19 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
 
         totalReviewStar.setRating((float)totalStar/reviewData.size());
         totalReviewStarScore.setText(""+totalReviewStar.getRating());
+    }
+
+    // 구글맵 연동 메소드
+    @Override
+    public void onMapReady(final GoogleMap map) {
+        LatLng NANJI = new LatLng(37.5701602, 126.87255210000001);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(NANJI);
+        markerOptions.title("난지캠핑장");
+        markerOptions.snippet("서울특별시 마포구 상암동 495-81");
+        map.addMarker(markerOptions);
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(NANJI,15));
     }
 }
