@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import endorphine.icampyou.Login.LoginActivity;
+import endorphine.icampyou.Login.PasswordPopupActivity;
 import endorphine.icampyou.Login.RegisterUserException;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
@@ -123,13 +124,13 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if(real_result.equals("success")){
-                        ((Activity)context).finish();
                         intent = new Intent((Activity)context, LoginActivity.class);
                         ((Activity)context).startActivity(intent);
+                        ((Activity)context).finish();
 
                         Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
                     } else {
-
+                        Toast.makeText(context, "사용자 등록 실패하였습니다.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -155,10 +156,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
+                    Intent intent = new Intent((Activity)context, PasswordPopupActivity.class);
+                    intent.putExtra("password",real_result);
+                    ((Activity)context).startActivity(intent);
                     if (real_result.equals("fail")) {
-                        Toast.makeText(context,"실패쨩",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"실팽",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(context, real_result, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
