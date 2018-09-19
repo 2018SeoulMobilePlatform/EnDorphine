@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context="endorphine.icampyou.EventMenu.EventFragment1">
+
+    <!-- 이벤트 제목 -->
+    <TextView
+        android:id="@+id/event_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="난지 캠핑장 8월 초특가"
+        android:textSize="21dp"/>
+
+    <!-- 이벤트 내용 -->
+    <TextView
+        android:id="@+id/event_info_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="저렴한 가격입니당"
+        android:textSize="15dp"/>
+
+
+</LinearLayout>
