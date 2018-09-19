@@ -20,14 +20,13 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     Intent intent;
 
     RatingBar ratingBar;    // 별점 바
-    Spinner campingPlaceSpinner;    // 캠핑장 선택바
     ImageView reviewImageView;  // 후기사진 이미지뷰
     EditText reviewEditText;    // 후기 내용
     Button completingReviewButton;  // 작성완료 버튼
     float starNum;  // 별점
-    String campingPlace;    // 캠핑장 이름
     int reviewImage; // 후기 사진
     String reviewContent;   // 후기 내용
+    String campingPlace;    // 캠핑장 종류
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +34,10 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_review_write);
 
         ratingBar = findViewById(R.id.star_ratingbar);
-        campingPlaceSpinner = findViewById(R.id.camping_place_spinner);
         reviewImageView = findViewById(R.id.review_image);
         reviewEditText = findViewById(R.id.review_content);
         completingReviewButton = findViewById(R.id.completing_review_button);
+        campingPlace = getIntent().getStringExtra("캠핑장 이름");
 
         completingReviewButton.setOnClickListener(this);
     }
@@ -61,8 +60,6 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     public void setReviewValue(){
         // 별점 가져오기
         starNum = (float)ratingBar.getRating();
-        // 캠핑장 이름 가져오기
-        campingPlace = campingPlaceSpinner.getSelectedItem().toString();
         // 후기 사진 가져오기...(어케하는지 모르긔)
         reviewImage = 0;
         // 후기 내용 가져오기
@@ -72,8 +69,8 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     public void putIntent(){
         intent = new Intent(this, GuideActivity.class);
         intent.putExtra("star",(float)starNum);
-        intent.putExtra("camping_place",campingPlace);
         intent.putExtra("review_content",reviewContent);
         intent.putExtra("review_image",reviewImage);
+        intent.putExtra("캠핑장 이름",campingPlace);
     }
 }

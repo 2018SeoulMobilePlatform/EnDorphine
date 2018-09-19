@@ -77,8 +77,6 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
                 intent.putExtra("캠핑장 이름", "강동 캠핑장");
                 break;
         }
-
-        Log.e("캠핑장 선택",v.getId()+"");
         startActivity(intent);
     }
 }

@@ -75,9 +75,11 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         // 인텐트로 캠핑장 이름 받아오기
         intent = getIntent();
-        campingPlace = intent.getStringExtra("캠핑장 이름");
 
-        Log.e("캠핑장 이름",campingPlace);
+        if(intent.getStringExtra("캠핑장 이름") != null) {
+            campingPlace = intent.getStringExtra("캠핑장 이름");
+            Log.e("캠핑장 이름", campingPlace);
+        }
 
         // 캠핑장 종류에 맞게 정보 페이지뷰에 사진 페이지 저장
         setPageViews();
@@ -214,6 +216,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
             case R.id.review_add_button:
                 // 후기 작성 버튼 누르면 후기 작성 액티비티 시작됨
                 intent.setClass(this, ReviewWriteActivity.class);
+                intent.putExtra("캠핑장 이름",campingPlace);
                 startActivity(intent);
                 break;
         }
@@ -225,24 +228,73 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         super.onResume();
 
         float starNum;
-        String campingPlace;
+        String reviewCampingPlace;
         String reviewContent;
         int reviewImage;
 
         intent = getIntent();
 
-        if (intent.getStringExtra("review_content") != null) {
+        if (intent.getStringExtra("review_content") != null && intent.getStringExtra("캠핑장 이름").equals(campingPlace)) {
             // 인텐트로 리뷰 값 받아오기
             starNum = intent.getFloatExtra("star", 0);
-            campingPlace = intent.getStringExtra("camping_place");
             reviewContent = intent.getStringExtra("review_content");
             reviewImage = intent.getIntExtra("review_image", 0);
             // 리스트에 추가하기
-            addReviewList(userIcon, nickName, starNum, reviewImage, reviewContent);
+            addReviewList(campingPlace, userIcon, nickName, starNum, reviewImage, reviewContent);
             adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
             reviewList.setAdapter(adapter);
             setTotalStarScore();
         }
+    }
+
+    // 리뷰페이지 설정하는 메소드
+    public void setReviewPage() {
+        // 후기 리스트 설정
+        reviewList = (ListView) findViewById(R.id.review_listView);
+
+        // 후기 데이터 설정
+        reviewData = new ArrayList<>();
+
+        // 유저 아이콘이랑 닉네임 설정
+        userIcon = R.drawable.user_icon;
+        nickName = "김다콩";
+
+        // 서버에서 후기 아이템들 추가 (지금은 예시로 임의로 추가함)
+        addReviewList("난지 캠핑장", R.drawable.user_icon, "이다콩", 3, R.drawable.nanji_1, "짱좋");
+        addReviewList("서울대공원 캠핑장", R.drawable.user_icon, "김다콩", 4, R.drawable.nanji_2, "너무너무너무좋아용>ㅁ<");
+        addReviewList("중랑 캠핑장", R.drawable.user_icon, "박다콩", (float) 2.5, 0, "시설이 깨끗해요");
+        addReviewList("중랑 캠핑장", R.drawable.user_icon, "김다콩", (float) 3.5, R.drawable.nanji_2, "친구들이랑 재밌게 놀았뜸");
+
+        // 어댑터로 후기 리스트에 아이템 뿌려주기
+        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+        reviewList.setAdapter(adapter);
+
+        // 후기작성버튼 설정
+        reviewAddButton = findViewById(R.id.review_add_button);
+        reviewAddButton.setOnClickListener(this);
+    }
+
+    // 후기 리스트에 아이템 추가하는 메소드
+    private void addReviewList(String reviewCampingPlace, int userIcon, String nickName, float star, int reviewImage, String reviewContent) {
+        if(campingPlace.equals(reviewCampingPlace)) {
+            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
+            reviewData.add(reviewItem);
+        }
+    }
+
+    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
+    public void setTotalStarScore() {
+        float totalStar = 0;
+
+        totalReviewStar = findViewById(R.id.review_total_star);
+        totalReviewStarScore = findViewById(R.id.total_star_score);
+
+        for (ReviewListItem review : reviewData) {
+            totalStar += review.getStar();
+        }
+
+        totalReviewStar.setRating((float) totalStar / reviewData.size());
+        totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
     // 캠핑장 별로 다르게 정보 설정해주기
@@ -334,55 +386,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         markerOptions.position(place);
         map.addMarker(markerOptions);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 15));
-    }
-
-
-    // 리뷰페이지 설정하는 메소드
-    public void setReviewPage() {
-        // 후기 리스트 설정
-        reviewList = (ListView) findViewById(R.id.review_listView);
-
-        // 후기 데이터 설정
-        reviewData = new ArrayList<>();
-
-        // 유저 아이콘이랑 닉네임 설정
-        userIcon = R.drawable.user_icon;
-        nickName = "김다콩";
-
-        // 후기 아이템들 추가
-        addReviewList(R.drawable.user_icon, "이다콩", 3, R.drawable.nanji_1, "짱좋");
-        addReviewList(R.drawable.user_icon, "김다콩", 4, R.drawable.nanji_2, "너무너무너무좋아용>ㅁ<");
-        addReviewList(R.drawable.user_icon, "박다콩", (float) 2.5, 0, "시설이 깨끗해요");
-        addReviewList(R.drawable.user_icon, "김다콩", (float) 3.5, R.drawable.nanji_2, "친구들이랑 재밌게 놀았뜸");
-
-        // 어댑터로 후기 리스트에 아이템 뿌려주기
-        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
-        reviewList.setAdapter(adapter);
-
-        // 후기작성버튼 설정
-        reviewAddButton = findViewById(R.id.review_add_button);
-        reviewAddButton.setOnClickListener(this);
-    }
-
-    // 후기 리스트에 아이템 추가하는 메소드
-    private void addReviewList(int userIcon, String nickName, float star, int reviewImage, String reviewContent) {
-        ReviewListItem reviewItem = new ReviewListItem(userIcon, nickName, star, reviewImage, reviewContent);
-        reviewData.add(reviewItem);
-    }
-
-    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
-    public void setTotalStarScore() {
-        float totalStar = 0;
-
-        totalReviewStar = findViewById(R.id.review_total_star);
-        totalReviewStarScore = findViewById(R.id.total_star_score);
-
-        for (ReviewListItem review : reviewData) {
-            totalStar += review.getStar();
-        }
-
-        totalReviewStar.setRating((float) totalStar / reviewData.size());
-        totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
     // 뷰페이저 페이지 알려주는 동그란 포인터 설정
