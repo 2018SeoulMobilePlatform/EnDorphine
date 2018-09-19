@@ -15,12 +15,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.RegisterUserException;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     private String url;
     private JSONObject data;
+    private Intent intent;
+    private int select;
+    private Context context;
+    ProgressDialog asyncDialog;
+    EditText insert;
+
 
     //사용자 등록 경우
     public static final int USER_REGISTER = 1111;
@@ -39,11 +46,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     //이메일 아이디 중복되는 경우
     public static final int DUPLICATED_PHONENUMBER = 1116;
-
-    private int select;
-    private Context context;
-    ProgressDialog asyncDialog;
-    EditText insert;
 
     public NetworkTask(String url, JSONObject data,int ACTION){
         this.url = url;
@@ -79,7 +81,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("로그인 중 입니다..");
                 break;
             case USER_FIND_INFO:
-                asyncDialog.setMessage("사용자 정보를 찾는 중 입니다..");
+                asyncDialog.setMessage("비밀번호를 찾는 중 입니다..");
                 break;
             case DUPLICATED_EMAIL:
                 asyncDialog.setMessage("이메일 중복 검사 중 입니다..");
@@ -120,18 +122,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if(real_result.equals("id_fail")){
-                        Toast.makeText(context, "중복된 아이디가 존재합니다", Toast.LENGTH_LONG).show();
-                    } else if( real_result.equals("nickname_fail")){
-                        Toast.makeText(context, "중복된 닉네임이 존재합니다", Toast.LENGTH_LONG).show();
-                    } else if( real_result.equals("phonenumber_fail")){
-                        Toast.makeText(context, "중복된 핸드폰번호가 존재합니다", Toast.LENGTH_LONG).show();
-                    } else if( real_result.equals("success")){
-//                        FragmentManager fragmentManager =
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace();
-//                        fragmentTransaction.commit();
+                    if(real_result.equals("success")){
+                        ((Activity)context).finish();
+                        intent = new Intent((Activity)context, LoginActivity.class);
+                        ((Activity)context).startActivity(intent);
+                        
                         Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
+                    } else {
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -154,6 +152,17 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 }
                 break;
             case USER_FIND_INFO:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("fail")) {
+                        Toast.makeText(context,"실패쨩",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, real_result, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case DUPLICATED_EMAIL:
                 try{

@@ -38,7 +38,7 @@ public class FindUserInfo_Fragment extends BaseFragment {
         find_password.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 //데이터베이스에서 비밀번호 찾아오기,로그인 화면으로
-                String url = "";
+                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/findpassword";
 
                 JSONObject data = null;
 
@@ -48,7 +48,7 @@ public class FindUserInfo_Fragment extends BaseFragment {
                     e.printStackTrace();
                 }
 
-                endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,data, NetworkTask.USER_FIND_INFO);
+                endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(getActivity(),url,data, NetworkTask.USER_FIND_INFO);
                 networkTask.execute();
             }
         });
