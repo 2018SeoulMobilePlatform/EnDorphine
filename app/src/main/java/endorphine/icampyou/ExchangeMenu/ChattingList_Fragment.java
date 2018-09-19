@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,7 +62,7 @@ public class ChattingList_Fragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
 
         // 탭 호스트에 탭 추가
-        TabHost tabHost1 = (TabHost)view.findViewById(R.id.tapHost_chatlist);
+        final TabHost tabHost1 = (TabHost)view.findViewById(R.id.tapHost_chatlist);
         tabHost1.setup();
 
         // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
@@ -75,6 +76,22 @@ public class ChattingList_Fragment extends BaseFragment {
         TabHost.TabSpec ts2 = tabHost1.newTabSpec("나의 채팅").setIndicator(tabView2);
         ts2.setContent(R.id.content2_chatlist);
         tabHost1.addTab(ts2);
+
+        // 탭 선택하면 탭 위젯 텍스트 색상 바뀌게 설정
+        tabHost1.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                for(int i=0;i< tabHost1.getTabWidget().getChildCount();i++)
+                {
+                    TextView tv = (TextView) tabHost1.getTabWidget().getChildAt(i).findViewById(R.id.tabs_text); //Unselected Tabs
+                    tv.setTextColor(Color.parseColor("#ACACAC"));
+                }
+                TextView tv = (TextView) tabHost1.getCurrentTabView().findViewById(R.id.tabs_text); //for Selected Tab
+                tv.setTextColor(Color.parseColor("#13B9A5"));
+            }
+        });
+
+
 
         listViewSetting(view);
 
@@ -213,6 +230,7 @@ public class ChattingList_Fragment extends BaseFragment {
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
         adapter = new ChatList_Adapter();
+        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥","냥냥"));
         chatlist_listView.setAdapter(adapter);
 
         copy = new ArrayList<>();
