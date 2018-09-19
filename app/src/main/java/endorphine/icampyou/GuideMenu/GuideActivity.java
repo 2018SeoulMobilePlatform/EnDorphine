@@ -58,7 +58,11 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
     private MapFragment mapFragment;    // 지도 프래그먼트
     private View page01, page02, page03;    // 상세정보 사진 페이지들
     private ImageView pic01, pic02, pic03;  // 상세정보 사진 페이지들 안에 사진
-    private String campingPlace;    // 캠핑장 정보
+    private String campingPlace;    // 인텐트로 받아온 캠핑장 정보
+    private TextView campingName;   // 캠핑장 이름
+    private TextView campingAddress;    // 캠핑장 주소
+    private ImageView campingInfoImage; // 캠핑장 상세정보 이미지
+    private ImageView mapImage; // 캠핑장 지도 이미지
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,14 +197,8 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         pageViews.add(page01);
         pageViews.add(page02);
         pageViews.add(page03);
-    }
 
-
-    // 항상 스크롤 위로 가있게 하는 메소드
-    public void setUpScroll() {
-        scrollView = (ScrollView) findViewById(R.id.nanji_guide_scrollView);
-        scrollView.setFocusableInTouchMode(true);
-        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        setInfo();
     }
 
     // 버튼 클릭 이벤트 메소드
@@ -246,6 +244,98 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
             setTotalStarScore();
         }
     }
+
+    // 캠핑장 별로 다르게 정보 설정해주기
+    public void setInfo(){
+        campingName = findViewById(R.id.camping_name);
+        campingAddress = findViewById(R.id.camping_address);
+        campingInfoImage = findViewById(R.id.camping_info_image);
+        mapImage = findViewById(R.id.map_image);
+
+        switch (campingPlace) {
+            case "난지 캠핑장":
+                campingName.setText("난지 캠핑장");
+                campingAddress.setText("서울특별시 마포구 상암동 495-51");
+                campingInfoImage.setImageResource(R.drawable.info_nanji);
+                mapImage.setImageResource(R.drawable.map_nanji);
+                break;
+            case "서울대공원 캠핑장":
+                campingName.setText("서울대공원 캠핑장");
+                campingAddress.setText("경기도 과천시 막계동 산59-2");
+                campingInfoImage.setImageResource(R.drawable.info_seoul);
+                mapImage.setImageResource(R.drawable.map_seoul);
+                break;
+            case "노을 캠핑장":
+                campingName.setText("노을 캠핑장");
+                campingAddress.setText("서울특별시 마포구 상암동 478-1");
+                campingInfoImage.setImageResource(R.drawable.info_noeul);
+                mapImage.setImageResource(R.drawable.map_noeul);
+                break;
+            case "중랑 캠핑장":
+                campingName.setText("중랑 캠핑장");
+                campingAddress.setText("서울특별시 중랑구 망우동 망우로87길 110");
+                campingInfoImage.setImageResource(R.drawable.info_jungrang);
+                mapImage.setImageResource(R.drawable.map_jungrang);
+                break;
+            case "초안산 캠핑장":
+                campingName.setText("초안산 캠핑장");
+                campingAddress.setText("서울특별시 노원구 월계2동 749-1");
+                campingInfoImage.setImageResource(R.drawable.info_choansan);
+                mapImage.setImageResource(R.drawable.map_choansan);
+                break;
+            default:
+                campingName.setText("강동 캠핑장");
+                campingAddress.setText("서울특별시 강동구 둔촌동 천호대로206길 87");
+                campingInfoImage.setImageResource(R.drawable.info_gangdong);
+                mapImage.setImageResource(R.drawable.map_choansan);
+                break;
+        }
+    }
+
+    // 구글맵 연동 메소드
+    @Override
+    public void onMapReady(final GoogleMap map) {
+        LatLng place;
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        switch (campingPlace) {
+            case "난지 캠핑장":
+                place = new LatLng(37.5701602, 126.87255210000001);
+                markerOptions.title("난지캠핑장");
+                markerOptions.snippet("서울특별시 마포구 상암동 495-81");
+                break;
+            case "서울대공원 캠핑장":
+                place = new LatLng(37.4295232, 127.02398859999994);
+                markerOptions.title("서울대공원 캠핑장");
+                markerOptions.snippet("경기도 과천시 막계동 산59-2");
+                break;
+            case "노을 캠핑장":
+                place = new LatLng(37.5732074, 126.87382500000001);
+                markerOptions.title("노을 캠핑장");
+                markerOptions.snippet("서울특별시 마포구 상암동 478-1");
+                break;
+            case "중랑 캠핑장":
+                place = new LatLng(37.6044856, 127.1096119);
+                markerOptions.title("중랑 캠핑장");
+                markerOptions.snippet("서울특별시 중랑구 망우동 망우로87길 110");
+                break;
+            case "초안산 캠핑장":
+                place = new LatLng(37.6430117, 127.05011579999996);
+                markerOptions.title("초안산 캠핑장");
+                markerOptions.snippet("서울특별시 노원구 월계2동 749-1");
+                break;
+            default:
+                place = new LatLng(37.5360802, 127.1532522);
+                markerOptions.title("강동 캠핑장");
+                markerOptions.snippet("서울특별시 강동구 둔촌동 천호대로206길 87");
+                break;
+        }
+
+        markerOptions.position(place);
+        map.addMarker(markerOptions);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 15));
+    }
+
 
     // 리뷰페이지 설정하는 메소드
     public void setReviewPage() {
@@ -295,50 +385,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
-    // 구글맵 연동 메소드
-    @Override
-    public void onMapReady(final GoogleMap map) {
-        LatLng place;
-        MarkerOptions markerOptions = new MarkerOptions();
-
-        switch (campingPlace) {
-            case "난지 캠핑장":
-                place = new LatLng(37.5701602, 126.87255210000001);
-                markerOptions.title("난지캠핑장");
-                markerOptions.snippet("서울특별시 마포구 상암동 495-81");
-                break;
-            case "서울대공원 캠핑장":
-                place = new LatLng(37.4295232, 127.02398859999994);
-                markerOptions.title("서울대공원 캠핑장");
-                markerOptions.snippet("경기도 과천시 막계동 산59-2");
-                break;
-            case "노을 캠핑장":
-                place = new LatLng(37.5732074, 126.87382500000001);
-                markerOptions.title("노을 캠핑장");
-                markerOptions.snippet("서울특별시 마포구 상암동 478-1");
-                break;
-            case "중랑 캠핑장":
-                place = new LatLng(37.6044856, 127.1096119);
-                markerOptions.title("중랑 캠핑장");
-                markerOptions.snippet("서울특별시 중랑구 망우동 망우로87길 110");
-                break;
-            case "초안산 캠핑장":
-                place = new LatLng(37.6430117, 127.05011579999996);
-                markerOptions.title("초안산 캠핑장");
-                markerOptions.snippet("서울특별시 노원구 월계2동 749-1");
-                break;
-            default:
-                place = new LatLng(37.5360802, 127.1532522);
-                markerOptions.title("강동 캠핑장");
-                markerOptions.snippet("서울특별시 강동구 둔촌동 천호대로206길 87");
-                break;
-        }
-
-        markerOptions.position(place);
-        map.addMarker(markerOptions);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 15));
-    }
-
     // 뷰페이저 페이지 알려주는 동그란 포인터 설정
     public void setViewPagerPointers() {
         // ImageViews = 동그라미들
@@ -366,5 +412,12 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
             // 뷰에 붙이기
             viewPoints.addView(pointImages[i]);
         }
+    }
+
+    // 항상 스크롤 위로 가있게 하는 메소드
+    public void setUpScroll() {
+        scrollView = (ScrollView) findViewById(R.id.nanji_guide_scrollView);
+        scrollView.setFocusableInTouchMode(true);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
     }
 }

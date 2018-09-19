@@ -107,6 +107,7 @@
                                     android:orientation="vertical">
                                     <!-- 캠핑장 이름 -->
                                     <TextView
+                                        android:id="@+id/camping_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="40dp"
                                         android:layout_marginLeft="10dp"
@@ -130,6 +131,7 @@
                                             android:src="@drawable/map" />
                                         <!-- 주소 -->
                                         <TextView
+                                            android:id="@+id/camping_address"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:background="#FFFFFF"
@@ -167,6 +169,7 @@
 
                             <!-- 상세 정보 -->
                             <ImageView
+                                android:id="@+id/camping_info_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -230,6 +233,7 @@
                         android:layout_height="wrap_content">
                         <!-- 지도 이미지 -->
                         <ImageView
+                            android:id="@+id/map_image"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
