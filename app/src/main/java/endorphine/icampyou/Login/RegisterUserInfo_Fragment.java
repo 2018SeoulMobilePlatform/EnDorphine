@@ -1,6 +1,7 @@
 package endorphine.icampyou.Login;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -70,7 +71,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
 
-                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(url,data, NetworkTask.USER_REGISTER);
+                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(getActivity(),url,data, NetworkTask.USER_REGISTER);
                     networkTask.execute();
 
                     // AsyncTask를 통해 HttpURLConnection 수행
@@ -101,6 +102,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 String edit = editable.toString();
+
                 if(exception.EmailException(edit)){
                     email_editText.setBackgroundResource(R.drawable.check_edittext);
                 } else{
@@ -112,6 +114,25 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
             }
         });
 
+        //emailText 포커스 변동
+        email_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkid";
+
+                    JSONObject data = null;
+                    try {
+                        data = checkJSonEmail();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_EMAIL,email_editText);
+                    networkTask.execute();
+                }
+            }
+        });
 
         //패스워드 리스너
         password_editText.addTextChangedListener(new TextWatcher() {
@@ -191,6 +212,27 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
             }
         });
 
+        //닉네임 중복검사
+        nickName_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
+
+                    JSONObject data = null;
+                    try {
+                        data = checkJSonNickname();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_NICKNAME,nickName_editText);
+                    networkTask.execute();
+                }
+            }
+        });
+
+
         //핸드폰번호 리스너
         phoneNumber_editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,6 +259,25 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
             }
         });
 
+        //핸드폰 중복검사
+        phoneNumber_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkphone";
+
+                    JSONObject data = null;
+                    try {
+                        data = checkJSonPhone();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_PHONENUMBER,phoneNumber_editText);
+                    networkTask.execute();
+                }
+            }
+        });
 
         return view;
     }
@@ -234,4 +295,32 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
 
         return jsonObject;
     }
+
+    //아이디 체크하는 JSON 데이터
+    private JSONObject checkJSonEmail() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("id",email_editText.getText().toString());
+
+        return jsonObject;
+    }
+
+    //닉네임 체크하는 JSON 데이터
+    private JSONObject checkJSonNickname() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("nickname",nickName_editText.getText().toString());
+
+        return jsonObject;
+    }
+
+    //핸드폰 체크하는 JSON 데이터
+    private JSONObject checkJSonPhone() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("phonenumber",phoneNumber_editText.getText().toString());
+
+        return jsonObject;
+    }
+
 }

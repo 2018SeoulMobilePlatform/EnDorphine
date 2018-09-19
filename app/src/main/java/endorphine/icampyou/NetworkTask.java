@@ -8,11 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import endorphine.icampyou.Login.RegisterUserException;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -28,9 +31,19 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     //사용자 로그인 경우
     public static final int USER_FIND_INFO = 1113;
 
+    //이메일 아이디 중복되는 경우
+    public static final int DUPLICATED_EMAIL = 1114;
+
+    //이메일 아이디 중복되는 경우
+    public static final int DUPLICATED_NICKNAME = 1115;
+
+    //이메일 아이디 중복되는 경우
+    public static final int DUPLICATED_PHONENUMBER = 1116;
+
     private int select;
     private Context context;
     ProgressDialog asyncDialog;
+    EditText insert;
 
     public NetworkTask(String url, JSONObject data,int ACTION){
         this.url = url;
@@ -46,6 +59,15 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert){
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.insert = _insert;
+    }
+
     @Override
     protected void onPreExecute() {
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -59,8 +81,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case USER_FIND_INFO:
                 asyncDialog.setMessage("사용자 정보를 찾는 중 입니다..");
                 break;
-                default:
+            case DUPLICATED_EMAIL:
+                asyncDialog.setMessage("이메일 중복 검사 중 입니다..");
+                break;
+            case DUPLICATED_NICKNAME:
+                asyncDialog.setMessage("닉네임 중복 검사 중 입니다..");
+                break;
+            case DUPLICATED_PHONENUMBER:
+                asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
+                break;
+            default:
                     break;
+
         }
 
         // show dialog
@@ -123,7 +155,46 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case USER_FIND_INFO:
                 break;
-                default:
+            case DUPLICATED_EMAIL:
+                try{
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if(real_result.equals("success")){
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
+                    } else{
+                        insert.setBackgroundResource(R.drawable.check_edittext);
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                break;
+            case DUPLICATED_NICKNAME:
+                try{
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if(real_result.equals("success")){
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
+                    } else{
+                        insert.setBackgroundResource(R.drawable.check_edittext);
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                break;
+            case DUPLICATED_PHONENUMBER:
+                try{
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if(real_result.equals("success")){
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
+                    } else{
+                        insert.setBackgroundResource(R.drawable.check_edittext);
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                break;
+            default:
                     break;
         }
     }
