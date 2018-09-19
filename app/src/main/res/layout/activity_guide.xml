@@ -28,7 +28,7 @@
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <!-- 첫 번째 페이지. content1 -->
                 <LinearLayout
@@ -188,10 +188,11 @@
                 <FrameLayout
                     android:id="@+id/content2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:background="#FFFFFF"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="1">
 
                     <!-- 후기들 -->
                     <ListView
@@ -204,16 +205,28 @@
                         android:divider="#E7E6E6"
                         android:dividerHeight="1dp" />
 
-                    <!-- 후기작성버튼 -->
-                    <com.melnykov.fab.FloatingActionButton
-                        android:id="@+id/review_add_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|right"
-                        android:layout_margin="30dp"
-                        android:background="#FFFFFF"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/review_plus_icon" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        android:visibility="visible"
+                        android:weightSum="1"
+                        android:gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp">
+                        <!-- 후기작성버튼 -->
+                        <com.melnykov.fab.FloatingActionButton
+                            android:id="@+id/review_add_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|right"
+                            android:layout_margin="30dp"
+                            android:background="#FFFFFF"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/review_plus_icon" />
+                    </LinearLayout>
+
                 </FrameLayout>
 
                 <!-- 세 번째 페이지. content3 -->

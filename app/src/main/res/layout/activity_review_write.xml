@@ -35,27 +35,6 @@
             android:textColor="#747474"
             android:textSize="13dp" />
 
-        <!--&lt;!&ndash; 캠핑장 선택 &ndash;&gt;-->
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:text="캠핑장"-->
-            <!--android:textColor="#000000"-->
-            <!--android:textSize="15dp" />-->
-
-        <!--<Spinner-->
-            <!--android:id="@+id/camping_place_spinner"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:entries="@array/camping_place_arrays" />-->
-
         <!-- 카메라 사진 -->
         <TextView
             android:layout_width="match_parent"
