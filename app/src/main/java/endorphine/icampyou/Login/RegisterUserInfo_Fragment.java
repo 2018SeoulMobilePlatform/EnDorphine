@@ -86,7 +86,6 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         nickName_editText = (EditText)view.findViewById(R.id.user_nickname);
         phoneNumber_editText = (EditText)view.findViewById(R.id.user_phone);
 
-
         //이메일 리스너
         email_editText.addTextChangedListener(new TextWatcher() {
             @Override
