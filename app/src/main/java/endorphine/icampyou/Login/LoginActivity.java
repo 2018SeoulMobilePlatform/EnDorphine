@@ -98,8 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 fragmentTransaction.commit();
                 break;
             case R.id.register_user_button:
-                RegisterUserInfo_Fragment registerUserInfo_fragment = new RegisterUserInfo_Fragment();
-
                 Intent intent = new Intent(this,RegisterUserActivity.class);
                 startActivity(intent);
 
