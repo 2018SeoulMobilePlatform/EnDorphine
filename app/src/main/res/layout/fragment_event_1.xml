@@ -1,9 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D5D5D5"
+    android:background="#FFFFFF"
     android:orientation="vertical"
+    android:id="@+id/event_frame"
     tools:context="endorphine.icampyou.EventMenu.EventFragment1">
 
     <!--<TextView-->
@@ -19,10 +20,10 @@
     <ListView
         android:id="@+id/event_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
         android:divider="#D5D5D5"
         android:dividerHeight="10.5dp"
         android:padding="10dp"/>
 
-</LinearLayout>
+</FrameLayout>

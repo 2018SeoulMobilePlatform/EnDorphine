@@ -1,14 +1,22 @@
 package endorphine.icampyou.EventMenu;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.github.nkzawa.thread.EventThread;
 
 import java.util.ArrayList;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.ExchangeMenu.ChattingMessage_Fragment;
+import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
 /**
@@ -36,6 +44,7 @@ public class EventFragment1 extends BaseFragment {
         // 데이터에 이벤트 아이템들 추가
         EventListViewItem event1 = new EventListViewItem(R.drawable.event_1,"난지 캠핑장 8월 초특가","2018-08-01 ~ 2018-09-11");
         EventListViewItem event2 = new EventListViewItem(R.drawable.event_2,"강동 캠핑장 아시안게임 응원 이벤트","2018-08-01 ~ 2018-09-11");
+
         eventData.add(event1);
         eventData.add(event2);
 
@@ -43,7 +52,19 @@ public class EventFragment1 extends BaseFragment {
         adapter = new EventListViewAdapter(inflater, R.layout.fragment_event_1_listview_item, eventData);
         eventList.setAdapter(adapter);
 
+        // 이벤트 상세페이지 프래그먼트로 선택한 이벤트 position값 전달
+        eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.event_frame, EventInfoFragment.newInstance(eventList.getSelectedItemPosition()));
+                fragmentTransaction.commit();
+            }
+        });
+
         return view;
     }
+
+
 
 }

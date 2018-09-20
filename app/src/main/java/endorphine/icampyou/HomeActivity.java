@@ -48,6 +48,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
 
+    // Back키 이벤트 인터페이스
+    public interface onKeyBackPressedListener {
+        public void onBack();
+    }
+    private onKeyBackPressedListener mOnKeyBackPressedListener;
+    public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
+        mOnKeyBackPressedListener = listener;
+    }
+
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -117,8 +126,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    // Back키 누르면 종료
     @Override
     public void onBackPressed() {
+//        if(mOnKeyBackPressedListener != null){
+//            mOnKeyBackPressedListener.onBack();
+//        }else{
+//            super.onBackPressed();
+//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="endorphine.icampyou.EventMenu.EventFragment1">
@@ -14,6 +14,13 @@
         android:layout_margin="20dp"
         android:text="난지 캠핑장 8월 초특가"
         android:textSize="21dp"/>
+
+    <!-- 가운데 실선 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:background="#BDBDBD"/>
 
     <!-- 이벤트 내용 -->
     <TextView
