@@ -99,8 +99,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".GuideMenu.GuideActivity" />
-        <activity android:name=".Login.PasswordPopupActivity"
+        <activity
+            android:name=".Login.PasswordPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".Login.RegisterUserActivity"></activity>
     </application>
 
 </manifest>

@@ -1,46 +1,28 @@
 package endorphine.icampyou.Login;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.Circle;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import de.hdodenhof.circleimageview.CircleImageView;
-import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.Camera;
-import endorphine.icampyou.ExchangeMenu.Chat_Content;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
-import static android.app.Activity.RESULT_OK;
-
-public class RegisterUserInfo_Fragment extends BaseFragment {
+public class RegisterUserActivity extends AppCompatActivity {
 
     EditText email_editText;
     EditText password_editText;
@@ -61,17 +43,13 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
     RegisterUserException exception;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_register_userinfo,container,false);
+        setContentView(R.layout.activity_register_user);
 
         exception = new RegisterUserException();
 
-        Button register_btn = (Button)view.findViewById(R.id.register_user);
+        Button register_btn = (Button)findViewById(R.id.register_user);
         register_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 if(!exception.EmailException(email_editText.getText().toString()) ||
@@ -80,7 +58,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         !exception.UserPassWordExcepiton(password_editText.getText().toString()) ||
                         !exception.UserPhoneException(phoneNumber_editText.getText().toString())){
 
-                    Toast.makeText(getActivity(),"올바른 입력이 필요합니다",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterUserActivity.this,"올바른 입력이 필요합니다",Toast.LENGTH_LONG).show();
                 } else{
                     // URL 설정
                     String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
@@ -93,24 +71,24 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
 
-                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(getActivity(),url,data, NetworkTask.USER_REGISTER);
+                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(RegisterUserActivity.this,url,data, NetworkTask.USER_REGISTER);
                     networkTask.execute();
 
                     // AsyncTask를 통해 HttpURLConnection 수행
-                    Toast.makeText(getActivity(),"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterUserActivity.this,"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
 
                 }
             }
         });
 
-        email_editText = (EditText)view.findViewById(R.id.user_email);
-        password_editText = (EditText)view.findViewById(R.id.password);
-        name_editText = (EditText)view.findViewById(R.id.user_name);
-        nickName_editText = (EditText)view.findViewById(R.id.user_nickname);
-        phoneNumber_editText = (EditText)view.findViewById(R.id.user_phone);
-        user_profile = (CircleImageView)view.findViewById(R.id.profile_image);
+        email_editText = (EditText)findViewById(R.id.user_email);
+        password_editText = (EditText)findViewById(R.id.password);
+        name_editText = (EditText)findViewById(R.id.user_name);
+        nickName_editText = (EditText)findViewById(R.id.user_nickname);
+        phoneNumber_editText = (EditText)findViewById(R.id.user_phone);
+        user_profile = (CircleImageView)findViewById(R.id.profile_image);
 
-        camera = new Camera(getActivity(),user_profile);
+        camera = new Camera(RegisterUserActivity.this,user_profile);
 
         //이메일 리스너
         email_editText.addTextChangedListener(new TextWatcher() {
@@ -153,7 +131,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_EMAIL,email_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_EMAIL,email_editText);
                     networkTask.execute();
                 }
             }
@@ -251,7 +229,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_NICKNAME,nickName_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_NICKNAME,nickName_editText);
                     networkTask.execute();
                 }
             }
@@ -298,7 +276,7 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,NetworkTask.DUPLICATED_PHONENUMBER,phoneNumber_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_PHONENUMBER,phoneNumber_editText);
                     networkTask.execute();
                 }
             }
@@ -329,19 +307,17 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
                     }
                 };
 
-                new AlertDialog.Builder(getActivity())
+                new AlertDialog.Builder(RegisterUserActivity.this)
                         .setTitle("업로드할 이미지 선택")
                         .setPositiveButton("사진 촬영", cameraListener)
                         .setNeutralButton("앨번 선택", albumListener)
                         .setNegativeButton("취소", cancelListener).show();
             }
         });
-
-        return view;
     }
 
     //POST 요청 JSON 데이터 형식 사용
-    private JSONObject sendJSonData() throws JSONException{
+    private JSONObject sendJSonData() throws JSONException {
 
         JSONObject jsonObject = new JSONObject();
 
@@ -379,5 +355,52 @@ public class RegisterUserInfo_Fragment extends BaseFragment {
         jsonObject.accumulate("phonenumber",phoneNumber_editText.getText().toString());
 
         return jsonObject;
+    }
+
+    //권한 요청하는 함수
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_CODE_GALLERY:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //동의 했을 경우
+                    camera.selectGallery();
+                } else {
+                    //거부했을 경우
+                    Toast toast = Toast.makeText(RegisterUserActivity.this,
+                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                break;
+            case REQUEST_PERMISSION_CODE_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //동의 했을 경우
+                    camera.selectPhoto();
+
+                } else {
+                    //거부했을 경우
+                    Toast toast = Toast.makeText(RegisterUserActivity.this,
+                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+        }
+    }
+
+    //선택한 사진 데이터 처리
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_CODE:
+                    camera.sendPicture(data.getData());
+                    break;
+                case CAMERA_CODE:
+                    camera.getPictureForPhoto();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
