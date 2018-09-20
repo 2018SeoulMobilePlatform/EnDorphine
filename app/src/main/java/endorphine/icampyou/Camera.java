@@ -47,7 +47,7 @@ public class Camera {
     String mimageCaptureName;
     ImageView m_userPhoto;
     CircleImageView circleImageView;
-
+    String realPath;
     private int image_type = -1;
 
 
@@ -55,6 +55,10 @@ public class Camera {
         this.context = _context;
         this.m_userPhoto = insertImage;
         image_type = 0;
+    }
+
+    public String getImageName(){
+        return mimageCaptureName;
     }
 
     public Camera(Context _context, CircleImageView _circleImageView) {
@@ -185,7 +189,8 @@ public class Camera {
         if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
-        return cursor.getString(column_index);
+        realPath = cursor.getString(column_index);
+        return realPath;
     }
 
     //카메라 접근 권한 확인하는 함수
@@ -230,51 +235,6 @@ public class Camera {
                 Toast toast = Toast.makeText(context,
                         "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
                 toast.show();
-            }
-        }
-    }
-
-    //권한 요청하는 함수
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_PERMISSION_CODE_GALLERY:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //동의 했을 경우
-                    selectGallery();
-                } else {
-                    //거부했을 경우
-                    Toast toast = Toast.makeText(context,
-                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                break;
-            case REQUEST_PERMISSION_CODE_CAMERA:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //동의 했을 경우
-                    selectPhoto();
-
-                } else {
-                    //거부했을 경우
-                    Toast toast = Toast.makeText(context,
-                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-        }
-    }
-
-    //선택한 사진 데이터 처리
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case GALLERY_CODE:
-                    sendPicture(data.getData());
-                    break;
-                case CAMERA_CODE:
-                    getPictureForPhoto();
-                    break;
-                default:
-                    break;
             }
         }
     }
