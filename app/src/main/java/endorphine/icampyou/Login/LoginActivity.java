@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -35,7 +36,7 @@ import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private SessionCallback callback;
     private Button loginButton;
@@ -214,6 +215,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
     }
 
 }

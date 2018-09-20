@@ -1,23 +1,18 @@
 package endorphine.icampyou;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
-import endorphine.icampyou.Login.RegisterUserException;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -48,13 +43,13 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     //이메일 아이디 중복되는 경우
     public static final int DUPLICATED_PHONENUMBER = 1116;
 
-    public NetworkTask(String url, JSONObject data,int ACTION){
+    public NetworkTask(String url, JSONObject data, int ACTION) {
         this.url = url;
         this.data = data;
         this.select = ACTION;
     }
 
-    public NetworkTask(Context _context,String url, JSONObject data,int ACTION){
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -62,7 +57,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert){
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -74,7 +69,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        switch (select){
+        switch (select) {
             case USER_REGISTER:
                 asyncDialog.setMessage("사용자 등록 중 입니다..");
                 break;
@@ -94,7 +89,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
             default:
-                    break;
+                break;
 
         }
 
@@ -118,15 +113,15 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog.dismiss();
 
         //경우에 따른 스위치문
-        switch (select){
+        switch (select) {
             case USER_REGISTER:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if(real_result.equals("success")){
-                        intent = new Intent((Activity)context, LoginActivity.class);
-                        ((Activity)context).startActivity(intent);
-                        ((Activity)context).finish();
+                    if (real_result.equals("success")) {
+                        intent = new Intent((Activity) context, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        ((Activity) context).startActivity(intent);
 
                         Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
                     } else {
@@ -143,7 +138,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (real_result.equals("success")) {
                         // 홈 액티비티 실행
                         context.startActivity(new Intent(context, HomeActivity.class));
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     } else {
                         onCancelled();
                         Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
@@ -156,58 +151,54 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    Intent intent = new Intent((Activity)context, PasswordPopupActivity.class);
-                    intent.putExtra("password",real_result);
-                    ((Activity)context).startActivity(intent);
-                    if (real_result.equals("fail")) {
-                        Toast.makeText(context,"실팽",Toast.LENGTH_LONG).show();
-                    } else {
-                    }
+                    Intent intent = new Intent((Activity) context, PasswordPopupActivity.class);
+                    intent.putExtra("password", real_result);
+                    ((Activity) context).startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
             case DUPLICATED_EMAIL:
-                try{
+                try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if(real_result.equals("success")){
+                    if (real_result.equals("success")) {
                         insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else{
+                    } else {
                         insert.setBackgroundResource(R.drawable.check_edittext);
                     }
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
             case DUPLICATED_NICKNAME:
-                try{
+                try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if(real_result.equals("success")){
+                    if (real_result.equals("success")) {
                         insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else{
+                    } else {
                         insert.setBackgroundResource(R.drawable.check_edittext);
                     }
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
             case DUPLICATED_PHONENUMBER:
-                try{
+                try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if(real_result.equals("success")){
+                    if (real_result.equals("success")) {
                         insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else{
+                    } else {
                         insert.setBackgroundResource(R.drawable.check_edittext);
                     }
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
             default:
-                    break;
+                break;
         }
     }
 

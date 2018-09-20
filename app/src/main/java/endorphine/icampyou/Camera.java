@@ -20,11 +20,14 @@ import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Circle;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.ExchangeMenu.Chat_Content;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,12 +46,21 @@ public class Camera {
     private String currentPhotoPath;
     String mimageCaptureName;
     ImageView m_userPhoto;
+    CircleImageView circleImageView;
 
+    private int image_type = -1;
 
 
     public Camera(Context _context,ImageView insertImage){
         this.context = _context;
         this.m_userPhoto = insertImage;
+        image_type = 0;
+    }
+
+    public Camera(Context _context,CircleImageView _circleImageView){
+        this.context = _context;
+        this.circleImageView = _circleImageView;
+        image_type = 1;
     }
 
     //사진 선택하는 함수
@@ -107,7 +119,12 @@ public class Camera {
             exifDegree = 0;
         }
 
-        m_userPhoto.setImageBitmap(rotate(bitmap,exifDegree));
+        if(image_type == 0){
+            m_userPhoto.setImageBitmap(rotate(bitmap,exifDegree));
+        } else{
+            circleImageView.setImageBitmap(rotate(bitmap,exifDegree));
+        }
+
     }
 
     //갤러리에서 사진 가져오는 함수
@@ -131,7 +148,11 @@ public class Camera {
         int exifDegree = exifOrientationToDegrees(exifOrientation);
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        m_userPhoto.setImageBitmap(rotate(bitmap,exifDegree));
+        if(image_type == 0){
+            m_userPhoto.setImageBitmap(rotate(bitmap,exifDegree));
+        } else{
+            circleImageView.setImageBitmap(rotate(bitmap,exifDegree));
+        }
     }
 
     //사진의 회전 값 가져오는 함수

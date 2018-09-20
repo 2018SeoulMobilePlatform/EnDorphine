@@ -320,7 +320,7 @@ public class Chat_Content extends AppCompatActivity {
                     break;
             }
         }
-//    }
+    }
 //
 //    private void sendPicture(Uri imgUri) {
 //        String imagePath = getRealPathFromURI(imgUri);
@@ -369,5 +369,5 @@ public class Chat_Content extends AppCompatActivity {
 //        }
 //        return cursor.getString(column_index);
 //    }
-    }
+
 }

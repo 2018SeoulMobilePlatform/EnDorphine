@@ -1,5 +1,6 @@
 package endorphine.icampyou.Login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,11 +15,15 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
-public class FindUserInfo_Fragment extends BaseFragment {
+import static android.app.Activity.RESULT_OK;
+
+public class FindUserInfo_Fragment extends BaseFragment{
 
     EditText findPassword_email_editText;
     EditText findPassword_name_editText;
@@ -57,6 +62,12 @@ public class FindUserInfo_Fragment extends BaseFragment {
         findPassword_name_editText = (EditText)view.findViewById(R.id.find_name2);
         findPassword_phone_editText = (EditText)view.findViewById(R.id.find_phone);
 
+        Intent intent = getActivity().getIntent();
+        if (intent.getBooleanExtra("find", false)) {
+            intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
+
         return view;
     }
 
@@ -70,5 +81,24 @@ public class FindUserInfo_Fragment extends BaseFragment {
         jsonObject.accumulate("phonenumber", findPassword_phone_editText.getText().toString());
 
         return jsonObject;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("requestCode",String.valueOf(requestCode));
+        Log.e("resultCode",String.valueOf(resultCode));
+        Log.e("data",data.getStringExtra("result"));
+        if(resultCode != RESULT_OK){
+            Log.e("1","1");
+            return ;
+        }
+        if(data.getStringExtra("result").equals("fail")){
+
+        } else{
+            Log.e("2","2");
+            Intent intent = new Intent(getActivity(),LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
     }
 }
