@@ -50,6 +50,7 @@ public class ChattingList_Fragment extends BaseFragment {
     ArrayList<Chat_Item> copy;
     ChatList_Adapter adapter;
     ListView chatlist_listView;
+    ListView mylist_listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -201,36 +202,18 @@ public class ChattingList_Fragment extends BaseFragment {
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
         String camp_name = data.getStringExtra("camp_name");
-        String time = timePorcess();
 
-//        byte[] image_byte = data.getByteArrayExtra("image");
-//        Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name,time);
-        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name,time));
+        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
+        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
         adapter.addItem(addItem);
         adapter.notifyDataSetChanged();
-    }
-
-    //현재시간 가공 함수
-    private String timePorcess(){
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-        String time = simpleDateFormat.format(date);
-        String am_pm = time.substring(time.length()-2,time.length()-1);
-        if(am_pm.equals("AM")){
-            am_pm = "오전";
-        } else {
-            am_pm = "오후";
-        }
-        String current_time = time.substring(11,16);
-        return am_pm+" "+current_time;
     }
 
     //리스트 뷰 세팅
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
         adapter = new ChatList_Adapter();
-        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥","냥냥"));
+        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥"));
         chatlist_listView.setAdapter(adapter);
 
         copy = new ArrayList<>();

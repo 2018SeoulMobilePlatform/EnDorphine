@@ -5,12 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import endorphine.icampyou.ExchangeMenu.Chat_Content;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 
@@ -43,6 +45,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     //이메일 아이디 중복되는 경우
     public static final int DUPLICATED_PHONENUMBER = 1116;
 
+    //채팅방 개설
+    public static final int MAKE_CHATTINGLIST = 1117;
+
     public NetworkTask(String url, JSONObject data, int ACTION) {
         this.url = url;
         this.data = data;
@@ -68,6 +73,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPreExecute() {
+        Log.e("3","3");
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         switch (select) {
             case USER_REGISTER:
@@ -88,6 +94,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case DUPLICATED_PHONENUMBER:
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
+            case MAKE_CHATTINGLIST:
+                Log.e("4","4");
+                asyncDialog.setMessage("채팅방 개설 중 입니다..");
+                break;
             default:
                 break;
 
@@ -103,7 +113,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         String result = null;
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, data);
-
+        if(result.equals(null)){
+            Log.e("null","입니당");
+        }
+        else{
+            Log.e("냥냥",result);
+        }
         return result;
     }
 
@@ -192,6 +207,22 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     } else {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MAKE_CHATTINGLIST:
+                try {
+                    Log.e("5","5");
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        Log.e("success","성공");
+                        Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
+                        //((Activity)context).finish();
+                    } else {
+                        Log.e("실패","실패");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -57,14 +57,14 @@ public class Camera {
         image_type = 0;
     }
 
-    public String getImageName(){
-        return mimageCaptureName;
-    }
-
     public Camera(Context _context, CircleImageView _circleImageView) {
         this.context = _context;
         this.circleImageView = _circleImageView;
         image_type = 1;
+    }
+
+    public String getImageName(){
+        return mimageCaptureName;
     }
 
     //사진 선택하는 함수

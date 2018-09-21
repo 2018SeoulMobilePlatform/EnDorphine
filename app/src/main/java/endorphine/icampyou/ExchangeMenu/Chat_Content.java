@@ -22,6 +22,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,14 +32,20 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import endorphine.icampyou.Camera;
+import endorphine.icampyou.Login.RegisterUserActivity;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class Chat_Content extends AppCompatActivity {
@@ -58,6 +65,10 @@ public class Chat_Content extends AppCompatActivity {
     private String currentPhotoPath;
     String mimageCaptureName;
 
+    String imageName;
+
+    ImageView temp;
+
     Camera camera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +77,9 @@ public class Chat_Content extends AppCompatActivity {
 
         //이미지 넣기
         m_userPhoto = (ImageView) findViewById(R.id.user_image);
+
+        //임시
+        temp = (ImageView) findViewById(R.id.user_image2);
 
         //카메라 클래스 객체 생성
         camera = new Camera(this,m_userPhoto);
@@ -100,32 +114,54 @@ public class Chat_Content extends AppCompatActivity {
                 } else if (camp_name == null) {
                     Toast.makeText(Chat_Content.this, "캠핑장 종류를 선택해 주세요", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent returnIntent = new Intent();
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addchatroom";
 
-                    try {
-                        //Write file
-                        String filename = "bitmap.png";
-                        FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
-                        tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    JSONObject data = sendJSonData();
 
-                        //Cleanup
-                        stream.close();
-                        tempBitmap.recycle();
+                    Log.e("2","2");
+                    NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data,NetworkTask.MAKE_CHATTINGLIST);
+                    networkTask.execute();
 
-                        //Pop intent
-                        returnIntent.putExtra("image", filename);
-                        returnIntent.putExtra("user", "허진규");
-                        returnIntent.putExtra("need", need_thing.getText().toString());
-                        returnIntent.putExtra("lettable", lettable_thing.getText().toString());
-                        returnIntent.putExtra("camp_name", camp_name);
-                        setResult(RESULT_OK, returnIntent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    Intent returnIntent = new Intent();
 
-                    finish();
+//                    try {
+////                        //Write file
+////                        String filename = "bitmap.png";
+////                        FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
+////                        tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+////
+////                        //Cleanup
+////                        stream.close();
+////                        tempBitmap.recycle();
+//
+////                        //Pop intent
+////                        returnIntent.putExtra("image", filename);
+////                        returnIntent.putExtra("user", "허진규");
+////                        returnIntent.putExtra("need", need_thing.getText().toString());
+////                        returnIntent.putExtra("lettable", lettable_thing.getText().toString());
+////                        returnIntent.putExtra("camp_name", camp_name);
+//
+//                        setResult(RESULT_OK, returnIntent);
+//
+//                        Log.e("1","1");
+//                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addchatroom";
+//
+//                        JSONObject data = sendJSonData();
+//
+//
+//                        Log.e("2","2");
+//                        NetworkTask networkTask = new NetworkTask(url,data,NetworkTask.MAKE_CHATTINGLIST);
+//                        networkTask.execute();
+//
+//                    } catch (Exception e) {
+//
+//                        Log.e("Error",e.toString());
+//                        e.printStackTrace();
+//                    }
 
-                    Toast.makeText(Chat_Content.this, "채팅방 개설", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Chat_Content.this, "채팅방 개설", Toast.LENGTH_LONG).show();
+//                    finish();
+
                 }
             }
         });
@@ -204,11 +240,9 @@ public class Chat_Content extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_CODE:
-                    //sendPicture(data.getData());
                     camera.sendPicture(data.getData());
                     break;
                 case CAMERA_CODE:
-                    //getPictureForPhoto();
                     camera.getPictureForPhoto();
                     break;
 
@@ -216,5 +250,50 @@ public class Chat_Content extends AppCompatActivity {
                     break;
             }
         }
+        imageName = camera.getImageName();
+    }
+
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData()  {
+
+        JSONObject jsonObject = new JSONObject();
+
+        String encodedImage = toBase64(m_userPhoto);
+
+        Log.e("이미지",encodedImage);
+
+        try {
+            jsonObject.accumulate("file",encodedImage);
+            jsonObject.accumulate("image_name", "냥냥");
+            jsonObject.accumulate("user_id", "허진규멍청이");
+            jsonObject.accumulate("myitem", need_thing.getText().toString());
+            jsonObject.accumulate("needitem", lettable_thing.getText().toString());
+            jsonObject.accumulate("campname", camp_kind.getSelectedItem().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap tempBitmap2 = fromBase64(encodedImage);
+        temp.setImageBitmap(tempBitmap2);
+
+        return jsonObject;
+    }
+
+    //비트맵 인코딩하기
+    public String toBase64(ImageView imageView){
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        tempBitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+        byte[] data = bos.toByteArray();
+        String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    //비트맵 디코딩하기
+    public Bitmap fromBase64 (String encodedImage) {
+        byte[] decodedByte = Base64.decode(encodedImage, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 }

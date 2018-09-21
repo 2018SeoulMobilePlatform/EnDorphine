@@ -35,7 +35,7 @@ public class RequestHttpURLConnection {
             HttpURLConnection conn = (HttpURLConnection) urlObject.openConnection();
 
             conn.setReadTimeout(100000); //10초동안 서버로부터 반응없으면 에러
-            conn.setConnectTimeout(15000); // 접속하는 커넥션 타임 15초동안 접속안되면 접속 안된느 것으로 간주
+            conn.setConnectTimeout(15000); // 접속하는 커넥션 타임 15초동안 접속안되면 접속 안되는 것으로 간주
 
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Accept-Charset", "UTF-8"); // Accept-Charset ����. //character set을 utf-8로 선언
@@ -190,6 +190,8 @@ public class RequestHttpURLConnection {
 //        Log.i("냥냥", data.length+"bytes written successed ... finish!!" );
 //
 //    }
+
+
 
     //이미지 서버에 올리는
     public String requestImage(String _url,Uri uri){
