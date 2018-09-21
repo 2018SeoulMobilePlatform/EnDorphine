@@ -1,6 +1,7 @@
 package endorphine.icampyou.ExchangeMenu;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Message;
 import android.text.Layout;
 import android.view.Gravity;
@@ -99,12 +100,14 @@ public class ChatMessage_Adapter extends BaseAdapter {
         text.setText(m_message_list.get(position).msg);
 
         if( m_message_list.get(position).type == 0 ) {
-            text.setBackgroundResource(R.drawable.inboxx);
+            text.setBackgroundResource(R.drawable.chat_you);
+            text.setTextColor(Color.BLACK);
             layout.setGravity(Gravity.LEFT);
             viewRight.setVisibility(View.GONE);
             viewLeft.setVisibility(View.GONE);
         }else if(m_message_list.get(position).type == 1){
-            text.setBackgroundResource(R.drawable.outboxx);
+            text.setBackgroundResource(R.drawable.chat_me);
+            text.setTextColor(Color.WHITE);
             layout.setGravity(Gravity.RIGHT);
             viewRight.setVisibility(View.GONE);
             viewLeft.setVisibility(View.GONE);

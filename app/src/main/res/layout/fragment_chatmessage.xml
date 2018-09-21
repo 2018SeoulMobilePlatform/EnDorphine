@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatting_background1"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
@@ -29,28 +29,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#13B9A5"
+        android:background="@drawable/edittext_border"
         android:layout_below="@id/im1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <EditText
-            android:hint="메세지를 입력하세요"
+            android:hint="메세지 쓰기"
             android:layout_marginLeft="10dp"
             android:id="@+id/editText1"
-            android:inputType="textMultiLine"
             android:maxLines="4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:textColor="#000000"
+            android:background="@null"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textCursorDrawable="@null"
+            android:padding="5dp"
             android:layout_weight="8"/>
 
         <Button
             android:id="@+id/send_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="#13B9A5"
             android:textColor="#ffff"
+            android:layout_weight="2"
             android:text="전송" />
-
     </LinearLayout>
 </LinearLayout>

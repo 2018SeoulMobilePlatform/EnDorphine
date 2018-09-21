@@ -124,13 +124,6 @@ public class ChattingMessage_Fragment extends BaseFragment {
         } catch(JSONException e) {
             e.printStackTrace();
         }
-
-//        if (TextUtils.isEmpty(message)) {
-//            return;
-//        }
-//
-//        send_message.setText("");
-//        mSocket.emit("private_message", "seyoung babu");
     }
 
     @Override
