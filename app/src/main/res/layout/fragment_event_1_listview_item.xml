@@ -4,24 +4,36 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:padding="10dp"
-    android:layout_margin="10dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
     <ImageView
         android:id="@+id/event_image"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:background="#DAD9FF"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/event_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서울대공원 캠핑장"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:background="#7BD2C8"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/event_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="대학생 난지 캠핑장 이용시 몽골텐트 15% 할인"
-        android:textSize="18dp"
-        android:textColor="#4C4C4C"
-        android:layout_marginTop="5dp"/>
+        android:textSize="15dp"
+        android:textColor="#747474"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/event_date"
@@ -29,5 +41,6 @@
         android:layout_height="wrap_content"
         android:text="2018.09.01 ~ 2018.09.30"
         android:textSize="13dp"
-        android:textColor="#8C8C8C"/>
+        android:textColor="#8C8C8C"
+        android:layout_marginLeft="10dp"/>
 </LinearLayout>

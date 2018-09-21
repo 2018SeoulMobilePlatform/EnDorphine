@@ -8,18 +8,22 @@ import android.widget.ListView;
 public class EventListViewItem {
 
     private int eventImage; // 이벤트 이미지
+    private String eventPlace;  // 이벤트 개최 캠핑장
     private String eventTitle;  // 이벤트 제목
     private String eventDate;   // 이벤트 기간
 
     // 생성자
-    public EventListViewItem(int eventImage, String eventTitle, String eventDate){
+    public EventListViewItem(int eventImage, String eventPlace, String eventTitle, String eventDate){
         this.eventImage = eventImage;
+        this.eventPlace = eventPlace;
         this.eventTitle = eventTitle;
         this.eventDate = eventDate;
     }
 
     // 각 변수들 get 메소드
     public int getEventImage(){return eventImage;}
+
+    public String getEventPlace(){return eventPlace;}
 
     public String getEventTitle(){return eventTitle;}
 

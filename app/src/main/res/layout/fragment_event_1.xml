@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:divider="#D5D5D5"
-        android:dividerHeight="10.5dp"
-        android:padding="10dp"/>
+        android:divider="#FFFFFF"
+        android:dividerHeight="15dp"
+        />
 
 </FrameLayout>

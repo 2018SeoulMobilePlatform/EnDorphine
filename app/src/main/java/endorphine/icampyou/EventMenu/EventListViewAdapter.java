@@ -20,6 +20,7 @@ public class EventListViewAdapter extends BaseAdapter {
     private ArrayList<EventListViewItem> eventData;
     private int layout;
     private ImageView eventImage;
+    private TextView eventPlace;
     private TextView eventTitle;
     private TextView eventDate;
 
@@ -46,6 +47,9 @@ public class EventListViewAdapter extends BaseAdapter {
 
         eventImage=(ImageView)convertView.findViewById(R.id.event_image);
         eventImage.setImageResource(eventListViewItem.getEventImage());
+
+        eventPlace = (TextView)convertView.findViewById(R.id.event_place);
+        eventPlace.setText(eventListViewItem.getEventPlace());
 
         eventTitle=(TextView)convertView.findViewById(R.id.event_title);
         eventTitle.setText(eventListViewItem.getEventTitle());

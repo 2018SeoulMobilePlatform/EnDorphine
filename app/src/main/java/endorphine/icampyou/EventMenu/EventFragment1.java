@@ -42,11 +42,15 @@ public class EventFragment1 extends BaseFragment {
         eventData = new ArrayList<>();
 
         // 데이터에 이벤트 아이템들 추가
-        EventListViewItem event1 = new EventListViewItem(R.drawable.event_1,"난지 캠핑장 8월 초특가","2018-08-01 ~ 2018-09-11");
-        EventListViewItem event2 = new EventListViewItem(R.drawable.event_2,"강동 캠핑장 아시안게임 응원 이벤트","2018-08-01 ~ 2018-09-11");
+        EventListViewItem event1 = new EventListViewItem(R.drawable.event1,"서울대공원캠핑장","2018년 서울동물원 대탐험(1박 2일 가족캠프)에 참여하세요!","2018-09-22 ~ 2018-10-09");
+        EventListViewItem event2 = new EventListViewItem(R.drawable.event2,"서울대공원캠핑장","즐거운 추석행사 '동물원 한가위 한마당' 개최","2018-09-24 ~ 2018-09-25");
+        EventListViewItem event3 = new EventListViewItem(R.drawable.event4,"난지캠핑장","★난지캠핑장 여름맞이 COOL한 8월 할인 프로모션! ★", "2018-06-27 ~ 2018-07-02");
+        EventListViewItem event4 = new EventListViewItem(R.drawable.event3,"중랑캠핑장","중랑캠핑숲! 2019년도 상반기 『시민의숲 꽃길 결혼식』 참여자를 모집합니다.","2018-10-01 ~ 2018-10-15");
 
         eventData.add(event1);
         eventData.add(event2);
+        eventData.add(event3);
+        eventData.add(event4);
 
         // 어댑터로 이벤트 리스트에 아이템 뿌려주기
         adapter = new EventListViewAdapter(inflater, R.layout.fragment_event_1_listview_item, eventData);
@@ -57,7 +61,7 @@ public class EventFragment1 extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.event_frame, EventInfoFragment.newInstance(eventList.getSelectedItemPosition()));
+                fragmentTransaction.replace(R.id.event_frame, EventInfoFragment.newInstance(position));
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             }
         });
