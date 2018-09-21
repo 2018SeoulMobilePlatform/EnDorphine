@@ -48,11 +48,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     //채팅방 개설
     public static final int MAKE_CHATTINGLIST = 1117;
 
-    public NetworkTask(String url, JSONObject data, int ACTION) {
-        this.url = url;
-        this.data = data;
-        this.select = ACTION;
-    }
+    //후기 작성
+    public static final int MAKE_REVIEWLIST = 1118;
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
@@ -73,7 +70,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        Log.e("3","3");
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         switch (select) {
             case USER_REGISTER:
@@ -97,6 +93,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case MAKE_CHATTINGLIST:
                 Log.e("4","4");
                 asyncDialog.setMessage("채팅방 개설 중 입니다..");
+                break;
+            case MAKE_REVIEWLIST:
+                asyncDialog.setMessage("후기 작성 중 입니다..");
                 break;
             default:
                 break;

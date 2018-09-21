@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import endorphine.icampyou.GuideMenu.GuideActivity;
 import endorphine.icampyou.Login.RegisterUserActivity;
@@ -37,10 +41,14 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     //카메라
     Camera camera;
 
+    //카메라에 사용하는 상수
     private final int CAMERA_CODE = 1111;
     private final int GALLERY_CODE = 1112;
     private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
     private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
+
+    //이미지 변환 객체 선언
+    ImageConversion imageConversion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         campingPlace = getIntent().getStringExtra("캠핑장 이름");
 
         camera = new Camera(ReviewWriteActivity.this, reviewImageView);
+        imageConversion = new ImageConversion();
 
         completingReviewButton.setOnClickListener(this);
     }
@@ -63,6 +72,16 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()){
             // 작성완료 버튼 누를 시 이벤트
             case R.id.completing_review_button :
+//                //서버 연동
+//                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
+//
+//                JSONObject data = null;
+//                data = sendJSonData();
+//
+//                endorphine.icampyou.NetworkTask networkTask =
+//                        new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, NetworkTask.MAKE_REVIEWLIST);
+//                networkTask.execute();
+
                 // 현재 설정값 저장
                 setReviewValue();
                 // 인텐트로 리뷰한테 값 보내기
@@ -166,5 +185,26 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
+    }
+
+    //후기 데이터 서버에 보내기 위한 JSON 형식 데이터
+    private JSONObject sendJSonData()  {
+
+        JSONObject jsonObject = new JSONObject();
+
+        String encodedImage = imageConversion.toBase64(reviewImageView);
+
+        try {
+            jsonObject.accumulate("file",encodedImage);
+            jsonObject.accumulate("image_name", "냥냥");
+            jsonObject.accumulate("camp_name", campingPlace);
+//            jsonObject.accumulate("nickname", need_thing.getText().toString());
+//            jsonObject.accumulate("point", lettable_thing.getText().toString());
+            jsonObject.accumulate("content", reviewEditText.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }
