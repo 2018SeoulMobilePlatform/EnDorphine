@@ -35,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //서버에 보낼 아이디,비밀번호 데이터
                 JSONObject jsonObject = sendObject();
 
-                NetworkTask networkTask = new NetworkTask(this, url, jsonObject, NetworkTask.USER_LOGIN);
+                NetworkTask networkTask = new NetworkTask(this, url, jsonObject, Constant.USER_LOGIN);
                 networkTask.execute();
 
                 break;

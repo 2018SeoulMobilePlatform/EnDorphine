@@ -36,12 +36,6 @@ public class Camera {
 
     private Context context;
 
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-
-    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
-    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
-
     private Uri photoUri;
     private String currentPhotoPath;
     String mimageCaptureName;
@@ -82,7 +76,7 @@ public class Camera {
                 if (photoFile != null) {
                     photoUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", photoFile);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    ((Activity) context).startActivityForResult(intent, CAMERA_CODE);
+                    ((Activity) context).startActivityForResult(intent, Constant.CAMERA_CODE);
                 }
             }
         }
@@ -136,7 +130,7 @@ public class Camera {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        ((Activity) context).startActivityForResult(intent, GALLERY_CODE);
+        ((Activity) context).startActivityForResult(intent, Constant.GALLERY_CODE);
     }
 
     //사진 적용하는 함수
@@ -200,7 +194,7 @@ public class Camera {
         if (permissionCheck_Camera == PackageManager.PERMISSION_GRANTED) {
             selectPhoto();
         } else {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION_CODE_CAMERA);
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, Constant.REQUEST_PERMISSION_CODE_CAMERA);
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.CAMERA)) {
                 //거부했을 경우
                 Toast toast = Toast.makeText(context,
@@ -222,8 +216,8 @@ public class Camera {
         if (permissionCheck_Read == PackageManager.PERMISSION_GRANTED && permissionCheck_Write == PackageManager.PERMISSION_GRANTED) {
             selectGallery();
         } else {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_GALLERY);
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_GALLERY);
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constant.REQUEST_PERMISSION_CODE_GALLERY);
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constant.REQUEST_PERMISSION_CODE_GALLERY);
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     || ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 //거부했을 경우

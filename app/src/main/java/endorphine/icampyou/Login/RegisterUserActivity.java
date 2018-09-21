@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
@@ -31,11 +32,6 @@ public class RegisterUserActivity extends AppCompatActivity {
     EditText phoneNumber_editText;
 
     CircleImageView user_profile;
-
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
-    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
 
     Camera camera;
 
@@ -70,7 +66,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(RegisterUserActivity.this,url,data, NetworkTask.USER_REGISTER);
+                    endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(RegisterUserActivity.this,url,data, Constant.USER_REGISTER);
                     networkTask.execute();
 
                     // AsyncTask를 통해 HttpURLConnection 수행
@@ -130,7 +126,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_EMAIL,email_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_EMAIL,email_editText);
                     networkTask.execute();
                 }
             }
@@ -228,7 +224,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_NICKNAME,nickName_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_NICKNAME,nickName_editText);
                     networkTask.execute();
                 }
             }
@@ -275,7 +271,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,NetworkTask.DUPLICATED_PHONENUMBER,phoneNumber_editText);
+                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_PHONENUMBER,phoneNumber_editText);
                     networkTask.execute();
                 }
             }
@@ -360,7 +356,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_PERMISSION_CODE_GALLERY:
+            case Constant.REQUEST_PERMISSION_CODE_GALLERY:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectGallery();
@@ -371,7 +367,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                     toast.show();
                 }
                 break;
-            case REQUEST_PERMISSION_CODE_CAMERA:
+            case Constant.REQUEST_PERMISSION_CODE_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectPhoto();
@@ -391,10 +387,10 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_CODE:
+                case Constant.GALLERY_CODE:
                     camera.sendPicture(data.getData());
                     break;
-                case CAMERA_CODE:
+                case Constant.CAMERA_CODE:
                     camera.getPictureForPhoto();
                     break;
                 default:

@@ -26,31 +26,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ProgressDialog asyncDialog;
     EditText insert;
 
-
-    //사용자 등록 경우
-    public static final int USER_REGISTER = 1111;
-
-    //사용자 로그인 경우
-    public static final int USER_LOGIN = 1112;
-
-    //사용자 로그인 경우
-    public static final int USER_FIND_INFO = 1113;
-
-    //이메일 아이디 중복되는 경우
-    public static final int DUPLICATED_EMAIL = 1114;
-
-    //이메일 아이디 중복되는 경우
-    public static final int DUPLICATED_NICKNAME = 1115;
-
-    //이메일 아이디 중복되는 경우
-    public static final int DUPLICATED_PHONENUMBER = 1116;
-
-    //채팅방 개설
-    public static final int MAKE_CHATTINGLIST = 1117;
-
-    //후기 작성
-    public static final int MAKE_REVIEWLIST = 1118;
-
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
         this.url = url;
@@ -72,29 +47,29 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     protected void onPreExecute() {
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         switch (select) {
-            case USER_REGISTER:
+            case Constant.USER_REGISTER:
                 asyncDialog.setMessage("사용자 등록 중 입니다..");
                 break;
-            case USER_LOGIN:
+            case Constant.USER_LOGIN:
                 asyncDialog.setMessage("로그인 중 입니다..");
                 break;
-            case USER_FIND_INFO:
+            case Constant.USER_FIND_INFO:
                 asyncDialog.setMessage("비밀번호를 찾는 중 입니다..");
                 break;
-            case DUPLICATED_EMAIL:
+            case Constant.DUPLICATED_EMAIL:
                 asyncDialog.setMessage("이메일 중복 검사 중 입니다..");
                 break;
-            case DUPLICATED_NICKNAME:
+            case Constant.DUPLICATED_NICKNAME:
                 asyncDialog.setMessage("닉네임 중복 검사 중 입니다..");
                 break;
-            case DUPLICATED_PHONENUMBER:
+            case Constant.DUPLICATED_PHONENUMBER:
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
-            case MAKE_CHATTINGLIST:
+            case Constant.MAKE_CHATTINGLIST:
                 Log.e("4","4");
                 asyncDialog.setMessage("채팅방 개설 중 입니다..");
                 break;
-            case MAKE_REVIEWLIST:
+            case Constant.MAKE_REVIEWLIST:
                 asyncDialog.setMessage("후기 작성 중 입니다..");
                 break;
             default:
@@ -128,7 +103,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
         //경우에 따른 스위치문
         switch (select) {
-            case USER_REGISTER:
+            case Constant.USER_REGISTER:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -145,7 +120,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case USER_LOGIN:
+            case Constant.USER_LOGIN:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -161,7 +136,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case USER_FIND_INFO:
+            case Constant.USER_FIND_INFO:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -172,7 +147,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case DUPLICATED_EMAIL:
+            case Constant.DUPLICATED_EMAIL:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -185,7 +160,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case DUPLICATED_NICKNAME:
+            case Constant.DUPLICATED_NICKNAME:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -198,7 +173,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case DUPLICATED_PHONENUMBER:
+            case Constant.DUPLICATED_PHONENUMBER:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -211,24 +186,24 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
-            case MAKE_CHATTINGLIST:
+            case Constant.MAKE_CHATTINGLIST:
                 try {
-                    Log.e("5","5");
-                    JSONObject jsonObject = new JSONObject(result);
-                    String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        Log.e("success","성공");
-                        Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
-                        //((Activity)context).finish();
-                    } else {
-                        Log.e("실패","실패");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                break;
+            Log.e("5","5");
+            JSONObject jsonObject = new JSONObject(result);
+            String real_result = jsonObject.getString("result");
+            if (real_result.equals("success")) {
+                Log.e("success","성공");
+                Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
+                //((Activity)context).finish();
+            } else {
+                Log.e("실패","실패");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        break;
+        default:
+        break;
         }
     }
 

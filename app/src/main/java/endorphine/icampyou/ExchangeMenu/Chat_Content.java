@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.Login.RegisterUserActivity;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -57,13 +58,6 @@ public class Chat_Content extends AppCompatActivity {
     EditText lettable_thing;
 
     //예시
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
-    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
-    private Uri photoUri;
-    private String currentPhotoPath;
-    String mimageCaptureName;
 
     String imageName;
 
@@ -114,7 +108,7 @@ public class Chat_Content extends AppCompatActivity {
                     JSONObject data = sendJSonData();
 
                     Log.e("2","2");
-                    NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data,NetworkTask.MAKE_CHATTINGLIST);
+                    NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data, Constant.MAKE_CHATTINGLIST);
                     networkTask.execute();
 
 //                    Intent returnIntent = new Intent();
@@ -203,7 +197,7 @@ public class Chat_Content extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_PERMISSION_CODE_GALLERY:
+            case Constant.REQUEST_PERMISSION_CODE_GALLERY:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectGallery();
@@ -214,7 +208,7 @@ public class Chat_Content extends AppCompatActivity {
                     toast.show();
                 }
                 break;
-            case REQUEST_PERMISSION_CODE_CAMERA:
+            case Constant.REQUEST_PERMISSION_CODE_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectPhoto();
@@ -234,10 +228,10 @@ public class Chat_Content extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_CODE:
+                case Constant.GALLERY_CODE:
                     camera.sendPicture(data.getData());
                     break;
-                case CAMERA_CODE:
+                case Constant.CAMERA_CODE:
                     camera.getPictureForPhoto();
                     break;
 

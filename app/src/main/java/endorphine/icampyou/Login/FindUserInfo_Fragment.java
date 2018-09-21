@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
@@ -53,7 +54,7 @@ public class FindUserInfo_Fragment extends BaseFragment{
                     e.printStackTrace();
                 }
 
-                endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(getActivity(),url,data, NetworkTask.USER_FIND_INFO);
+                endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(getActivity(),url,data, Constant.USER_FIND_INFO);
                 networkTask.execute();
             }
         });
