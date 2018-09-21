@@ -133,7 +133,7 @@ public class ReceiveWeatherTask extends AsyncTask<String, Void, JSONObject>{
         else if(weather.equals("broken clouds")) {
             return "흐림";
         }
-        else if(weather.equals("overcase clouds")) {
+        else if(weather.equals("overcast clouds")) {
             return "흐림";
         }
         else if(weather.equals("light rain")) {

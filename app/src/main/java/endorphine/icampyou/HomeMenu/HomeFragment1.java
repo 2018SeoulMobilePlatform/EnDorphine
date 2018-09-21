@@ -26,7 +26,7 @@ public class HomeFragment1 extends BaseFragment implements AsyncResponse {
     private View view;
     public String description="";
     public String temperature="";
-    public String temp="";
+
 
     public static boolean mAsync = false;
 

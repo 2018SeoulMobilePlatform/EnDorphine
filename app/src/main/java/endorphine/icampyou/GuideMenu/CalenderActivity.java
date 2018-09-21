@@ -52,6 +52,8 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     public final static String RESULT_TYPE = "result_type";
     public final static String RESULT_STATE = "result_state";
 
+    public String RESULT_STAY_LENGTH = "stay_length";
+
     public String CampingName;
 
     private DayPickerView pickerView;
@@ -101,7 +103,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
         isMonthLabel = getData.getBooleanExtra(EXTRA_IS_MONTH_LABEL , false);
         isSingleSelect = getData.getBooleanExtra(EXTRA_IS_SINGLE_SELECT , false);
         dates = getData.getStringArrayListExtra(EXTRA_BOOKING_DATES);
-        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , -1);
+        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 3);
         maxYear = getData.getIntExtra(EXTRA_MAX_YEAR , 2018);
 
         sYear = getData.getIntExtra(EXTRA_SELECT_DATE_SY , 0);
@@ -191,7 +193,8 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                 }
 
 
-                Intent resultIntent = new Intent(CalenderActivity.this, DetailsActivity.class);
+
+                Intent resultIntent = new Intent(CalenderActivity.this, TentSelectActivity.class);
                 resultIntent.putExtra(RESULT_SELECT_START_DATE , SELECT_START_DATE );
                 resultIntent.putExtra(RESULT_SELECT_END_DATE , SELECT_END_DATE );
                 resultIntent.putExtra(RESULT_SELECT_START_VIEW_DATE , tv_start_date.getText().toString() );
@@ -201,7 +204,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                 resultIntent.putExtra(RESULT_STATE , "done" );
                 resultIntent.putExtra("camping_name", CampingName);
                 Log.e("CalendarActivity", CampingName);
-                Log.e("CalendarActivty", "1");
+                Log.e("CalendarActivity", "1");
                 setResult(RESULT_OK , resultIntent);
                 startActivity(resultIntent);
                 //finish();
@@ -303,9 +306,24 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
             SELECT_START_DATE = startDate;
             SELECT_END_DATE = endDate;
 
+            RESULT_STAY_LENGTH = Integer.toString(calculateStayLength(start_month_int, start_day_int, end_month_int, end_day_int));
+
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public int calculateStayLength(int startMonth, int startDay, int endMonth, int endDay) {
+        if(startMonth == endMonth)
+            return endDay - startDay;
+        else
+            switch (startMonth) {
+                case 10:
+                    return endDay + (31-startDay);
+
+                default:
+                    return endDay + (30-startDay);
+            }
     }
 
     @Override
