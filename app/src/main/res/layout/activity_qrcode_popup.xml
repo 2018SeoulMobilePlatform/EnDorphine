@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="QR코드"
+            android:text="QR코드 입장권"
             android:textSize="20sp"
             android:textColor="#fff"
             android:gravity="center"
