@@ -54,6 +54,8 @@ public class EventInfoFragment extends BaseFragment {
         if (getArguments() != null) {
             mPosition = getArguments().getInt("position");
         }
+
+        // 포지션에 따라 이벤트 상세 내용 다르게 셋팅
         switch (mPosition) {
             case 0:
                 eventTitle.setText("짱짱");
@@ -70,30 +72,4 @@ public class EventInfoFragment extends BaseFragment {
 
         return view;
     }
-
-//    // Back키 누르면 앱이 종료되는게 아니라 EventFragment1로 이동하게 설정
-//    @Override
-//    public void onBack() {
-//        if (getArguments() != null) {
-//            startFragment(getFragmentManager(), EventFragment1.class);
-//        } else {
-//            HomeActivity activity = (HomeActivity) getActivity();
-//            activity.setOnKeyBackPressedListener(null);
-//            activity.onBackPressed();
-//        }
-//
-////        if (mWebView.canGoBack()) {
-////            mWebView.goBack();
-////        } else {
-////            HomeActivity activity = (HomeActivity) getActivity();
-////            activity.setOnKeyBackPressedListener(null);
-////            activity.onBackPressed();
-////        }
-//    }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        ((HomeActivity) activity).setOnKeyBackPressedListener(this);
-//    } // in SearchFragment
 }

@@ -58,7 +58,7 @@ public class EventFragment1 extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.event_frame, EventInfoFragment.newInstance(eventList.getSelectedItemPosition()));
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             }
         });
 
