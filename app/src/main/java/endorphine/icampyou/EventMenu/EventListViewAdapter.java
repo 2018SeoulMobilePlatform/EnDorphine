@@ -1,5 +1,6 @@
 package endorphine.icampyou.EventMenu;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class EventListViewAdapter extends BaseAdapter {
     private TextView eventPlace;
     private TextView eventTitle;
     private TextView eventDate;
+    private TextView isClosed;
 
     // 생성자
     public EventListViewAdapter(LayoutInflater inflater, int layout, ArrayList<EventListViewItem> eventData){
@@ -56,6 +58,16 @@ public class EventListViewAdapter extends BaseAdapter {
 
         eventDate=(TextView)convertView.findViewById(R.id.event_date);
         eventDate.setText(eventListViewItem.getEventDate());
+
+        isClosed = (TextView)convertView.findViewById(R.id.closed_event);
+        if(eventListViewItem.getEventIsClosed()){
+            isClosed.setText(" 종료된 이벤트 ");
+            isClosed.setBackgroundColor(Color.GRAY);
+        }
+        else{
+            isClosed.setText(" 진행중인 이벤트 ");
+            isClosed.setBackgroundColor(Color.parseColor("#FFBB00"));
+        }
 
         return convertView;
     }

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -89,14 +91,6 @@ public class EventInfoFragment extends BaseFragment {
                 eventImage.setImageResource(R.drawable.event_info2);
                 break;
             case 2:
-                eventTitle.setText("★난지캠핑장 여름맞이 COOL한 8월 할인 프로모션! ★");
-                eventContent.setText(" 6월 27일 오전 11시 ~ 7월 2일 오전 10시 해당 기간에 한하여 (8월 예매)를 최대"+
-                        "30% 할인을 적용 받을 수 있는 절호의 기회! (토요일, 광복절 전날 제외)\n" +
-                        "다시 없을 기회를 놓치지 마세요!!\n" + "\n" +
-                        "(특정 기간 외에는 정가가 판매되오니, 예매에 참고 부탁드립니다.)");
-                eventImage.setImageResource(R.drawable.event_info4);
-                break;
-             default:
                 eventTitle.setText("중랑캠핑숲! 2019년도 상반기 『시민의숲 꽃길 결혼식』 참여자를 모집합니다.");
                 eventContent.setText("아름다운 봄날, 꽃들이 만발한 공원에서 만들어가는 소박하지만 특별한 결혼식.\n" +
                         "동부공원녹지사업소는 2019년 상반기(4월~6월)에 『시민의숲 꽃길 결혼식』에 참여할 예비부부 25쌍을 오는 10월 1일부터 15일까지 보름간 모집합니다.\n" +
@@ -112,8 +106,15 @@ public class EventInfoFragment extends BaseFragment {
                         "\n"+"자세한 내용은 붙임 공고문 참고하시고, 저희 시민의숲 꽃길 결혼식에 관심있는 예비 부부들의 많은 참여 바랍니다.\n");
                 eventImage.setImageResource(R.drawable.event_info3);
                 break;
+            default:
+                eventTitle.setText("★난지캠핑장 여름맞이 COOL한 8월 할인 프로모션! ★");
+                eventContent.setText(" 6월 27일 오전 11시 ~ 7월 2일 오전 10시 해당 기간에 한하여 (8월 예매)를 최대"+
+                        "30% 할인을 적용 받을 수 있는 절호의 기회! (토요일, 광복절 전날 제외)\n" +
+                        "다시 없을 기회를 놓치지 마세요!!\n" + "\n" +
+                        "(특정 기간 외에는 정가가 판매되오니, 예매에 참고 부탁드립니다.)");
+                eventImage.setImageResource(R.drawable.event_info4);
+                break;
         }
-
 
         return view;
     }
