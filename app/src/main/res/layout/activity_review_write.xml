@@ -46,13 +46,15 @@
             android:textSize="15dp" />
 
         <ImageView
+            android:id="@+id/review_imageview"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/camera2"/>
+            android:src="@drawable/camera2"
+            android:onClick="select_image"/>
 
 
         <!-- 후기 작성란 -->

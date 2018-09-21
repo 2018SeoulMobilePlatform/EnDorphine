@@ -1,6 +1,10 @@
 package endorphine.icampyou;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import endorphine.icampyou.GuideMenu.GuideActivity;
+import endorphine.icampyou.Login.RegisterUserActivity;
 
 /**
  * 후기 작성 페이지
@@ -28,16 +34,26 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     String reviewContent;   // 후기 내용
     String campingPlace;    // 캠핑장 종류
 
+    //카메라
+    Camera camera;
+
+    private final int CAMERA_CODE = 1111;
+    private final int GALLERY_CODE = 1112;
+    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
+    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_write);
 
         ratingBar = findViewById(R.id.star_ratingbar);
-        reviewImageView = findViewById(R.id.review_image);
+        reviewImageView = (ImageView) findViewById(R.id.review_imageview);
         reviewEditText = findViewById(R.id.review_content);
         completingReviewButton = findViewById(R.id.completing_review_button);
         campingPlace = getIntent().getStringExtra("캠핑장 이름");
+
+        camera = new Camera(ReviewWriteActivity.this, reviewImageView);
 
         completingReviewButton.setOnClickListener(this);
     }
@@ -57,6 +73,37 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    //이미지 선택 함수
+    public void select_image(View view){
+        DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //권한 보유 여부 확인
+                camera.CheckCameraAcess();
+            }
+        };
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                camera.CheckAlbumAcess();
+            }
+        };
+
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        };
+
+        new AlertDialog.Builder(ReviewWriteActivity.this)
+                .setTitle("업로드할 이미지 선택")
+                .setPositiveButton("사진 촬영", cameraListener)
+                .setNeutralButton("앨번 선택", albumListener)
+                .setNegativeButton("취소", cancelListener).show();
+
+    }
+
     public void setReviewValue(){
         // 별점 가져오기
         starNum = (float)ratingBar.getRating();
@@ -72,5 +119,52 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra("review_content",reviewContent);
         intent.putExtra("review_image",reviewImage);
         intent.putExtra("캠핑장 이름",campingPlace);
+    }
+
+    //권한 요청하는 함수
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_CODE_GALLERY:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //동의 했을 경우
+                    camera.selectGallery();
+                } else {
+                    //거부했을 경우
+                    Toast toast = Toast.makeText(ReviewWriteActivity.this,
+                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                break;
+            case REQUEST_PERMISSION_CODE_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //동의 했을 경우
+                    camera.selectPhoto();
+
+                } else {
+                    //거부했을 경우
+                    Toast toast = Toast.makeText(ReviewWriteActivity.this,
+                            "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+        }
+    }
+
+    //선택한 사진 데이터 처리
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_CODE:
+                    camera.sendPicture(data.getData());
+                    break;
+                case CAMERA_CODE:
+                    camera.getPictureForPhoto();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

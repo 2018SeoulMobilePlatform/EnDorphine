@@ -67,8 +67,6 @@ public class Chat_Content extends AppCompatActivity {
 
     String imageName;
 
-    ImageView temp;
-
     Camera camera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +75,6 @@ public class Chat_Content extends AppCompatActivity {
 
         //이미지 넣기
         m_userPhoto = (ImageView) findViewById(R.id.user_image);
-
-        //임시
-        temp = (ImageView) findViewById(R.id.user_image2);
 
         //카메라 클래스 객체 생성
         camera = new Camera(this,m_userPhoto);
@@ -272,9 +267,6 @@ public class Chat_Content extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Bitmap tempBitmap2 = fromBase64(encodedImage);
-        temp.setImageBitmap(tempBitmap2);
 
         return jsonObject;
     }

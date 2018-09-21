@@ -32,7 +32,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     CircleImageView user_profile;
 
-    //예시
     private final int CAMERA_CODE = 1111;
     private final int GALLERY_CODE = 1112;
     private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
