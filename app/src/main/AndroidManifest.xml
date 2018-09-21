@@ -20,7 +20,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.StatusBar">
+        android:theme="@style/AppTheme.StatusBar"
+        tools:replace="android:theme">
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -63,6 +64,7 @@
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".GuideMenu.DetailsActivity" />
+        <activity android:name=".GuideMenu.TentSelectActivity"/>
         <activity android:name=".ReviewWriteActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

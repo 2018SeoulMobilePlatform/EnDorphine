@@ -21,9 +21,12 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.yongbeom.aircalendar.core.AirCalendarIntent;
 
 import endorphine.icampyou.R;
 import endorphine.icampyou.ReviewWriteActivity;
+
+import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 public class NanjiGuideActivity extends Activity implements View.OnClickListener{
 
@@ -176,7 +179,7 @@ public class NanjiGuideActivity extends Activity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.reservation_button:
-                // 예약 버튼 누르면 캘린더 액티비티 시작됨
+                //예약 버튼 누르면 캘린더 액티비티 시작됨
                 intent.setClass(this, CalenderActivity.class);
                 intent.putExtra("title", "난지 캠핑장");
                 startActivity(intent);
