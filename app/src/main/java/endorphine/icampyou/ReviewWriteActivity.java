@@ -1,8 +1,11 @@
 package endorphine.icampyou;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +22,17 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import endorphine.icampyou.GuideMenu.GuideActivity;
 import endorphine.icampyou.Login.RegisterUserActivity;
 
 /**
  * 후기 작성 페이지
  */
-public class ReviewWriteActivity extends AppCompatActivity implements View.OnClickListener{
+public class ReviewWriteActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent intent;
 
@@ -40,12 +47,6 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
     //카메라
     Camera camera;
-
-    //카메라에 사용하는 상수
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
-    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
 
     //이미지 변환 객체 선언
     ImageConversion imageConversion;
@@ -69,9 +70,9 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             // 작성완료 버튼 누를 시 이벤트
-            case R.id.completing_review_button :
+            case R.id.completing_review_button:
 //                //서버 연동
 //                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
 //
@@ -93,7 +94,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     }
 
     //이미지 선택 함수
-    public void select_image(View view){
+    public void select_image(View view) {
         DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -123,28 +124,49 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    public void setReviewValue(){
+    public void setReviewValue() {
         // 별점 가져오기
-        starNum = (float)ratingBar.getRating();
+        starNum = (float) ratingBar.getRating();
         // 후기 사진 가져오기...(어케하는지 모르긔)
         reviewImage = 0;
         // 후기 내용 가져오기
         reviewContent = reviewEditText.getText().toString();
     }
 
-    public void putIntent(){
+    public void putIntent() {
         intent = new Intent(this, GuideActivity.class);
-        intent.putExtra("star",(float)starNum);
-        intent.putExtra("review_content",reviewContent);
-        intent.putExtra("review_image",reviewImage);
-        intent.putExtra("캠핑장 이름",campingPlace);
+
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) reviewImageView.getDrawable();
+        Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
+        //Write file
+        String filename = "bitmap.png";
+        FileOutputStream stream = null;
+        try {
+            stream = openFileOutput(filename, Context.MODE_PRIVATE);
+            tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            stream.close();
+            tempBitmap.recycle();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //Cleanup
+
+        intent.putExtra("image", filename);
+        intent.putExtra("star", (float) starNum);
+        intent.putExtra("review_content", reviewContent);
+        intent.putExtra("review_image", reviewImage);
+        intent.putExtra("캠핑장 이름", campingPlace);
     }
 
     //권한 요청하는 함수
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_PERMISSION_CODE_GALLERY:
+            case Constant.REQUEST_PERMISSION_CODE_GALLERY:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectGallery();
@@ -155,7 +177,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                     toast.show();
                 }
                 break;
-            case REQUEST_PERMISSION_CODE_CAMERA:
+            case Constant.REQUEST_PERMISSION_CODE_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectPhoto();
@@ -175,10 +197,10 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_CODE:
+                case Constant.GALLERY_CODE:
                     camera.sendPicture(data.getData());
                     break;
-                case CAMERA_CODE:
+                case Constant.CAMERA_CODE:
                     camera.getPictureForPhoto();
                     break;
                 default:
@@ -188,14 +210,14 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     }
 
     //후기 데이터 서버에 보내기 위한 JSON 형식 데이터
-    private JSONObject sendJSonData()  {
+    private JSONObject sendJSonData() {
 
         JSONObject jsonObject = new JSONObject();
 
         String encodedImage = imageConversion.toBase64(reviewImageView);
 
         try {
-            jsonObject.accumulate("file",encodedImage);
+            jsonObject.accumulate("file", encodedImage);
             jsonObject.accumulate("image_name", "냥냥");
             jsonObject.accumulate("camp_name", campingPlace);
 //            jsonObject.accumulate("nickname", need_thing.getText().toString());

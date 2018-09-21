@@ -34,5 +34,4 @@ public class Constant {
     public static final int REQUEST_PERMISSION_CODE_CAMERA = 2000;
     public static final int REQUEST_PERMISSION_CODE_GALLERY = 2001;
 
-
 }
