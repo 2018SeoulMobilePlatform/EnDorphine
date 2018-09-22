@@ -1,5 +1,6 @@
 package endorphine.icampyou.EventMenu;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import endorphine.icampyou.BaseFragment;
-import endorphine.icampyou.GuideMenu.ConfirmFragment;
+
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
