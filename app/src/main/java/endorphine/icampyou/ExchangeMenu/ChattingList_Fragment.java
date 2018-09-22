@@ -29,6 +29,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -120,7 +122,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
 
         //채팅방 목록 생성하는 버튼
-        Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
+        FloatingActionButton add_chatlist_btn = (FloatingActionButton) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override

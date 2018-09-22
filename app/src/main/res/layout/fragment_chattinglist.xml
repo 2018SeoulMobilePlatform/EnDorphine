@@ -103,14 +103,17 @@
                         android:layout_marginBottom="30dp"
                         android:weightSum="1">
 
-                        <Button
+                        <com.melnykov.fab.FloatingActionButton
                             android:id="@+id/make_chatlist_button"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:background="@drawable/rounded_button"
-                            android:text="+"
-                            android:textSize="30dp"
-                            android:textColor="#fff" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|right"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="#FFFFFF"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/review_plus_icon" />
+
                     </LinearLayout>
                 </LinearLayout>
 

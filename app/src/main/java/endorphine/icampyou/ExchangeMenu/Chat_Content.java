@@ -45,6 +45,7 @@ import java.util.Date;
 
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.Login.RegisterUserActivity;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -57,12 +58,9 @@ public class Chat_Content extends AppCompatActivity {
     EditText need_thing;
     EditText lettable_thing;
 
-    //예시
-
-    String imageName;
-
     Camera camera;
 
+    ImageConversion imageConversion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +71,8 @@ public class Chat_Content extends AppCompatActivity {
 
         //카메라 클래스 객체 생성
         camera = new Camera(this,m_userPhoto);
+
+        imageConversion = new ImageConversion();
 
         //콤보 박스
         camp_kind = (Spinner) findViewById(R.id.camp_combobox);
@@ -108,7 +108,6 @@ public class Chat_Content extends AppCompatActivity {
 
                     JSONObject data = sendJSonData();
 
-                    Log.e("2","2");
                     NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data, Constant.MAKE_CHATTINGLIST);
                     networkTask.execute();
 
@@ -202,7 +201,6 @@ public class Chat_Content extends AppCompatActivity {
                     break;
             }
         }
-        imageName = camera.getImageName();
     }
 
     //POST 요청 JSON 데이터 형식 사용
@@ -210,7 +208,7 @@ public class Chat_Content extends AppCompatActivity {
 
         JSONObject jsonObject = new JSONObject();
 
-        String encodedImage = toBase64(m_userPhoto);
+        String encodedImage = imageConversion.toBase64(m_userPhoto);
 
         Log.e("이미지",encodedImage);
 
@@ -227,21 +225,4 @@ public class Chat_Content extends AppCompatActivity {
         return jsonObject;
     }
 
-    //비트맵 인코딩하기
-    public String toBase64(ImageView imageView){
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap tempBitmap = bitmapDrawable.getBitmap();
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        tempBitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
-        byte[] data = bos.toByteArray();
-        String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
-        return encodedImage;
-    }
-
-    //비트맵 디코딩하기
-    public Bitmap fromBase64 (String encodedImage) {
-        byte[] decodedByte = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-    }
 }
