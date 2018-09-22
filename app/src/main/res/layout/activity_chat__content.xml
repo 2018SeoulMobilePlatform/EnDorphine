@@ -29,8 +29,7 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/pot"
                 android:foregroundGravity="center_vertical"
-                android:background="@drawable/border"
-                android:onClick="put_image" />
+                android:background="@drawable/border" />
 
             <Button
                 android:id="@+id/select_img_btn"

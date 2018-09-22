@@ -29,6 +29,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -37,6 +40,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -50,16 +56,31 @@ public class ChattingList_Fragment extends BaseFragment {
     ArrayList<Chat_Item> copy;
     ChatList_Adapter adapter;
     ListView chatlist_listView;
+    ListView mylist_listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.removeAllitem();
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchatroominfo";
+
+        JSONObject data = sendJSonData();
+
+        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,adapter);
+        networkTask.execute();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
+
+        listViewSetting(view);
 
         // 탭 호스트에 탭 추가
         final TabHost tabHost1 = (TabHost)view.findViewById(R.id.tapHost_chatlist);
@@ -93,7 +114,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
 
 
-        listViewSetting(view);
+
 
         //채팅방 목록 생성하는 버튼
         Button add_chatlist_btn = (Button) view.findViewById(R.id.make_chatlist_button);
@@ -201,36 +222,19 @@ public class ChattingList_Fragment extends BaseFragment {
         String pass_need =data.getStringExtra("need");
         String pass_lettable = data.getStringExtra("lettable");
         String camp_name = data.getStringExtra("camp_name");
-        String time = timePorcess();
 
-//        byte[] image_byte = data.getByteArrayExtra("image");
-//        Bitmap pass_image = BitmapFactory.decodeByteArray(image_byte,0,image_byte.length);
-        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name,time);
-        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name,time));
+        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
+        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
         adapter.addItem(addItem);
         adapter.notifyDataSetChanged();
-    }
-
-    //현재시간 가공 함수
-    private String timePorcess(){
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-        String time = simpleDateFormat.format(date);
-        String am_pm = time.substring(time.length()-2,time.length()-1);
-        if(am_pm.equals("AM")){
-            am_pm = "오전";
-        } else {
-            am_pm = "오후";
-        }
-        String current_time = time.substring(11,16);
-        return am_pm+" "+current_time;
     }
 
     //리스트 뷰 세팅
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
         adapter = new ChatList_Adapter();
-        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥","냥냥"));
+
+        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥"));
         chatlist_listView.setAdapter(adapter);
 
         copy = new ArrayList<>();
@@ -292,4 +296,17 @@ public class ChattingList_Fragment extends BaseFragment {
         return view;
     }
 
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData()  {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("user_id", "허진규멍청이");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }

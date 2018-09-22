@@ -61,7 +61,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         star.setRating(reviewListItem.getStar());
 
         reviewImage = (ImageView)convertView.findViewById(R.id.review_image);
-        reviewImage.setImageResource(reviewListItem.getReviewImage());
+        reviewImage.setImageBitmap(reviewListItem.getReviewImage());
 
         reviewContent = convertView.findViewById(R.id.review_content);
         reviewContent.setText(reviewListItem.getReviewContent());

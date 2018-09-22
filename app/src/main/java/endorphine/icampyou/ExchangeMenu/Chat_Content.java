@@ -22,6 +22,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,14 +32,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.Login.RegisterUserActivity;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class Chat_Content extends AppCompatActivity {
@@ -50,15 +58,11 @@ public class Chat_Content extends AppCompatActivity {
     EditText lettable_thing;
 
     //예시
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
-    private final int REQUEST_PERMISSION_CODE_CAMERA = 2222;
-    private final int REQUEST_PERMISSION_CODE_GALLERY = 2223;
-    private Uri photoUri;
-    private String currentPhotoPath;
-    String mimageCaptureName;
+
+    String imageName;
 
     Camera camera;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,32 +104,16 @@ public class Chat_Content extends AppCompatActivity {
                 } else if (camp_name == null) {
                     Toast.makeText(Chat_Content.this, "캠핑장 종류를 선택해 주세요", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent returnIntent = new Intent();
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addchatroom";
 
-                    try {
-                        //Write file
-                        String filename = "bitmap.png";
-                        FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
-                        tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    JSONObject data = sendJSonData();
 
-                        //Cleanup
-                        stream.close();
-                        tempBitmap.recycle();
-
-                        //Pop intent
-                        returnIntent.putExtra("image", filename);
-                        returnIntent.putExtra("user", "허진규");
-                        returnIntent.putExtra("need", need_thing.getText().toString());
-                        returnIntent.putExtra("lettable", lettable_thing.getText().toString());
-                        returnIntent.putExtra("camp_name", camp_name);
-                        setResult(RESULT_OK, returnIntent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Log.e("2","2");
+                    NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data, Constant.MAKE_CHATTINGLIST);
+                    networkTask.execute();
 
                     finish();
 
-                    Toast.makeText(Chat_Content.this, "채팅방 개설", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -138,50 +126,12 @@ public class Chat_Content extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //권한 보유 여부 확인
                 camera.CheckCameraAcess();
-//                int permissionCheck_Camera = ContextCompat.checkSelfPermission(Chat_Content.this, Manifest.permission.CAMERA);
-//                if (permissionCheck_Camera == PackageManager.PERMISSION_GRANTED) {
-//                    selectPhoto();
-//                } else {
-//                    ActivityCompat.requestPermissions(Chat_Content.this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION_CODE_CAMERA);
-//                    if (ActivityCompat.shouldShowRequestPermissionRationale(Chat_Content.this, Manifest.permission.CAMERA)) {
-//                        //거부했을 경우
-//                        Toast toast = Toast.makeText(Chat_Content.this,
-//                                "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                    } else {
-//                        //거부했을 경우
-//                        Toast toast = Toast.makeText(Chat_Content.this,
-//                                "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                    }
-//                }
             }
         };
         DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 camera.CheckAlbumAcess();
-//                int permissionCheck_Write = ContextCompat.checkSelfPermission(Chat_Content.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//                int permissionCheck_Read = ContextCompat.checkSelfPermission(Chat_Content.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//                if (permissionCheck_Read == PackageManager.PERMISSION_GRANTED && permissionCheck_Write == PackageManager.PERMISSION_GRANTED) {
-//                    selectGallery();
-//                } else {
-//                    ActivityCompat.requestPermissions(Chat_Content.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_GALLERY);
-//                    ActivityCompat.requestPermissions(Chat_Content.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE_GALLERY);
-//                    if (ActivityCompat.shouldShowRequestPermissionRationale(Chat_Content.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                            || ActivityCompat.shouldShowRequestPermissionRationale(Chat_Content.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-//                        //거부했을 경우
-//                        Toast toast = Toast.makeText(Chat_Content.this,
-//                                "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                    } else {
-//                        //거부했을 경우
-//                        Toast toast = Toast.makeText(Chat_Content.this,
-//                                "기능 사용을 위한 권한 동의가 필요합니다.", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                    }
-//                }
-
             }
         };
 
@@ -210,7 +160,7 @@ public class Chat_Content extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_PERMISSION_CODE_GALLERY:
+            case Constant.REQUEST_PERMISSION_CODE_GALLERY:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectGallery();
@@ -221,7 +171,7 @@ public class Chat_Content extends AppCompatActivity {
                     toast.show();
                 }
                 break;
-            case REQUEST_PERMISSION_CODE_CAMERA:
+            case Constant.REQUEST_PERMISSION_CODE_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //동의 했을 경우
                     camera.selectPhoto();
@@ -235,84 +185,16 @@ public class Chat_Content extends AppCompatActivity {
         }
     }
 
-//    private void selectPhoto() {
-//        String state = Environment.getExternalStorageState();
-//        if (Environment.MEDIA_MOUNTED.equals(state)) {
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if (intent.resolveActivity(getPackageManager()) != null) {
-//                File photoFile = null;
-//                try {
-//                    photoFile = createImageFile();
-//                } catch (IOException ex) {
-//
-//                }
-//                if (photoFile != null) {
-//                    photoUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", photoFile);
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-//                    startActivityForResult(intent, CAMERA_CODE);
-//                }
-//            }
-//        }
-//    }
-//
-//    //이미지 파일 생성
-//    private File createImageFile() throws IOException {
-//        File dir = new File(Environment.getExternalStorageDirectory() + "/path/");
-//        if (!dir.exists()) {
-//            dir.mkdirs();
-//        }
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        mimageCaptureName = timeStamp + ".png";
-//
-//        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/" + mimageCaptureName);
-//        currentPhotoPath = storageDir.getAbsolutePath();
-//
-//        return storageDir;
-//    }
-//
-//    //카메라를 찍은 사진 적용
-//    private void getPictureForPhoto() {
-//        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-//        ExifInterface exif = null;
-//        try {
-//            exif = new ExifInterface(currentPhotoPath);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        int exifOrientation;
-//        int exifDegree;
-//
-//        if (exif != null) {
-//            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//            exifDegree = exifOrientationToDegrees(exifOrientation);
-//        } else {
-//            exifDegree = 0;
-//        }
-//
-//        m_userPhoto.setImageBitmap(rotate(bitmap, exifDegree));
-//    }
-//
-//    //갤러리에서 사진 가져오는 함수
-//    private void selectGallery() {
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, GALLERY_CODE);
-//    }
-
     //선택한 사진 데이터 처리
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_CODE:
-                    //sendPicture(data.getData());
+                case Constant.GALLERY_CODE:
                     camera.sendPicture(data.getData());
                     break;
-                case CAMERA_CODE:
-                    //getPictureForPhoto();
+                case Constant.CAMERA_CODE:
                     camera.getPictureForPhoto();
                     break;
 
@@ -320,54 +202,46 @@ public class Chat_Content extends AppCompatActivity {
                     break;
             }
         }
-//    }
-//
-//    private void sendPicture(Uri imgUri) {
-//        String imagePath = getRealPathFromURI(imgUri);
-//        ExifInterface exif = null;
-//        try {
-//            exif = new ExifInterface(imagePath);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//        int exifDegree = exifOrientationToDegrees(exifOrientation);
-//
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-//        m_userPhoto.setImageBitmap(rotate(bitmap, exifDegree));
-//    }
-//
-//    //사진의 회전 값 가져오기
-//    private int exifOrientationToDegrees(int exifOrientation) {
-//        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-//            return 90;
-//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-//            return 180;
-//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-//            return 270;
-//        }
-//        return 0;
-//    }
-//
-//    //사진을 정방향대로 회전하기
-//    private Bitmap rotate(Bitmap src, float degree) {
-//        //Matrix 객체 생성
-//        Matrix matrix = new Matrix();
-//        //회전 각도 셋팅
-//        matrix.postRotate(degree);
-//        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-//        return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-//    }
-//
-//
-//    private String getRealPathFromURI(Uri contentUri) {
-//        int column_index = 0;
-//        String[] proj = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-//        if (cursor.moveToFirst()) {
-//            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        }
-//        return cursor.getString(column_index);
-//    }
+        imageName = camera.getImageName();
+    }
+
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData()  {
+
+        JSONObject jsonObject = new JSONObject();
+
+        String encodedImage = toBase64(m_userPhoto);
+
+        Log.e("이미지",encodedImage);
+
+        try {
+            jsonObject.accumulate("image", encodedImage);
+            jsonObject.accumulate("user_id", "허진규멍청이");
+            jsonObject.accumulate("myitem", need_thing.getText().toString());
+            jsonObject.accumulate("needitem", lettable_thing.getText().toString());
+            jsonObject.accumulate("camp_name", camp_kind.getSelectedItem().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    //비트맵 인코딩하기
+    public String toBase64(ImageView imageView){
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap tempBitmap = bitmapDrawable.getBitmap();
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        tempBitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+        byte[] data = bos.toByteArray();
+        String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    //비트맵 디코딩하기
+    public Bitmap fromBase64 (String encodedImage) {
+        byte[] decodedByte = Base64.decode(encodedImage, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 }
