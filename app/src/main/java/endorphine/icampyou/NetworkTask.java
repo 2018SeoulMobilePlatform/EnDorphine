@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Content;
+import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 
@@ -25,6 +29,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     private Context context;
     ProgressDialog asyncDialog;
     EditText insert;
+    ChatList_Adapter adpater;
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
@@ -32,6 +37,15 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
+    }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.adpater = _adapter;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
@@ -66,11 +80,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
             case Constant.MAKE_CHATTINGLIST:
-                Log.e("4","4");
+                Log.e("4", "4");
                 asyncDialog.setMessage("채팅방 개설 중 입니다..");
                 break;
             case Constant.MAKE_REVIEWLIST:
                 asyncDialog.setMessage("후기 작성 중 입니다..");
+                break;
+            case Constant.GET_CHATTINGLIST:
+                asyncDialog.setMessage("채팅방 목록 가져오는 중 입니다..");
                 break;
             default:
                 break;
@@ -87,12 +104,11 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         String result = null;
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, data);
-        if(result.equals(null)){
-            Log.e("null","입니당");
-        }
-        else{
-            Log.e("냥냥",result);
-        }
+//        if (result.equals(null)) {
+//            Log.e("null", "입니당");
+//        } else {
+//            Log.e("냥냥", result);
+//        }
         return result;
     }
 
@@ -188,22 +204,71 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.MAKE_CHATTINGLIST:
                 try {
-            Log.e("5","5");
-            JSONObject jsonObject = new JSONObject(result);
-            String real_result = jsonObject.getString("result");
-            if (real_result.equals("success")) {
-                Log.e("success","성공");
-                Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
-                //((Activity)context).finish();
-            } else {
-                Log.e("실패","실패");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        break;
-        default:
-        break;
+                    Log.e("5", "5");
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        Log.e("success", "성공");
+                        Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
+                        //((Activity)context).finish();
+                    } else {
+                        Log.e("실패", "실패");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.GET_CHATTINGLIST:
+                    Log.e("response => ", result);
+                    ImageConversion imageConversion = new ImageConversion();
+                    try{
+                        JSONObject jsonObject = new JSONObject(result);
+                        String resultResponse = jsonObject.getString("result");
+                        Log.e("resultResponse => ", resultResponse);
+                        JSONArray resultObjectArray = new JSONArray(resultResponse);
+                        JSONObject resultObject = resultObjectArray.getJSONObject(0);
+                        Log.e("resultObject => ", resultObject.toString());
+                        if(!resultObject.toString().equals("fail")){
+                            Log.e("Success", "");
+                            Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                            String user_id = resultObject.getString("user_id");
+                            String camp_name = resultObject.getString("camp_name");
+                            String myitem = resultObject.getString("myitem");
+                            String needitem = resultObject.getString("needitem");
+                            adpater.addItem(new Chat_Item(image,user_id,myitem,needitem,camp_name));
+                            adpater.notifyDataSetChanged();
+                        }
+                    }catch (JSONException e) {
+                        Log.e("exception",e.toString());
+                        e.printStackTrace();
+                    }
+
+//                    ImageConversion imageConversion = new ImageConversion();
+//
+//                    Log.e("1", "1");
+//                    String camp_name = jsonObject.getString("camp_name");
+//                    Log.e("camp_name", camp_name);
+//                        Log.e("2","2");
+//                        String image_encode = jsonObject.getString("image");
+//                        String user_id = jsonObject.getJSONObject("result").getString("user_id");
+//                        String myitem = jsonObject.getJSONObject("result").getString("myitem");
+//                        String needitem = jsonObject.getJSONObject("result").getString("needitem");
+//                        Bitmap bitmap = imageConversion.fromBase64(image_encode);
+//                        adpater.addItem(new Chat_Item(bitmap,user_id,myitem,needitem,camp_name));
+//                        adpater.notifyDataSetChanged();
+//                        Log.e("camp_name",camp_name);
+//                        Log.e("image_code",image_encode);
+//                        Log.e("user_id",user_id);
+//                        Log.e("myitem",myitem);
+//                        Log.e("needitem",needitem);
+
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+                break;
+            default:
+                break;
         }
     }
 

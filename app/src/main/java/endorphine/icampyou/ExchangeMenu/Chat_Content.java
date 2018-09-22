@@ -62,6 +62,7 @@ public class Chat_Content extends AppCompatActivity {
     String imageName;
 
     Camera camera;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,12 +253,11 @@ public class Chat_Content extends AppCompatActivity {
         Log.e("이미지",encodedImage);
 
         try {
-            jsonObject.accumulate("file",encodedImage);
-            jsonObject.accumulate("image_name", "냥냥");
+            jsonObject.accumulate("image", encodedImage);
             jsonObject.accumulate("user_id", "허진규멍청이");
             jsonObject.accumulate("myitem", need_thing.getText().toString());
             jsonObject.accumulate("needitem", lettable_thing.getText().toString());
-            jsonObject.accumulate("campname", camp_kind.getSelectedItem().toString());
+            jsonObject.accumulate("camp_name", camp_kind.getSelectedItem().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
