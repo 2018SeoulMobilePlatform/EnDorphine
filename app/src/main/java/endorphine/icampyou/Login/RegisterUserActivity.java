@@ -3,6 +3,7 @@ package endorphine.icampyou.Login;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
@@ -37,12 +39,17 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     RegisterUserException exception;
 
+    ImageConversion imageConversion;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
         exception = new RegisterUserException();
+
+        imageConversion = new ImageConversion();
 
         Button register_btn = (Button)findViewById(R.id.register_user);
         register_btn.setOnClickListener(new View.OnClickListener(){
@@ -316,6 +323,9 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         JSONObject jsonObject = new JSONObject();
 
+        String encodedImage = imageConversion.toBase64(user_profile);
+
+        jsonObject.accumulate("image", encodedImage);
         jsonObject.accumulate("id", email_editText.getText().toString());
         jsonObject.accumulate("password", password_editText.getText().toString());
         jsonObject.accumulate("name", name_editText.getText().toString());
