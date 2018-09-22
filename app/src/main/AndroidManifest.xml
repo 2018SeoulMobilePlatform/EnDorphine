@@ -41,9 +41,7 @@
         android:theme="@style/AppTheme.StatusBar">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
-
-        </activity>
+            android:theme="@style/SplashTheme"></activity>
         <activity
             android:name=".ExchangeMenu.Chat_Content"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -99,9 +97,10 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-
-        <activity android:name=".GuideMenu.GuideActivity"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".GuideMenu.GuideActivity" />
+        <activity android:name=".MyPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
     </application>
 
 </manifest>

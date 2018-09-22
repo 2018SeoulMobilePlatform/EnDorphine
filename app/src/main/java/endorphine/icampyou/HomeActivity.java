@@ -39,12 +39,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private FragmentTransaction fragmentTransaction;
     // fragment 모음
     private GuideFragment1 guideFragment1;
-    private ReservationFragment1 reservationFragment1;
     private ChattingList_Fragment chattingList_fragment;
     private HomeFragment1 homeFragment1;
     private EventFragment1 eventFragment1;
     // intent 모음
     private Intent qrcodePopupIntent;
+    private Intent mypageIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
 
@@ -91,7 +91,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // fragment 객체 생성
         guideFragment1 = new GuideFragment1();
-        reservationFragment1 = new ReservationFragment1();
         chattingList_fragment = new ChattingList_Fragment();
         homeFragment1 = new HomeFragment1();
         eventFragment1 = new EventFragment1();
@@ -100,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // intent 설정하기
         qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
+        mypageIntent = new Intent(this, MyPageActivity.class);
 
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -129,11 +129,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // Back키 누르면 종료
     @Override
     public void onBackPressed() {
-//        if(mOnKeyBackPressedListener != null){
-//            mOnKeyBackPressedListener.onBack();
-//        }else{
-//            super.onBackPressed();
-//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -159,19 +154,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        // 내 정보 누르면 마이페이지 프래그먼트로 이동
+        if(id==R.id.nav_mypage){
+            startActivity(mypageIntent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -190,22 +176,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case 1:
                 // 예약 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, guideFragment1);
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 2:
                 // 홈 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, homeFragment1);
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 3:
                 // 교환 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, chattingList_fragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 4:
                 // 이벤트 프래그먼트1로 변경
                 fragmentTransaction.replace(R.id.main_frame, eventFragment1);
-                fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             default:
                 break;
         }
