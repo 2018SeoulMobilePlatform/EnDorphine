@@ -73,7 +73,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_guide, null);
         setContentView(viewLayout);
 
-        // 인텐트로 캠핑장 이름 받아오기
+        // 인텐트로 캠핑장 이름 받아오기ii
         intent = getIntent();
 
         if(intent.getStringExtra("캠핑장 이름") != null) {

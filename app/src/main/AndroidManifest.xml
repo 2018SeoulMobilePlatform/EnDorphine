@@ -75,9 +75,9 @@
         <activity
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".GuideMenu.DetailsActivity" />
-
-        <activity android:name=".GuideMenu.TentSelectActivity"/>
+        <activity
+            android:name=".GuideMenu.TentSelectActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ReviewWriteActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
@@ -97,6 +97,12 @@
             android:label="@string/title_activity_maps"></activity>
 
         <activity android:name=".GuideMenu.GuideActivity"></activity>
+        <activity
+            android:name=".GuideMenu.PricePopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity
+            android:name=".GuideMenu.ConfirmPopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>
