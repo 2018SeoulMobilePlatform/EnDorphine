@@ -217,7 +217,9 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         String encodedImage = imageConversion.toBase64(reviewImageView);
 
         try {
+
             jsonObject.accumulate("image", encodedImage);
+            jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
             jsonObject.accumulate("nickname", "다뚱이");
             jsonObject.accumulate("point", String.valueOf(starNum));

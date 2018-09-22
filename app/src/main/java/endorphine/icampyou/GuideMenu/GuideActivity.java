@@ -264,12 +264,12 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 //            setTotalStarScore();
 //        }
 
-        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
-
-        JSONObject data = sendJSonData();
-
-        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST);
-        networkTask.execute();
+//        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
+//
+//        JSONObject data = sendJSonData();
+//
+//        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST);
+//        networkTask.execute();
     }
 
     // 리뷰페이지 설정하는 메소드
@@ -301,10 +301,10 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
     // 후기 리스트에 아이템 추가하는 메소드
     private void addReviewList(String reviewCampingPlace, int userIcon, String nickName, float star, Bitmap reviewImage, String reviewContent) {
-        if(campingPlace.equals(reviewCampingPlace)) {
-            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
-            reviewData.add(reviewItem);
-        }
+//        if(campingPlace.equals(reviewCampingPlace)) {
+//            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
+//            reviewData.add(reviewItem);
+//        }
     }
 
     // 총 별점 평균 구해서 ratingBar 설정하는 메소드

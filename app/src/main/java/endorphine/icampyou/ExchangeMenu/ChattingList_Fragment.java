@@ -68,7 +68,9 @@ public class ChattingList_Fragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         campList_adapter.removeAllitem();
-        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchatroominfo";
+        myList_adapter.removeAllitem();
+
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getmyroom";
 
         JSONObject data = sendJSonData();
 

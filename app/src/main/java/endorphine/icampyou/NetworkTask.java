@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Content;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
+import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
+import endorphine.icampyou.GuideMenu.PricePopupActivity;
 import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
@@ -258,6 +260,20 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     }
                 break;
             case Constant.RESERVATION_CAMPING:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        intent = new Intent(context, ConfirmPopupActivity.class);
+                        ((Activity)context).startActivity(intent);
+                        Toast.makeText(context, "결제 완료", Toast.LENGTH_LONG).show();
+                        ((Activity)context).finish();
+                    } else {
+                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case Constant.MAKE_REVIEWLIST:
                 try {
