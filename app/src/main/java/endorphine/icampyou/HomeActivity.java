@@ -30,6 +30,7 @@ import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.ExchangeMenu.ExchangeFragment1;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment1;
+import endorphine.icampyou.HomeMenu.HomeFragment2;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ChattingList_Fragment chattingList_fragment;
     private HomeFragment1 homeFragment1;
     private EventFragment1 eventFragment1;
+    private HomeFragment2 homeFragment2;
     // intent 모음
     private Intent qrcodePopupIntent;
     private Intent mypageIntent;
@@ -95,6 +97,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         chattingList_fragment = new ChattingList_Fragment();
         homeFragment1 = new HomeFragment1();
         eventFragment1 = new EventFragment1();
+        homeFragment2 = new HomeFragment2();
         // 디폴트 프래그먼트 홈화면으로 설정
         setFragment(2);
 
@@ -186,7 +189,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 2:
                 // 홈 프래그먼트1로 변경
-                fragmentTransaction.replace(R.id.main_frame, homeFragment1);
+                fragmentTransaction.replace(R.id.main_frame, homeFragment2);
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 3:
