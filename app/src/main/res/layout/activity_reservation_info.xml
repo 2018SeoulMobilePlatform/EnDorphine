@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     >
 
     <!-- 상단 타이틀바 -->
@@ -33,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="MY PAGE"
+            android:text="예약 정보"
             android:textStyle="bold"
             android:textSize="21dp"
             android:textColor="#FFFFFF"/>
@@ -42,7 +40,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +56,7 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="220dp">
+                    android:layout_height="240dp">
                     <!-- 바탕뷰 -->
                     <View
                         android:layout_width="match_parent"
@@ -69,26 +67,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true">
-                        <!-- 프로필 이미지 테두리-->
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                        <!-- 이미지 테두리-->
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
                             android:layout_centerInParent="true"
                             android:src="@color/colorPrimary" />
-                        <!-- 프로필 이미지 -->
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/mypage_user_image"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                        <!-- QR code 이미지 -->
+                        <ImageView
+                            android:id="@+id/res_info_qrcode"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:scaleType="fitXY"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/profile" />
-                        <!-- 프로필 이미지 수정 버튼 -->
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/mypage_profile_change_btn"
-                            android:layout_width="29dp"
-                            android:layout_height="29dp"
-                            android:src="@drawable/review_plus_icon" />
+                            android:src="@drawable/qrcode_no"
+                            android:background="#FFFFFF"/>
                     </RelativeLayout>
 
                     <LinearLayout
@@ -97,20 +91,20 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true"
                         android:orientation="horizontal">
-                        <!-- 닉네임 -->
-                        <EditText
-                            android:id="@+id/user_name_mypage"
+                        <!-- 예약 번호 -->
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="배챙이"
+                            android:text="예약번호:  "
                             android:textColor="#5D5D5D"
-                            android:textSize="20dp" />
-                        <!-- 수정 이미지 -->
-                        <Button
-                            android:id="@+id/user_name_edit_btn_mypage"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:background="@drawable/edit"/>
+                            android:textSize="16dp" />
+                        <TextView
+                            android:id="@+id/res_info_reservation_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ADSDS1242141"
+                            android:textColor="#5D5D5D"
+                            android:textSize="16dp" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -120,9 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="20dp"
                 >
 
-                <!-- 이메일 -->
+                <!-- 캠핑장 종류 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,20 +128,19 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="28dp"
-                        android:layout_weight="2"
-                        android:text="E-mail" />
-
+                        android:layout_weight="2.5"
+                        android:text="캠핑장 종류" />
                     <EditText
-                        android:id="@+id/mypage_email"
+                        android:id="@+id/res_info_camping_place"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:editable="false"
-                        android:text="dain6912@naver.com" />
+                        android:text="난지 캠핑장"
+                        android:background="@null"/>
                 </LinearLayout>
 
-                <!-- 이름 -->
+                <!-- 예약 날짜 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -157,19 +151,20 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="28dp"
-                        android:layout_weight="2"
-                        android:text="Name" />
+                        android:layout_weight="2.5"
+                        android:text="예약 날짜" />
+
                     <EditText
-                        android:id="@+id/mypage_name"
+                        android:id="@+id/res_info_date"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:editable="false"
-                        android:text="배진영" />
+                        android:text="2018-09-27 목 ~ 2018-09-28 금"
+                        android:background="@null"/>
                 </LinearLayout>
 
-                <!-- 폰번호 -->
+                <!-- 텐트 종류 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,19 +175,20 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_marginRight="28dp"
-                        android:layout_weight="2"
-                        android:text="Phone" />
+                        android:layout_weight="2.5"
+                        android:text="텐트 종류" />
+
                     <EditText
-                        android:id="@+id/mypage_phone"
+                        android:id="@+id/res_info_tent"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
+                        android:layout_weight="7.5"
                         android:editable="false"
-                        android:text="010-8215-8282" />
+                        android:text="몽골텐트_대"
+                        android:background="@null"/>
                 </LinearLayout>
 
-                <!-- 비밀번호 -->
+                <!-- 텐트 수량 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,24 +199,20 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="2"
-                        android:text="Password"
-                        android:layout_marginRight="5dp"/>
-                    <!-- 수정 이미지 -->
-                    <Button
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/edit"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_weight="2.5"
+                        android:text="텐트 수량" />
                     <EditText
-                        android:id="@+id/mypage_password"
+                        android:id="@+id/res_info_tent_num"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
-                        android:text="******" />
+                        android:layout_weight="7.5"
+                        android:editable="false"
+                        android:text="1개"
+                        android:background="@null"/>
                 </LinearLayout>
 
-                <!-- 비밀번호 -->
+
+                <!-- 총 금액 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -231,27 +223,22 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="2"
-                        android:text="Password Check"
-                        android:layout_marginRight="5dp"/>
-                    <!-- 수정 이미지 -->
-                    <Button
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/edit"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_weight="2.5"
+                        android:text="총 금액" />
                     <EditText
-                        android:id="@+id/mypage_password_check"
+                        android:id="@+id/res_info_total_price"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
-                        android:text="******" />
+                        android:layout_weight="7.5"
+                        android:editable="false"
+                        android:text="50000원"
+                        android:background="@null"/>
                 </LinearLayout>
 
 
                 <!-- 확인 버튼 -->
                 <Button
-                    android:id="@+id/mypage_confirm"
+                    android:id="@+id/res_info_confirm"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
