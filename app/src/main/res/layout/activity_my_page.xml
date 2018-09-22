@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <!-- 상단 타이틀바 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/mypage_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/aricalendar_btn_back" />
+        <TextView
+            android:id="@+id/mypage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="MY PAGE"
+            android:textStyle="bold"
+            android:textSize="21dp"
+            android:textColor="#FFFFFF"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- 프로필 사진 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="220dp">
+                    <!-- 바탕뷰 -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:background="@color/colorPrimary" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                        <!-- 프로필 이미지 테두리-->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_centerInParent="true"
+                            android:src="@color/colorPrimary" />
+                        <!-- 프로필 이미지 -->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/mypage_user_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:src="@drawable/profile" />
+                        <!-- 프로필 이미지 수정 버튼 -->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/mypage_profile_change_btn"
+                            android:layout_width="29dp"
+                            android:layout_height="29dp"
+                            android:src="@drawable/review_plus_icon" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
+                        <!-- 닉네임 -->
+                        <EditText
+                            android:id="@+id/user_name_mypage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="배챙이"
+                            android:textColor="#5D5D5D"
+                            android:textSize="20dp" />
+                        <!-- 수정 이미지 -->
+                        <Button
+                            android:id="@+id/user_name_edit_btn_mypage"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@drawable/edit"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <!-- 이메일 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="28dp"
+                        android:layout_weight="2"
+                        android:text="E-mail" />
+
+                    <EditText
+                        android:id="@+id/mypage_email"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="8"
+                        android:editable="false"
+                        android:text="dain6912@naver.com" />
+                </LinearLayout>
+
+                <!-- 이름 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="28dp"
+                        android:layout_weight="2"
+                        android:text="Name" />
+                    <EditText
+                        android:id="@+id/mypage_name"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="8"
+                        android:editable="false"
+                        android:text="배진영" />
+                </LinearLayout>
+
+                <!-- 폰번호 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="28dp"
+                        android:layout_weight="2"
+                        android:text="Phone" />
+                    <EditText
+                        android:id="@+id/mypage_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="8"
+                        android:editable="false"
+                        android:text="010-8215-8282" />
+                </LinearLayout>
+
+                <!-- 비밀번호 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="2"
+                        android:text="Password"
+                        android:layout_marginRight="5dp"/>
+                    <!-- 수정 이미지 -->
+                    <Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/edit"
+                        android:layout_marginRight="8dp"/>
+                    <EditText
+                        android:id="@+id/mypage_password"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="8"
+                        android:text="******" />
+                </LinearLayout>
+
+                <!-- 비밀번호 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="2"
+                        android:text="Password Check"
+                        android:layout_marginRight="5dp"/>
+                    <!-- 수정 이미지 -->
+                    <Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/edit"
+                        android:layout_marginRight="8dp"/>
+                    <EditText
+                        android:id="@+id/mypage_password_check"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="8"
+                        android:text="******" />
+                </LinearLayout>
+
+
+                <!-- 확인 버튼 -->
+                <Button
+                    android:id="@+id/mypage_confirm"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_login_button"
+                    android:text="Confirm"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
