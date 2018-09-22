@@ -122,14 +122,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="600dp"
-                        android:background="#FFC19E"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="TAB CONTENT 2" />
-
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">

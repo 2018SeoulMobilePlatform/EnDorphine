@@ -54,7 +54,8 @@ public class ChattingList_Fragment extends BaseFragment {
     final int save_info = 1;
 
     ArrayList<Chat_Item> copy;
-    ChatList_Adapter adapter;
+    ChatList_Adapter campList_adapter;
+    ChatList_Adapter myList_adapter;
     ListView chatlist_listView;
     ListView mylist_listView;
 
@@ -66,12 +67,12 @@ public class ChattingList_Fragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        adapter.removeAllitem();
+        campList_adapter.removeAllitem();
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchatroominfo";
 
         JSONObject data = sendJSonData();
 
-        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,adapter);
+        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter);
         networkTask.execute();
     }
 
@@ -145,8 +146,8 @@ public class ChattingList_Fragment extends BaseFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         copy.remove(position);
-                        adapter.removeItem(position);
-                        adapter.notifyDataSetChanged();
+                        campList_adapter.removeItem(position);
+                        campList_adapter.notifyDataSetChanged();
                     }
                 };
 
@@ -225,17 +226,20 @@ public class ChattingList_Fragment extends BaseFragment {
 
         Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
         copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
-        adapter.addItem(addItem);
-        adapter.notifyDataSetChanged();
+        campList_adapter.addItem(addItem);
+        campList_adapter.notifyDataSetChanged();
     }
 
     //리스트 뷰 세팅
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
-        adapter = new ChatList_Adapter();
+        campList_adapter = new ChatList_Adapter();
 
-        adapter.addItem(new Chat_Item(null,"냥냥","냥냥","냥냥","냥냥"));
-        chatlist_listView.setAdapter(adapter);
+        mylist_listView = (ListView)view.findViewById(R.id.my_chat_listview);
+        myList_adapter = new ChatList_Adapter();
+
+        chatlist_listView.setAdapter(campList_adapter);
+        mylist_listView.setAdapter(myList_adapter);
 
         copy = new ArrayList<>();
 
@@ -245,12 +249,12 @@ public class ChattingList_Fragment extends BaseFragment {
     public void search(String charText) {
 
         // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        adapter.removeAllitem();
+        campList_adapter.removeAllitem();
 
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length() == 0) {
             for(Chat_Item mItem : copy){
-                adapter.addItem(mItem);
+                campList_adapter.addItem(mItem);
             }
         }
         // 문자 입력을 할때..
@@ -264,12 +268,12 @@ public class ChattingList_Fragment extends BaseFragment {
                         copy.get(i).getNeed_thing().toLowerCase().contains(charText))
                 {
                     // 검색된 데이터를 리스트에 추가한다.
-                    adapter.addItem(copy.get(i));
+                    campList_adapter.addItem(copy.get(i));
                 }
             }
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        adapter.notifyDataSetChanged();
+        campList_adapter.notifyDataSetChanged();
     }
 
     // Tab에 나타날 View를 구성
