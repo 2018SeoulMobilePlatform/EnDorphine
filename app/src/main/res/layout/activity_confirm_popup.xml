@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="QR코드 입장권"
+            android:text="예약 확인"
             android:textSize="20sp"
             android:textColor="#fff"
             android:gravity="center"
@@ -28,12 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/qrcode_popup"
+            android:id="@+id/confirm_qrcode_popup"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:background="@drawable/qrcode_no"
-            android:src="@drawable/qrcode_no"
+            android:background="#FFFFFF"
             />
     </LinearLayout>
     <!-- QR코드 -->
@@ -57,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="예약 번호 : "/>
             <TextView
-                android:id="@+id/reservation_number"
+                android:id="@+id/confirm_reservation_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -71,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="캠핑장 종류 : "/>
             <TextView
-                android:id="@+id/reservation_camping"
+                android:id="@+id/confirm_reservation_camping"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -85,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="예약 날짜 : "/>
             <TextView
-                android:id="@+id/reservation_date"
+                android:id="@+id/confirm_reservation_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -99,7 +98,35 @@
                 android:layout_height="wrap_content"
                 android:text="텐트 종류 : "/>
             <TextView
-                android:id="@+id/reservation_tent"
+                android:id="@+id/confirm_reservation_tent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="텐트 수량 : "/>
+            <TextView
+                android:id="@+id/confirm_reservation_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 금액 : "/>
+            <TextView
+                android:id="@+id/confirm_reservation_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

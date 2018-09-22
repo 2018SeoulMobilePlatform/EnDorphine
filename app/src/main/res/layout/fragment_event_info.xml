@@ -1,28 +1,82 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="endorphine.icampyou.EventMenu.EventFragment1">
 
-    <!-- 이벤트 제목 -->
-    <TextView
-        android:id="@+id/event_info_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="난지 캠핑장 8월 초특가"
-        android:textSize="21dp"/>
-
-    <!-- 이벤트 내용 -->
-    <TextView
-        android:id="@+id/event_info_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="저렴한 가격입니당"
-        android:textSize="15dp"/>
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
 
-</LinearLayout>
+        <!-- 이벤트 제목 -->
+        <TextView
+            android:id="@+id/event_info_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#FFFFFF"
+            android:text="난지 캠핑장 8월 초특가 이벤트"
+            android:textColor="#747474"
+            android:textSize="21dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="left"
+                android:background="#FFFFFF"
+                android:src="@drawable/camping_jigi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:text="캠핑지기" />
+
+        </LinearLayout>
+
+        <!-- 가운데 실선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"
+            android:background="#EAEAEA" />
+
+        <!-- 이벤트 이미지 -->
+        <ImageView
+            android:id="@+id/event_info_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY" />
+
+        <!-- 이벤트 내용 -->
+        <TextView
+            android:id="@+id/event_info_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="#FFFFFF"
+            android:text="저렴한 가격입니당"
+            android:textSize="15dp" />
+    </LinearLayout>
+</ScrollView>

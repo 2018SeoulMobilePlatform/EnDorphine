@@ -31,6 +31,59 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- 난지 캠핑장 -->
+    <string name="nanji_1">가족 텐트</string>
+    <string name="nanji_2">몽골 텐트_대</string>
+    <string name="nanji_3">몽골 텐트_대(냉_난방 포함)</string>
+    <string name="nanji_4">몽골 텐트_중</string>
+    <string name="nanji_5">몽골 텐트_중(냉_난방 포함)</string>
+    <string name="nanji_6">몽골 텐트_특대(5x4)</string>
+    <string name="nanji_7">몽골 텐트_특대(5x5)</string>
+    <string name="nanji_8">캐빈 텐트</string>
+    <string name="nanji_9">캐빈 텐트(냉_난방 포함)</string>
+    <string name="price_1">33,000원</string>
+    <string name="price_2">50,000원</string>
+    <string name="price_3">68,000원</string>
+    <string name="price_4">40,000원</string>
+    <string name="price_5">58,000원</string>
+    <string name="price_6">70,000원</string>
+    <string name="price_7">70,000원</string>
+    <string name="price_8">44,500원</string>
+    <string name="price_9">62,500원</string>
+
+    <!--노을 캠핑장-->
+    <string name="noeul_1">A 구역</string>
+    <string name="noeul_2">B 구역</string>
+    <string name="noeul_3">C 구역</string>
+    <string name="noeul_4">D 구역</string>
+    <string name="noeul_price_1">13,000원</string>
+    <string name="noeul_price_2">10,000원</string>
+    <string name="noeul_price_3">13,000원</string>
+    <string name="noeul_price_4">13,000원</string>
+
+
+    <!--서울대공원,중랑 캠핑장-->
+    <string name="seoul_1">4인용</string>
+    <string name="seoul_price_1">25,000원</string>
+
+    <!--강동 캠핑장-->
+    <string name="gangdong_1">오토 캠핑장</string>
+    <string name="gangdong_2">가족 캠핑장</string>
+    <string name="gangdong_3">매화나무 캠핑장</string>
+    <string name="gangdong_price_1">21,000원</string>
+    <string name="gangdong_price_2">20,000원</string>
+    <string name="gangdong_price_3">20,000원</string>
+
+    <!--초안산 캠핑장-->
+    <string name="choan_1">일반 캠핑장</string>
+    <string name="choan_2">오토 캠핑장</string>
+    <string name="choan_3">데크 캠핑장</string>
+    <string name="choan_4">캐빈하우스</string>
+    <string name="choan_price_1">15,000원</string>
+    <string name="choan_price_2">25,000원</string>
+    <string name="choan_price_3">25,000원</string>
+    <string name="choan_price_4">30,000원</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>

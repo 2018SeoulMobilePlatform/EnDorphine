@@ -30,11 +30,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="#FFFFFF"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@string/app_name"
-                    app:titleTextColor="@color/colorPrimary"
-                    app:titleMarginStart="100dp"
-                />
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/app_name"
+                        android:textColor="@color/colorPrimary"
+                        android:gravity = "center"
+                        android:id="@+id/toolbar_title"
+                        android:textSize="21dp"
+                        android:textStyle="bold"/>
+                </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
 
             <!-- fragment 영역-->

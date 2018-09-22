@@ -38,12 +38,12 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.StatusBar">
+        android:theme="@style/AppTheme.StatusBar"
+        tools:replace="android:theme">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"/>
 
-        </activity>
         <activity
             android:name=".ExchangeMenu.Chat_Content"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -74,17 +74,19 @@
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        </activity>>
+        </activity>
+
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".GuideMenu.DetailsActivity" />
         <activity
-            android:name=".ReviewWriteActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".GuideMenu.TentSelectActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ReviewWriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -100,12 +102,23 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
+
         <activity android:name=".GuideMenu.GuideActivity" />
         <activity
             android:name=".Login.PasswordPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".Login.RegisterUserActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".MyPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity
+            android:name=".GuideMenu.PricePopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity
+            android:name=".GuideMenu.ConfirmPopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+
     </application>
 
 </manifest>
