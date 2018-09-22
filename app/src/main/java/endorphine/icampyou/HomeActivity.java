@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // intent 모음
     private Intent qrcodePopupIntent;
     private Intent mypageIntent;
-    private Intent reservationInfoIntent;
+    private Intent reservationInfoListIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
 
@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // intent 설정하기
         qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
         mypageIntent = new Intent(this, MyPageActivity.class);
-        reservationInfoIntent = new Intent(this, ReservationInfoActivity.class);
+        reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -161,7 +161,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(mypageIntent);
         }
         else if(id==R.id.nav_reservation_information){
-            startActivity(reservationInfoIntent);
+            startActivity(reservationInfoListIntent);
         }
 
 

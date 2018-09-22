@@ -104,15 +104,19 @@
         <activity android:name=".GuideMenu.GuideActivity" />
         <activity
             android:name=".MyPageActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GuideMenu.PricePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".GuideMenu.ConfirmPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".ReservationInfoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".ReservationInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReservationInfoListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
