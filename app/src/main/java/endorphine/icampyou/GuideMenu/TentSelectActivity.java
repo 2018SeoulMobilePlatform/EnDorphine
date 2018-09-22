@@ -59,9 +59,6 @@ public class TentSelectActivity extends AppCompatActivity
 
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        //mButton = (Button) findViewById(R.id.cardTypeBtn);
-        //((CheckBox) findViewById(R.id.checkBox)).setOnCheckedChangeListener(this);
-        //mButton.setOnClickListener(this);
 
         makeCardView(campName);
 

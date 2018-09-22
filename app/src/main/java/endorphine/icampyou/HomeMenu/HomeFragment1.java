@@ -36,8 +36,6 @@ public class HomeFragment1 extends BaseFragment implements AsyncResponse {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_1, container, false);
-//        ImageView imgView = (ImageView) view.findViewById(R.id.animationImage);
-//        imgView.setVisibility(ImageView.VISIBLE);
 
         typeMini = (AirQualityTypeMini) view.findViewById(R.id.button_mini);
         typeMini.setOpenAPIKey(OpenApiKey);

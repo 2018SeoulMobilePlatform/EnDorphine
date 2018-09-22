@@ -75,8 +75,6 @@
         <activity
             android:name=".GuideMenu.CalenderActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".GuideMenu.DetailsActivity" />
-
         <activity
             android:name=".GuideMenu.TentSelectActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

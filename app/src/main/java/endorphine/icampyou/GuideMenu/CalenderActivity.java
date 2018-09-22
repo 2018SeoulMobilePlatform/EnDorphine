@@ -29,18 +29,6 @@ import endorphine.icampyou.R;
 
 public class CalenderActivity extends AppCompatActivity implements DatePickerController{
 
-    public final static String EXTRA_FLAG = "FLAG";
-    public final static String EXTRA_IS_BOOIKNG = "IS_BOOING";
-    public final static String EXTRA_IS_SELECT = "IS_SELECT";
-    public final static String EXTRA_BOOKING_DATES = "BOOKING_DATES";
-    public final static String EXTRA_SELECT_DATE_SY = "SELECT_START_DATE_Y";
-    public final static String EXTRA_SELECT_DATE_SM = "SELECT_START_DATE_M";
-    public final static String EXTRA_SELECT_DATE_SD = "SELECT_START_DATE_D";
-    public final static String EXTRA_SELECT_DATE_EY = "SELECT_END_DATE_Y";
-    public final static String EXTRA_SELECT_DATE_EM = "SELECT_END_DATE_M";
-    public final static String EXTRA_SELECT_DATE_ED = "SELECT_END_DATE_D";
-    public final static String EXTRA_IS_MONTH_LABEL = "IS_MONTH_LABEL";
-    public final static String EXTRA_IS_SINGLE_SELECT = "IS_SINGLE_SELECT";
     public final static String EXTRA_ACTIVE_MONTH_NUM = "ACTIVE_MONTH_NUMBER";
     public final static String EXTRA_MAX_YEAR = "MAX_YEAR";
 
@@ -48,8 +36,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     public final static String RESULT_SELECT_END_DATE = "end_date";
     public final static String RESULT_SELECT_START_VIEW_DATE = "start_date_view";
     public final static String RESULT_SELECT_END_VIEW_DATE = "end_date_view";
-    public final static String RESULT_FLAG = "flag";
-    public final static String RESULT_TYPE = "result_type";
     public final static String RESULT_STATE = "result_state";
 
     public String RESULT_STAY_LENGTH = "stay_length";
@@ -70,7 +56,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     private String SELECT_END_DATE = "";
     private int BASE_YEAR = 2018;
 
-    private String FLAG = "all";
     private boolean isSelect = false;
     private boolean isBooking = false;
     private boolean isMonthLabel = false;
@@ -97,22 +82,9 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
 
         CampingName = getData.getStringExtra("title");
 
-        FLAG = getData.getStringExtra(EXTRA_FLAG) != null ? getData.getStringExtra(EXTRA_FLAG):"all";
-        isBooking = getData.getBooleanExtra(EXTRA_IS_BOOIKNG , false);
-        isSelect = getData.getBooleanExtra(EXTRA_IS_SELECT , false);
-        isMonthLabel = getData.getBooleanExtra(EXTRA_IS_MONTH_LABEL , false);
-        isSingleSelect = getData.getBooleanExtra(EXTRA_IS_SINGLE_SELECT , false);
-        dates = getData.getStringArrayListExtra(EXTRA_BOOKING_DATES);
         maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 1);
         maxYear = getData.getIntExtra(EXTRA_MAX_YEAR , 2018);
 
-        sYear = getData.getIntExtra(EXTRA_SELECT_DATE_SY , 0);
-        sMonth = getData.getIntExtra(EXTRA_SELECT_DATE_SM , 0);
-        sDay = getData.getIntExtra(EXTRA_SELECT_DATE_SD , 0);
-
-        eYear = getData.getIntExtra(EXTRA_SELECT_DATE_EY , 0);
-        eMonth = getData.getIntExtra(EXTRA_SELECT_DATE_EM , 0);
-        eDay = getData.getIntExtra(EXTRA_SELECT_DATE_ED , 0);
 
         if(sYear == 0 || sMonth == 0 || sDay == 0
                 || eYear == 0 || eMonth == 0 || eDay == 0){
@@ -197,8 +169,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                 resultIntent.putExtra(RESULT_SELECT_END_DATE , SELECT_END_DATE );
                 resultIntent.putExtra(RESULT_SELECT_START_VIEW_DATE , tv_start_date.getText().toString() );
                 resultIntent.putExtra(RESULT_SELECT_END_VIEW_DATE , tv_end_date.getText().toString() );
-                resultIntent.putExtra(RESULT_FLAG , FLAG );
-                resultIntent.putExtra(RESULT_TYPE , FLAG );
                 resultIntent.putExtra(RESULT_STATE , "done" );
                 resultIntent.putExtra("camping_name", CampingName);
                 resultIntent.putExtra("stay_length", RESULT_STAY_LENGTH);
@@ -334,5 +304,4 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
             }
         }
     }
-
 }
