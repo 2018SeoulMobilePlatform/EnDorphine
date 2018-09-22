@@ -103,7 +103,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
         isMonthLabel = getData.getBooleanExtra(EXTRA_IS_MONTH_LABEL , false);
         isSingleSelect = getData.getBooleanExtra(EXTRA_IS_SINGLE_SELECT , false);
         dates = getData.getStringArrayListExtra(EXTRA_BOOKING_DATES);
-        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 3);
+        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 1);
         maxYear = getData.getIntExtra(EXTRA_MAX_YEAR , 2018);
 
         sYear = getData.getIntExtra(EXTRA_SELECT_DATE_SY , 0);
@@ -192,8 +192,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                     }
                 }
 
-
-
                 Intent resultIntent = new Intent(CalenderActivity.this, TentSelectActivity.class);
                 resultIntent.putExtra(RESULT_SELECT_START_DATE , SELECT_START_DATE );
                 resultIntent.putExtra(RESULT_SELECT_END_DATE , SELECT_END_DATE );
@@ -203,6 +201,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                 resultIntent.putExtra(RESULT_TYPE , FLAG );
                 resultIntent.putExtra(RESULT_STATE , "done" );
                 resultIntent.putExtra("camping_name", CampingName);
+                resultIntent.putExtra("stay_length", RESULT_STAY_LENGTH);
                 Log.e("CalendarActivity", CampingName);
                 Log.e("CalendarActivity", "1");
                 setResult(RESULT_OK , resultIntent);
@@ -317,13 +316,12 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
         if(startMonth == endMonth)
             return endDay - startDay;
         else
-            switch (startMonth) {
-                case 10:
-                    return endDay + (31-startDay);
-
-                default:
-                    return endDay + (30-startDay);
-            }
+            if(startMonth == 1 || startMonth == 3 || startMonth == 5 || startMonth == 7 || startMonth == 8 || startMonth == 10 || startMonth == 12)
+                return endDay + (31 - startDay);
+            else if(startDay == 2)
+                return endDay + (28 - startDay);
+            else
+                return endDay + (30 - startDay);
     }
 
     @Override

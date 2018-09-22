@@ -28,6 +28,8 @@ public class TentSelectActivity extends AppCompatActivity
     private CardFragmentPagerAdapter mFragmentCardAdapter;
     private ShadowTransformer mFragmentCardShadowTransformer;
 
+    private Intent pricePopupIntent;
+
     private boolean mShowingFragments = false;
 
     public int tentNum;
@@ -41,12 +43,15 @@ public class TentSelectActivity extends AppCompatActivity
 
         final String startDate = intent.getStringExtra(RESULT_SELECT_START_VIEW_DATE);
         final String endDate = intent.getStringExtra(RESULT_SELECT_END_VIEW_DATE);
+        final String stayLength = intent.getStringExtra("stay_length");
+
+        Log.e("숙박기간", stayLength);
 
         TextView periodTextView = (TextView) findViewById(R.id.period);
         periodTextView.setText("예약 기간 : " + startDate + " ~ " + endDate);
 
         TextView campingTextView = (TextView) findViewById(R.id.selectedTitle);
-        campingTextView.setText(intent.getExtras().getString("camping_name"));
+        campingTextView.setText("캠핑장 : " + intent.getExtras().getString("camping_name"));
 
         final String campName = intent.getExtras().getString("camping_name");
 
@@ -75,15 +80,29 @@ public class TentSelectActivity extends AppCompatActivity
 
         final ElegantNumberButton numberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         numberButton.setRange(1,5);
+        numberButton.setNumber("1");
+
 
         RelativeLayout paymentButton = (RelativeLayout) findViewById(R.id.payment);
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tentNum = mViewPager.getCurrentItem();
-                Log.e("씨발", Integer.toString(tentNum));
-                String tentName = classifyTent(tentNum, campName);
-                Log.e("개새끼", tentName);
+                Log.e("텐트 번호", Integer.toString(tentNum));
+                String tempInfo = classifyTent(tentNum, campName);
+                String[] tentInfo = tempInfo.split("/");
+                String tentQuantity = numberButton.getNumber();
+                int totalPrice = (Integer.parseInt(stayLength) * Integer.parseInt(tentQuantity)) * Integer.parseInt(tentInfo[1]);
+                Log.e("총 가격", Integer.toString(totalPrice));
+                if(pricePopupIntent == null) {
+                    pricePopupIntent = new Intent(TentSelectActivity.this, PricePopupActivity.class);
+                }
+                pricePopupIntent.putExtra("tent_name", tentInfo[0]);
+                pricePopupIntent.putExtra("camp_name", campName);
+                pricePopupIntent.putExtra("period", startDate + " ~ " + endDate);
+                pricePopupIntent.putExtra("price", Integer.toString(totalPrice));
+                pricePopupIntent.putExtra("quantity", tentQuantity);
+                startActivity(pricePopupIntent);
             }
         });
     }
@@ -99,54 +118,54 @@ public class TentSelectActivity extends AppCompatActivity
 
             case "난지 캠핑장":
                 if(tentNum == 0)
-                    return "가족 텐트";
+                    return "가족 텐트/33000";
                 else if(tentNum == 1)
-                    return "몽골 텐트_대";
+                    return "몽골 텐트_대/50000";
                 else if(tentNum == 2)
-                    return "몽골 텐트_대(냉_난방 포함)";
+                    return "몽골 텐트_대(냉_난방 포함)/68000";
                 else if(tentNum == 3)
-                    return "몽골 텐트_중";
+                    return "몽골 텐트_중/40000";
                 else if(tentNum == 4)
-                    return "몽골 텐트_중(냉_난방 포함)";
+                    return "몽골 텐트_중(냉_난방 포함)/58000";
                 else if(tentNum == 5)
-                    return "몽골 텐트_특대(5x4)";
+                    return "몽골 텐트_특대(5x4)/70000";
                 else if(tentNum == 6)
-                    return "몽골 텐트_(5x5)";
+                    return "몽골 텐트_(5x5)/70000";
                 else if(tentNum == 7)
-                    return "캐빈 텐트";
+                    return "캐빈 텐트/44500";
                 else
-                    return "캐빈 텐트(냉_난방 포함)";
+                    return "캐빈 텐트(냉_난방 포함)/62500";
 
             case "노을 캠핑장":
                 if(tentNum == 0)
-                    return "A 구역";
+                    return "A 구역/13000";
                 else if(tentNum == 1)
-                    return "B 구역";
+                    return "B 구역/10000";
                 else if(tentNum == 2)
-                    return "C 구역";
+                    return "C 구역/13000";
                 else
-                    return "D구역";
+                    return "D 구역/13000";
 
             case "강동 캠핑장":
                 if(tentNum == 0)
-                    return "오토 캠핑장";
+                    return "오토 캠핑장/21000";
                 else if(tentNum == 1)
-                    return "가족 캠핑장";
+                    return "가족 캠핑장/20000";
                 else
-                    return "매화나무 캠핑장";
+                    return "매화나무 캠핑장/20000";
 
             case "초안산 캠핑장":
                 if(tentNum == 0)
-                    return "일반 캠핑";
+                    return "일반 캠핑/15000";
                 else if(tentNum == 1)
-                    return "오토 캠핑";
+                    return "오토 캠핑/25000";
                 else if(tentNum == 2)
-                    return "데크 캠핑";
+                    return "데크 캠핑/25000";
                 else
-                    return "캐빈하우스";
+                    return "캐빈하우스/30000";
 
             default:
-                return "4인용";
+                return "4인용/25000";
         }
     }
 

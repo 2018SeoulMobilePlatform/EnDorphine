@@ -27,8 +27,8 @@ public class HomeFragment1 extends BaseFragment implements AsyncResponse {
     public String description="";
     public String temperature="";
 
-
     public static boolean mAsync = false;
+    public static boolean mDoAsync = false;
 
     ImageView weatherIcon;
 
@@ -46,6 +46,12 @@ public class HomeFragment1 extends BaseFragment implements AsyncResponse {
 
         if(mAsync==false) {
             mAsync = true;
+            mDoAsync = true;
+            String url = "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=9595c31a22a4095ba487c9b0f1e062bc";
+            receiveWeatherTask.execute(url);
+        }
+
+        if(description == "" && mDoAsync == false) {
             String url = "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=9595c31a22a4095ba487c9b0f1e062bc";
             receiveWeatherTask.execute(url);
         }
@@ -130,5 +136,6 @@ public class HomeFragment1 extends BaseFragment implements AsyncResponse {
                 weatherIcon.setBackgroundResource(R.drawable.sunny);
                 break;
         }
+        mDoAsync = false;
     }
 }
