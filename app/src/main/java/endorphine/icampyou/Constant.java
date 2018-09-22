@@ -31,6 +31,9 @@ public class Constant {
     //채팅방 목록 가져오기
     public static final int GET_CHATTINGLIST = 1119;
 
+    //예약
+    public static final int RESERVATION_CAMPING = 1120;
+
     //Camera 클래스
     public static final int CAMERA_CODE = 1000;
     public static final int GALLERY_CODE = 1001;

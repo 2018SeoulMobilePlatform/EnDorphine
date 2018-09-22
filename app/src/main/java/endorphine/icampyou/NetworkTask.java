@@ -89,6 +89,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case Constant.GET_CHATTINGLIST:
                 asyncDialog.setMessage("채팅방 목록 가져오는 중 입니다..");
                 break;
+            case Constant.RESERVATION_CAMPING:
+                asyncDialog.setMessage("예약이 진행 중 입니다..");
+                break;
             default:
                 break;
 
@@ -104,11 +107,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         String result = null;
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, data);
-//        if (result.equals(null)) {
-//            Log.e("null", "입니당");
-//        } else {
-//            Log.e("냥냥", result);
-//        }
+
         return result;
     }
 
@@ -224,48 +223,26 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     try{
                         JSONObject jsonObject = new JSONObject(result);
                         String resultResponse = jsonObject.getString("result");
-                        Log.e("resultResponse => ", resultResponse);
                         JSONArray resultObjectArray = new JSONArray(resultResponse);
-                        JSONObject resultObject = resultObjectArray.getJSONObject(0);
-                        Log.e("resultObject => ", resultObject.toString());
-                        if(!resultObject.toString().equals("fail")){
-                            Log.e("Success", "");
-                            Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
-                            String user_id = resultObject.getString("user_id");
-                            String camp_name = resultObject.getString("camp_name");
-                            String myitem = resultObject.getString("myitem");
-                            String needitem = resultObject.getString("needitem");
-                            adpater.addItem(new Chat_Item(image,user_id,myitem,needitem,camp_name));
+                        if(!resultResponse.equals("fail")){
+                            JSONObject resultObject;
+                            for(int i=0;i<resultObjectArray.length();i++){
+                                resultObject = resultObjectArray.getJSONObject(i);
+                                Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                                String user_id = resultObject.getString("user_id");
+                                String camp_name = resultObject.getString("camp_name");
+                                String myitem = resultObject.getString("myitem");
+                                String needitem = resultObject.getString("needitem");
+                                adpater.addItem(new Chat_Item(image,user_id,myitem,needitem,camp_name));
+                            }
                             adpater.notifyDataSetChanged();
                         }
                     }catch (JSONException e) {
                         Log.e("exception",e.toString());
                         e.printStackTrace();
                     }
-
-//                    ImageConversion imageConversion = new ImageConversion();
-//
-//                    Log.e("1", "1");
-//                    String camp_name = jsonObject.getString("camp_name");
-//                    Log.e("camp_name", camp_name);
-//                        Log.e("2","2");
-//                        String image_encode = jsonObject.getString("image");
-//                        String user_id = jsonObject.getJSONObject("result").getString("user_id");
-//                        String myitem = jsonObject.getJSONObject("result").getString("myitem");
-//                        String needitem = jsonObject.getJSONObject("result").getString("needitem");
-//                        Bitmap bitmap = imageConversion.fromBase64(image_encode);
-//                        adpater.addItem(new Chat_Item(bitmap,user_id,myitem,needitem,camp_name));
-//                        adpater.notifyDataSetChanged();
-//                        Log.e("camp_name",camp_name);
-//                        Log.e("image_code",image_encode);
-//                        Log.e("user_id",user_id);
-//                        Log.e("myitem",myitem);
-//                        Log.e("needitem",needitem);
-
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-
+                break;
+            case Constant.RESERVATION_CAMPING:
                 break;
             default:
                 break;

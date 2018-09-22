@@ -63,20 +63,24 @@ public class ChattingList_Fragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
-
-        listViewSetting(view);
-
+    public void onResume() {
+        super.onResume();
+        adapter.removeAllitem();
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchatroominfo";
 
         JSONObject data = sendJSonData();
 
         NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,adapter);
         networkTask.execute();
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
+
+        listViewSetting(view);
 
         // 탭 호스트에 탭 추가
         final TabHost tabHost1 = (TabHost)view.findViewById(R.id.tapHost_chatlist);

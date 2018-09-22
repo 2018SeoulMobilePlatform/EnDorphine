@@ -112,45 +112,7 @@ public class Chat_Content extends AppCompatActivity {
                     NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data, Constant.MAKE_CHATTINGLIST);
                     networkTask.execute();
 
-//                    Intent returnIntent = new Intent();
-
-//                    try {
-////                        //Write file
-////                        String filename = "bitmap.png";
-////                        FileOutputStream stream = openFileOutput(filename, Context.MODE_PRIVATE);
-////                        tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-////
-////                        //Cleanup
-////                        stream.close();
-////                        tempBitmap.recycle();
-//
-////                        //Pop intent
-////                        returnIntent.putExtra("image", filename);
-////                        returnIntent.putExtra("user", "허진규");
-////                        returnIntent.putExtra("need", need_thing.getText().toString());
-////                        returnIntent.putExtra("lettable", lettable_thing.getText().toString());
-////                        returnIntent.putExtra("camp_name", camp_name);
-//
-//                        setResult(RESULT_OK, returnIntent);
-//
-//                        Log.e("1","1");
-//                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addchatroom";
-//
-//                        JSONObject data = sendJSonData();
-//
-//
-//                        Log.e("2","2");
-//                        NetworkTask networkTask = new NetworkTask(url,data,NetworkTask.MAKE_CHATTINGLIST);
-//                        networkTask.execute();
-//
-//                    } catch (Exception e) {
-//
-//                        Log.e("Error",e.toString());
-//                        e.printStackTrace();
-//                    }
-
-//                    Toast.makeText(Chat_Content.this, "채팅방 개설", Toast.LENGTH_LONG).show();
-//                    finish();
+                    finish();
 
                 }
             }
