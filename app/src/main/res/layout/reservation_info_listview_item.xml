@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="#FFFFFF"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:id="@+id/res_info_item_tent_image"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tent1"
+        android:layout_weight="2"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="8">
+        
+        <TextView
+            android:id="@+id/res_info_item_camping_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="난지캠핑장"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="예약번호: "
+                android:textSize="13dp"/>
+            <TextView
+                android:id="@+id/res_info_item_res_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DSAGDF54662"
+                android:textSize="13dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/res_info_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-09-27 목 ~ 2018-09-28 금"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+</LinearLayout>

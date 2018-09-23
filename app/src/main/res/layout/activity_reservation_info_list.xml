@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 상단 타이틀바 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="100dp" />
+        <ImageView
+            android:id="@+id/mypage_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/back_btn" />
+        <TextView
+            android:id="@+id/mypage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="예약 내역"
+            android:textStyle="bold"
+            android:textSize="21dp"
+            android:textColor="#FFFFFF"/>
+    </RelativeLayout>
+
+    <!-- 예약정보들 -->
+    <ListView
+        android:id="@+id/reservation_info_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:adjustViewBounds="true"
+        android:choiceMode="singleChoice"
+        android:divider="#E7E6E6"
+        android:dividerHeight="1dp" />
+</LinearLayout>
