@@ -2,9 +2,7 @@ package endorphine.icampyou.HomeMenu;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,10 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import endorphine.icampyou.R;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class ReceiveWeatherTask extends AsyncTask<String, Void, JSONObject>{
     View view;

@@ -2,7 +2,6 @@ package endorphine.icampyou;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -27,12 +26,10 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
-import endorphine.icampyou.ExchangeMenu.ExchangeFragment1;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
-import endorphine.icampyou.ReservationMenu.ReservationFragment1;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     // fragment 교체를 위한 변수들
@@ -93,18 +90,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         // fragment 객체 생성
-        guideFragment1 = new GuideFragment1();
-        chattingList_fragment = new ChattingList_Fragment();
-        homeFragment1 = new HomeFragment1();
-        eventFragment1 = new EventFragment1();
-        homeFragment2 = new HomeFragment2();
+        //guideFragment1 = new GuideFragment1();
+        //chattingList_fragment = new ChattingList_Fragment();
+        //homeFragment1 = new HomeFragment1();
+        //eventFragment1 = new EventFragment1();
+        //homeFragment2 = new HomeFragment2();
         // 디폴트 프래그먼트 홈화면으로 설정
         setFragment(2);
 
         // intent 설정하기
         qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-        mypageIntent = new Intent(this, MyPageActivity.class);
-        reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
+        //mypageIntent = new Intent(this, MyPageActivity.class);
+        //reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -112,10 +109,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
 
-        // Navigation Drawer (옆구리 네비게이션 바)
+
+//        // Navigation Drawer (옆구리 네비게이션 바)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+//
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -142,31 +140,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
 
     // 옆구리 네비게이션 바 아이템 클릭 이벤트
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         // 내 정보 누르면 마이페이지 프래그먼트로 이동
         if(id==R.id.nav_mypage){
+            mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
         }
         else if(id==R.id.nav_reservation_information){
+            reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -184,21 +175,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (num) {
             case 1:
                 // 예약 프래그먼트1로 변경
+                guideFragment1 = new GuideFragment1();
                 fragmentTransaction.replace(R.id.main_frame, guideFragment1);
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 2:
                 // 홈 프래그먼트1로 변경
+                homeFragment2 = new HomeFragment2();
                 fragmentTransaction.replace(R.id.main_frame, homeFragment2);
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 3:
                 // 교환 프래그먼트1로 변경
+                chattingList_fragment = new ChattingList_Fragment();
                 fragmentTransaction.replace(R.id.main_frame, chattingList_fragment);
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
                 break;
             case 4:
                 // 이벤트 프래그먼트1로 변경
+                eventFragment1 = new EventFragment1();
                 fragmentTransaction.replace(R.id.main_frame, eventFragment1);
                 fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             default:
@@ -251,4 +246,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

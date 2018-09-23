@@ -15,9 +15,6 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import endorphine.icampyou.R;
 
-import static endorphine.icampyou.GuideMenu.CalenderActivity.RESULT_SELECT_END_VIEW_DATE;
-import static endorphine.icampyou.GuideMenu.CalenderActivity.RESULT_SELECT_START_VIEW_DATE;
-
 public class TentSelectActivity extends AppCompatActivity
          {
     //private Button mButton;
@@ -41,8 +38,8 @@ public class TentSelectActivity extends AppCompatActivity
 
         Intent intent = new Intent(this.getIntent());
 
-        final String startDate = intent.getStringExtra(RESULT_SELECT_START_VIEW_DATE);
-        final String endDate = intent.getStringExtra(RESULT_SELECT_END_VIEW_DATE);
+        final String startDate = intent.getStringExtra("start_date");
+        final String endDate = intent.getStringExtra("end_date");
         final String stayLength = intent.getStringExtra("stay_length");
 
         Log.e("숙박기간", stayLength);

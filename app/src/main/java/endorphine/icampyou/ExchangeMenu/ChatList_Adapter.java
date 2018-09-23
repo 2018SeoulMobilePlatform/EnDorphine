@@ -2,8 +2,6 @@ package endorphine.icampyou.ExchangeMenu;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import endorphine.icampyou.R;
 

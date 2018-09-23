@@ -2,9 +2,6 @@ package endorphine.icampyou.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +12,8 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.Constant;
-import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 import static android.app.Activity.RESULT_OK;

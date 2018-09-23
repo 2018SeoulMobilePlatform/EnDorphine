@@ -3,7 +3,6 @@ package endorphine.icampyou.GuideMenu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -28,10 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import endorphine.icampyou.Constant;
@@ -220,6 +217,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
                 intent.setClass(this, CalenderActivity.class);
                 intent.putExtra("title", campingPlace);
                 startActivity(intent);
+//                finish();
                 break;
             case R.id.review_add_button:
                 // 후기 작성 버튼 누르면 후기 작성 액티비티 시작됨

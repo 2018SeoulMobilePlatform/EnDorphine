@@ -1,14 +1,7 @@
 package endorphine.icampyou;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * 프래그먼트끼리 이동이 수월하도록 기능을 넣은 클래스

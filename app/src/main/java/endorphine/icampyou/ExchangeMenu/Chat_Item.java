@@ -1,7 +1,6 @@
 package endorphine.icampyou.ExchangeMenu;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 //채팅 목록 한 개를 차지할 클래스
 public class Chat_Item {

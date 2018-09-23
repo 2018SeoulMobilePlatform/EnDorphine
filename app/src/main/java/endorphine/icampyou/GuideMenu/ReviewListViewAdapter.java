@@ -1,6 +1,5 @@
 package endorphine.icampyou.GuideMenu;
 
-import android.media.Rating;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import endorphine.icampyou.ExchangeMenu.Chat_Item;
-import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.R;
 
 /**

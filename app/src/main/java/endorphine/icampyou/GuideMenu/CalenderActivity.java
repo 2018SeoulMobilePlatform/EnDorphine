@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,14 +27,14 @@ import endorphine.icampyou.R;
 
 public class CalenderActivity extends AppCompatActivity implements DatePickerController{
 
-    public final static String EXTRA_ACTIVE_MONTH_NUM = "ACTIVE_MONTH_NUMBER";
-    public final static String EXTRA_MAX_YEAR = "MAX_YEAR";
+    public String EXTRA_ACTIVE_MONTH_NUM = "ACTIVE_MONTH_NUMBER";
+    public String EXTRA_MAX_YEAR = "MAX_YEAR";
 
-    public final static String RESULT_SELECT_START_DATE = "start_date";
-    public final static String RESULT_SELECT_END_DATE = "end_date";
-    public final static String RESULT_SELECT_START_VIEW_DATE = "start_date_view";
-    public final static String RESULT_SELECT_END_VIEW_DATE = "end_date_view";
-    public final static String RESULT_STATE = "result_state";
+    public String RESULT_SELECT_START_DATE = "start_date";
+    public String RESULT_SELECT_END_DATE = "end_date";
+    public String RESULT_SELECT_START_VIEW_DATE = "start_date_view";
+    public String RESULT_SELECT_END_VIEW_DATE = "end_date_view";
+    public String RESULT_STATE = "result_state";
 
     public String RESULT_STAY_LENGTH = "stay_length";
 
@@ -300,7 +298,7 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
 
         if(resultCode == RESULT_OK) {
             if(data != null) {
-                Toast.makeText(this, "Select Data range" + data.getStringExtra(CalenderActivity.RESULT_SELECT_START_DATE) + "~" + data.getStringExtra(CalenderActivity.RESULT_SELECT_END_DATE), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Select Data range" + data.getStringExtra(RESULT_SELECT_START_DATE) + "~" + data.getStringExtra(RESULT_SELECT_END_DATE), Toast.LENGTH_SHORT).show();
             }
         }
     }

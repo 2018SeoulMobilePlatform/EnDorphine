@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
@@ -23,9 +22,7 @@ import org.json.JSONObject;
 import java.util.Random;
 
 import endorphine.icampyou.Constant;
-import endorphine.icampyou.QRcode.QrcodePopupActivity;
 import endorphine.icampyou.R;
-import endorphine.icampyou.ReviewWriteActivity;
 
 public class PricePopupActivity extends Activity {
 
