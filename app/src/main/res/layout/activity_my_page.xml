@@ -88,7 +88,8 @@
                             android:id="@+id/mypage_profile_change_btn"
                             android:layout_width="29dp"
                             android:layout_height="29dp"
-                            android:src="@drawable/review_plus_icon" />
+                            android:src="@drawable/review_plus_icon"
+                            android:onClick="modify_profile"/>
                     </RelativeLayout>
 
                     <LinearLayout

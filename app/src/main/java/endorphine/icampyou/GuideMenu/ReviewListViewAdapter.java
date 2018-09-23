@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.R;
 
@@ -37,6 +38,14 @@ public class ReviewListViewAdapter extends BaseAdapter {
         this.layout=layout;
     }
 
+    public void addItem(ReviewListItem mitem){
+        reviewData.add(mitem);
+    }
+
+    public void removeAllitem(){
+        reviewData.clear();
+    }
+
     @Override
     public int getCount(){return reviewData.size();}
     @Override
@@ -51,9 +60,6 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
         ReviewListItem reviewListItem= reviewData.get(position);
 
-        profileImage=(ImageView)convertView.findViewById(R.id.review_profile_image);
-        profileImage.setImageResource(reviewListItem.getProfileImage());
-
         nickName=(TextView)convertView.findViewById(R.id.review_nickname);
         nickName.setText(reviewListItem.getNickName());
 
@@ -61,7 +67,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         star.setRating(reviewListItem.getStar());
 
         reviewImage = (ImageView)convertView.findViewById(R.id.review_image);
-        reviewImage.setImageResource(reviewListItem.getReviewImage());
+        reviewImage.setImageBitmap(reviewListItem.getReviewImage());
 
         reviewContent = convertView.findViewById(R.id.review_content);
         reviewContent.setText(reviewListItem.getReviewContent());

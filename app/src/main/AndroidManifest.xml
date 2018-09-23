@@ -43,6 +43,7 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ExchangeMenu.Chat_Content"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -67,13 +68,14 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
@@ -103,8 +105,13 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".GuideMenu.GuideActivity" />
         <activity
-            android:name=".MyPageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Login.PasswordPopupActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".Login.RegisterUserActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".MyPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
         <activity
             android:name=".GuideMenu.PricePopupActivity"
             android:theme="@android:style/Theme.Dialog" />

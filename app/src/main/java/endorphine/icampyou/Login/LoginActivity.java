@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -31,6 +33,9 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -66,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
 
-        loginButton = (Button)findViewById(R.id.login_button);
+        loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
     }
 
@@ -81,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //서버에 보낼 아이디,비밀번호 데이터
                 JSONObject jsonObject = sendObject();
 
-                NetworkTask networkTask = new NetworkTask(this,url,jsonObject,NetworkTask.USER_LOGIN);
+                NetworkTask networkTask = new NetworkTask(this, url, jsonObject, Constant.USER_LOGIN);
                 networkTask.execute();
 
                 break;
@@ -94,25 +99,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 fragmentTransaction.commit();
                 break;
             case R.id.register_user_button:
-                RegisterUserInfo_Fragment registerUserInfo_fragment = new RegisterUserInfo_Fragment();
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.login, registerUserInfo_fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(this,RegisterUserActivity.class);
+                startActivity(intent);
+
                 break;
             default:
                 break;
         }
     }
 
-    private void getHashKey(){
+    private void getHashKey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo("패키지이름", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.d("tag","key_hash="+ Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                Log.d("tag", "key_hash=" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -205,15 +207,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //POST 요청 JSON 데이터 형식 사용
-    private JSONObject sendObject(){
+    private JSONObject sendObject() {
         JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.accumulate("id",user_email_editText.getText().toString());
-            jsonObject.accumulate("password",user_password_editText.getText().toString());
-        } catch (JSONException e){
+        try {
+            jsonObject.accumulate("id", user_email_editText.getText().toString());
+            jsonObject.accumulate("password", user_password_editText.getText().toString());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonObject;
     }
 
+    //선택한 사진 데이터 처리
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("resultCode",String.valueOf(resultCode));
+        Log.e("requestCode",String.valueOf(requestCode));
+
+    }
 }
