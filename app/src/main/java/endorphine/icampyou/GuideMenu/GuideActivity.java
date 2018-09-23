@@ -28,9 +28,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 import endorphine.icampyou.ReviewWriteActivity;
 /**
@@ -229,35 +234,44 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
     @Override
     protected void onResume() {
         super.onResume();
+//
+//        float starNum;
+//        String reviewCampingPlace;
+//        String reviewContent;
+//        int reviewImage;
+//
+//        intent = getIntent();
+//
+//        Bitmap pass_image =  null;
+//        String filename = intent.getStringExtra("image");
+//        try {
+//            FileInputStream stream = this.openFileInput(filename);
+//            pass_image = BitmapFactory.decodeStream(stream);
+//            stream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (intent.getStringExtra("review_content") != null && intent.getStringExtra("캠핑장 이름").equals(campingPlace)) {
+//            // 인텐트로 리뷰 값 받아오기
+//            starNum = intent.getFloatExtra("star", 0);
+//            reviewContent = intent.getStringExtra("review_content");
+//            reviewImage = intent.getIntExtra("review_image", 0);
+//            // 리스트에 추가하기
+//            addReviewList(campingPlace, userIcon, nickName, starNum, pass_image, reviewContent);
+//
+//            setTotalStarScore();
+//        }
 
-        float starNum;
-        String reviewCampingPlace;
-        String reviewContent;
-        int reviewImage;
+        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+        reviewList.setAdapter(adapter);
 
-        intent = getIntent();
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
 
-        Bitmap pass_image =  null;
-        String filename = intent.getStringExtra("image");
-        try {
-            FileInputStream stream = this.openFileInput(filename);
-            pass_image = BitmapFactory.decodeStream(stream);
-            stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        JSONObject data = sendJSonData();
 
-        if (intent.getStringExtra("review_content") != null && intent.getStringExtra("캠핑장 이름").equals(campingPlace)) {
-            // 인텐트로 리뷰 값 받아오기
-            starNum = intent.getFloatExtra("star", 0);
-            reviewContent = intent.getStringExtra("review_content");
-            reviewImage = intent.getIntExtra("review_image", 0);
-            // 리스트에 추가하기
-            addReviewList(campingPlace, userIcon, nickName, starNum, pass_image, reviewContent);
-            adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
-            reviewList.setAdapter(adapter);
-            setTotalStarScore();
-        }
+        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter);
+        networkTask.execute();
     }
 
     // 리뷰페이지 설정하는 메소드
@@ -289,10 +303,10 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
     // 후기 리스트에 아이템 추가하는 메소드
     private void addReviewList(String reviewCampingPlace, int userIcon, String nickName, float star, Bitmap reviewImage, String reviewContent) {
-        if(campingPlace.equals(reviewCampingPlace)) {
-            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
-            reviewData.add(reviewItem);
-        }
+//        if(campingPlace.equals(reviewCampingPlace)) {
+//            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
+//            reviewData.add(reviewItem);
+//        }
     }
 
     // 총 별점 평균 구해서 ratingBar 설정하는 메소드
@@ -435,5 +449,19 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         scrollView = (ScrollView) findViewById(R.id.nanji_guide_scrollView);
         scrollView.setFocusableInTouchMode(true);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+    }
+
+    //POST 요청 JSON 데이터 형식 사용
+    private JSONObject sendJSonData()  {
+
+        JSONObject jsonObject = new JSONObject();
+
+//        try {
+//            jsonObject.accumulate("image", encodedImage);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        return jsonObject;
     }
 }

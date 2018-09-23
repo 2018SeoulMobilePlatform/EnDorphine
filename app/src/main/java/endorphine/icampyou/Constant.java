@@ -28,11 +28,14 @@ public class Constant {
     //후기 작성
     public static final int MAKE_REVIEWLIST = 1118;
 
+    //후기 정보 가져오기
+    public static final int GET_REVIEWLIST = 1119;
+
     //채팅방 목록 가져오기
-    public static final int GET_CHATTINGLIST = 1119;
+    public static final int GET_CHATTINGLIST = 1120;
 
     //예약
-    public static final int RESERVATION_CAMPING = 1120;
+    public static final int RESERVATION_CAMPING = 1121;
 
     //Camera 클래스
     public static final int CAMERA_CODE = 1000;

@@ -73,22 +73,22 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             // 작성완료 버튼 누를 시 이벤트
             case R.id.completing_review_button:
-//                //서버 연동
-//                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
-//
-//                JSONObject data = null;
-//                data = sendJSonData();
-//
-//                endorphine.icampyou.NetworkTask networkTask =
-//                        new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, NetworkTask.MAKE_REVIEWLIST);
-//                networkTask.execute();
+                //서버 연동
+                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
 
-                // 현재 설정값 저장
-                setReviewValue();
-                // 인텐트로 리뷰한테 값 보내기
-                putIntent();
-                startActivity(intent);
-                finish();
+                JSONObject data = null;
+                data = sendJSonData();
+
+                endorphine.icampyou.NetworkTask networkTask =
+                        new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, Constant.MAKE_REVIEWLIST);
+                networkTask.execute();
+
+//                // 현재 설정값 저장
+//                setReviewValue();
+//                // 인텐트로 리뷰한테 값 보내기
+//                putIntent();
+//                startActivity(intent);
+//                finish();
                 break;
         }
     }
@@ -133,34 +133,34 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         reviewContent = reviewEditText.getText().toString();
     }
 
-    public void putIntent() {
-        intent = new Intent(this, GuideActivity.class);
-
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) reviewImageView.getDrawable();
-        Bitmap tempBitmap = bitmapDrawable.getBitmap();
-
-        //Write file
-        String filename = "bitmap.png";
-        FileOutputStream stream = null;
-        try {
-            stream = openFileOutput(filename, Context.MODE_PRIVATE);
-            tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-            stream.close();
-            tempBitmap.recycle();
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+//    public void putIntent() {
+//        intent = new Intent(this, GuideActivity.class);
+//
+//        BitmapDrawable bitmapDrawable = (BitmapDrawable) reviewImageView.getDrawable();
+//        Bitmap tempBitmap = bitmapDrawable.getBitmap();
+//
+//        //Write file
+//        String filename = "bitmap.png";
+//        FileOutputStream stream = null;
+//        try {
+//            stream = openFileOutput(filename, Context.MODE_PRIVATE);
+//            tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//
+//            stream.close();
+//            tempBitmap.recycle();
+//
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
 
         //Cleanup
 
-        intent.putExtra("image", filename);
-        intent.putExtra("star", (float) starNum);
-        intent.putExtra("review_content", reviewContent);
-        intent.putExtra("review_image", reviewImage);
-        intent.putExtra("캠핑장 이름", campingPlace);
-    }
+//        intent.putExtra("image", filename);
+//        intent.putExtra("star", (float) starNum);
+//        intent.putExtra("review_content", reviewContent);
+//        intent.putExtra("review_image", reviewImage);
+//        intent.putExtra("캠핑장 이름", campingPlace);
+//    }
 
     //권한 요청하는 함수
     @Override
@@ -217,11 +217,12 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         String encodedImage = imageConversion.toBase64(reviewImageView);
 
         try {
-            jsonObject.accumulate("file", encodedImage);
-            jsonObject.accumulate("image_name", "냥냥");
+
+            jsonObject.accumulate("image", encodedImage);
+            jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
-//            jsonObject.accumulate("nickname", need_thing.getText().toString());
-//            jsonObject.accumulate("point", lettable_thing.getText().toString());
+            jsonObject.accumulate("nickname", "다뚱이");
+            jsonObject.accumulate("point", String.valueOf(starNum));
             jsonObject.accumulate("content", reviewEditText.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();

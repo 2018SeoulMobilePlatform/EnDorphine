@@ -17,10 +17,15 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Random;
 
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 import endorphine.icampyou.R;
+import endorphine.icampyou.ReviewWriteActivity;
 
 public class PricePopupActivity extends Activity {
 
@@ -76,8 +81,20 @@ public class PricePopupActivity extends Activity {
         if(reservationNum < 0)
             reservationNum = reservationNum * (-1);
         Log.e("예약 번호", Integer.toString(reservationNum));
-        confirmPopupIntent = new Intent(PricePopupActivity.this, ConfirmPopupActivity.class);
-        generateQRCode(Integer.toString(reservationNum));
+//        confirmPopupIntent = new Intent(PricePopupActivity.this, ConfirmPopupActivity.class);
+//        generateQRCode(Integer.toString(reservationNum));
+
+        //서버 연동
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";
+
+        JSONObject data = null;
+        data = sendJSonData(reservationNum);
+
+        endorphine.icampyou.NetworkTask networkTask =
+                new endorphine.icampyou.NetworkTask(PricePopupActivity.this,url,data, Constant.RESERVATION_CAMPING);
+        networkTask.execute();
+
+
     }
 
     @Override
@@ -124,5 +141,24 @@ public class PricePopupActivity extends Activity {
             }
         }
         return bmp;
+    }
+
+    //후기 데이터 서버에 보내기 위한 JSON 형식 데이터
+    private JSONObject sendJSonData(int reservationNumber) {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            jsonObject.accumulate("reservation_number", String.valueOf(reservationNumber));
+            jsonObject.accumulate("user_id", "허진규멍청잉");
+            jsonObject.accumulate("camp_name", campName);
+            jsonObject.accumulate("tent_type", tentName);
+            jsonObject.accumulate("date",period );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

@@ -17,6 +17,11 @@ import org.json.JSONObject;
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Content;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
+import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
+import endorphine.icampyou.GuideMenu.GuideActivity;
+import endorphine.icampyou.GuideMenu.PricePopupActivity;
+import endorphine.icampyou.GuideMenu.ReviewListItem;
+import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 
@@ -29,7 +34,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     private Context context;
     ProgressDialog asyncDialog;
     EditText insert;
-    ChatList_Adapter adpater;
+    ChatList_Adapter chatList_adpater;
+    ReviewListViewAdapter reviewList_adapter;
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
@@ -45,7 +51,16 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
-        this.adpater = _adapter;
+        this.chatList_adpater = _adapter;
+    }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.reviewList_adapter = _adapter;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
@@ -92,6 +107,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case Constant.RESERVATION_CAMPING:
                 asyncDialog.setMessage("예약이 진행 중 입니다..");
                 break;
+            case Constant.GET_REVIEWLIST:
+                asyncDialog.setMessage("후기 목록 가져오는 중 입니다..");
+                break;
             default:
                 break;
 
@@ -115,6 +133,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         //다이얼로그 종료
         asyncDialog.dismiss();
+
+        ImageConversion imageConversion = new ImageConversion();
 
         //경우에 따른 스위치문
         switch (select) {
@@ -203,13 +223,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.MAKE_CHATTINGLIST:
                 try {
-                    Log.e("5", "5");
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
                         Log.e("success", "성공");
                         Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
-                        //((Activity)context).finish();
+                        ((Activity)context).finish();
                     } else {
                         Log.e("실패", "실패");
                     }
@@ -218,8 +237,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 }
                 break;
             case Constant.GET_CHATTINGLIST:
-                    Log.e("response => ", result);
-                    ImageConversion imageConversion = new ImageConversion();
                     try{
                         JSONObject jsonObject = new JSONObject(result);
                         String resultResponse = jsonObject.getString("result");
@@ -233,9 +250,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                                 String camp_name = resultObject.getString("camp_name");
                                 String myitem = resultObject.getString("myitem");
                                 String needitem = resultObject.getString("needitem");
-                                adpater.addItem(new Chat_Item(image,user_id,myitem,needitem,camp_name));
+                                chatList_adpater.addItem(new Chat_Item(image,user_id,myitem,needitem,camp_name));
                             }
-                            adpater.notifyDataSetChanged();
+                            chatList_adpater.notifyDataSetChanged();
                         }
                     }catch (JSONException e) {
                         Log.e("exception",e.toString());
@@ -243,6 +260,61 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     }
                 break;
             case Constant.RESERVATION_CAMPING:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        intent = new Intent(context, ConfirmPopupActivity.class);
+                        ((Activity)context).startActivity(intent);
+                        Toast.makeText(context, "결제 완료", Toast.LENGTH_LONG).show();
+                        ((Activity)context).finish();
+                    } else {
+                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.MAKE_REVIEWLIST:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        Log.e("success", "성공");
+                        intent = new Intent(context, GuideActivity.class);
+                        intent.putExtra("캠핑장 이름",data.getString("camp_name"));
+                        ((Activity)context).startActivity(intent);
+                        Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
+                        ((Activity)context).finish();
+                    } else {
+                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.GET_REVIEWLIST:
+                try{
+                    JSONObject jsonObject = new JSONObject(result);
+                    String resultResponse = jsonObject.getString("result");
+                    JSONArray resultObjectArray = new JSONArray(resultResponse);
+                    if(!resultResponse.equals("fail")){
+                        JSONObject resultObject;
+                        for(int i=0;i<resultObjectArray.length();i++){
+                            resultObject = resultObjectArray.getJSONObject(i);
+                            Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                            String nickname = resultObject.getString("nickname");
+                            String camp_name = resultObject.getString("camp_name");
+                            String point = resultObject.getString("point");
+                            String content = resultObject.getString("content");
+                            reviewList_adapter.addItem(new ReviewListItem(camp_name,nickname,Float.parseFloat(point),image,content));
+                        }
+                        reviewList_adapter.notifyDataSetChanged();
+                    }
+                }catch (JSONException e) {
+                    Log.e("exception",e.toString());
+                    e.printStackTrace();
+                }
                 break;
             default:
                 break;
