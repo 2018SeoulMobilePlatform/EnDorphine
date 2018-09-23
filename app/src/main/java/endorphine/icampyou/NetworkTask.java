@@ -282,6 +282,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (real_result.equals("success")) {
                         Log.e("success", "성공");
                         intent = new Intent(context, GuideActivity.class);
+                        intent.putExtra("캠핑장 이름",data.getString("camp_name"));
                         ((Activity)context).startActivity(intent);
                         Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
                         ((Activity)context).finish();

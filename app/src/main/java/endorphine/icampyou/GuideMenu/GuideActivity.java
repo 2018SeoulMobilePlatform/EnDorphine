@@ -259,17 +259,19 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 //            reviewImage = intent.getIntExtra("review_image", 0);
 //            // 리스트에 추가하기
 //            addReviewList(campingPlace, userIcon, nickName, starNum, pass_image, reviewContent);
-//            adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
-//            reviewList.setAdapter(adapter);
+//
 //            setTotalStarScore();
 //        }
 
-//        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
-//
-//        JSONObject data = sendJSonData();
-//
-//        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST);
-//        networkTask.execute();
+        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+        reviewList.setAdapter(adapter);
+
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
+
+        JSONObject data = sendJSonData();
+
+        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter);
+        networkTask.execute();
     }
 
     // 리뷰페이지 설정하는 메소드
