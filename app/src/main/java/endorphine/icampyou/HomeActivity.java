@@ -3,8 +3,8 @@ package endorphine.icampyou;
 import android.app.ActivityManager;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,15 +17,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.util.Set;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
@@ -48,6 +56,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Intent reservationInfoListIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
+    private SharedPreferences preferences;
+    // drawer
+    private CircleImageView drawerProfileImage;
+    private TextView drawerNickName;
+    private TextView drawerEmail;
+    private ImageView drawerQrcode;
+    private LayoutInflater inflater;
+    private View naviHeaderLayout;
+    private ViewGroup qrcodePopupLayout;
 
     // Back키 이벤트 인터페이스
     public interface onKeyBackPressedListener {
@@ -67,8 +84,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.navigation_guide:
                     // 프래그먼트 변경
                     setFragment(1);
-                    // 임의로 QR 코드 설정
-                    generateRQCode("QR코드");
                     return true;
                 case R.id.navigation_home:
                     setFragment(2);
@@ -78,7 +93,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.navigation_event:
                     setFragment(4);
-                    //mTextMessage.setText(R.string.title_event);
                     return true;
             }
             return false;
@@ -90,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE)).getLargeMemoryClass();
+        ((ActivityManager)this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
 
         setContentView(R.layout.activity_home);
 
@@ -132,6 +146,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header_navi, navigationView, false);
+        navigationView.addHeaderView(headerView);
+
+        // drawer 네비게이션 바 설정
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
+        drawerNickName = headerView.findViewById(R.id.drawer_user_name);
+        drawerEmail = headerView.findViewById(R.id.drawer_email);
+        drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
+
+        // 프로필 사진 일단 기본으로 설정함
+        drawerProfileImage.setImageResource(R.drawable.user_icon);
+        drawerNickName.setText(preferences.getString("nickname",""));
+        drawerEmail.setText(preferences.getString("email",""));
+
+        // 임의로 QR 코드 설정
+        generateQRCode(preferences.getString("reservationNum",""));
+        drawerQrcode.setImageBitmap(qrcodeBitmap);
     }
 
     @Override
@@ -195,35 +228,36 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // 예약 프래그먼트1로 변경
                 guideFragment1 = new GuideFragment1();
                 fragmentTransaction.replace(R.id.main_frame, guideFragment1);
-                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
+                fragmentTransaction.commit();
                 break;
             case 2:
                 // 홈 프래그먼트1로 변경
                 homeFragment2 = new HomeFragment2();
                 fragmentTransaction.replace(R.id.main_frame, homeFragment2);
-                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
+                fragmentTransaction.commit();
                 break;
             case 3:
                 // 교환 프래그먼트1로 변경
                 chattingList_fragment = new ChattingList_Fragment();
                 fragmentTransaction.replace(R.id.main_frame, chattingList_fragment);
-                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
+                fragmentTransaction.commit();
                 break;
             case 4:
                 // 이벤트 프래그먼트1로 변경
                 eventFragment1 = new EventFragment1();
                 fragmentTransaction.replace(R.id.main_frame, eventFragment1);
-                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
+                fragmentTransaction.commit();
             default:
                 break;
         }
     }
 
     // QR코드 생성
-    public void generateRQCode(String contents) {
+    public void generateQRCode(String contents) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+
             ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(qrcodeBitmap);
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);

@@ -1,6 +1,7 @@
 package endorphine.icampyou.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -46,6 +47,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText user_email_editText;
     private EditText user_password_editText;
 
+    // shared preference에 유저정보 저장
+    private String email;
+    private String password;
+    private String name;
+    private String nickname;
+    private String phoneNumber;
+    private String profileImage;
+    private String campingPlace;
+    private String date;
+    private String tentType;
+    private String reservationNum;
+    private String tentNum;
+    private String price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -210,13 +226,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
         return jsonObject;
-    }
-
-    //선택한 사진 데이터 처리
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("resultCode",String.valueOf(resultCode));
-        Log.e("requestCode",String.valueOf(requestCode));
-
     }
 }

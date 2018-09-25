@@ -19,7 +19,7 @@
 
         <!-- 프로필 이미지 -->
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/mypage_user_image"
+            android:id="@+id/drawer_user_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
@@ -32,17 +32,17 @@
             android:orientation="vertical">
         <!-- 닉네임 -->
         <TextView
-            android:id="@+id/user_name_mypage"
+            android:id="@+id/drawer_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="배챙이"
+            android:text="다콩잉"
             android:textColor="#FFFFFF"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"/>
         <!-- 이메일 -->
         <TextView
-            android:id="@+id/nav_header_email"
+            android:id="@+id/drawer_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="dain6912@naver.com"
@@ -106,7 +106,7 @@
 
     <!-- 입장권 대신하는 QR코드 -->
     <ImageView
-        android:id="@+id/qrcode"
+        android:id="@+id/drawer_qrcode"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_gravity="center"

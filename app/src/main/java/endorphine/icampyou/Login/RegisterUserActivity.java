@@ -59,7 +59,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         !exception.UserPassWordExcepiton(password_editText.getText().toString()) ||
                         !exception.UserPhoneException(phoneNumber_editText.getText().toString())){
 
-                    Toast.makeText(RegisterUserActivity.this,"올바른 입력이 필요합니다",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterUserActivity.this,"입력을 다시 확인해주세요",Toast.LENGTH_LONG).show();
                 } else{
                     // URL 설정
                     String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
@@ -75,9 +75,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                     endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(RegisterUserActivity.this,url,data, Constant.USER_REGISTER);
                     networkTask.execute();
 
-                    // AsyncTask를 통해 HttpURLConnection 수행
-                    Toast.makeText(RegisterUserActivity.this,"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
-
                 }
             }
         });
@@ -91,49 +88,26 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         camera = new Camera(RegisterUserActivity.this,user_profile);
 
-        //이메일 리스너
-        email_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String edit = editable.toString();
-
-                if(exception.EmailException(edit)){
-                    email_editText.setBackgroundResource(R.drawable.check_edittext);
-                } else{
-                    if(edit.length() != 0)
-                        email_editText.setBackgroundResource(R.drawable.uncheck_edittext);
-                    else
-                        email_editText.setBackgroundResource(R.drawable.rounded_login);
-                }
-            }
-        });
-
         //emailText 포커스 변동
         email_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
-                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkid";
+                    if(email_editText.getText().length() != 0){
+                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkid";
 
-                    JSONObject data = null;
-                    try {
-                        data = checkJSonEmail();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject data = null;
+                        try {
+                            data = checkJSonEmail();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_EMAIL,email_editText);
+                        networkTask.execute();
+                    } else{
+                        email_editText.setBackgroundResource(R.drawable.rounded_login);
                     }
-
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_EMAIL,email_editText);
-                    networkTask.execute();
                 }
             }
         });
@@ -190,75 +164,26 @@ public class RegisterUserActivity extends AppCompatActivity {
             }
         });
 
-        //닉네임 리스너
-        nickName_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String edit = editable.toString();
-                if(exception.UserNickNameException(edit)){
-                    nickName_editText.setBackgroundResource(R.drawable.check_edittext);
-                } else{
-                    if(edit.length() != 0)
-                        nickName_editText.setBackgroundResource(R.drawable.uncheck_edittext);
-                    else
-                        nickName_editText.setBackgroundResource(R.drawable.rounded_login);
-                }
-            }
-        });
-
         //닉네임 중복검사
         nickName_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
-                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
+                    if(nickName_editText.getText().length() != 0){
+                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
 
-                    JSONObject data = null;
-                    try {
-                        data = checkJSonNickname();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject data = null;
+                        try {
+                            data = checkJSonNickname();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_NICKNAME,nickName_editText);
+                        networkTask.execute();
+                    } else{
+                        nickName_editText.setBackgroundResource(R.drawable.rounded_login);
                     }
-
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_NICKNAME,nickName_editText);
-                    networkTask.execute();
-                }
-            }
-        });
-
-
-        //핸드폰번호 리스너
-        phoneNumber_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String edit = editable.toString();
-                if(exception.UserPhoneException(edit)){
-                    phoneNumber_editText.setBackgroundResource(R.drawable.check_edittext);
-                } else{
-                    if(edit.length() != 0)
-                        phoneNumber_editText.setBackgroundResource(R.drawable.uncheck_edittext);
-                    else
-                        phoneNumber_editText.setBackgroundResource(R.drawable.rounded_login);
                 }
             }
         });
@@ -268,17 +193,21 @@ public class RegisterUserActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if(!hasFocus){
-                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkphone";
+                    if(phoneNumber_editText.getText().length() !=0){
+                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkphone";
 
-                    JSONObject data = null;
-                    try {
-                        data = checkJSonPhone();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject data = null;
+                        try {
+                            data = checkJSonPhone();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_PHONENUMBER,phoneNumber_editText);
+                        networkTask.execute();
+                    } else{
+                        phoneNumber_editText.setBackgroundResource(R.drawable.rounded_login);
                     }
-
-                    NetworkTask networkTask = new NetworkTask(RegisterUserActivity.this,url,data,Constant.DUPLICATED_PHONENUMBER,phoneNumber_editText);
-                    networkTask.execute();
                 }
             }
         });
@@ -311,7 +240,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 new AlertDialog.Builder(RegisterUserActivity.this)
                         .setTitle("업로드할 이미지 선택")
                         .setPositiveButton("사진 촬영", cameraListener)
-                        .setNeutralButton("앨번 선택", albumListener)
+                        .setNeutralButton("앨범 선택", albumListener)
                         .setNegativeButton("취소", cancelListener).show();
             }
         });

@@ -259,7 +259,9 @@ public class ChattingList_Fragment extends BaseFragment {
             {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
                 if (copy.get(i).getUser_id().toLowerCase().contains(charText) ||
-                        copy.get(i).getNeed_thing().toLowerCase().contains(charText))
+                        copy.get(i).getNeed_thing().toLowerCase().contains(charText) ||
+                        copy.get(i).getCamping_name().toLowerCase().contains(charText) ||
+                        copy.get(i).getLettable_thing().toLowerCase().contains(charText))
                 {
                     // 검색된 데이터를 리스트에 추가한다.
                     campList_adapter.addItem(copy.get(i));

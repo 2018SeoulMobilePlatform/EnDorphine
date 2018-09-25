@@ -4,11 +4,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +29,9 @@ import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
+import endorphine.icampyou.Login.RegisterUserException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -32,14 +42,40 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     private Context context;
     ProgressDialog asyncDialog;
     EditText insert;
+    String insert_value;
+    RegisterUserException exception;
     ChatList_Adapter chatList_adpater;
     ReviewListViewAdapter reviewList_adapter;
+    String campingPlace;
+
+    //예약부분
+    String contents;
+    String price;
+    String quantity;
+    String tentName;
+    String campName;
+    String period;
+    Bitmap qrcodeBitmap;
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+    }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, String contents,String price,String quantity,String tentName,String campName, String period) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        this.contents = contents;
+        this.price = price;
+        this.quantity = quantity;
+        this.tentName = tentName;
+        this.campName = campName;
+        this.period = period;
         asyncDialog = new ProgressDialog(_context);
     }
 
@@ -52,13 +88,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.chatList_adpater = _adapter;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter,String _campingPlace) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.reviewList_adapter = _adapter;
+        this.campingPlace =_campingPlace;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
@@ -68,6 +105,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.insert = _insert;
+        this.exception = new RegisterUserException();
+        this.insert_value = insert.getText().toString();
     }
 
     @Override
@@ -93,7 +132,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
             case Constant.MAKE_CHATTINGLIST:
-                Log.e("4", "4");
                 asyncDialog.setMessage("채팅방 개설 중 입니다..");
                 break;
             case Constant.MAKE_REVIEWLIST:
@@ -129,9 +167,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        //다이얼로그 종료
-        asyncDialog.dismiss();
-
         ImageConversion imageConversion = new ImageConversion();
 
         //경우에 따른 스위치문
@@ -144,7 +179,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         intent = new Intent((Activity) context, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         ((Activity) context).startActivity(intent);
-
                         Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, "사용자 등록 실패하였습니다.", Toast.LENGTH_LONG).show();
@@ -157,12 +191,42 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
+                    if (!real_result.equals("fail")) {
                         // 홈 액티비티 실행
+                        String user_email = jsonObject.getJSONObject("result").getString("id");
+                        String user_image = jsonObject.getJSONObject("result").getString("image");
+                        String user_name = jsonObject.getJSONObject("result").getString("name");
+                        String user_nickname = jsonObject.getJSONObject("result").getString("nickname");
+                        String user_password = jsonObject.getJSONObject("result").getString("password");
+                        String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
+
+                        SharedPreferences preferences = context.getSharedPreferences("preferences",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        // 유저정보 다 삭제
+                        editor.clear();
+                        editor.commit();
+
+                        // 유저정보 저장
+                        editor.putString("email",user_email);
+                        editor.putString("password",user_password);
+                        editor.putString("name",user_name);
+                        editor.putString("nickname",user_nickname);
+                        editor.putString("profileImage",user_image);
+                        editor.putString("phoneNumber",user_phonenumber);
+                        // 예약 정보도 저장
+                        editor.putString("reservationNum","1");
+                        editor.putString("campingPlace","2");
+                        editor.putString("date","3");
+                        editor.putString("tentType","4");
+                        editor.putString("tentNum","5");
+                        editor.putString("price","6");
+
+                        editor.commit();
+
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
                     } else {
-                        onCancelled();
                         Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -184,10 +248,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.EmailException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -197,10 +261,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.UserNickNameException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -210,10 +274,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.UserPhoneException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -263,11 +327,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
                         intent = new Intent(context, ConfirmPopupActivity.class);
+                        generateQRCode();
                         ((Activity)context).startActivity(intent);
                         Toast.makeText(context, "결제 완료", Toast.LENGTH_LONG).show();
                         ((Activity)context).finish();
                     } else {
-                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "결제 실패하였습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -285,7 +350,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
                         ((Activity)context).finish();
                     } else {
-                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "후기 작성 실패하였습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -305,7 +370,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String camp_name = resultObject.getString("camp_name");
                             String point = resultObject.getString("point");
                             String content = resultObject.getString("content");
-                            reviewList_adapter.addItem(new ReviewListItem(camp_name,nickname,Float.parseFloat(point),image,content));
+                            if(camp_name.equals(campingPlace)){
+                                reviewList_adapter.addItem(new ReviewListItem(camp_name,nickname,Float.parseFloat(point),image,content));
+                            }
                         }
                         reviewList_adapter.notifyDataSetChanged();
                     }
@@ -317,11 +384,46 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             default:
                 break;
         }
+
+        //다이얼로그 종료
+        asyncDialog.dismiss();
+
     }
 
     @Override
     protected void onCancelled() {
         super.onCancelled();
+    }
+
+
+    // QR코드 생성
+    public void generateQRCode() {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+            intent.putExtra("qrcode",qrcodeBitmap);
+            intent.putExtra("reservation_number", contents);
+            intent.putExtra("tent_name", tentName);
+            intent.putExtra("camp_name", campName);
+            intent.putExtra("period", period);
+            intent.putExtra("price", price);
+            intent.putExtra("quantity", quantity);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // QR코드 이미지 비트맵으로 변환
+    public Bitmap toBitmap(BitMatrix matrix) {
+        int height = matrix.getHeight();
+        int width = matrix.getWidth();
+        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
+            }
+        }
+        return bmp;
     }
 }
 

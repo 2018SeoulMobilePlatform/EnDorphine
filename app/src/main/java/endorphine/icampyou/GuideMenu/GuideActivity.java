@@ -252,43 +252,16 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
     @Override
     protected void onResume() {
         super.onResume();
-//
-//        float starNum;
-//        String reviewCampingPlace;
-//        String reviewContent;
-//        int reviewImage;
-//
-//        intent = getIntent();
-//
-//        Bitmap pass_image =  null;
-//        String filename = intent.getStringExtra("image");
-//        try {
-//            FileInputStream stream = this.openFileInput(filename);
-//            pass_image = BitmapFactory.decodeStream(stream);
-//            stream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (intent.getStringExtra("review_content") != null && intent.getStringExtra("캠핑장 이름").equals(campingPlace)) {
-//            // 인텐트로 리뷰 값 받아오기
-//            starNum = intent.getFloatExtra("star", 0);
-//            reviewContent = intent.getStringExtra("review_content");
-//            reviewImage = intent.getIntExtra("review_image", 0);
-//            // 리스트에 추가하기
-//            addReviewList(campingPlace, userIcon, nickName, starNum, pass_image, reviewContent);
-//
-//            setTotalStarScore();
-//        }
 
         adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+
         reviewList.setAdapter(adapter);
 
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
 
         JSONObject data = sendJSonData();
 
-        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter);
+        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter,campingPlace);
         networkTask.execute();
     }
 
@@ -300,16 +273,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 후기 데이터 설정
         reviewData = new ArrayList<>();
 
-        // 유저 아이콘이랑 닉네임 설정
-        userIcon = R.drawable.user_icon;
-        nickName = "김다콩";
-
-        // 서버에서 후기 아이템들 추가 (지금은 예시로 임의로 추가함)
-        addReviewList("난지 캠핑장", R.drawable.user_icon, "이다콩", 3, null, "짱좋");
-        addReviewList("서울대공원 캠핑장", R.drawable.user_icon, "김다콩", 4, null, "너무너무너무좋아용>ㅁ<");
-        addReviewList("중랑 캠핑장", R.drawable.user_icon, "박다콩", (float) 2.5, null, "시설이 깨끗해요");
-        addReviewList("중랑 캠핑장", R.drawable.user_icon, "김다콩", (float) 3.5, null, "친구들이랑 재밌게 놀았뜸");
-
         // 어댑터로 후기 리스트에 아이템 뿌려주기
         adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
         reviewList.setAdapter(adapter);
@@ -319,13 +282,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         reviewAddButton.setOnClickListener(this);
     }
 
-    // 후기 리스트에 아이템 추가하는 메소드
-    private void addReviewList(String reviewCampingPlace, int userIcon, String nickName, float star, Bitmap reviewImage, String reviewContent) {
-//        if(campingPlace.equals(reviewCampingPlace)) {
-//            ReviewListItem reviewItem = new ReviewListItem(reviewCampingPlace, userIcon, nickName, star, reviewImage, reviewContent);
-//            reviewData.add(reviewItem);
-//        }
-    }
 
     // 총 별점 평균 구해서 ratingBar 설정하는 메소드
     public void setTotalStarScore() {
