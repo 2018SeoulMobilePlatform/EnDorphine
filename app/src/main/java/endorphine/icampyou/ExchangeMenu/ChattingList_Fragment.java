@@ -73,7 +73,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
         JSONObject data = sendJSonData();
 
-        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy);
+        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy,myList_adapter);
         networkTask.execute();
     }
 

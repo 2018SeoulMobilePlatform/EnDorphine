@@ -47,6 +47,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     String insert_value;
     RegisterUserException exception;
     ChatList_Adapter chatList_adpater;
+    ChatList_Adapter chatList_adapter2;
     ReviewListViewAdapter reviewList_adapter;
     String campingPlace;
     ArrayList<Chat_Item> copy;
@@ -82,7 +83,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter,ArrayList<Chat_Item> copy) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter,ArrayList<Chat_Item> copy,ChatList_Adapter _adpater2) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -90,6 +91,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.chatList_adpater = _adapter;
         this.copy = copy;
         asyncDialog = new ProgressDialog(_context);
+        this.chatList_adapter2 = _adpater2;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter, String _campingPlace) {
@@ -361,6 +363,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 }
                 break;
             case Constant.GET_CHATTINGLIST:
+                SharedPreferences preferences1 = context.getSharedPreferences("preferences", MODE_PRIVATE);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String resultResponse = jsonObject.getString("result");
@@ -377,8 +381,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             Chat_Item item = new Chat_Item(image, user_id, myitem, needitem, camp_name);
                             chatList_adpater.addItem(item);
                             copy.add(item);
+                            if(user_id.equals(preferences1.getString("nickname",""))){
+                                chatList_adapter2.addItem(item);
+                            }
                         }
                         chatList_adpater.notifyDataSetChanged();
+                        chatList_adapter2.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     Log.e("exception", e.toString());
