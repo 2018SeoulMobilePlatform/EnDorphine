@@ -10,8 +10,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 

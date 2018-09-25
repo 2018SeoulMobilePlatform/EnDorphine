@@ -1,7 +1,6 @@
 package endorphine.icampyou.GuideMenu;
 
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.ImageView;
 
 import endorphine.icampyou.R;

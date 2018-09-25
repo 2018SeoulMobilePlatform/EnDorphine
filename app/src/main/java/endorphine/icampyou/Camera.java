@@ -13,14 +13,11 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.Circle;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import endorphine.icampyou.ExchangeMenu.Chat_Content;
-
-import static android.app.Activity.RESULT_OK;
 
 public class Camera {
 

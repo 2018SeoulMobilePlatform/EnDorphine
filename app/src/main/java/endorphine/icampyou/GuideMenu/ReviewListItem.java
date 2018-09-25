@@ -1,8 +1,6 @@
 package endorphine.icampyou.GuideMenu;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * 리뷰 리스트 아이템 클래스

@@ -2,8 +2,6 @@ package endorphine.icampyou.ExchangeMenu;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Message;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
