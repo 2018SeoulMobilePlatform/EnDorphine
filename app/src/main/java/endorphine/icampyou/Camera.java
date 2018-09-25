@@ -93,7 +93,9 @@ public class Camera {
 
     //카메라를 찍은 사진 적용하는 함수
     public void getPictureForPhoto() {
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath,options);
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(currentPhotoPath);
@@ -138,6 +140,9 @@ public class Camera {
         }
         int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         int exifDegree = exifOrientationToDegrees(exifOrientation);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         if (image_type == 0) {
