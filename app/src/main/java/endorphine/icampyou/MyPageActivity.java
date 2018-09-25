@@ -1,9 +1,11 @@
 package endorphine.icampyou;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +22,6 @@ import endorphine.icampyou.Login.RegisterUserActivity;
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     Camera camera;
-    CircleImageView circleImageView;
     CircleImageView userImage;
     EditText nickname;
     EditText email;
@@ -37,8 +38,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
-        camera = new Camera(this,circleImageView);
-
         confirmButton = findViewById(R.id.mypage_confirm);
         confirmButton.setOnClickListener(this);
 
@@ -51,15 +50,17 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         password = findViewById(R.id.mypage_password);
         passwordCheck = findViewById(R.id.mypage_password_check);
 
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        camera = new Camera(this, userImage);
+
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         editor = preferences.edit();
         userImage.setImageResource(R.drawable.user_icon);
-        nickname.setText(preferences.getString("nickname",""));
-        email.setText(preferences.getString("email",""));
-        name.setText(preferences.getString("name",""));
-        phone.setText(preferences.getString("phoneNumber",""));
-        password.setText(preferences.getString("password",""));
-        passwordCheck.setText(preferences.getString("password",""));
+        nickname.setText(preferences.getString("nickname", ""));
+        email.setText(preferences.getString("email", ""));
+        name.setText(preferences.getString("name", ""));
+        phone.setText(preferences.getString("phoneNumber", ""));
+        password.setText(preferences.getString("password", ""));
+        passwordCheck.setText(preferences.getString("password", ""));
     }
 
     //권한 요청하기
@@ -113,13 +114,13 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         // 확인버튼 누르면 예외처리 후 수정됨
-        if(v.getId() == R.id.mypage_confirm){
+        if (v.getId() == R.id.mypage_confirm) {
             // 닉네임 수정
             editor.remove("nickname");
-            editor.putString("nickname",nickname.getText().toString());
+            editor.putString("nickname", nickname.getText().toString());
             // 비밀번호 수정
             editor.remove("password");
-            editor.putString("password",password.getText().toString());
+            editor.putString("password", password.getText().toString());
             editor.commit();
 
             // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
@@ -133,11 +134,41 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public JSONObject sendJSONdata(String user_id){
+    public void modify_profile(View view) {
+        DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //권한 보유 여부 확인
+                camera.CheckCameraAcess();
+            }
+        };
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                camera.CheckAlbumAcess();
+            }
+        };
+
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle("업로드할 이미지 선택")
+                .setPositiveButton("사진 촬영", cameraListener)
+                .setNeutralButton("앨범 선택", albumListener)
+                .setNegativeButton("취소", cancelListener).show();
+    }
+
+
+    public JSONObject sendJSONdata(String user_id) {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.accumulate("user_id",user_id);
+            jsonObject.accumulate("user_id", user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }

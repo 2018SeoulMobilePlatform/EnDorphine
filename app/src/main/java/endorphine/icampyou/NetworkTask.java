@@ -381,6 +381,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             Chat_Item item = new Chat_Item(image, user_id, myitem, needitem, camp_name);
                             chatList_adpater.addItem(item);
                             copy.add(item);
+
                             if(user_id.equals(preferences1.getString("nickname",""))){
                                 chatList_adapter2.addItem(item);
                             }

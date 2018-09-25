@@ -2,6 +2,7 @@ package endorphine.icampyou;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +33,8 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     String reviewContent;   // 후기 내용
     String campingPlace;    // 캠핑장 종류
 
+    SharedPreferences preferences;
+
     //카메라
     Camera camera;
 
@@ -42,6 +45,8 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_write);
+
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
         ratingBar = findViewById(R.id.star_ratingbar);
         reviewImageView = (ImageView) findViewById(R.id.review_imageview);
@@ -99,7 +104,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         new AlertDialog.Builder(ReviewWriteActivity.this)
                 .setTitle("업로드할 이미지 선택")
                 .setPositiveButton("사진 촬영", cameraListener)
-                .setNeutralButton("앨번 선택", albumListener)
+                .setNeutralButton("앨범 선택", albumListener)
                 .setNegativeButton("취소", cancelListener).show();
 
     }
@@ -165,7 +170,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
             jsonObject.accumulate("image", encodedImage);
             jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
-            jsonObject.accumulate("nickname", "다뚱이");
+            jsonObject.accumulate("nickname", preferences.getString("nickname",""));
             jsonObject.accumulate("point", String.valueOf(starNum));
             jsonObject.accumulate("content", reviewEditText.getText().toString());
         } catch (JSONException e) {

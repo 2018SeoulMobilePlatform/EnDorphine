@@ -66,6 +66,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
 
+    //이미지 변환
+    ImageConversion imageConversion;
+
     // Back키 이벤트 인터페이스
     public interface onKeyBackPressedListener {
         public void onBack();
@@ -107,6 +110,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ((ActivityManager)this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
 
         setContentView(R.layout.activity_home);
+
+        imageConversion = new ImageConversion();
 
         // fragment 객체 생성
         //guideFragment1 = new GuideFragment1();
@@ -152,13 +157,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // drawer 네비게이션 바 설정
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
         drawerEmail = headerView.findViewById(R.id.drawer_email);
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-        drawerProfileImage.setImageResource(R.drawable.user_icon);
+        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage","")));
         drawerNickName.setText(preferences.getString("nickname",""));
         drawerEmail.setText(preferences.getString("email",""));
 
