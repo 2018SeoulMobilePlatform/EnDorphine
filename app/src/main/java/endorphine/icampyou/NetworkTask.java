@@ -22,11 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
-import endorphine.icampyou.ExchangeMenu.Chat_Content;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
-import endorphine.icampyou.GuideMenu.PricePopupActivity;
 import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;

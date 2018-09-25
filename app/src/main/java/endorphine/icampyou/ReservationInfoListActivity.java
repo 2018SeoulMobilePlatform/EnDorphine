@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
-import endorphine.icampyou.GuideMenu.ReviewListItem;
-import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 
 public class ReservationInfoListActivity extends AppCompatActivity {
 

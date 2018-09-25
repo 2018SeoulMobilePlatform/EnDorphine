@@ -1,6 +1,5 @@
 package endorphine.icampyou.EventMenu;
 
-import android.widget.ListView;
 
 /**
  * 이벤트 리스트 아이템 데이터 처리하는 클래스

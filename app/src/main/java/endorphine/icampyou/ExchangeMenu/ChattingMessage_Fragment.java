@@ -1,9 +1,7 @@
 package endorphine.icampyou.ExchangeMenu;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import java.net.URISyntaxException;
 
 
 import endorphine.icampyou.BaseFragment;
-import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
 import endorphine.icampyou.R;
 
 public class ChattingMessage_Fragment extends BaseFragment {
