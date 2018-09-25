@@ -82,13 +82,6 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                 endorphine.icampyou.NetworkTask networkTask =
                         new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, Constant.MAKE_REVIEWLIST);
                 networkTask.execute();
-
-//                // 현재 설정값 저장
-//                setReviewValue();
-//                // 인텐트로 리뷰한테 값 보내기
-//                putIntent();
-//                startActivity(intent);
-//                finish();
                 break;
         }
     }
@@ -123,44 +116,6 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                 .setNegativeButton("취소", cancelListener).show();
 
     }
-
-    public void setReviewValue() {
-        // 별점 가져오기
-        starNum = (float) ratingBar.getRating();
-        // 후기 사진 가져오기...(어케하는지 모르긔)
-        reviewImage = 0;
-        // 후기 내용 가져오기
-        reviewContent = reviewEditText.getText().toString();
-    }
-
-//    public void putIntent() {
-//        intent = new Intent(this, GuideActivity.class);
-//
-//        BitmapDrawable bitmapDrawable = (BitmapDrawable) reviewImageView.getDrawable();
-//        Bitmap tempBitmap = bitmapDrawable.getBitmap();
-//
-//        //Write file
-//        String filename = "bitmap.png";
-//        FileOutputStream stream = null;
-//        try {
-//            stream = openFileOutput(filename, Context.MODE_PRIVATE);
-//            tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//
-//            stream.close();
-//            tempBitmap.recycle();
-//
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-        //Cleanup
-
-//        intent.putExtra("image", filename);
-//        intent.putExtra("star", (float) starNum);
-//        intent.putExtra("review_content", reviewContent);
-//        intent.putExtra("review_image", reviewImage);
-//        intent.putExtra("캠핑장 이름", campingPlace);
-//    }
 
     //권한 요청하는 함수
     @Override
@@ -216,6 +171,8 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
         String encodedImage = imageConversion.toBase64(reviewImageView);
 
+        starNum = (float) ratingBar.getRating();
+
         try {
 
             jsonObject.accumulate("image", encodedImage);
@@ -224,6 +181,7 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
             jsonObject.accumulate("nickname", "다뚱이");
             jsonObject.accumulate("point", String.valueOf(starNum));
             jsonObject.accumulate("content", reviewEditText.getText().toString());
+            Log.e("point",String.valueOf(starNum));
         } catch (JSONException e) {
             e.printStackTrace();
         }
