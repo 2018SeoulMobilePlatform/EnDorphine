@@ -2,6 +2,7 @@ package endorphine.icampyou.GuideMenu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,9 +37,13 @@ public class PricePopupActivity extends Activity {
     public String price;
     public String quantity;
 
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -111,7 +116,7 @@ public class PricePopupActivity extends Activity {
 
         try {
             jsonObject.accumulate("reservation_number", String.valueOf(reservationNumber));
-            jsonObject.accumulate("user_id", "허진규멍청잉");
+            jsonObject.accumulate("user_id", preferences.getString("email",""));
             jsonObject.accumulate("camp_name", campName);
             jsonObject.accumulate("tent_type", tentName);
             jsonObject.accumulate("date",period );

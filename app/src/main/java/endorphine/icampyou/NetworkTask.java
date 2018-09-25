@@ -234,7 +234,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.putString("tentNum", "5");
                         editor.putString("price", "6");
 
-
                         editor.commit();
 
                         context.startActivity(new Intent(context, HomeActivity.class));
