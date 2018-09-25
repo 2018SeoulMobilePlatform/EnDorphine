@@ -41,7 +41,7 @@ public class RegisterUserException {
 
     //사용자 핸드폰 예외처리하는 함수
     public boolean UserPhoneException(String value){
-        Pattern pattern = Pattern.compile("01{1}[016789]{1}[0-9]{7,8}");
+        Pattern pattern = Pattern.compile("01{1}[016789]{1}[0-9]{8}");
         Matcher matcher = pattern.matcher(value);
         return matcher.find();
     }
