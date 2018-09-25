@@ -217,12 +217,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return jsonObject;
     }
-
-    //선택한 사진 데이터 처리
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("resultCode",String.valueOf(resultCode));
-        Log.e("requestCode",String.valueOf(requestCode));
-
-    }
 }

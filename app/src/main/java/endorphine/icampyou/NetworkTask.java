@@ -181,7 +181,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         intent = new Intent((Activity) context, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         ((Activity) context).startActivity(intent);
-
                         Toast.makeText(context, "사용자 등록을 완료하였습니다", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, "사용자 등록 실패하였습니다.", Toast.LENGTH_LONG).show();

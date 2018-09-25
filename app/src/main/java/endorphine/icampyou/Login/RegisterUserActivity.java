@@ -60,7 +60,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         !exception.UserPassWordExcepiton(password_editText.getText().toString()) ||
                         !exception.UserPhoneException(phoneNumber_editText.getText().toString())){
 
-                    Toast.makeText(RegisterUserActivity.this,"올바른 입력이 필요합니다",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterUserActivity.this,"입력을 다시 확인해주세요",Toast.LENGTH_LONG).show();
                 } else{
                     // URL 설정
                     String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/register";
@@ -75,9 +75,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
                     endorphine.icampyou.NetworkTask networkTask = new endorphine.icampyou.NetworkTask(RegisterUserActivity.this,url,data, Constant.USER_REGISTER);
                     networkTask.execute();
-
-                    // AsyncTask를 통해 HttpURLConnection 수행
-                    Toast.makeText(RegisterUserActivity.this,"사용자 정보 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
 
                 }
             }
