@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
@@ -47,6 +49,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ChatList_Adapter chatList_adpater;
     ReviewListViewAdapter reviewList_adapter;
     String campingPlace;
+    ArrayList<Chat_Item> copy;
 
     //예약부분
     String contents;
@@ -79,13 +82,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter,ArrayList<Chat_Item> copy) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
-        asyncDialog = new ProgressDialog(_context);
         this.chatList_adpater = _adapter;
+        this.copy = copy;
+        asyncDialog = new ProgressDialog(_context);
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter, String _campingPlace) {
@@ -370,7 +374,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String camp_name = resultObject.getString("camp_name");
                             String myitem = resultObject.getString("myitem");
                             String needitem = resultObject.getString("needitem");
-                            chatList_adpater.addItem(new Chat_Item(image, user_id, myitem, needitem, camp_name));
+                            Chat_Item item = new Chat_Item(image, user_id, myitem, needitem, camp_name);
+                            chatList_adpater.addItem(item);
+                            copy.add(item);
                         }
                         chatList_adpater.notifyDataSetChanged();
                     }

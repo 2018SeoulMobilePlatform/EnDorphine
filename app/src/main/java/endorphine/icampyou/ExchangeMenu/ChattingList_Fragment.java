@@ -3,6 +3,7 @@ package endorphine.icampyou.ExchangeMenu;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -38,6 +40,7 @@ import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 public class ChattingList_Fragment extends BaseFragment {
 
@@ -50,6 +53,8 @@ public class ChattingList_Fragment extends BaseFragment {
     ChatList_Adapter myList_adapter;
     ListView chatlist_listView;
     ListView mylist_listView;
+
+    SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -66,7 +71,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
         JSONObject data = sendJSonData();
 
-        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter);
+        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy);
         networkTask.execute();
     }
 
@@ -74,6 +79,8 @@ public class ChattingList_Fragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_chattinglist,container,false);
+
+        preferences = getActivity().getSharedPreferences("preferences",MODE_PRIVATE);
 
         listViewSetting(view);
 
@@ -108,9 +115,6 @@ public class ChattingList_Fragment extends BaseFragment {
         });
 
 
-
-
-
         //채팅방 목록 생성하는 버튼
         FloatingActionButton add_chatlist_btn = (FloatingActionButton) view.findViewById(R.id.make_chatlist_button);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
@@ -139,9 +143,16 @@ public class ChattingList_Fragment extends BaseFragment {
                 DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        copy.remove(position);
-                        campList_adapter.removeItem(position);
-                        campList_adapter.notifyDataSetChanged();
+                        if(preferences.getString("nickname","").equals(
+                                ((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString())) {
+                            copy.remove(position);
+                            campList_adapter.removeItem(position);
+                            campList_adapter.notifyDataSetChanged();
+                        } else{
+                            Toast toast = Toast.makeText(getActivity(),
+                                "사용자가 생성한 채팅방만 삭제할 수 있습니다", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }
                 };
 
@@ -194,36 +205,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
         return view;
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-
-        if(resultCode != RESULT_OK){
-            return ;
-        }
-
-        Bitmap pass_image =  null;
-        String filename = data.getStringExtra("image");
-        try {
-            FileInputStream stream = getActivity().openFileInput(filename);
-            pass_image = BitmapFactory.decodeStream(stream);
-            stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String pass_user = data.getStringExtra("user");
-        String pass_need =data.getStringExtra("need");
-        String pass_lettable = data.getStringExtra("lettable");
-        String camp_name = data.getStringExtra("camp_name");
-
-        Chat_Item addItem = new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name);
-        copy.add(new Chat_Item(pass_image,pass_user,pass_need,pass_lettable,camp_name));
-        campList_adapter.addItem(addItem);
-        campList_adapter.notifyDataSetChanged();
-    }
-
+    
     //리스트 뷰 세팅
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
@@ -302,7 +284,7 @@ public class ChattingList_Fragment extends BaseFragment {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.accumulate("user_id", "허진규멍청이");
+            jsonObject.accumulate("user_id", preferences.getString("nickname",""));
         } catch (JSONException e) {
             e.printStackTrace();
         }
