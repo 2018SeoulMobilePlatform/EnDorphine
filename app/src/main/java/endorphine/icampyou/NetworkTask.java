@@ -159,7 +159,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
+                    if (!real_result.equals("fail")) {
                         // 홈 액티비티 실행
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
