@@ -1,6 +1,7 @@
 package endorphine.icampyou.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -52,6 +53,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText user_email_editText;
     private EditText user_password_editText;
 
+    // shared preference에 유저정보 저장
+    private SharedPreferences preferences;
+    private String email;
+    private String password;
+    private String name;
+    private String nickname;
+    private String phoneNumber;
+    private String profileImage;
+    private String campingPlace;
+    private String date;
+    private String tentType;
+    private String reservationNum;
+    private String tentNum;
+    private String price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
+
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
     }
 
     @Override
@@ -89,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 NetworkTask networkTask = new NetworkTask(this, url, jsonObject, Constant.USER_LOGIN);
                 networkTask.execute();
 
+                setSharedPreference();
                 break;
             case R.id.password_find_button:
                 FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
@@ -106,6 +125,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    private void setSharedPreference(){
+        // 유저정보 설정
+        email = user_email_editText.getText().toString();
+        password = user_password_editText.getText().toString();
+        // 원래 이 부분 이메일(아이디)로 서버에서 다른 정보들 가져와야하는 부분인데
+        // 다인이가 구현못해서 일단 아무 문자열로 임시로 설정해둠
+        name = "이다인";
+        nickname = "다콩콩";
+        profileImage = "1";
+        phoneNumber = "010-8215-8282";
+        reservationNum = "123123131";
+        campingPlace = "난지캠핑장";
+        date = "2018-09-27 목 ~ 2018-09-28 금";
+        tentType = "몽골텐트_대";
+        tentNum = "1";
+        price = "50000";
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // 유저정보 다 삭제
+        editor.clear();
+        editor.commit();
+
+        // 유저정보 저장
+        editor.putString("email",email);
+        editor.putString("password",password);
+        editor.putString("name",name);
+        editor.putString("nickname",nickname);
+        editor.putString("profileImage",profileImage);
+        editor.putString("phoneNumber",phoneNumber);
+        // 예약 정보도 저장
+        editor.putString("reservationNum",reservationNum);
+        editor.putString("campingPlace",campingPlace);
+        editor.putString("date",date);
+        editor.putString("tentType",tentType);
+        editor.putString("tentNum",tentNum);
+        editor.putString("price",price);
+
+        editor.commit();
     }
 
     private void getHashKey() {

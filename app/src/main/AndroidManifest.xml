@@ -58,7 +58,12 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -68,13 +73,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".QRcode.QrcodePopupActivity"
@@ -107,11 +106,13 @@
         <activity
             android:name=".Login.PasswordPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".Login.RegisterUserActivity"
+        <activity
+            android:name=".Login.RegisterUserActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".MyPageActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity
+            android:name=".MyPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".GuideMenu.PricePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
@@ -123,7 +124,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReservationInfoListActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
