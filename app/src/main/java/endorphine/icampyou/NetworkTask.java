@@ -30,6 +30,7 @@ import endorphine.icampyou.GuideMenu.ReviewListItem;
 import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
+import endorphine.icampyou.Login.RegisterUserException;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -40,6 +41,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     private Context context;
     ProgressDialog asyncDialog;
     EditText insert;
+    String insert_value;
+    RegisterUserException exception;
     ChatList_Adapter chatList_adpater;
     ReviewListViewAdapter reviewList_adapter;
     String campingPlace;
@@ -101,6 +104,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.insert = _insert;
+        this.exception = new RegisterUserException();
+        this.insert_value = insert.getText().toString();
     }
 
     @Override
@@ -126,7 +131,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("핸드폰 중복 검사 중 입니다..");
                 break;
             case Constant.MAKE_CHATTINGLIST:
-                Log.e("4", "4");
                 asyncDialog.setMessage("채팅방 개설 중 입니다..");
                 break;
             case Constant.MAKE_REVIEWLIST:
@@ -217,10 +221,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.EmailException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -230,10 +234,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.UserNickNameException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -243,10 +247,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
-                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
-                    } else {
+                    if (real_result.equals("fail") && exception.UserPhoneException(insert_value)) {
                         insert.setBackgroundResource(R.drawable.check_edittext);
+                    } else {
+                        insert.setBackgroundResource(R.drawable.uncheck_edittext);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

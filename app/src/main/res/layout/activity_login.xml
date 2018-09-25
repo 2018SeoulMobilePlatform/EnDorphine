@@ -70,7 +70,7 @@
             android:textAlignment="center"
             android:inputType="textPassword"
             android:textColorHint="#FFFFFF"
-            android:maxLength="20"
+            android:maxLength="16"
             android:maxLines="1"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
