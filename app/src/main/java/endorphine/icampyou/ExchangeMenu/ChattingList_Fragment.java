@@ -1,5 +1,7 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -131,7 +133,23 @@ public class ChattingList_Fragment extends BaseFragment {
         chatlist_listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
-                startFragment(getFragmentManager(),ChattingMessage_Fragment.class);
+                if(preferences.getString("nickname","").equals(
+                        ((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString())){
+                    Toast toast = Toast.makeText(getActivity(),
+                            "사용자가 만든 채팅방입니다", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else{
+                    FragmentManager manager= getFragmentManager();
+                    ChattingMessage_Fragment chattingMessage_fragment = new ChattingMessage_Fragment();
+                    Bundle args = new Bundle();
+                    args.putString("other",((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString());
+                    chattingMessage_fragment.setArguments(args);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.container,chattingMessage_fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
             }
         });
 
@@ -205,7 +223,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
         return view;
     }
-    
+
     //리스트 뷰 세팅
     private void listViewSetting(View view){
         chatlist_listView = (ListView)view.findViewById(R.id.camp_chat_listview);
