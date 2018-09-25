@@ -83,7 +83,7 @@ public class Camera {
             dir.mkdirs();
         }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        mimageCaptureName = timeStamp + ".png";
+        mimageCaptureName = timeStamp + ".jpg";
 
         File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/" + mimageCaptureName);
         currentPhotoPath = storageDir.getAbsolutePath();

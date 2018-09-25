@@ -11,7 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import endorphine.icampyou.Login.RegisterUserActivity;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -117,7 +121,27 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             editor.remove("password");
             editor.putString("password",password.getText().toString());
             editor.commit();
+
             // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
+            // 서버 구현 확인
+//            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkphone";
+//
+//            JSONObject data = sendJSONdata(preferences.getString("email",""));
+//
+//            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
+//            networkTask.execute();
         }
+    }
+
+    public JSONObject sendJSONdata(String user_id){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("user_id",user_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

@@ -103,6 +103,8 @@
                             android:id="@+id/mypage_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:maxLength="15"
                             android:text="배챙이"
                             android:textColor="#5D5D5D"
                             android:textSize="20dp" />
@@ -217,6 +219,8 @@
                         android:id="@+id/mypage_password"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:maxLines="1"
+                        android:maxLength="16"
                         android:layout_weight="8"
                         android:text="******" />
                 </LinearLayout>
@@ -244,6 +248,8 @@
                     <EditText
                         android:id="@+id/mypage_password_check"
                         android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:maxLength="16"
                         android:layout_height="50dp"
                         android:layout_weight="8"
                         android:text="******" />
