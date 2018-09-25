@@ -189,8 +189,8 @@ public class Camera {
     //카메라 접근 권한 확인하는 함수
     public void CheckCameraAcess() {
         //권한 보유 여부 확인
-        int permissionCheck_Camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
-        if (permissionCheck_Camera == PackageManager.PERMISSION_GRANTED) {
+        Constant.permissionCheck_Camera = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+        if (Constant.permissionCheck_Camera == PackageManager.PERMISSION_GRANTED) {
             selectPhoto();
         } else {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, Constant.REQUEST_PERMISSION_CODE_CAMERA);
@@ -210,9 +210,9 @@ public class Camera {
 
     //앨범 권한 접근 확인하는 함수
     public void CheckAlbumAcess() {
-        int permissionCheck_Write = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permissionCheck_Read = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permissionCheck_Read == PackageManager.PERMISSION_GRANTED && permissionCheck_Write == PackageManager.PERMISSION_GRANTED) {
+        Constant.permissionCheck_Write = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        Constant.permissionCheck_Read = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (Constant.permissionCheck_Read == PackageManager.PERMISSION_GRANTED && Constant.permissionCheck_Write == PackageManager.PERMISSION_GRANTED) {
             selectGallery();
         } else {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constant.REQUEST_PERMISSION_CODE_GALLERY);
