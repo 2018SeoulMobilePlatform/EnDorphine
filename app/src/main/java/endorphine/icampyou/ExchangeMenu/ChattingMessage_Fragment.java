@@ -123,7 +123,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
             mSocket.emit("private_message", data);
         } catch(JSONException e) {
             e.printStackTrace();
-            
+
         }
     }
 

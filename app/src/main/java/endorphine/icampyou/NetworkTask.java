@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -31,6 +32,8 @@ import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 import endorphine.icampyou.Login.RegisterUserException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NetworkTask extends AsyncTask<Void, Void, String> {
 
@@ -198,6 +201,30 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         String user_nickname = jsonObject.getJSONObject("result").getString("nickname");
                         String user_password = jsonObject.getJSONObject("result").getString("password");
                         String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
+
+                        SharedPreferences preferences = context.getSharedPreferences("preferences",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        // 유저정보 다 삭제
+                        editor.clear();
+                        editor.commit();
+
+                        // 유저정보 저장
+                        editor.putString("email",user_email);
+                        editor.putString("password",user_password);
+                        editor.putString("name",user_name);
+                        editor.putString("nickname",user_nickname);
+                        editor.putString("profileImage",user_image);
+                        editor.putString("phoneNumber",user_phonenumber);
+                        // 예약 정보도 저장
+                        editor.putString("reservationNum","1");
+                        editor.putString("campingPlace","2");
+                        editor.putString("date","3");
+                        editor.putString("tentType","4");
+                        editor.putString("tentNum","5");
+                        editor.putString("price","6");
+
+                        editor.commit();
 
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
