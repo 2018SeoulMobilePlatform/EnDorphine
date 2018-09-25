@@ -166,9 +166,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        //다이얼로그 종료
-        asyncDialog.dismiss();
-
         ImageConversion imageConversion = new ImageConversion();
 
         //경우에 따른 스위치문
@@ -193,12 +190,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    if (real_result.equals("success")) {
+                    if (!real_result.equals("fail")) {
                         // 홈 액티비티 실행
+                        String user_email = jsonObject.getJSONObject("result").getString("id");
+                        String user_image = jsonObject.getJSONObject("result").getString("image");
+                        String user_name = jsonObject.getJSONObject("result").getString("name");
+                        String user_nickname = jsonObject.getJSONObject("result").getString("nickname");
+                        String user_password = jsonObject.getJSONObject("result").getString("password");
+                        String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
+
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
                     } else {
-                        onCancelled();
                         Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -322,7 +325,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
                         ((Activity)context).finish();
                     } else {
-                        Toast.makeText(context, "후기 작성에 실패하였습니다", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "후기 작성 실패하였습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -356,6 +359,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             default:
                 break;
         }
+
+        //다이얼로그 종료
+        asyncDialog.dismiss();
+
     }
 
     @Override

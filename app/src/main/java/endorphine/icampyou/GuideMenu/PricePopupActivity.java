@@ -113,12 +113,13 @@ public class PricePopupActivity extends Activity {
         JSONObject jsonObject = new JSONObject();
 
         try {
-
             jsonObject.accumulate("reservation_number", String.valueOf(reservationNumber));
             jsonObject.accumulate("user_id", "허진규멍청잉");
             jsonObject.accumulate("camp_name", campName);
             jsonObject.accumulate("tent_type", tentName);
             jsonObject.accumulate("date",period );
+            jsonObject.accumulate("price",price);
+            jsonObject.accumulate("count",quantity);
         } catch (JSONException e) {
             e.printStackTrace();
         }
