@@ -1,7 +1,9 @@
 package endorphine.icampyou;
 
+import android.app.ActivityManager;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -38,7 +40,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // fragment 모음
     private GuideFragment1 guideFragment1;
     private ChattingList_Fragment chattingList_fragment;
-    private HomeFragment1 homeFragment1;
     private EventFragment1 eventFragment1;
     private HomeFragment2 homeFragment2;
     // intent 모음
@@ -84,9 +85,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE)).getLargeMemoryClass();
+
         setContentView(R.layout.activity_home);
 
         // fragment 객체 생성
@@ -99,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setFragment(2);
 
         // intent 설정하기
-        qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
+        //qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
         //mypageIntent = new Intent(this, MyPageActivity.class);
         //reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
@@ -129,6 +134,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        qrcodePopupIntent = null;
+        reservationInfoListIntent = null;
+        mypageIntent = null;
+        guideFragment1 = null;
+        eventFragment1 = null;
+        homeFragment2 = null;
+        chattingList_fragment = null;
+        fragmentManager = null;
+        fragmentTransaction = null;
+    }
+
     // Back키 누르면 종료
     @Override
     public void onBackPressed() {
@@ -139,7 +158,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
     // 옆구리 네비게이션 바 아이템 클릭 이벤트
     @SuppressWarnings("StatementWithEmptyBody")
@@ -207,6 +225,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
             ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(qrcodeBitmap);
+            qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();

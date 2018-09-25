@@ -1,6 +1,8 @@
 package endorphine.icampyou.GuideMenu;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -69,8 +71,11 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
     private ImageView campingInfoImage; // 캠핑장 상세정보 이미지
     private ImageView mapImage; // 캠핑장 지도 이미지
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE)).getLargeMemoryClass();
+
         super.onCreate(savedInstanceState);
 
         // activity_nanji_guide.xml 설정
@@ -78,7 +83,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_guide, null);
         setContentView(viewLayout);
 
-        // 인텐트로 캠핑장 이름 받아오기ii
+        // 인텐트로 캠핑장 이름 받아오기
         intent = getIntent();
 
         if(intent.getStringExtra("캠핑장 이름") != null) {
@@ -151,6 +156,22 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         mapFragment.getMapAsync(this);
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        pageViews = null;
+        pointImage = null;
+        pointImages = null;
+        viewLayout = null;
+        viewPager = null;
+        viewPoints = null;
+        intent = null;
+        pointImages = null;
+        mapImage = null;
+        pointImage = null;
+        campingInfoImage = null;
+    }
+
     // 캠핑장 종류에 맞게 페이지뷰에 사진 설정
     public void setPageViews() {
         // 페이지뷰에 사진 페이지 저장
@@ -214,14 +235,13 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         switch (view.getId()) {
             case R.id.reservation_button:
                 // 예약 버튼 누르면 캘린더 액티비티 시작됨
-                intent.setClass(this, CalenderActivity.class);
+                intent = new Intent(GuideActivity.this, CalenderActivity.class);
                 intent.putExtra("title", campingPlace);
                 startActivity(intent);
-//                finish();
                 break;
             case R.id.review_add_button:
                 // 후기 작성 버튼 누르면 후기 작성 액티비티 시작됨
-                intent.setClass(this, ReviewWriteActivity.class);
+                intent = new Intent(GuideActivity.this, ReviewWriteActivity.class);
                 intent.putExtra("캠핑장 이름",campingPlace);
                 startActivity(intent);
                 break;

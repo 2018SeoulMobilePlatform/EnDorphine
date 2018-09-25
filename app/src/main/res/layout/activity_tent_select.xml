@@ -52,7 +52,7 @@
             android:layout_height="330dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:paddingBottom="30dp"
             android:paddingEnd="@dimen/card_padding"
             android:paddingLeft="@dimen/card_padding"

@@ -23,8 +23,6 @@ import org.json.JSONObject;
  */
 public class ReviewWriteActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Intent intent;
-
     RatingBar ratingBar;    // 별점 바
     ImageView reviewImageView;  // 후기사진 이미지뷰
     EditText reviewEditText;    // 후기 내용
