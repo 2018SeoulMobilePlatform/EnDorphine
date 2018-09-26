@@ -215,7 +215,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.putString("profileImage",user_image);
                         editor.putString("phoneNumber",user_phonenumber);
                         // 예약 정보도 저장
-                        editor.putString("reservationNum","1");
+                        editor.putString("reservationNum","183921839183981293819312893");
                         editor.putString("campingPlace","2");
                         editor.putString("date","3");
                         editor.putString("tentType","4");

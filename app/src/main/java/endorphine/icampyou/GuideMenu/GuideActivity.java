@@ -255,6 +255,8 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
 
+        reviewData.clear();
+
         reviewList.setAdapter(adapter);
 
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";

@@ -32,6 +32,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.Set;
+import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
@@ -258,7 +259,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
-            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(qrcodeBitmap);
+            LayoutInflater inflater = getLayoutInflater();
+            ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
+
+            ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {
