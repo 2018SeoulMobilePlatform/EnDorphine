@@ -13,6 +13,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@null</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -34,5 +35,11 @@
     <style name="CustomRatingStar" parent="Base.Widget.AppCompat.RatingBar.Small">
         <item name="colorAccent">#F9BE4F</item>
     </style>
+
+    <!-- 백그라운드 없앤 테마 -->
+    <style name="Theme.NoBackground" parent="android:Theme">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
 
 </resources>

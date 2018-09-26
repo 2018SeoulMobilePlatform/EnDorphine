@@ -68,7 +68,8 @@
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme" />
 
-        <activity android:name=".Login.LoginActivity">
+        <activity
+            android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -95,8 +96,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".GuideMenu.GuideActivity"/>
+        <activity
             android:name=".GuideMenu.Reservation.CalenderActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GuideMenu.Reservation.TentSelectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -110,11 +113,11 @@
         <activity
             android:name=".GuideMenu.Review.ReviewWriteActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".GuideMenu.Map.MapsActivity"
+            android:theme="@style/Theme.NoBackground"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".GuideMenu.GuideActivity" />
+
 
 
         <activity
