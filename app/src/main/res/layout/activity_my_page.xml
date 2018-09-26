@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_my_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,8 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/back_btn" />
+            android:layout_marginLeft="15dp" />
         <TextView
             android:id="@+id/mypage_title"
             android:layout_width="wrap_content"
@@ -82,7 +79,7 @@
                             android:layout_height="100dp"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/profile" />
+                            android:src="@drawable/user_icon" />
                         <!-- 프로필 이미지 수정 버튼 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_profile_change_btn"
@@ -258,7 +255,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_login_button"
                     android:text="Confirm"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"

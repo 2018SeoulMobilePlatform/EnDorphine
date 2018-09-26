@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import endorphine.icampyou.R;
 
 /**
  * 예약정보리스트 어댑터

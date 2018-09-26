@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 import android.support.v7.widget.CardView;
 

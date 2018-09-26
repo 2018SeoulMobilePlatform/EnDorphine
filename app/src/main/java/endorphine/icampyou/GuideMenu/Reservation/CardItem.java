@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 public class CardItem {
     private int mTextResource;

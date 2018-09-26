@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 /**
  * 예약 정보 아이템 클래스

@@ -1,9 +1,12 @@
 package endorphine.icampyou.HomeMenu;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
@@ -26,13 +29,16 @@ public class HomeFragment2 extends BaseFragment {
 
         typeMini = (AirQualityTypeMini) view.findViewById(R.id.button_mini);
         typeMini.setOpenAPIKey(OpenApiKey);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.home_image);
+        ((ImageView) view.findViewById(R.id.home_background)).setImageBitmap(bitmap);
+
         return view;
     }
 
     @Override
     public void onResume(){
         super.onResume();
-
         typeMini.setVisibility(View.VISIBLE);
     }
 
@@ -41,6 +47,4 @@ public class HomeFragment2 extends BaseFragment {
         super.onStop();
         typeMini.setVisibility(View.GONE);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.GuideMenu.Review;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
+import endorphine.icampyou.R;
 
 
 /**
@@ -165,10 +170,9 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
             jsonObject.accumulate("image", encodedImage);
             jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
-            jsonObject.accumulate("nickname", "다뚱이");
+            jsonObject.accumulate("nickname", "다콩이돼지새끼");
             jsonObject.accumulate("point", String.valueOf(starNum));
             jsonObject.accumulate("content", reviewEditText.getText().toString());
-            Log.e("point",String.valueOf(starNum));
         } catch (JSONException e) {
             e.printStackTrace();
         }
