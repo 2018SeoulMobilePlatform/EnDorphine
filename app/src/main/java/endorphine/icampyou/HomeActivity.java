@@ -35,8 +35,6 @@ import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
-import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
-import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

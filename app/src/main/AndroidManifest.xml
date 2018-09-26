@@ -112,7 +112,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".NavigationDrawerMenu.MyPageActivity"
+            android:name=".MyPageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".GuideMenu.PricePopupActivity"
@@ -121,10 +121,10 @@
             android:name=".GuideMenu.ConfirmPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".NavigationDrawerMenu.ReservationInfoActivity"
+            android:name=".ReservationInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NavigationDrawerMenu.ReservationInfoListActivity"
+            android:name=".ReservationInfoListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
