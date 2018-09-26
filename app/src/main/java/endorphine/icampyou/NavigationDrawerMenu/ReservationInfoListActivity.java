@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
@@ -12,11 +12,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import java.util.zip.Inflater;
-
 import endorphine.icampyou.EventMenu.EventInfoFragment;
-import endorphine.icampyou.GuideMenu.ReviewListItem;
-import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
+import endorphine.icampyou.R;
 
 public class ReservationInfoListActivity extends AppCompatActivity {
 

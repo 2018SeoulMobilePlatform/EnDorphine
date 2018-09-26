@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
 import endorphine.icampyou.R;
 
 

@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Review;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.R;
 
 /**
@@ -36,10 +38,6 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
     public void addItem(ReviewListItem mitem){
         reviewData.add(mitem);
-    }
-
-    public void removeAllitem(){
-        reviewData.clear();
     }
 
     @Override

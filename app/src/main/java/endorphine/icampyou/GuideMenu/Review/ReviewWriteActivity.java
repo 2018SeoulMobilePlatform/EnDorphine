@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.GuideMenu.Review;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
+import endorphine.icampyou.R;
 
 
 /**

@@ -21,12 +21,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
-import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
+import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
-import endorphine.icampyou.GuideMenu.ReviewListItem;
-import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
+import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
+import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 import endorphine.icampyou.Login.RegisterUserException;
@@ -46,6 +48,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     RegisterUserException exception;
     ChatList_Adapter chatList_adpater;
     ReviewListViewAdapter reviewList_adapter;
+    ArrayList<ReviewListItem> reviewData;
     String campingPlace;
 
     //예약부분
@@ -383,7 +386,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             default:
                 break;
-        }
+    }
 
         //다이얼로그 종료
         asyncDialog.dismiss();

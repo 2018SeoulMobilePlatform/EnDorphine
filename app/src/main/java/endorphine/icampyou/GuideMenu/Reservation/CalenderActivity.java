@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 import android.content.Intent;
 import android.os.Bundle;

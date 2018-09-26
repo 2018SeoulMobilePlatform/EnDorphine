@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.R;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 

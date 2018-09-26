@@ -10,15 +10,14 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <permission
-        android:name="com.skcc.skpcm.activity.locationapi.maps.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature" />
-
     <uses-permission android:name="com.skcc.skpcm.activity.locationapi.maps.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <permission
+        android:name="com.skcc.skpcm.activity.locationapi.maps.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -39,13 +38,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.StatusBar"
         tools:replace="android:theme">
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@style/SplashTheme" />
-
-        <activity
-            android:name=".ExchangeMenu.Chat_Content"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+              The API key for Google Maps-based APIs is defined as a string resource.
+              (See the file "res/values/google_maps_api.xml").
+              Note that the API key is linked to the encryption key used to sign the APK.
+              You need a different API key for each encryption key, including the release key that is used to
+              sign the APK for publishing.
+              You can define the keys for the debug and release targets in src/debug/ and src/release/.
+         -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -57,53 +63,17 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".Login.LoginActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme" />
+
+        <activity android:name=".Login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
-
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
-
-        <activity
-            android:name=".QRcode.QrcodePopupActivity"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity
-            android:name=".GuideMenu.CalenderActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".GuideMenu.TentSelectActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ReviewWriteActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".GuideMenu.GuideActivity" />
         <activity
             android:name=".Login.PasswordPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
@@ -112,19 +82,50 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".MyPageActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
-            android:name=".GuideMenu.PricePopupActivity"
+            android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
+
         <activity
-            android:name=".GuideMenu.ConfirmPopupActivity"
-            android:theme="@android:style/Theme.Dialog" />
+            android:name=".ExchangeMenu.Chat_Content"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name=".ReservationInfoActivity"
+            android:name=".GuideMenu.Reservation.CalenderActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".GuideMenu.Reservation.TentSelectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ReservationInfoListActivity"
+            android:name=".GuideMenu.Reservation.PricePopupActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".GuideMenu.Reservation.ConfirmPopupActivity"
+            android:theme="@android:style/Theme.Dialog" />
+
+        <activity
+            android:name=".GuideMenu.Review.ReviewWriteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".GuideMenu.Map.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".GuideMenu.GuideActivity" />
+
+
+        <activity
+            android:name=".NavigationDrawerMenu.MyPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <activity
+            android:name=".NavigationDrawerMenu.ReservationInfoListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NavigationDrawerMenu.ReservationInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

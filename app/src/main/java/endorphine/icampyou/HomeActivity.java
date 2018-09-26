@@ -17,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,16 +30,14 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.util.Set;
-import java.util.zip.Inflater;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
-import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
 import endorphine.icampyou.Login.LoginActivity;
+import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
+import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,6 +13,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import endorphine.icampyou.R;
 
 public class ReservationInfoActivity extends AppCompatActivity {
 
