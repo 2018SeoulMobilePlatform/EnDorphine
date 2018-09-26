@@ -90,21 +90,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.navigation_guide:
                     // 예약 프래그먼트1로 변경
                     guideFragment1 = new GuideFragment1();
+                    eventFragment1 = null;
+                    homeFragment2 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, guideFragment1).commit();
                     return true;
                 case R.id.navigation_home:
                     // 홈 프래그먼트1로 변경
                     homeFragment2 = new HomeFragment2();
+                    guideFragment1 = null;
+                    eventFragment1 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, homeFragment2).commit();
                     return true;
                 case R.id.navigation_exchange:
                     // 교환 프래그먼트1로 변경
                     chattingList_fragment = new ChattingList_Fragment();
+                    guideFragment1 = null;
+                    eventFragment1 = null;
+                    homeFragment2 = null;
                     fragmentTransaction.replace(R.id.main_frame, chattingList_fragment).commit();
                     return true;
                 case R.id.navigation_event:
                     // 이벤트 프래그먼트1로 변경
                     eventFragment1 = new EventFragment1();
+                    guideFragment1 = null;
+                    homeFragment2 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, eventFragment1).commit();
                     return true;
             }
@@ -119,19 +131,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setContentView(R.layout.activity_home);
 
-        // fragment 객체 생성
-        guideFragment1 = new GuideFragment1();
-        chattingList_fragment = new ChattingList_Fragment();
-        eventFragment1 = new EventFragment1();
-        homeFragment2 = new HomeFragment2();
-
         // 디폴트 프래그먼트 홈화면으로 설정
+        homeFragment2 = new HomeFragment2();
         getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
-
-        // intent 설정하기
-        //qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-        //mypageIntent = new Intent(this, MyPageActivity.class);
-        //reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -140,10 +142,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
 
 
-//        // Navigation Drawer (옆구리 네비게이션 바)
+        // Navigation Drawer (옆구리 네비게이션 바)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -169,14 +171,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
-        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
+//        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
+//        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
         drawerNickName.setText(preferences.getString("nickname",""));
         drawerEmail.setText(preferences.getString("email",""));
+        GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
+        GlideApp.with(this).load(R.drawable.user_icon).into(drawerProfileImage);
 
         // 임의로 QR 코드 설정
         generateQRCode(preferences.getString("reservationNum",""));
-        drawerQrcode.setImageBitmap(qrcodeBitmap);
+        //drawerQrcode.setImageBitmap(qrcodeBitmap);
+        GlideApp.with(this).load(qrcodeBitmap).into(drawerQrcode);
     }
 
     @Override
@@ -244,7 +249,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             LayoutInflater inflater = getLayoutInflater();
             ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
 
-            ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
+            GlideApp.with(this).load(qrcodeBitmap).into((ImageView)view.findViewById(R.id.qrcode_popup));
+            //((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
 
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);

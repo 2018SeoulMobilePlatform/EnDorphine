@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="20dp"
-            android:background="#DAD9FF"
             android:scaleType="fitXY"/>
 
         <!-- 종료된 이벤트인지 알려주기 -->

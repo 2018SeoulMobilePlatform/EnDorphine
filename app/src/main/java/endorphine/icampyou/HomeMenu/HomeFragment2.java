@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 import kr.go.seoul.airquality.AirQualityTypeMini;
 
@@ -30,9 +31,7 @@ public class HomeFragment2 extends BaseFragment {
         typeMini = (AirQualityTypeMini) view.findViewById(R.id.button_mini);
         typeMini.setOpenAPIKey(OpenApiKey);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.home_image);
-        ((ImageView) view.findViewById(R.id.home_background)).setImageBitmap(bitmap);
-
+        GlideApp.with(this).load(R.drawable.home_image).into((ImageView)view.findViewById(R.id.home_background));
         return view;
     }
 
