@@ -211,13 +211,12 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             editor.commit();
 
             // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
-            // 서버 구현 확인 자꾸 null 이 옴
-//            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
-//
-//            JSONObject data = sendJSONdata();
-//
-//            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
-//            networkTask.execute();
+            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
+
+            JSONObject data = sendJSONdata();
+
+            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
+            networkTask.execute();
         }
     }
 
