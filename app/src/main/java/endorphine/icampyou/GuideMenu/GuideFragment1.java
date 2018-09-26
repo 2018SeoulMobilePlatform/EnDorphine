@@ -1,6 +1,8 @@
 package endorphine.icampyou.GuideMenu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
     private ImageView noeul;
     private ImageView seoul;
     private Intent intent;
+    private Bitmap bitmap;
 
     // 프래그먼트 xml 설정하는 메소드
     @Override
@@ -48,6 +51,13 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
         jungrang.setOnClickListener(this);
         gangdong.setOnClickListener(this);
         choansan.setOnClickListener(this);
+
+        nanji.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_nanji));
+        choansan.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_choansan));
+        jungrang.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_junglang));
+        gangdong.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_gangdong));
+        noeul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_noeul));
+        seoul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_seoul));
 
         return view;
     }

@@ -82,7 +82,7 @@
                             android:layout_height="100dp"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/profile" />
+                            android:src="@drawable/user_icon" />
                         <!-- 프로필 이미지 수정 버튼 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_profile_change_btn"
