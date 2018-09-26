@@ -1,5 +1,6 @@
 package endorphine.icampyou.NavigationDrawerMenu;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,46 +28,33 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
     TextView tentType;
     TextView tentNum;
     TextView price;
-    Button confirmButton;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
     Bitmap qrcodeBitmap;
-    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_info);
 
-        qrcode.findViewById(R.id.res_info_qrcode);
-        reservationNum.findViewById(R.id.res_info_reservation_number);
-        campingPlace.findViewById(R.id.res_info_camping_place);
-        date.findViewById(R.id.res_info_date);
-        tentType.findViewById(R.id.res_info_tent);
-        tentNum.findViewById(R.id.res_info_tent_num);
-        price.findViewById(R.id.res_info_total_price);
-        confirmButton.findViewById(R.id.res_info_confirm);
+        qrcode = (ImageView)findViewById(R.id.res_info_qrcode);
+        reservationNum = (TextView) findViewById(R.id.res_info_reservation_number);
+        campingPlace = (TextView) findViewById(R.id.res_info_camping_place);
+        date = (TextView)findViewById(R.id.res_info_date);
+        tentType = (TextView)findViewById(R.id.res_info_tent);
+        tentNum = (TextView)findViewById(R.id.res_info_tent_num);
+        price = (TextView)findViewById(R.id.res_info_total_price);
 
-        // back 버튼 설정
-        backButton = findViewById(R.id.res_info_back_btn);
-        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
-        backButton.setOnClickListener(this);
+        //인텐트로 정보 가져오기
+        Intent intent = getIntent();
 
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
-        editor = preferences.edit();
-
-        // 프리퍼런스 파일에서 정보 가져와서 예약정보페이지에 뿌려주기
-        // 사실상 예약번호 하나로 다른 정보들을 서버에서 가져와서 뿌려줘야함
-        generateQRCode(preferences.getString("reservationNum",""));
+        generateQRCode(intent.getStringExtra("reservation_number"));
         qrcode.setImageBitmap(qrcodeBitmap);
-        reservationNum.setText(preferences.getString("reservationNum",""));
-        campingPlace.setText(preferences.getString("campingPlace",""));
-        date.setText(preferences.getString("date",""));
-        tentType.setText(preferences.getString("tentType",""));
-        tentNum.setText(preferences.getString("tentNum",""));
-        price.setText(preferences.getString("price",""));
+        reservationNum.setText(intent.getStringExtra("reservation_number"));
+        campingPlace.setText(intent.getStringExtra("camping_place"));
+        date.setText(intent.getStringExtra("date"));
+        tentType.setText(intent.getStringExtra("tent_type"));
+        tentNum.setText(intent.getStringExtra("tent_number"));
+        price.setText(intent.getStringExtra("total_price"));
 
-        editor.commit();
     }
 
     // QR코드 생성
@@ -92,13 +80,14 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
         return bmp;
     }
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.res_info_back_btn:
-                onBackPressed();
+        switch (v.getId()) {
+            case R.id.res_info_confirm:
+                finish();
+            default:
                 break;
         }
     }
+
 }

@@ -1,5 +1,6 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import java.net.URISyntaxException;
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ChattingMessage_Fragment extends BaseFragment {
 
     ListView m_chatMessage_listView;
@@ -29,6 +32,10 @@ public class ChattingMessage_Fragment extends BaseFragment {
     View view;
 
     EditText send_message;
+
+    SharedPreferences preferences;
+
+    String other;
 
     //서버
     Socket mSocket = null;
@@ -71,7 +78,14 @@ public class ChattingMessage_Fragment extends BaseFragment {
 
         mSocket.on("new_private_message", onNewMessage);
         mSocket.connect();
+
+        if(getArguments() != null){
+            other = getArguments().getString("other");
+        }
+
         attemptLoginSignal();
+
+        preferences = getActivity().getSharedPreferences("preferences",MODE_PRIVATE);
 
         m_chatmessage_adapter = new ChatMessage_Adapter();
         m_chatMessage_listView = (ListView)view.findViewById(R.id.chatmessage_listView);
@@ -101,7 +115,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
 
     //로그인했다는 표시
     private void attemptLoginSignal(){
-        String user_id = "홍길동";
+        String user_id = preferences.getString("nickname","");
         if (TextUtils.isEmpty(user_id)) {
             return;
         }
@@ -114,8 +128,8 @@ public class ChattingMessage_Fragment extends BaseFragment {
 
         JSONObject data = new JSONObject();
         try {
-            data.put("to_username", "홍길동");
-            data.put("from_username","홍길동");
+            data.put("to_username", other);
+            data.put("from_username",preferences.getString("nickname",""));
             data.put("message", message);
             mSocket.emit("private_message", data);
         } catch(JSONException e) {

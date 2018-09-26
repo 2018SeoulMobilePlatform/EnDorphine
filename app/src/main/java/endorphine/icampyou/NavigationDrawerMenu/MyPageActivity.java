@@ -1,27 +1,36 @@
 package endorphine.icampyou.NavigationDrawerMenu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
+import endorphine.icampyou.Login.RegisterUserException;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     Camera camera;
-    CircleImageView circleImageView;
     CircleImageView userImage;
     EditText nickname;
     EditText email;
@@ -32,24 +41,22 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Button confirmButton;
-    ImageView backButton;
+
+    ImageConversion imageConversion;
+
+    RegisterUserException exception ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
-        camera = new Camera(this,circleImageView);
+        imageConversion = new ImageConversion();
 
-        // 컨펌 버튼 설정
+        exception = new RegisterUserException();
+
         confirmButton = findViewById(R.id.mypage_confirm);
-        confirmButton.setBackgroundResource(R.drawable.rounded_login_button);
         confirmButton.setOnClickListener(this);
-
-        // back 버튼 설정
-        backButton = findViewById(R.id.mypage_back_btn);
-        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
-        backButton.setOnClickListener(this);
 
         // 유저정보 설정
         userImage = findViewById(R.id.mypage_user_image);
@@ -60,15 +67,93 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         password = findViewById(R.id.mypage_password);
         passwordCheck = findViewById(R.id.mypage_password_check);
 
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        camera = new Camera(this, userImage);
 
-        userImage.setImageResource(R.drawable.user_icon);
-        nickname.setText(preferences.getString("nickname",""));
-        email.setText(preferences.getString("email",""));
-        name.setText(preferences.getString("name",""));
-        phone.setText(preferences.getString("phoneNumber",""));
-        password.setText(preferences.getString("password",""));
-        passwordCheck.setText(preferences.getString("password",""));
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        editor = preferences.edit();
+
+        userImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage","")));
+        nickname.setText(preferences.getString("nickname", ""));
+        email.setText(preferences.getString("email", ""));
+        name.setText(preferences.getString("name", ""));
+        phone.setText(preferences.getString("phoneNumber", ""));
+        password.setText(preferences.getString("password", ""));
+        passwordCheck.setText(preferences.getString("password", ""));
+
+        nickname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    if(nickname.getText().length() != 0){
+                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
+
+                        JSONObject data = null;
+                        try {
+                            data = checkJSonNickname();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_EMAIL,nickname);
+                        networkTask.execute();
+                    } else{
+                        nickname.setBackgroundResource(R.drawable.rounded_login);
+                    }
+                }
+            }
+        });
+
+        //패스워드 리스너
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String edit = editable.toString();
+                if(exception.UserPassWordExcepiton(edit)){
+                    password.setBackgroundResource(R.drawable.check_edittext);
+                } else{
+                    if(edit.length() != 0)
+                        password.setBackgroundResource(R.drawable.uncheck_edittext);
+                    else
+                        password.setBackgroundResource(R.drawable.rounded_login);
+                }
+            }
+        });
+
+        //패스워드 리스너
+        passwordCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String edit = editable.toString();
+                if(exception.UserPassWordExcepiton(edit)){
+                    passwordCheck.setBackgroundResource(R.drawable.check_edittext);
+                } else{
+                    if(edit.length() != 0)
+                        passwordCheck.setBackgroundResource(R.drawable.uncheck_edittext);
+                    else
+                        passwordCheck.setBackgroundResource(R.drawable.rounded_login);
+                }
+            }
+        });
     }
 
     //권한 요청하기
@@ -121,21 +206,77 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.mypage_confirm:
-                editor = preferences.edit();
-                // 닉네임 수정
-                editor.remove("nickname");
-                editor.putString("nickname",nickname.getText().toString());
-                // 비밀번호 수정
-                editor.remove("password");
-                editor.putString("password",password.getText().toString());
-                editor.commit();
-                // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
-                break;
-            case R.id.mypage_back_btn:
-                onBackPressed();
-                break;
+        // 확인버튼 누르면 예외처리 후 수정됨
+        if (v.getId() == R.id.mypage_confirm) {
+            // 닉네임 수정
+            editor.remove("nickname");
+            editor.putString("nickname", nickname.getText().toString());
+            // 비밀번호 수정
+            editor.remove("password");
+            editor.putString("password", password.getText().toString());
+            editor.commit();
+
+            // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
+            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
+
+            JSONObject data = sendJSONdata();
+
+            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
+            networkTask.execute();
         }
+    }
+
+    public void modify_profile(View view) {
+        DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //권한 보유 여부 확인
+                camera.CheckCameraAcess();
+            }
+        };
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                camera.CheckAlbumAcess();
+            }
+        };
+
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle("업로드할 이미지 선택")
+                .setPositiveButton("사진 촬영", cameraListener)
+                .setNeutralButton("앨범 선택", albumListener)
+                .setNegativeButton("취소", cancelListener).show();
+    }
+
+
+    public JSONObject sendJSONdata() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("id", preferences.getString("email",""));
+            jsonObject.accumulate("image",imageConversion.toBase64(userImage));
+            jsonObject.accumulate("nickname",nickname.getText().toString());
+            jsonObject.accumulate("password",password.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    //닉네임 체크하는 JSON 데이터
+    private JSONObject checkJSonNickname() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("nickname",nickname.getText().toString());
+
+        return jsonObject;
     }
 }

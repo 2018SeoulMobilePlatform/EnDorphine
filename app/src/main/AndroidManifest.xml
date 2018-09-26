@@ -28,7 +28,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <application
-        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"

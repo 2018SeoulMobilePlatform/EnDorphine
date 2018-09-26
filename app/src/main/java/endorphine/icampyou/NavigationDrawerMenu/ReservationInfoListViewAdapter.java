@@ -22,6 +22,7 @@ public class ReservationInfoListViewAdapter extends BaseAdapter {
     private TextView campingPlace;
     private TextView date;
 
+
     // 생성자
     public ReservationInfoListViewAdapter(LayoutInflater inflater, int layout, ArrayList<ReservationInfoItem> reservationInfoData){
         this.inflater = inflater;
@@ -32,7 +33,8 @@ public class ReservationInfoListViewAdapter extends BaseAdapter {
     @Override
     public int getCount(){return reservationInfoData.size();}
     @Override
-    public String getItem(int position){return reservationInfoData.get(position).getReservationNo();}
+    public Object getItem(int position){return reservationInfoData.get(position);}
+
     @Override
     public long getItemId(int position){return position;}
     @Override

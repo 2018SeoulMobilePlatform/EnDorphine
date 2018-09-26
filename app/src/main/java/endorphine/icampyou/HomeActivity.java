@@ -18,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,11 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
@@ -70,11 +76,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ViewGroup qrcodePopupLayout;
     private ImageView nav_header;
 
+    //이미지 변환
+    ImageConversion imageConversion;
+
     // Back키 이벤트 인터페이스
     public interface onKeyBackPressedListener {
         public void onBack();
     }
+
     private onKeyBackPressedListener mOnKeyBackPressedListener;
+
     public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
         mOnKeyBackPressedListener = listener;
     }
@@ -115,9 +126,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ActivityManager)this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
+        ((ActivityManager) this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
 
         setContentView(R.layout.activity_home);
+
+        imageConversion = new ImageConversion();
 
         // fragment 객체 생성
         guideFragment1 = new GuideFragment1();
@@ -161,7 +174,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.addHeaderView(headerView);
 
         // drawer 네비게이션 바 설정
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+
         drawerBackground = headerView.findViewById(R.id.drawer_background);
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
@@ -169,14 +184,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
-        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
-        drawerNickName.setText(preferences.getString("nickname",""));
-        drawerEmail.setText(preferences.getString("email",""));
 
-        // 임의로 QR 코드 설정
-        generateQRCode(preferences.getString("reservationNum",""));
-        drawerQrcode.setImageBitmap(qrcodeBitmap);
+        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage", "")));
+        drawerNickName.setText(preferences.getString("nickname", ""));
+        drawerEmail.setText(preferences.getString("email", ""));
+
+        // 예약 정보도 저장
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getreservation";
+
+        JSONObject data = getReservationInfo();
+        NetworkTask networkTask = new NetworkTask(HomeActivity.this, url, data, Constant.GET_RESERVATION_INFO,drawerQrcode);
+        networkTask.execute();
+
     }
 
     @Override
@@ -217,7 +236,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
-            reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
+            Log.e("리뷰리스트 넘어가기","1");
+            reservationInfoListIntent = new Intent(this, endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
         // 로그인 이동
@@ -229,41 +249,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-
-    // QR코드 생성
-    public void generateQRCode(String contents) {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        try {
-            qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
-
-
-            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);=======
-            LayoutInflater inflater = getLayoutInflater();
-            ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
-
-            ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
-
-            qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-            qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // QR코드 이미지 비트맵으로 변환
-    public static Bitmap toBitmap(BitMatrix matrix) {
-        int height = matrix.getHeight();
-        int width = matrix.getWidth();
-        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
-            }
-        }
-        return bmp;
     }
 
     // 상단에 QR코드 아이콘 생성하는 메소드
@@ -287,4 +272,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    //아이디 체크하는 JSON 데이터
+    private JSONObject getReservationInfo(){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("user_id", preferences.getString("email",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }

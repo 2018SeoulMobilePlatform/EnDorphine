@@ -36,6 +36,10 @@ public class ReviewListViewAdapter extends BaseAdapter {
         this.layout=layout;
     }
 
+    public ArrayList<ReviewListItem> getReviewList(){
+        return reviewData;
+    }
+
     public void addItem(ReviewListItem mitem){
         reviewData.add(mitem);
     }

@@ -1,45 +1,58 @@
 package endorphine.icampyou.NavigationDrawerMenu;
 
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import endorphine.icampyou.EventMenu.EventInfoFragment;
 import endorphine.icampyou.R;
 
-public class ReservationInfoListActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReservationInfoListActivity extends AppCompatActivity {
 
     private LayoutInflater inflater;
     private ViewGroup viewLayout;
-    private ListView reservationInfoList;         // 후기 리스트
-    private ArrayList<ReservationInfoItem> reservationinfoData;   // 후기 데이터
-    private ReservationInfoListViewAdapter adapter;  //후기 리스트뷰 어댑터
-    private SharedPreferences preferences;
-    private ImageView backButton;
+    private ListView reservationInfoList;
+    private ArrayList<ReservationInfoItem> reservationinfoData;
+    private ReservationInfoListViewAdapter adapter;
+
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        preferences =getSharedPreferences("preferences", MODE_PRIVATE);
+
         inflater = getLayoutInflater();
         viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_reservation_info_list, null);
         setContentView(viewLayout);
+
         setReservationInfoList();
 
-        // back 버튼 설정
-        backButton = findViewById(R.id.res_info_list_back_btn);
-        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
-        backButton.setOnClickListener(this);
+        //예약 상세정보 확인
+        reservationInfoList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view , int position, long id){
+                Intent intent = new Intent(ReservationInfoListActivity.this, ReservationInfoActivity.class);
+                intent.putExtra("reservation_number",((ReservationInfoItem)adapter.getItem(position)).getReservationNo());
+                intent.putExtra("camping_place",((ReservationInfoItem)adapter.getItem(position)).getCampingPlace());
+                intent.putExtra("date",((ReservationInfoItem)adapter.getItem(position)).getDate());
+                intent.putExtra("tent_type",((ReservationInfoItem)adapter.getItem(position)).getTent_type());
+                intent.putExtra("tent_number",((ReservationInfoItem)adapter.getItem(position)).getTent_number());
+                intent.putExtra("total_price",((ReservationInfoItem)adapter.getItem(position)).getTotal_price());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setReservationInfoList(){
@@ -48,43 +61,50 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
 
         // 예약정보 데이터 설정
         reservationinfoData = new ArrayList<>();
-        // 유저정보 가져오기
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
-        String userId = preferences.getString("email","");
-        // 서버에서 해당하는 유저 아이디의 예약정보 가져와서 리스트아이템 추가 (지금은 예시로 임의로 추가함)
-        addReservationInfoList("DSAFQQWR1523","서울대공원캠핑장","2018-09-11 목 ~ 2018-09-15 토");
-        addReservationInfoList("GVGH12334DAS","초안산캠핑장","2018-10-11 월 ~ 2018-11-12 화");
-        addReservationInfoList("BVQ2312GFDQ5","중랑캠핑장","2018-11-02 화 ~ 2018-11-12 수");
+
+        Set<String> reservationNum = preferences.getStringSet("reservationNum", new HashSet<String>());
+        Set<String> campingPlace = preferences.getStringSet("campingPlace", new HashSet<String>());
+        Set<String> date = preferences.getStringSet("date", new HashSet<String>());
+        Set<String> tentType = preferences.getStringSet("tentType", new HashSet<String>());
+        Set<String> tentNum = preferences.getStringSet("tentNum", new HashSet<String>());
+        Set<String> price = preferences.getStringSet("price", new HashSet<String>());
+
+        ArrayList<String> arrayList_reservationNum = new ArrayList<>();
+        ArrayList<String> arrayList_campingPlace = new ArrayList<>();
+        ArrayList<String> arrayList_date = new ArrayList<>();
+        ArrayList<String> arrayList_tentType = new ArrayList<>();
+        ArrayList<String> arrayList_tentNum = new ArrayList<>();
+        ArrayList<String> arrayList_price = new ArrayList<>();
+
+        for (String str : reservationNum)
+            arrayList_reservationNum.add(str);
+        for (String str : campingPlace)
+            arrayList_campingPlace.add(str);
+        for (String str : date)
+            arrayList_date.add(str);
+        for (String str : tentType)
+            arrayList_tentType.add(str);
+        for (String str : tentNum)
+            arrayList_tentNum.add(str);
+        for (String str : price)
+            arrayList_price.add(str);
+
+        // 서버에서 예약정보 아이템들 추가
+        for(int i=0;i<arrayList_reservationNum.size();i++){
+            addReservationInfoList(arrayList_reservationNum.get(i),
+                    arrayList_campingPlace.get(i), arrayList_date.get(i),
+                    arrayList_tentType.get(i), arrayList_tentNum.get(i),
+                    arrayList_price.get(i));
+        }
 
         // 어댑터로 예약정보 리스트에 아이템 뿌려주기
         adapter = new ReservationInfoListViewAdapter(inflater, R.layout.reservation_info_listview_item, reservationinfoData);
         reservationInfoList.setAdapter(adapter);
-
-        // 리스트 아이템 클릭이벤트 리스너
-        reservationInfoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.event_frame, EventInfoFragment.newInstance(position));
-                fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
-            }
-        });
     }
-
-    //
 
     // 예약정보 리스트
-    private void addReservationInfoList(String reservationNo, String campingPlace, String date){
-        ReservationInfoItem reservationInfoItem = new ReservationInfoItem(reservationNo, campingPlace, date);
+    private void addReservationInfoList(String reservationNo, String campingPlace, String date,String tent_type,String tent_number,String total_price){
+        ReservationInfoItem reservationInfoItem = new ReservationInfoItem(reservationNo, campingPlace, date,tent_type,tent_number,total_price);
         reservationinfoData.add(reservationInfoItem);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.res_info_list_back_btn:
-                onBackPressed();
-                break;
-        }
     }
 }

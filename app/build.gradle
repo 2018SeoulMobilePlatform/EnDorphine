@@ -46,8 +46,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:27.1.1'
     // Version 23+ is Required
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
-    //카카오 로그인 sdk를 사용하기 위해 필요.
-    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+
     //서버
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
     //원 모양의 ImageView

@@ -27,7 +27,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:src="@drawable/pot"
+                android:src="@drawable/camera2"
                 android:foregroundGravity="center_vertical"
                 android:background="@drawable/border" />
 
