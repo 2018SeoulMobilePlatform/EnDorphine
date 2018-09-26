@@ -239,14 +239,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
-<<<<<<< HEAD
-            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
-=======
+
+            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);=======
             LayoutInflater inflater = getLayoutInflater();
             ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
 
             ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
->>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
+
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {
