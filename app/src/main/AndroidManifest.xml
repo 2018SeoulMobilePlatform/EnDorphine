@@ -33,13 +33,18 @@
         android:name=".GlobalApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.StatusBar"
-        tools:replace="android:theme">
+        tools:replace="android:icon,android:theme,android:label"
+        android:icon="@drawable/app_icon5">
+
+    <!--
+    tools:replace="android:theme"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        -->
 
         <!--
               The API key for Google Maps-based APIs is defined as a string resource.
@@ -72,7 +77,6 @@
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -19,10 +19,8 @@ public class ReservationInfoListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reservation_info_list);
 
-        inflater = getLayoutInflater();
-        viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_reservation_info_list, null);
-        setContentView(viewLayout);
         setReservationInfoList();
     }
 
