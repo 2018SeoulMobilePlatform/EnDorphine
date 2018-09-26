@@ -1,8 +1,10 @@
 package endorphine.icampyou;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Intent mypageIntent;
     private Intent reservationInfoListIntent;
     private Intent logoutIntent;
+    private Intent closeIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
     private SharedPreferences preferences;
@@ -74,7 +78,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public interface onKeyBackPressedListener {
         public void onBack();
     }
+
     private onKeyBackPressedListener mOnKeyBackPressedListener;
+
     public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
         mOnKeyBackPressedListener = listener;
     }
@@ -127,7 +133,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ActivityManager)this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
+        ((ActivityManager) this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
 
         setContentView(R.layout.activity_home);
 
@@ -163,7 +169,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.addHeaderView(headerView);
 
         // drawer 네비게이션 바 설정
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         drawerBackground = headerView.findViewById(R.id.drawer_background);
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
@@ -173,13 +179,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // 프로필 사진 일단 기본으로 설정함
 //        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
 //        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
-        drawerNickName.setText(preferences.getString("nickname",""));
-        drawerEmail.setText(preferences.getString("email",""));
+        drawerNickName.setText(preferences.getString("nickname", ""));
+        drawerEmail.setText(preferences.getString("email", ""));
         GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
         GlideApp.with(this).load(R.drawable.user_icon).into(drawerProfileImage);
 
         // 임의로 QR 코드 설정
-        generateQRCode(preferences.getString("reservationNum",""));
+        generateQRCode(preferences.getString("reservationNum", ""));
         //drawerQrcode.setImageBitmap(qrcodeBitmap);
         GlideApp.with(this).load(qrcodeBitmap).into(drawerQrcode);
     }
@@ -198,6 +204,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("resumeCloseApp",getIntent().getBooleanExtra("closeApp", false) + "");
+        if (getIntent().getBooleanExtra("closeApp", false)) {
+            onBackPressed();
+        }
+        closeIntent = null;
+    }
+
     // Back키 누르면 종료
     @Override
     public void onBackPressed() {
@@ -205,7 +221,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder finishDialog = new AlertDialog.Builder(this);
+            finishDialog.setMessage("정말로 종료하시겠습니까?");
+
+            finishDialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            finishDialog.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finishAffinity();
+                }
+            });
+            finishDialog.setTitle(R.string.app_name);
+            AlertDialog alert = finishDialog.create();
+            alert.show();
         }
     }
 
@@ -216,17 +248,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // 내 정보 이동
-        if(id==R.id.nav_mypage){
+        if (id == R.id.nav_mypage) {
             mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
         }
         // 예약 정보 이동
-        else if(id==R.id.nav_reservation_information){
+        else if (id == R.id.nav_reservation_information) {
             reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
         // 로그인 이동
-        else if(id==R.id.nav_logout){
+        else if (id == R.id.nav_logout) {
             logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
         }
@@ -235,7 +267,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 
     // QR코드 생성
@@ -247,13 +278,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);=======
             LayoutInflater inflater = getLayoutInflater();
-            ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
+            ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_qrcode_popup, null);
 
-            GlideApp.with(this).load(qrcodeBitmap).into((ImageView)view.findViewById(R.id.qrcode_popup));
+            GlideApp.with(this).load(qrcodeBitmap).into((ImageView) view.findViewById(R.id.qrcode_popup));
             //((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
 
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-            qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
+            qrcodePopupIntent.putExtra("qrcode", qrcodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
