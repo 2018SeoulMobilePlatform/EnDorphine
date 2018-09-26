@@ -33,22 +33,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import endorphine.icampyou.Constant;
-<<<<<<< HEAD
 import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
-import endorphine.icampyou.ReviewWriteActivity;
+import endorphine.icampyou.GuideMenu.Review.ReviewWriteActivity;
+
 
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.annotation.GlideModule;
-=======
 import endorphine.icampyou.GuideMenu.Reservation.CalenderActivity;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 import endorphine.icampyou.GuideMenu.Review.ReviewWriteActivity;
->>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
+
 /**
  * 캠핑장 안내 액티비티
  */
