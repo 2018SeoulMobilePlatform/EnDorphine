@@ -1,5 +1,6 @@
 package endorphine.icampyou;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,8 +25,6 @@ public class ReservationInfoActivity extends AppCompatActivity {
     TextView tentNum;
     TextView price;
     Button confirmButton;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
     Bitmap qrcodeBitmap;
 
     @Override
@@ -33,30 +32,28 @@ public class ReservationInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_info);
 
-        qrcode.findViewById(R.id.res_info_qrcode);
-        reservationNum.findViewById(R.id.res_info_reservation_number);
-        campingPlace.findViewById(R.id.res_info_camping_place);
-        date.findViewById(R.id.res_info_date);
-        tentType.findViewById(R.id.res_info_tent);
-        tentNum.findViewById(R.id.res_info_tent_num);
-        price.findViewById(R.id.res_info_total_price);
-        confirmButton.findViewById(R.id.res_info_confirm);
+        qrcode = (ImageView)findViewById(R.id.res_info_qrcode);
+        reservationNum = (TextView) findViewById(R.id.res_info_reservation_number);
+        campingPlace = (TextView) findViewById(R.id.res_info_camping_place);
+        date = (TextView)findViewById(R.id.res_info_date);
+        tentType = (TextView)findViewById(R.id.res_info_tent);
+        tentNum = (TextView)findViewById(R.id.res_info_tent_num);
+        price = (TextView)findViewById(R.id.res_info_total_price);
+        confirmButton= (Button)findViewById(R.id.res_info_confirm);
 
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
-        editor = preferences.edit();
 
         // 프리퍼런스 파일에서 정보 가져와서 예약정보페이지에 뿌려주기
         // 사실상 예약번호 하나로 다른 정보들을 서버에서 가져와서 뿌려줘야함
-        generateQRCode(preferences.getString("reservationNum",""));
-        qrcode.setImageBitmap(qrcodeBitmap);
-        reservationNum.setText(preferences.getString("reservationNum",""));
-        campingPlace.setText(preferences.getString("campingPlace",""));
-        date.setText(preferences.getString("date",""));
-        tentType.setText(preferences.getString("tentType",""));
-        tentNum.setText(preferences.getString("tentNum",""));
-        price.setText(preferences.getString("price",""));
+        Intent intent = getIntent();
 
-        editor.commit();
+        generateQRCode(intent.getStringExtra("reservation_number"));
+        qrcode.setImageBitmap(qrcodeBitmap);
+        reservationNum.setText(intent.getStringExtra("reservation_number"));
+        campingPlace.setText(intent.getStringExtra("camping_place"));
+        date.setText(intent.getStringExtra("date"));
+        tentType.setText(intent.getStringExtra("tent_type"));
+        tentNum.setText(intent.getStringExtra("tent_number"));
+        price.setText(intent.getStringExtra("total_price"));
     }
 
     // QR코드 생성

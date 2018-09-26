@@ -31,6 +31,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,7 +76,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public interface onKeyBackPressedListener {
         public void onBack();
     }
+
     private onKeyBackPressedListener mOnKeyBackPressedListener;
+
     public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
         mOnKeyBackPressedListener = listener;
     }
@@ -103,11 +108,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     };
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ActivityManager)this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
+        ((ActivityManager) this.getSystemService(this.ACTIVITY_SERVICE)).getLargeMemoryClass();
 
         setContentView(R.layout.activity_home);
 
@@ -156,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.addHeaderView(headerView);
 
         // drawer 네비게이션 바 설정
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
@@ -164,13 +168,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage","")));
-        drawerNickName.setText(preferences.getString("nickname",""));
-        drawerEmail.setText(preferences.getString("email",""));
+        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage", "")));
+        drawerNickName.setText(preferences.getString("nickname", ""));
+        drawerEmail.setText(preferences.getString("email", ""));
+
+        // 예약 정보도 저장
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getreservation";
+
+        JSONObject data = getReservationInfo();
+        NetworkTask networkTask = new NetworkTask(HomeActivity.this, url, data, Constant.GET_RESERVATION_INFO,drawerQrcode);
+        networkTask.execute();
+
 
         // 임의로 QR 코드 설정
-        generateQRCode(preferences.getString("reservationNum",""));
-        drawerQrcode.setImageBitmap(qrcodeBitmap);
+//        generateQRCode(preferences.getString("reservationNum", ""));
+//        drawerQrcode.setImageBitmap(qrcodeBitmap);
     }
 
     @Override
@@ -207,11 +219,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // 내 정보 누르면 마이페이지 프래그먼트로 이동
-        if(id==R.id.nav_mypage){
+        if (id == R.id.nav_mypage) {
             mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
-        }
-        else if(id==R.id.nav_reservation_information){
+        } else if (id == R.id.nav_reservation_information) {
             reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
@@ -265,11 +276,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
             LayoutInflater inflater = getLayoutInflater();
-            ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
+            ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_qrcode_popup, null);
 
             ((ImageView) view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-            qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
+            qrcodePopupIntent.putExtra("qrcode", qrcodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -309,4 +320,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    //아이디 체크하는 JSON 데이터
+    private JSONObject getReservationInfo(){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("user_id", preferences.getString("email",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }

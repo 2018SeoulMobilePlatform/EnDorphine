@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Login.RegisterUserActivity;
+import endorphine.icampyou.Login.RegisterUserException;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,12 +38,16 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
     ImageConversion imageConversion;
 
+    RegisterUserException exception ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
         imageConversion = new ImageConversion();
+
+        exception = new RegisterUserException();
 
         confirmButton = findViewById(R.id.mypage_confirm);
         confirmButton.setOnClickListener(this);
@@ -66,6 +73,81 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         phone.setText(preferences.getString("phoneNumber", ""));
         password.setText(preferences.getString("password", ""));
         passwordCheck.setText(preferences.getString("password", ""));
+
+        nickname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    if(nickname.getText().length() != 0){
+                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
+
+                        JSONObject data = null;
+                        try {
+                            data = checkJSonNickname();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_EMAIL,nickname);
+                        networkTask.execute();
+                    } else{
+                        nickname.setBackgroundResource(R.drawable.rounded_login);
+                    }
+                }
+            }
+        });
+
+        //패스워드 리스너
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String edit = editable.toString();
+                if(exception.UserPassWordExcepiton(edit)){
+                    password.setBackgroundResource(R.drawable.check_edittext);
+                } else{
+                    if(edit.length() != 0)
+                        password.setBackgroundResource(R.drawable.uncheck_edittext);
+                    else
+                        password.setBackgroundResource(R.drawable.rounded_login);
+                }
+            }
+        });
+
+        //패스워드 리스너
+        passwordCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String edit = editable.toString();
+                if(exception.UserPassWordExcepiton(edit)){
+                    passwordCheck.setBackgroundResource(R.drawable.check_edittext);
+                } else{
+                    if(edit.length() != 0)
+                        passwordCheck.setBackgroundResource(R.drawable.uncheck_edittext);
+                    else
+                        passwordCheck.setBackgroundResource(R.drawable.rounded_login);
+                }
+            }
+        });
     }
 
     //권한 요청하기
@@ -180,6 +262,15 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return jsonObject;
+    }
+
+    //닉네임 체크하는 JSON 데이터
+    private JSONObject checkJSonNickname() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.accumulate("nickname",nickname.getText().toString());
 
         return jsonObject;
     }

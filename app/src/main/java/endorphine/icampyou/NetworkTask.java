@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ArrayList<Chat_Item> copy;
     RatingBar totalReviewStar;
     TextView totalReviewStarScore;
+    ImageView drawerQrCode;
 
     //예약부분
     String contents;
@@ -121,6 +123,16 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.insert_value = insert.getText().toString();
     }
 
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ImageView drawerQrCode) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.drawerQrCode = drawerQrCode;
+        this.exception = new RegisterUserException();
+    }
+
     @Override
     protected void onPreExecute() {
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -166,9 +178,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
         }
 
-        // show dialogcase Constant.GET_RESERVATION_INFO:
-        //                asyncDialog.setMessage("사용자의 예약정보를 가져오는 중 입니다..");
-        //                break;
         asyncDialog.show();
         super.onPreExecute();
     }
@@ -232,31 +241,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.putString("profileImage", user_image);
                         editor.putString("phoneNumber", user_phonenumber);
 
-                        //예약정보 임시
-                        editor.putString("reservationNum", "1");
-                        editor.putString("campingPlace", "2");
-                        editor.putString("date", "3");
-                        editor.putString("tentType", "4");
-                        editor.putString("tentNum", "5");
-                        editor.putString("price", "6");
-
                         editor.commit();
 
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
-
-//                        // 예약 정보도 저장
-//                        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getreservation";
-//
-//                        JSONObject data = null;
-//                        try {
-//                            data = getReservationInfo(user_email);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        NetworkTask networkTask = new NetworkTask(context, url, data, Constant.GET_RESERVATION_INFO);
-//                        networkTask.execute();
 
                     } else {
                         Toast.makeText(context, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
@@ -290,8 +278,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             campingPlace_Set.add(resultObject.getString("camp_name"));
                             date_Set.add(resultObject.getString("date"));
                             tentType_Set.add(resultObject.getString("tent_type"));
-                            tentNum_Set.add(resultObject.getString("tentNum"));
+                            tentNum_Set.add(resultObject.getString("count"));
                             price_Set.add(resultObject.getString("price"));
+                            if(i ==0 ) {
+                                QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                                contents = resultObject.getString("reservation_number");
+                                try {
+                                    qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+                                } catch (WriterException e) {
+                                    e.printStackTrace();
+                                }
+                                drawerQrCode.setImageBitmap(qrcodeBitmap);
+                            }
                         }
 
                         editor.putStringSet("reservationNum", reservationNum_Set);
@@ -301,8 +299,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.putStringSet("tentNum", tentNum_Set);
                         editor.putStringSet("price", price_Set);
 
-                        context.startActivity(new Intent(context, HomeActivity.class));
-                        ((Activity) context).finish();
+                        editor.commit();
+
                     }
                 } catch (JSONException e) {
                     Log.e("exception", e.toString());
@@ -532,14 +530,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
     //사용자 예약 정보 데이터 가져오는 JSON 함수
 
-    //아이디 체크하는 JSON 데이터
-    private JSONObject getReservationInfo(String user_id) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
 
-        jsonObject.accumulate("user_id", user_id);
-
-        return jsonObject;
-    }
 
     // 총 별점 평균 구해서 ratingBar 설정하는 메소드
     public void setTotalStarScore(ArrayList<ReviewListItem> reviewData) {
