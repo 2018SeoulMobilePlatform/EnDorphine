@@ -69,6 +69,13 @@ public class EventFragment1 extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
 
-
+        eventList = null;
+        eventData= null;
+        view = null;
+        adapter = null;
+    }
 }

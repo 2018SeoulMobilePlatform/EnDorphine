@@ -33,12 +33,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import endorphine.icampyou.Constant;
+<<<<<<< HEAD
+import endorphine.icampyou.GlideApp;
+import endorphine.icampyou.NetworkTask;
+import endorphine.icampyou.R;
+import endorphine.icampyou.ReviewWriteActivity;
+
+import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.annotation.GlideModule;
+=======
 import endorphine.icampyou.GuideMenu.Reservation.CalenderActivity;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 import endorphine.icampyou.GuideMenu.Review.ReviewWriteActivity;
+>>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
 /**
  * 캠핑장 안내 액티비티
  */
@@ -189,34 +199,34 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 캠핑장 종류에 맞게 안내 사진 다르게 설정
         switch (campingPlace) {
             case "난지 캠핑장":
-                pic01.setImageResource(R.drawable.nanji_1);
-                pic02.setImageResource(R.drawable.nanji_2);
-                pic03.setImageResource(R.drawable.nanji_3);
+                GlideApp.with(this).load(R.drawable.nanji_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.nanji_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.nanji_3).into(pic03);
                 break;
             case "서울대공원 캠핑장":
-                pic01.setImageResource(R.drawable.seoul_park_1);
-                pic02.setImageResource(R.drawable.seoul_park_2);
-                pic03.setImageResource(R.drawable.seoul_park_3);
+                GlideApp.with(this).load(R.drawable.seoul_park_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.seoul_park_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.seoul_park_3).into(pic03);
                 break;
             case "노을 캠핑장":
-                pic01.setImageResource(R.drawable.noeul_1);
-                pic02.setImageResource(R.drawable.noeul_2);
-                pic03.setImageResource(R.drawable.noeul_3);
+                GlideApp.with(this).load(R.drawable.noeul_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.noeul_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.noeul_3).into(pic03);
                 break;
             case "중랑 캠핑장":
-                pic01.setImageResource(R.drawable.jungrang_1);
-                pic02.setImageResource(R.drawable.jungrang_2);
-                pic03.setImageResource(R.drawable.jungrang_3);
+                GlideApp.with(this).load(R.drawable.jungrang_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.jungrang_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.jungrang_3).into(pic03);
                 break;
             case "초안산 캠핑장":
-                pic01.setImageResource(R.drawable.choansan_1);
-                pic02.setImageResource(R.drawable.choansan_2);
-                pic03.setImageResource(R.drawable.choansan_3);
+                GlideApp.with(this).load(R.drawable.choansan_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.choansan_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.choansan_3).into(pic03);
                 break;
             default:
-                pic01.setImageResource(R.drawable.gangdong_1);
-                pic02.setImageResource(R.drawable.gangdong_2);
-                pic03.setImageResource(R.drawable.gangdong_3);
+                GlideApp.with(this).load(R.drawable.gangdong_1).into(pic01);
+                GlideApp.with(this).load(R.drawable.gangdong_2).into(pic02);
+                GlideApp.with(this).load(R.drawable.gangdong_3).into(pic03);
                 break;
         }
 
@@ -312,38 +322,38 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
             case "난지 캠핑장":
                 campingName.setText("난지 캠핑장");
                 campingAddress.setText("서울특별시 마포구 상암동 495-51");
-                campingInfoImage.setImageResource(R.drawable.info_nanji);
-                mapImage.setImageResource(R.drawable.map_nanji);
+                GlideApp.with(this).load(R.drawable.info_nanji).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_nanji).into(mapImage);
                 break;
             case "서울대공원 캠핑장":
                 campingName.setText("서울대공원 캠핑장");
                 campingAddress.setText("경기도 과천시 막계동 산59-2");
-                campingInfoImage.setImageResource(R.drawable.info_seoul);
-                mapImage.setImageResource(R.drawable.map_seoul);
+                GlideApp.with(this).load(R.drawable.info_seoul).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_seoul).into(mapImage);
                 break;
             case "노을 캠핑장":
                 campingName.setText("노을 캠핑장");
                 campingAddress.setText("서울특별시 마포구 상암동 478-1");
-                campingInfoImage.setImageResource(R.drawable.info_noeul);
-                mapImage.setImageResource(R.drawable.map_noeul);
+                GlideApp.with(this).load(R.drawable.info_nanji).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_noeul).into(mapImage);
                 break;
             case "중랑 캠핑장":
                 campingName.setText("중랑 캠핑장");
                 campingAddress.setText("서울특별시 중랑구 망우동 망우로87길 110");
-                campingInfoImage.setImageResource(R.drawable.info_jungrang);
-                mapImage.setImageResource(R.drawable.map_jungrang);
+                GlideApp.with(this).load(R.drawable.info_jungrang).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_jungrang).into(mapImage);
                 break;
             case "초안산 캠핑장":
                 campingName.setText("초안산 캠핑장");
                 campingAddress.setText("서울특별시 노원구 월계2동 749-1");
-                campingInfoImage.setImageResource(R.drawable.info_choansan);
-                mapImage.setImageResource(R.drawable.map_choansan);
+                GlideApp.with(this).load(R.drawable.info_choansan).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_choansan).into(mapImage);
                 break;
             default:
                 campingName.setText("강동 캠핑장");
                 campingAddress.setText("서울특별시 강동구 둔촌동 천호대로206길 87");
-                campingInfoImage.setImageResource(R.drawable.info_gangdong);
-                mapImage.setImageResource(R.drawable.map_choansan);
+                GlideApp.with(this).load(R.drawable.info_gangdong).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.map_gangdong).into(mapImage);
                 break;
         }
     }

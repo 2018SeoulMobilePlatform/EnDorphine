@@ -35,7 +35,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
-import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
@@ -69,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private LayoutInflater inflater;
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
+    private ImageView nav_header;
 
     // Back키 이벤트 인터페이스
     public interface onKeyBackPressedListener {
@@ -239,10 +239,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
+<<<<<<< HEAD
+            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
+=======
             LayoutInflater inflater = getLayoutInflater();
             ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
 
             ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
+>>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {
