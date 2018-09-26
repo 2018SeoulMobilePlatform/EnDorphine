@@ -58,7 +58,8 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         editor = preferences.edit();
-        userImage.setImageResource(R.drawable.user_icon);
+
+        userImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage","")));
         nickname.setText(preferences.getString("nickname", ""));
         email.setText(preferences.getString("email", ""));
         name.setText(preferences.getString("name", ""));

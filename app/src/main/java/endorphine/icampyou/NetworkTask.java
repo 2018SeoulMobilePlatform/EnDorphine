@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
@@ -272,22 +274,32 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String resultResponse = jsonObject.getString("result");
                     JSONArray resultObjectArray = new JSONArray(resultResponse);
+
+                    Set<String> reservationNum_Set = new HashSet<String>();
+                    Set<String> campingPlace_Set = new HashSet<String>();
+                    Set<String> date_Set = new HashSet<String>();
+                    Set<String> tentType_Set = new HashSet<String>();
+                    Set<String> tentNum_Set = new HashSet<String>();
+                    Set<String> price_Set = new HashSet<String>();
+
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
-                        resultObject = resultObjectArray.getJSONObject(0);
-                        String reservation_number = resultObject.getString("reservation_number");
-                        String camp_name = resultObject.getString("camp_name");
-                        String tent_type = resultObject.getString("tent_type");
-                        String date = resultObject.getString("date");
-                        String tent_Num = resultObject.getString("tentNum");
-                        String price = resultObject.getString("price");
+                        for(int i=0;i<resultObjectArray.length();i++){
+                            resultObject = resultObjectArray.getJSONObject(i);
+                            reservationNum_Set.add(resultObject.getString("reservation_number"));
+                            campingPlace_Set.add(resultObject.getString("camp_name"));
+                            date_Set.add(resultObject.getString("date"));
+                            tentType_Set.add(resultObject.getString("tent_type"));
+                            tentNum_Set.add(resultObject.getString("tentNum"));
+                            price_Set.add(resultObject.getString("price"));
+                        }
 
-                        editor.putString("reservationNum", reservation_number);
-                        editor.putString("campingPlace", camp_name);
-                        editor.putString("date", date);
-                        editor.putString("tentType", tent_type);
-                        editor.putString("tentNum", tent_Num);
-                        editor.putString("price", price);
+                        editor.putStringSet("reservationNum", reservationNum_Set);
+                        editor.putStringSet("campingPlace", campingPlace_Set);
+                        editor.putStringSet("date", date_Set);
+                        editor.putStringSet("tentType", tentType_Set);
+                        editor.putStringSet("tentNum", tentNum_Set);
+                        editor.putStringSet("price", price_Set);
 
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
