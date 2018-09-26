@@ -48,6 +48,7 @@ public class EventListViewAdapter extends BaseAdapter {
 
         eventImage=(ImageView)convertView.findViewById(R.id.event_image);
         eventImage.setImageResource(eventListViewItem.getEventImage());
+        //GlideApp.with(convertView).load(eventListViewItem.getEventImage()).into(eventImage);
 
         eventPlace = (TextView)convertView.findViewById(R.id.event_place);
         eventPlace.setText(eventListViewItem.getEventPlace());

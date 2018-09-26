@@ -2,9 +2,11 @@ package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +18,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import endorphine.icampyou.R;
 
-public class ReservationInfoActivity extends AppCompatActivity {
+public class ReservationInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView qrcode;
     TextView reservationNum;
@@ -29,6 +31,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Bitmap qrcodeBitmap;
+    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,11 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tentNum.findViewById(R.id.res_info_tent_num);
         price.findViewById(R.id.res_info_total_price);
         confirmButton.findViewById(R.id.res_info_confirm);
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.res_info_back_btn);
+        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
+        backButton.setOnClickListener(this);
 
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         editor = preferences.edit();
@@ -85,4 +93,12 @@ public class ReservationInfoActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.res_info_back_btn:
+                onBackPressed();
+                break;
+        }
+    }
 }

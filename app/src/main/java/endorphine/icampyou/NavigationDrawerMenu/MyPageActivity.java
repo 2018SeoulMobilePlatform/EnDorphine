@@ -3,12 +3,14 @@ package endorphine.icampyou.NavigationDrawerMenu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,6 +32,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Button confirmButton;
+    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,15 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         camera = new Camera(this,circleImageView);
 
+        // 컨펌 버튼 설정
         confirmButton = findViewById(R.id.mypage_confirm);
+        confirmButton.setBackgroundResource(R.drawable.rounded_login_button);
         confirmButton.setOnClickListener(this);
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.mypage_back_btn);
+        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
+        backButton.setOnClickListener(this);
 
         // 유저정보 설정
         userImage = findViewById(R.id.mypage_user_image);
@@ -51,7 +61,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         passwordCheck = findViewById(R.id.mypage_password_check);
 
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
-        editor = preferences.edit();
+
         userImage.setImageResource(R.drawable.user_icon);
         nickname.setText(preferences.getString("nickname",""));
         email.setText(preferences.getString("email",""));
@@ -111,16 +121,21 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        // 확인버튼 누르면 예외처리 후 수정됨
-        if(v.getId() == R.id.mypage_confirm){
-            // 닉네임 수정
-            editor.remove("nickname");
-            editor.putString("nickname",nickname.getText().toString());
-            // 비밀번호 수정
-            editor.remove("password");
-            editor.putString("password",password.getText().toString());
-            editor.commit();
-            // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
+        switch (v.getId()){
+            case R.id.mypage_confirm:
+                editor = preferences.edit();
+                // 닉네임 수정
+                editor.remove("nickname");
+                editor.putString("nickname",nickname.getText().toString());
+                // 비밀번호 수정
+                editor.remove("password");
+                editor.putString("password",password.getText().toString());
+                editor.commit();
+                // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
+                break;
+            case R.id.mypage_back_btn:
+                onBackPressed();
+                break;
         }
     }
 }

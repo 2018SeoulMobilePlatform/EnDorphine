@@ -2,12 +2,14 @@ package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import endorphine.icampyou.EventMenu.EventInfoFragment;
 import endorphine.icampyou.R;
 
-public class ReservationInfoListActivity extends AppCompatActivity {
+public class ReservationInfoListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LayoutInflater inflater;
     private ViewGroup viewLayout;
@@ -23,6 +25,7 @@ public class ReservationInfoListActivity extends AppCompatActivity {
     private ArrayList<ReservationInfoItem> reservationinfoData;   // 후기 데이터
     private ReservationInfoListViewAdapter adapter;  //후기 리스트뷰 어댑터
     private SharedPreferences preferences;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,11 @@ public class ReservationInfoListActivity extends AppCompatActivity {
         viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_reservation_info_list, null);
         setContentView(viewLayout);
         setReservationInfoList();
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.res_info_list_back_btn);
+        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
+        backButton.setOnClickListener(this);
     }
 
     private void setReservationInfoList(){
@@ -40,8 +48,8 @@ public class ReservationInfoListActivity extends AppCompatActivity {
 
         // 예약정보 데이터 설정
         reservationinfoData = new ArrayList<>();
-
         // 유저정보 가져오기
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         String userId = preferences.getString("email","");
         // 서버에서 해당하는 유저 아이디의 예약정보 가져와서 리스트아이템 추가 (지금은 예시로 임의로 추가함)
         addReservationInfoList("DSAFQQWR1523","서울대공원캠핑장","2018-09-11 목 ~ 2018-09-15 토");
@@ -69,5 +77,14 @@ public class ReservationInfoListActivity extends AppCompatActivity {
     private void addReservationInfoList(String reservationNo, String campingPlace, String date){
         ReservationInfoItem reservationInfoItem = new ReservationInfoItem(reservationNo, campingPlace, date);
         reservationinfoData.add(reservationInfoItem);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.res_info_list_back_btn:
+                onBackPressed();
+                break;
+        }
     }
 }
