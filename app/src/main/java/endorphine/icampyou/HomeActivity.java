@@ -17,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,14 +30,13 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.util.Set;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
-import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
+import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
+import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private LayoutInflater inflater;
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
+    private ImageView nav_header;
 
     // Back키 이벤트 인터페이스
     public interface onKeyBackPressedListener {
@@ -258,7 +257,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
-            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(qrcodeBitmap);
+            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {

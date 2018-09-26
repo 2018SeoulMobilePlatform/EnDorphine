@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 /**
@@ -48,7 +49,7 @@ public class EventListViewAdapter extends BaseAdapter {
         EventListViewItem eventListViewItem= eventData.get(position);
 
         eventImage=(ImageView)convertView.findViewById(R.id.event_image);
-        eventImage.setImageResource(eventListViewItem.getEventImage());
+        GlideApp.with(convertView).load(eventListViewItem.getEventImage()).into(eventImage);
 
         eventPlace = (TextView)convertView.findViewById(R.id.event_place);
         eventPlace.setText(eventListViewItem.getEventPlace());
