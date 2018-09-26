@@ -148,9 +148,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
         setUpScroll();
 
-        // 총 별점 평점 계산하기
-        setTotalStarScore();
-
         // 구글맵 연동
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -261,6 +258,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         JSONObject data = sendJSonData();
 
+
         NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter,campingPlace);
         networkTask.execute();
     }
@@ -282,21 +280,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         reviewAddButton.setOnClickListener(this);
     }
 
-
-    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
-    public void setTotalStarScore() {
-        float totalStar = 0;
-
-        totalReviewStar = findViewById(R.id.review_total_star);
-        totalReviewStarScore = findViewById(R.id.total_star_score);
-
-        for (ReviewListItem review : reviewData) {
-            totalStar += review.getStar();
-        }
-
-        totalReviewStar.setRating((float) totalStar / reviewData.size());
-        totalReviewStarScore.setText("" + totalReviewStar.getRating());
-    }
 
     // 캠핑장 별로 다르게 정보 설정해주기
     public void setInfo(){

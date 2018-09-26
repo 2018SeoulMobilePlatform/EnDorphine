@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -51,6 +53,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ReviewListViewAdapter reviewList_adapter;
     String campingPlace;
     ArrayList<Chat_Item> copy;
+    RatingBar totalReviewStar;
+    TextView totalReviewStarScore;
 
     //예약부분
     String contents;
@@ -447,6 +451,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             }
                         }
                         reviewList_adapter.notifyDataSetChanged();
+                        setTotalStarScore(reviewList_adapter.getReviewList());
                     }
                 } catch (JSONException e) {
                     Log.e("exception", e.toString());
@@ -455,6 +460,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.MODIFY_USER_INFO:
                 try {
+                    Log.e("result",result);
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
@@ -522,6 +528,22 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
         return jsonObject;
     }
+
+    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
+    public void setTotalStarScore(ArrayList<ReviewListItem> reviewData) {
+        float totalStar = 0;
+
+        totalReviewStar = ((Activity)context).findViewById(R.id.review_total_star);
+        totalReviewStarScore = ((Activity)context).findViewById(R.id.total_star_score);
+
+        for (ReviewListItem review : reviewData) {
+            totalStar += review.getStar();
+        }
+
+        totalReviewStar.setRating((float) totalStar / reviewData.size());
+        totalReviewStarScore.setText("" + totalReviewStar.getRating());
+    }
+
 }
 
 

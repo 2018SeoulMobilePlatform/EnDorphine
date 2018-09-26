@@ -33,10 +33,14 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences.Editor editor;
     Button confirmButton;
 
+    ImageConversion imageConversion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
+
+        imageConversion = new ImageConversion();
 
         confirmButton = findViewById(R.id.mypage_confirm);
         confirmButton.setOnClickListener(this);
@@ -124,10 +128,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             editor.commit();
 
             // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
-            // 서버 구현 확인
-//            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checkphone";
+            // 서버 구현 확인 자꾸 null 이 옴
+//            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
 //
-//            JSONObject data = sendJSONdata(preferences.getString("email",""));
+//            JSONObject data = sendJSONdata();
 //
 //            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
 //            networkTask.execute();
@@ -164,11 +168,14 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public JSONObject sendJSONdata(String user_id) {
+    public JSONObject sendJSONdata() {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.accumulate("user_id", user_id);
+            jsonObject.accumulate("id", preferences.getString("email",""));
+            jsonObject.accumulate("image",imageConversion.toBase64(userImage));
+            jsonObject.accumulate("nickname",nickname.getText().toString());
+            jsonObject.accumulate("password",password.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
