@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -58,7 +59,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Intent mypageIntent;
     private Intent reservationInfoListIntent;
     private Intent logoutIntent;
-    private Intent closeIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
     private SharedPreferences preferences;
@@ -73,17 +73,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
     private ImageView nav_header;
-
-    // Back키 이벤트 인터페이스
-    public interface onKeyBackPressedListener {
-        public void onBack();
-    }
-
-    private onKeyBackPressedListener mOnKeyBackPressedListener;
-
-    public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
-        mOnKeyBackPressedListener = listener;
-    }
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -126,6 +115,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     fragmentTransaction.replace(R.id.main_frame, eventFragment1).commit();
                     return true;
             }
+            fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             return false;
         }
     };
@@ -177,8 +167,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-//        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
-//        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
         drawerNickName.setText(preferences.getString("nickname", ""));
         drawerEmail.setText(preferences.getString("email", ""));
         GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
@@ -204,23 +192,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction = null;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("resumeCloseApp",getIntent().getBooleanExtra("closeApp", false) + "");
-        if (getIntent().getBooleanExtra("closeApp", false)) {
-            onBackPressed();
-        }
-        closeIntent = null;
-    }
-
     // Back키 누르면 종료
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(getFragmentManager().getBackStackEntryCount() == 0){
             AlertDialog.Builder finishDialog = new AlertDialog.Builder(this);
             finishDialog.setMessage("정말로 종료하시겠습니까?");
 
@@ -238,6 +218,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finishDialog.setTitle(R.string.app_name);
             AlertDialog alert = finishDialog.create();
             alert.show();
+        }
+        else{
+            getFragmentManager().popBackStack();
         }
     }
 

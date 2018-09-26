@@ -281,7 +281,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
     public void setTotalStarScore() {
         float totalStar = 0;
 
-        Log.e("reviewData size",reviewData.size()+"");
         totalReviewStar = findViewById(R.id.review_total_star);
         totalReviewStarScore = findViewById(R.id.total_star_score);
 

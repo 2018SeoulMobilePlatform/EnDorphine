@@ -111,4 +111,5 @@ public class EventInfoFragment extends BaseFragment {
 
         return view;
     }
+
 }
