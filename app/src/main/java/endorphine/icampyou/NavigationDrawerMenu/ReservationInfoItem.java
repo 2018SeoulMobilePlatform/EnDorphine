@@ -1,4 +1,4 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 /**
  * 예약 정보 아이템 클래스
@@ -39,7 +39,7 @@ public class ReservationInfoItem {
         return tent_number;
     }
 
-    public String getTotal_pricee(){
+    public String getTotal_price(){
         return total_price;
     }
 }

@@ -13,6 +13,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@null</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -35,4 +36,36 @@
         <item name="colorAccent">#F9BE4F</item>
     </style>
 
+    <!-- 백그라운드 없앤 테마 -->
+    <style name="Theme.NoBackground" parent="android:Theme">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="Theme.NavigationDrawerTheme" parent="android:Theme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <!--<item name="android:colorForeground">@color/foreground_material_dark</item>-->
+        <!--<item name="android:colorForegroundInverse">@color/foreground_material_light</item>-->
+        <!--<item name="android:colorBackground">@color/background_material_dark</item>-->
+        <!--<item name="android:colorBackgroundCacheHint">@color/abc_background_cache_hint_selector_material_dark</item>-->
+        <!--<item name="colorBackgroundFloating">@color/background_floating_material_dark</item>-->
+
+        <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
+        <!--<item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item>-->
+        <!--<item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only_material_dark</item>-->
+        <!--<item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>-->
+        <item name="android:textColorSecondaryInverse">#FFFFFF</item>
+        <!--<item name="android:textColorTertiary">@color/abc_secondary_text_material_dark</item>-->
+        <!--<item name="android:textColorTertiaryInverse">@color/abc_secondary_text_material_light</item>-->
+        <!--<item name="android:textColorHint">@color/abc_hint_foreground_material_dark</item>-->
+        <!--<item name="android:textColorHintInverse">@color/abc_hint_foreground_material_light</item>-->
+        <item name="android:textColorHighlight">#FFFFFF</item>
+
+        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
+        <item name="colorControlHighlight">@color/ripple_material_dark</item>
+        <item name="colorButtonNormal">#FFFFFF</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+
+        <!-- Used by MediaRouter -->
+        <item name="isLightTheme">false</item>
+    </style>
 </resources>

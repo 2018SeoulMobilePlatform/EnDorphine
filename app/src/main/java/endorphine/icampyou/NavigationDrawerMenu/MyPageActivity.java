@@ -1,9 +1,10 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +14,19 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import endorphine.icampyou.Login.RegisterUserActivity;
+import endorphine.icampyou.Camera;
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.Login.RegisterUserException;
+import endorphine.icampyou.NetworkTask;
+import endorphine.icampyou.R;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
 

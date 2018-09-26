@@ -1,7 +1,10 @@
 package endorphine.icampyou.GuideMenu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
     private ImageView noeul;
     private ImageView seoul;
     private Intent intent;
+    private Bitmap bitmap;
 
     // 프래그먼트 xml 설정하는 메소드
     @Override
@@ -38,9 +42,6 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
         noeul = (ImageView) view.findViewById(R.id.noeul);
         seoul = (ImageView) view.findViewById(R.id.seoul);
 
-        // 인텐트 설정
-        intent = new Intent(getActivity(), GuideActivity.class);
-
         // 버튼 클릭 메소드 (각 프래그먼트간 유동성 확인하려고 임의로 난지버튼 누르면 예약화면으로 가게함)
         nanji.setOnClickListener(this);
         seoul.setOnClickListener(this);
@@ -49,12 +50,22 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
         gangdong.setOnClickListener(this);
         choansan.setOnClickListener(this);
 
+        nanji.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_nanji));
+        choansan.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_choansan));
+        jungrang.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_junglang));
+        gangdong.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_gangdong));
+        noeul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_noeul));
+        seoul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_seoul));
+
         return view;
     }
 
     // 각 버튼 클릭 이벤트 메소드
     @Override
     public void onClick(View v) {
+        // 인텐트 설정
+        intent = new Intent(getActivity(), GuideActivity.class);
+
         switch (v.getId()) {
             case R.id.nanji:
                 intent.putExtra("캠핑장 이름", "난지 캠핑장");
@@ -76,5 +87,18 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
                 break;
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        nanji = null;
+        seoul = null;
+        noeul = null;
+        jungrang = null;
+        choansan = null;
+        gangdong = null;
+        view = null;
+        intent = null;
     }
 }

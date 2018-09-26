@@ -25,15 +25,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
-import endorphine.icampyou.GuideMenu.ConfirmPopupActivity;
+import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
-import endorphine.icampyou.GuideMenu.ReviewListItem;
-import endorphine.icampyou.GuideMenu.ReviewListViewAdapter;
+import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
+import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.Login.PasswordPopupActivity;
 import endorphine.icampyou.Login.RegisterUserException;
@@ -54,6 +55,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ChatList_Adapter chatList_adpater;
     ChatList_Adapter chatList_adapter2;
     ReviewListViewAdapter reviewList_adapter;
+    ArrayList<ReviewListItem> reviewData;
     String campingPlace;
     ArrayList<Chat_Item> copy;
     RatingBar totalReviewStar;
@@ -234,6 +236,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.commit();
 
                         // 유저정보 저장
+
                         editor.putString("email", user_email);
                         editor.putString("password", user_password);
                         editor.putString("name", user_name);
@@ -485,7 +488,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             default:
                 break;
-        }
+    }
 
         //다이얼로그 종료
         asyncDialog.dismiss();

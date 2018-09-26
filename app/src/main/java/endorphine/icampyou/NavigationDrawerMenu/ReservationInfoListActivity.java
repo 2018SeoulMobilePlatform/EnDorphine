@@ -1,9 +1,9 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +13,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+
+import endorphine.icampyou.R;
 
 public class ReservationInfoListActivity extends AppCompatActivity {
 
@@ -35,9 +36,10 @@ public class ReservationInfoListActivity extends AppCompatActivity {
         inflater = getLayoutInflater();
         viewLayout = (ViewGroup)inflater.inflate(R.layout.activity_reservation_info_list, null);
         setContentView(viewLayout);
+
         setReservationInfoList();
 
-        //채팅방 들어가기
+        //예약 상세정보 확인
         reservationInfoList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view , int position, long id){
@@ -47,7 +49,7 @@ public class ReservationInfoListActivity extends AppCompatActivity {
                 intent.putExtra("date",((ReservationInfoItem)adapter.getItem(position)).getDate());
                 intent.putExtra("tent_type",((ReservationInfoItem)adapter.getItem(position)).getTent_type());
                 intent.putExtra("tent_number",((ReservationInfoItem)adapter.getItem(position)).getTent_number());
-                intent.putExtra("total_price",((ReservationInfoItem)adapter.getItem(position)).getTotal_pricee());
+                intent.putExtra("total_price",((ReservationInfoItem)adapter.getItem(position)).getTotal_price());
                 startActivity(intent);
             }
         });

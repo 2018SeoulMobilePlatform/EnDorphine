@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
+import endorphine.icampyou.GuideMenu.Reservation.CardItem;
 import endorphine.icampyou.R;
 
 

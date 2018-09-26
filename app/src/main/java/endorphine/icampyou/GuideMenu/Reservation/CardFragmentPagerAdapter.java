@@ -1,4 +1,4 @@
-package endorphine.icampyou.GuideMenu;
+package endorphine.icampyou.GuideMenu.Reservation;
 
 
 import android.support.v4.app.Fragment;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
+import endorphine.icampyou.GuideMenu.Reservation.CardFragment;
 
 public class CardFragmentPagerAdapter extends FragmentPagerAdapter implements CardAdapter {
     private List<CardFragment> mFragments;

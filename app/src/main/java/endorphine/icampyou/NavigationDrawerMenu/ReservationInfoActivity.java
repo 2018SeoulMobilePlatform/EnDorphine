@@ -1,11 +1,13 @@
-package endorphine.icampyou;
+package endorphine.icampyou.NavigationDrawerMenu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +17,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-public class ReservationInfoActivity extends AppCompatActivity {
+import endorphine.icampyou.R;
+
+public class ReservationInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView qrcode;
     TextView reservationNum;
@@ -24,7 +28,6 @@ public class ReservationInfoActivity extends AppCompatActivity {
     TextView tentType;
     TextView tentNum;
     TextView price;
-    Button confirmButton;
     Bitmap qrcodeBitmap;
 
     @Override
@@ -39,11 +42,8 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tentType = (TextView)findViewById(R.id.res_info_tent);
         tentNum = (TextView)findViewById(R.id.res_info_tent_num);
         price = (TextView)findViewById(R.id.res_info_total_price);
-        confirmButton= (Button)findViewById(R.id.res_info_confirm);
 
-
-        // 프리퍼런스 파일에서 정보 가져와서 예약정보페이지에 뿌려주기
-        // 사실상 예약번호 하나로 다른 정보들을 서버에서 가져와서 뿌려줘야함
+        //인텐트로 정보 가져오기
         Intent intent = getIntent();
 
         generateQRCode(intent.getStringExtra("reservation_number"));
@@ -54,6 +54,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tentType.setText(intent.getStringExtra("tent_type"));
         tentNum.setText(intent.getStringExtra("tent_number"));
         price.setText(intent.getStringExtra("total_price"));
+
     }
 
     // QR코드 생성
@@ -79,5 +80,14 @@ public class ReservationInfoActivity extends AppCompatActivity {
         return bmp;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.res_info_confirm:
+                finish();
+            default:
+                break;
+        }
+    }
 
 }
