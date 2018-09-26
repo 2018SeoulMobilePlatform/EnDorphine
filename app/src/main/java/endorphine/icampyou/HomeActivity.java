@@ -40,6 +40,7 @@ import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
+import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Intent qrcodePopupIntent;
     private Intent mypageIntent;
     private Intent reservationInfoListIntent;
+    private Intent logoutIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
     private SharedPreferences preferences;
@@ -197,18 +199,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        // 내 정보 누르면 마이페이지 프래그먼트로 이동
+        // 내 정보 이동
         if(id==R.id.nav_mypage){
             mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
         }
+        // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
             reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
+        }
+        // 로그인 이동
+        else if(id==R.id.nav_logout){
+            logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
