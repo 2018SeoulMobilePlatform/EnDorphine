@@ -32,14 +32,6 @@
                 android:text="이다콩"
                 android:textColor="#4C4C4C"
                 android:paddingTop="5dp"/>
-            <!-- 별점 -->
-            <!--<TextView-->
-                <!--android:id="@+id/review_star"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="25dp"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--android:text="★★★☆☆"-->
-                <!--android:textColor="@color/colorPrimary" />-->
             <RatingBar
                 android:id="@+id/review_star"
                 android:layout_width="wrap_content"
@@ -61,8 +53,8 @@
             <!-- 리뷰 이미지 -->
             <ImageView
                 android:id="@+id/review_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/nanji_1"
                 android:adjustViewBounds="true"
                 android:layout_marginTop="10dp"

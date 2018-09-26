@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +36,9 @@ import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
+import endorphine.icampyou.Login.LoginActivity;
+import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
+import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,14 +54,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Intent qrcodePopupIntent;
     private Intent mypageIntent;
     private Intent reservationInfoListIntent;
+    private Intent logoutIntent;
     // qr코드 비트맵
     private Bitmap qrcodeBitmap;
     private SharedPreferences preferences;
     // drawer
+    private ImageView drawerBackground;
     private CircleImageView drawerProfileImage;
     private TextView drawerNickName;
     private TextView drawerEmail;
     private ImageView drawerQrcode;
+
     private LayoutInflater inflater;
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
@@ -77,26 +84,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            fragmentTransaction = getFragmentManager().beginTransaction();
+
             switch (item.getItemId()) {
                 case R.id.navigation_guide:
-                    // 프래그먼트 변경
-                    setFragment(1);
+                    // 예약 프래그먼트1로 변경
+                    guideFragment1 = new GuideFragment1();
+                    fragmentTransaction.replace(R.id.main_frame, guideFragment1).commit();
                     return true;
                 case R.id.navigation_home:
-                    setFragment(2);
+                    // 홈 프래그먼트1로 변경
+                    homeFragment2 = new HomeFragment2();
+                    fragmentTransaction.replace(R.id.main_frame, homeFragment2).commit();
                     return true;
                 case R.id.navigation_exchange:
-                    setFragment(3);
+                    // 교환 프래그먼트1로 변경
+                    chattingList_fragment = new ChattingList_Fragment();
+                    fragmentTransaction.replace(R.id.main_frame, chattingList_fragment).commit();
                     return true;
                 case R.id.navigation_event:
-                    setFragment(4);
+                    // 이벤트 프래그먼트1로 변경
+                    eventFragment1 = new EventFragment1();
+                    fragmentTransaction.replace(R.id.main_frame, eventFragment1).commit();
                     return true;
             }
             return false;
         }
     };
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,13 +120,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         // fragment 객체 생성
-        //guideFragment1 = new GuideFragment1();
-        //chattingList_fragment = new ChattingList_Fragment();
-        //homeFragment1 = new HomeFragment1();
-        //eventFragment1 = new EventFragment1();
-        //homeFragment2 = new HomeFragment2();
+        guideFragment1 = new GuideFragment1();
+        chattingList_fragment = new ChattingList_Fragment();
+        eventFragment1 = new EventFragment1();
+        homeFragment2 = new HomeFragment2();
+
         // 디폴트 프래그먼트 홈화면으로 설정
-        setFragment(2);
+        getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
 
         // intent 설정하기
         //qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
@@ -135,7 +149,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        //int color = getResources().getColor(getResources().getIdentifier("black","color",getPackageName()));
 
         // 상단에 토글 아이콘 색상 변경
         int color = ContextCompat.getColor(getBaseContext(), R.color.colorPrimary);
@@ -149,13 +162,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // drawer 네비게이션 바 설정
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        drawerBackground = headerView.findViewById(R.id.drawer_background);
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
         drawerEmail = headerView.findViewById(R.id.drawer_email);
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
         // 프로필 사진 일단 기본으로 설정함
-        drawerProfileImage.setImageResource(R.drawable.user_icon);
+        drawerBackground.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.drawer_background));
+        drawerProfileImage.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_icon));
         drawerNickName.setText(preferences.getString("nickname",""));
         drawerEmail.setText(preferences.getString("email",""));
 
@@ -193,18 +208,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        // 내 정보 누르면 마이페이지 프래그먼트로 이동
+        // 내 정보 이동
         if(id==R.id.nav_mypage){
             mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
         }
+        // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
             reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
+        }
+        // 로그인 이동
+        else if(id==R.id.nav_logout){
+            logoutIntent = new Intent(this, LoginActivity.class);
+            startActivity(logoutIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -212,42 +231,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /*
-     num을 인자로 받아서 num에 맞는 fragment 교체하는 메소드
-     */
-    public void setFragment(int num) {
-        // fragmentTransaction은 fragment 변경할 때마다 초기화해야 에러가 나지 않는다.
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
 
-        switch (num) {
-            case 1:
-                // 예약 프래그먼트1로 변경
-                guideFragment1 = new GuideFragment1();
-                fragmentTransaction.replace(R.id.main_frame, guideFragment1);
-                fragmentTransaction.commit();
-                break;
-            case 2:
-                // 홈 프래그먼트1로 변경
-                homeFragment2 = new HomeFragment2();
-                fragmentTransaction.replace(R.id.main_frame, homeFragment2);
-                fragmentTransaction.commit();
-                break;
-            case 3:
-                // 교환 프래그먼트1로 변경
-                chattingList_fragment = new ChattingList_Fragment();
-                fragmentTransaction.replace(R.id.main_frame, chattingList_fragment);
-                fragmentTransaction.commit();
-                break;
-            case 4:
-                // 이벤트 프래그먼트1로 변경
-                eventFragment1 = new EventFragment1();
-                fragmentTransaction.replace(R.id.main_frame, eventFragment1);
-                fragmentTransaction.commit();
-            default:
-                break;
-        }
-    }
 
     // QR코드 생성
     public void generateQRCode(String contents) {
@@ -255,7 +239,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         try {
             qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
 
+<<<<<<< HEAD
             //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
+=======
+            LayoutInflater inflater = getLayoutInflater();
+            ViewGroup view = (ViewGroup)inflater.inflate(R.layout.activity_qrcode_popup, null);
+
+            ((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
+>>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             qrcodePopupIntent.putExtra("qrcode",qrcodeBitmap);
         } catch (WriterException e) {

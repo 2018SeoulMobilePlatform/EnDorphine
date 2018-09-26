@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -34,6 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import endorphine.icampyou.Constant;
+<<<<<<< HEAD
 import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -41,6 +41,14 @@ import endorphine.icampyou.ReviewWriteActivity;
 
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.annotation.GlideModule;
+=======
+import endorphine.icampyou.GuideMenu.Reservation.CalenderActivity;
+import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
+import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
+import endorphine.icampyou.NetworkTask;
+import endorphine.icampyou.R;
+import endorphine.icampyou.GuideMenu.Review.ReviewWriteActivity;
+>>>>>>> e6c0b77591baa43e46134aaeac25170fd014adfc
 /**
  * 캠핑장 안내 액티비티
  */
@@ -152,9 +160,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 페이지 떴을 때 항상 스크롤 맨위에 가있도록
         setUpScroll();
 
-        // 총 별점 평점 계산하기
-        setTotalStarScore();
-
         // 구글맵 연동
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -259,6 +264,8 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
 
+        reviewData.clear();
+
         reviewList.setAdapter(adapter);
 
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
@@ -267,6 +274,24 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter,campingPlace);
         networkTask.execute();
+
+        setTotalStarScore();
+    }
+
+    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
+    public void setTotalStarScore() {
+        float totalStar = 0;
+
+        Log.e("reviewData size",reviewData.size()+"");
+        totalReviewStar = findViewById(R.id.review_total_star);
+        totalReviewStarScore = findViewById(R.id.total_star_score);
+
+        for (ReviewListItem review : reviewData) {
+            totalStar += review.getStar();
+        }
+
+        totalReviewStar.setRating((float) totalStar / reviewData.size());
+        totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
     // 리뷰페이지 설정하는 메소드
@@ -284,22 +309,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 후기작성버튼 설정
         reviewAddButton = findViewById(R.id.review_add_button);
         reviewAddButton.setOnClickListener(this);
-    }
-
-
-    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
-    public void setTotalStarScore() {
-        float totalStar = 0;
-
-        totalReviewStar = findViewById(R.id.review_total_star);
-        totalReviewStarScore = findViewById(R.id.total_star_score);
-
-        for (ReviewListItem review : reviewData) {
-            totalStar += review.getStar();
-        }
-
-        totalReviewStar.setRating((float) totalStar / reviewData.size());
-        totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
     // 캠핑장 별로 다르게 정보 설정해주기
