@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -61,6 +62,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     RatingBar totalReviewStar;
     TextView totalReviewStarScore;
     ImageView drawerQrCode;
+    TextView check_textView;
 
     //예약부분
     String contents;
@@ -125,6 +127,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.insert_value = insert.getText().toString();
     }
 
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert,TextView _textView) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.insert = _insert;
+        this.exception = new RegisterUserException();
+        this.insert_value = insert.getText().toString();
+        this.check_textView = _textView;
+    }
+
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ImageView drawerQrCode) {
         this.context = _context;
         this.url = url;
@@ -152,6 +166,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("이메일 중복 검사 중 입니다..");
                 break;
             case Constant.DUPLICATED_NICKNAME:
+                asyncDialog.setMessage("닉네임 중복 검사 중 입니다..");
+                break;
+            case Constant.DUPLICATED_NICKNAME2:
                 asyncDialog.setMessage("닉네임 중복 검사 중 입니다..");
                 break;
             case Constant.DUPLICATED_PHONENUMBER:
@@ -345,6 +362,19 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         insert.setBackgroundResource(R.drawable.check_edittext);
                     } else {
                         insert.setBackgroundResource(R.drawable.uncheck_edittext);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.DUPLICATED_NICKNAME2:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("fail") && exception.UserNickNameException(insert_value)) {
+                        check_textView.setVisibility(View.VISIBLE);
+                    } else {
+                        check_textView.setVisibility(View.INVISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

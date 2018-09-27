@@ -38,8 +38,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,9 +48,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -59,7 +58,9 @@
                     <!-- 바탕뷰 -->
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="39dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:background="@color/colorPrimary" />
 
                     <RelativeLayout
@@ -79,15 +80,15 @@
                             android:layout_height="100dp"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:onClick="modify_profile"/>
+                            android:onClick="modify_profile" />
 
                         <!-- 프로필 이미지 수정 버튼 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_profile_change_btn"
                             android:layout_width="29dp"
                             android:layout_height="29dp"
-                            android:src="@drawable/review_plus_icon"
-                            android:onClick="modify_profile"/>
+                            android:onClick="modify_profile"
+                            android:src="@drawable/review_plus_icon" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -101,8 +102,8 @@
                             android:id="@+id/mypage_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxLines="1"
                             android:maxLength="15"
+                            android:maxLines="1"
                             android:text="배챙이"
                             android:textColor="#5D5D5D"
                             android:textSize="20dp" />
@@ -111,7 +112,18 @@
                             android:id="@+id/user_name_edit_btn_mypage"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:background="@drawable/edit"/>
+                            android:background="@drawable/edit" />
+
+                        <TextView
+                            android:id="@+id/check_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="V"
+                            android:textColor="#13B9A5"
+                            android:textSize="17dp"
+                            android:textStyle="bold"
+                            android:visibility="invisible" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -120,8 +132,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <!-- 이메일 -->
                 <LinearLayout
@@ -131,6 +142,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
@@ -155,12 +167,14 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="28dp"
                         android:layout_weight="2"
                         android:text="Name" />
+
                     <EditText
                         android:id="@+id/mypage_name"
                         android:layout_width="0dp"
@@ -178,12 +192,14 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="28dp"
                         android:layout_weight="2"
                         android:text="Phone" />
+
                     <EditText
                         android:id="@+id/mypage_phone"
                         android:layout_width="0dp"
@@ -201,26 +217,39 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2"
-                        android:text="Password"
-                        android:layout_marginRight="5dp"/>
+                        android:text="Password" />
                     <!-- 수정 이미지 -->
                     <Button
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="@drawable/edit"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edit" />
+
                     <EditText
                         android:id="@+id/mypage_password"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:maxLines="1"
-                        android:maxLength="16"
                         android:layout_weight="8"
+                        android:maxLength="16"
+                        android:maxLines="1"
                         android:text="******" />
+
+                    <TextView
+                        android:id="@+id/check_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="V"
+                        android:textColor="#13B9A5"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
                 <!-- 비밀번호 -->
@@ -231,26 +260,40 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2"
-                        android:text="Password Check"
-                        android:layout_marginRight="5dp"/>
+                        android:text="Password Check" />
                     <!-- 수정 이미지 -->
                     <Button
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:background="@drawable/edit"
-                        android:layout_marginRight="8dp"/>
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/edit" />
+
                     <EditText
                         android:id="@+id/mypage_password_check"
                         android:layout_width="0dp"
-                        android:maxLines="1"
-                        android:maxLength="16"
                         android:layout_height="50dp"
                         android:layout_weight="8"
+                        android:maxLength="16"
+                        android:maxLines="1"
                         android:text="******" />
+
+                    <TextView
+                        android:id="@+id/check_confimPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="V"
+                        android:textColor="#13B9A5"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
                 </LinearLayout>
 
 
@@ -262,6 +305,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:background="@color/colorPrimary"
                     android:text="Confirm"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"

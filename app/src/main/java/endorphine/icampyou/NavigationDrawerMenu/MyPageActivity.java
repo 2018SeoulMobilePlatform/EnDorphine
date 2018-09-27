@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -41,6 +42,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Button confirmButton;
+    TextView check_nickname;
+    TextView check_password;
+    TextView check_confirmPassword;
+
 
     ImageConversion imageConversion;
 
@@ -66,6 +71,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         phone = findViewById(R.id.mypage_phone);
         password = findViewById(R.id.mypage_password);
         passwordCheck = findViewById(R.id.mypage_password_check);
+        check_nickname = findViewById(R.id.check_nickname);
+        check_password = findViewById(R.id.check_password);
+        check_confirmPassword = findViewById(R.id.check_confimPassword);
 
         camera = new Camera(this, userImage);
 
@@ -94,10 +102,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
 
-                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_EMAIL,nickname);
+                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_NICKNAME2,nickname,check_nickname);
                         networkTask.execute();
                     } else{
-                        nickname.setBackgroundResource(R.drawable.rounded_login);
+                        check_nickname.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -119,12 +127,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             public void afterTextChanged(Editable editable) {
                 String edit = editable.toString();
                 if(exception.UserPassWordExcepiton(edit)){
-                    password.setBackgroundResource(R.drawable.check_edittext);
+                    check_password.setVisibility(View.VISIBLE);
                 } else{
-                    if(edit.length() != 0)
-                        password.setBackgroundResource(R.drawable.uncheck_edittext);
-                    else
-                        password.setBackgroundResource(R.drawable.rounded_login);
+                    check_password.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -145,12 +150,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             public void afterTextChanged(Editable editable) {
                 String edit = editable.toString();
                 if(exception.UserPassWordExcepiton(edit)){
-                    passwordCheck.setBackgroundResource(R.drawable.check_edittext);
+                    check_confirmPassword.setVisibility(View.VISIBLE);
                 } else{
-                    if(edit.length() != 0)
-                        passwordCheck.setBackgroundResource(R.drawable.uncheck_edittext);
-                    else
-                        passwordCheck.setBackgroundResource(R.drawable.rounded_login);
+                    check_confirmPassword.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -208,21 +210,26 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         // 확인버튼 누르면 예외처리 후 수정됨
         if (v.getId() == R.id.mypage_confirm) {
-            // 닉네임 수정
-            editor.remove("nickname");
-            editor.putString("nickname", nickname.getText().toString());
-            // 비밀번호 수정
-            editor.remove("password");
-            editor.putString("password", password.getText().toString());
-            editor.commit();
+            if(password.getText().toString().equals(passwordCheck.getText().toString())){
+                // 닉네임 수정
+                editor.remove("nickname");
+                editor.putString("nickname", nickname.getText().toString());
+                // 비밀번호 수정
+                editor.remove("password");
+                editor.putString("password", password.getText().toString());
+                editor.commit();
 
-            // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
-            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
+                // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
+                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
 
-            JSONObject data = sendJSONdata();
+                JSONObject data = sendJSONdata();
 
-            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
-            networkTask.execute();
+                NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
+                networkTask.execute();
+            } else{
+                Toast.makeText(this,"비밀번호를 확인해주세요",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 

@@ -142,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
 
         // intent 설정하기
-        //qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
+        qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
         //mypageIntent = new Intent(this, MyPageActivity.class);
         //reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
@@ -266,6 +266,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.action_settings) {
             // QR코드 팝업창 띄우기
+            qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             startActivity(qrcodePopupIntent);
             return true;
         }
