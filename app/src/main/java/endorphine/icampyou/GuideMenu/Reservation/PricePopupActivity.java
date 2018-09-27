@@ -97,7 +97,7 @@ public class PricePopupActivity extends Activity {
         editor.putStringSet("tentType", tentType_Set);
         editor.putStringSet("tentNum", tentNum_Set);
         editor.putStringSet("price", price_Set);
-        
+
         //서버 연동
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";
 

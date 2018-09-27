@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 public class QrcodePopupActivity extends Activity {
@@ -34,7 +35,6 @@ public class QrcodePopupActivity extends Activity {
     TextView tentType_View;
 
     SharedPreferences preferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class QrcodePopupActivity extends Activity {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             Bitmap qrcode = null;
             try {
-                qrcode = toBitmap(qrCodeWriter.encode(arrayList_reservationNum.get(0), BarcodeFormat.QR_CODE,500, 500));
+                qrcode = toBitmap(qrCodeWriter.encode(arrayList_reservationNum.get(0), BarcodeFormat.QR_CODE, 500, 500));
             } catch (WriterException e) {
                 e.printStackTrace();
             }
@@ -90,7 +90,7 @@ public class QrcodePopupActivity extends Activity {
 
             imageView.setImageBitmap(qrcode);
         }
-}
+    }
 
     //확인 버튼 클릭
     public void mOnClose(View v) {

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.Login.RegisterUserException;
 import endorphine.icampyou.NetworkTask;
@@ -42,10 +40,12 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Button confirmButton;
+
     TextView check_nickname;
     TextView check_password;
     TextView check_confirmPassword;
 
+    ImageView backButton;
 
     ImageConversion imageConversion;
 
@@ -62,6 +62,14 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         confirmButton = findViewById(R.id.mypage_confirm);
         confirmButton.setOnClickListener(this);
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.mypage_back_btn);
+        backButton.setOnClickListener(this);
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+
+        GlideApp.with(this).load(R.color.colorPrimary).into((CircleImageView)findViewById(R.id.mypage_profile_borderLine));
+        GlideApp.with(this).load(R.drawable.review_plus_icon).into((CircleImageView)findViewById(R.id.mypage_profile_change_btn));
 
         // 유저정보 설정
         userImage = findViewById(R.id.mypage_user_image);
@@ -80,7 +88,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         editor = preferences.edit();
 
-        userImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage","")));
+        GlideApp.with(this).load(imageConversion.fromBase64(preferences.getString("profileImage",""))).into(userImage);
         nickname.setText(preferences.getString("nickname", ""));
         email.setText(preferences.getString("email", ""));
         name.setText(preferences.getString("name", ""));
@@ -115,7 +123,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override

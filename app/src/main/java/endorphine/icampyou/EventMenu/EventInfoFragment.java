@@ -59,7 +59,6 @@ public class EventInfoFragment extends BaseFragment {
                 eventContent.setText("안녕하세요? 서울대공원입니다.\n" + "선선한 가을바람 부는 계절! 캠핑하기 좋은 계절!\n" +
                         "서울동물원에서 가족과 함께 특별한 캠핑에 참여하세요!\n" + "선착순접수이오니 서둘러 신청바랍니다.\n" + "\n" + "\n" + "\n" +
                         "○ 1차 9.22(토)~23(일), 2차 9.29(토)~30(일)\n" + "○ 3차 10.6(토)~7(일), 4차 10.8(월)~9(화)");
-                //eventImage.setImageResource(R.drawable.event_info1);
                 GlideApp.with(this).load(R.drawable.event_info1).into(eventImage);
                 break;
             case 1:
@@ -78,7 +77,6 @@ public class EventInfoFragment extends BaseFragment {
                         "○ 일시 : 9.24(월) ~ 9.25(일) / 12시~18시\n" +
                         "○ 장소 : 동물원 정문광장\n" +
                         "○ 내용 : 한복입기, 전통놀이 등 다양한 명절 체험프로그램");
-                //eventImage.setImageResource(R.drawable.event_info2);
                 GlideApp.with(this).load(R.drawable.event_info2).into(eventImage);
                 break;
             case 2:
@@ -95,7 +93,6 @@ public class EventInfoFragment extends BaseFragment {
                         "하객규모는 120명 내외여야 하고, 예식 진행은 서울시가 지정한 4개의 작은 결혼식 협력업체와 해야 합니다.\n"+
                         "이 밖에도 ▲피로연 음식 간소화 및 화기 사용 금지, ▲축하화환 반입 금지, ▲일회용품 사용 최소화 등의 운영 원칙이 있어요.\n" +
                         "\n"+"자세한 내용은 붙임 공고문 참고하시고, 저희 시민의숲 꽃길 결혼식에 관심있는 예비 부부들의 많은 참여 바랍니다.\n");
-                //eventImage.setImageResource(R.drawable.event_info3);
                 GlideApp.with(this).load(R.drawable.event_info3).into(eventImage);
                 break;
             default:
@@ -104,11 +101,11 @@ public class EventInfoFragment extends BaseFragment {
                         "30% 할인을 적용 받을 수 있는 절호의 기회! (토요일, 광복절 전날 제외)\n" +
                         "다시 없을 기회를 놓치지 마세요!!\n" + "\n" +
                         "(특정 기간 외에는 정가가 판매되오니, 예매에 참고 부탁드립니다.)");
-                //eventImage.setImageResource(R.drawable.event_info4);
                 GlideApp.with(this).load(R.drawable.event_info4).into(eventImage);
                 break;
         }
 
         return view;
     }
+
 }

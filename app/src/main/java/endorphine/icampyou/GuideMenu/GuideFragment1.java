@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 /*
@@ -50,12 +51,12 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
         gangdong.setOnClickListener(this);
         choansan.setOnClickListener(this);
 
-        nanji.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_nanji));
-        choansan.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_choansan));
-        jungrang.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_junglang));
-        gangdong.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_gangdong));
-        noeul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_noeul));
-        seoul.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.menu_seoul));
+        GlideApp.with(this).load(R.drawable.menu_nanji).into(nanji);
+        GlideApp.with(this).load(R.drawable.menu_choansan).into(choansan);
+        GlideApp.with(this).load(R.drawable.menu_junglang).into(jungrang);
+        GlideApp.with(this).load(R.drawable.menu_gangdong).into(gangdong);
+        GlideApp.with(this).load(R.drawable.menu_noeul).into(noeul);
+        GlideApp.with(this).load(R.drawable.menu_seoul).into(seoul);
 
         return view;
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.R;
 
@@ -68,7 +69,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         star.setRating(reviewListItem.getStar());
 
         reviewImage = (ImageView)convertView.findViewById(R.id.review_image);
-        reviewImage.setImageBitmap(reviewListItem.getReviewImage());
+        GlideApp.with(convertView).load(reviewListItem.getReviewImage()).into(reviewImage);
 
         reviewContent = convertView.findViewById(R.id.review_content);
         reviewContent.setText(reviewListItem.getReviewContent());

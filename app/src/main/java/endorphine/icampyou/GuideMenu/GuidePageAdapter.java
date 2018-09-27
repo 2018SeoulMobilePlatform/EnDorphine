@@ -23,21 +23,6 @@ public class GuidePageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(View v, int position) {
-        switch (position) {
-            case 0:
-//                btn = (Button) pageViews.get(position).findViewById(R.id.button1);
-//                btn.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(mContext, "Clicked!", 1).show();
-//                    }
-//                });
-                break;
-
-            default:
-                break;
-        }
-
         ((ViewPager) v).addView(pageViews.get(position));
         return pageViews.get(position);
     }
