@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,39 +68,18 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         // 예약정보 데이터 설정
         reservationinfoData = new ArrayList<>();
 
-        Set<String> reservationNum = preferences.getStringSet("reservationNum", new HashSet<String>());
-        Set<String> campingPlace = preferences.getStringSet("campingPlace", new HashSet<String>());
-        Set<String> date = preferences.getStringSet("date", new HashSet<String>());
-        Set<String> tentType = preferences.getStringSet("tentType", new HashSet<String>());
-        Set<String> tentNum = preferences.getStringSet("tentNum", new HashSet<String>());
-        Set<String> price = preferences.getStringSet("price", new HashSet<String>());
-
-        ArrayList<String> arrayList_reservationNum = new ArrayList<>();
-        ArrayList<String> arrayList_campingPlace = new ArrayList<>();
-        ArrayList<String> arrayList_date = new ArrayList<>();
-        ArrayList<String> arrayList_tentType = new ArrayList<>();
-        ArrayList<String> arrayList_tentNum = new ArrayList<>();
-        ArrayList<String> arrayList_price = new ArrayList<>();
-
-        for (String str : reservationNum)
-            arrayList_reservationNum.add(str);
-        for (String str : campingPlace)
-            arrayList_campingPlace.add(str);
-        for (String str : date)
-            arrayList_date.add(str);
-        for (String str : tentType)
-            arrayList_tentType.add(str);
-        for (String str : tentNum)
-            arrayList_tentNum.add(str);
-        for (String str : price)
-            arrayList_price.add(str);
-
-        // 서버에서 예약정보 아이템들 추가
-        for(int i=0;i<arrayList_reservationNum.size();i++){
-            addReservationInfoList(arrayList_reservationNum.get(i),
-                    arrayList_campingPlace.get(i), arrayList_date.get(i),
-                    arrayList_tentType.get(i), arrayList_tentNum.get(i),
-                    arrayList_price.get(i));
+        String[] reservationNum = preferences.getString("reservationNum", "").split(",");
+        String[] campingPlace = preferences.getString("campingPlace",  "").split(",");
+        String[] date = preferences.getString("date", "").split(",");
+        String[] tentType = preferences.getString("tentType",  "").split(",");
+        String[] tentNum = preferences.getString("tentNum",  "").split(",");
+        String[] price = preferences.getString("price", "").split(",");
+        
+        for(int i=0;i<reservationNum.length;i++){
+            addReservationInfoList(reservationNum[i],
+                    campingPlace[i], date[i],
+                    tentType[i], tentNum[i],
+                    price[i]);
         }
 
         // 어댑터로 예약정보 리스트에 아이템 뿌려주기

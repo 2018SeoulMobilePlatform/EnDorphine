@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -167,7 +170,18 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
 
         JSONObject jsonObject = new JSONObject();
 
-        String encodedImage = imageConversion.toBase64(reviewImageView);
+        Drawable reviewImage = reviewImageView.getDrawable();
+        Drawable cameraImage = this.getResources().getDrawable(R.drawable.camera2);
+
+        Bitmap temp_reviewImage = ((BitmapDrawable)reviewImage).getBitmap();
+        Bitmap temp_cameraImage = ((BitmapDrawable)cameraImage).getBitmap();
+
+        String encodedImage;
+        if(temp_reviewImage.equals(temp_cameraImage)){
+            encodedImage = "null";
+        } else{
+            encodedImage = imageConversion.toBase64(reviewImageView);
+        }
 
         starNum = (float) ratingBar.getRating();
 

@@ -235,7 +235,6 @@
                         android:background="@null"/>
                 </LinearLayout>
 
-
                 <!-- 확인 버튼 -->
                 <Button
                     android:id="@+id/res_info_confirm"
