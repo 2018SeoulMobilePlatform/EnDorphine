@@ -17,8 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/user_icon"/>
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
                 android:id="@+id/review_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:text="이다콩"
                 android:textColor="#4C4C4C"
                 android:paddingTop="5dp"/>
             <RatingBar
@@ -47,15 +45,13 @@
                 android:id="@+id/review_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="공원이 있어서 산책하기 좋아요. 주변 시설이 청결하고 매점 아주머니도 친절하셔서 너무 좋았어요."
                 android:textColor="#8C8C8C"
                 android:textSize="13dp" />
             <!-- 리뷰 이미지 -->
             <ImageView
                 android:id="@+id/review_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/nanji_1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:adjustViewBounds="true"
                 android:layout_marginTop="10dp"
                 />

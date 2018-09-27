@@ -446,6 +446,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 }
                 break;
             case Constant.GET_REVIEWLIST:
+                SharedPreferences preferences2 = context.getSharedPreferences("preferences", MODE_PRIVATE);
+
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String resultResponse = jsonObject.getString("result");
@@ -460,7 +462,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String point = resultObject.getString("point");
                             String content = resultObject.getString("content");
                             if (camp_name.equals(campingPlace)) {
-                                reviewList_adapter.addItem(new ReviewListItem(camp_name, nickname, Float.parseFloat(point), image, content));
+                                reviewList_adapter.addItem(new ReviewListItem(imageConversion.fromBase64(preferences2.getString("profileImage","")),
+                                        camp_name, nickname, Float.parseFloat(point), image, content));
                             }
                         }
                         reviewList_adapter.notifyDataSetChanged();

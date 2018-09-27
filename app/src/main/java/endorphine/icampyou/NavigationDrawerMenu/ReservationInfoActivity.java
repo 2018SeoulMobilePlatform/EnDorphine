@@ -19,7 +19,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import endorphine.icampyou.R;
 
-public class ReservationInfoActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReservationInfoActivity extends AppCompatActivity {
 
     ImageView qrcode;
     TextView reservationNum;
@@ -29,6 +29,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
     TextView tentNum;
     TextView price;
     Bitmap qrcodeBitmap;
+    Button confirmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
         tentType = (TextView)findViewById(R.id.res_info_tent);
         tentNum = (TextView)findViewById(R.id.res_info_tent_num);
         price = (TextView)findViewById(R.id.res_info_total_price);
+        confirmButton = (Button)findViewById(R.id.res_info_confirm);
 
         //인텐트로 정보 가져오기
         Intent intent = getIntent();
@@ -54,6 +56,13 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
         tentType.setText(intent.getStringExtra("tent_type"));
         tentNum.setText(intent.getStringExtra("tent_number"));
         price.setText(intent.getStringExtra("total_price"));
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -80,14 +89,6 @@ public class ReservationInfoActivity extends AppCompatActivity implements View.O
         return bmp;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.res_info_confirm:
-                finish();
-            default:
-                break;
-        }
-    }
+
 
 }

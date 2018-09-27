@@ -177,6 +177,8 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
             jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
             jsonObject.accumulate("nickname", preferences.getString("nickname",""));
+            jsonObject.accumulate("point", String.valueOf(starNum));
+            jsonObject.accumulate("content",reviewEditText.getText().toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
