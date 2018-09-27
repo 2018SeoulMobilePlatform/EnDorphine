@@ -71,4 +71,8 @@ public class ChatList_Adapter extends BaseAdapter{
     public void removeAllitem(){
         items.clear();
     }
+
+    public int countItme(){
+        return items.size();
+    }
 }

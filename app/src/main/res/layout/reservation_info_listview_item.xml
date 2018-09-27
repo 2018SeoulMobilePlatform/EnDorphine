@@ -27,7 +27,6 @@
             android:id="@+id/res_info_item_camping_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="난지캠핑장"
             android:textColor="@color/colorPrimary"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -40,13 +39,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="예약번호: "
                 android:textSize="13dp"/>
             <TextView
                 android:id="@+id/res_info_item_res_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DSAGDF54662"
                 android:textSize="13dp"/>
         </LinearLayout>
 
@@ -54,7 +51,6 @@
             android:id="@+id/res_info_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2018-09-27 목 ~ 2018-09-28 금"
             android:textSize="13dp" />
     </LinearLayout>
 

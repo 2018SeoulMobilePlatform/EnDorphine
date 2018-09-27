@@ -37,6 +37,17 @@ public class Constant {
     //예약
     public static final int RESERVATION_CAMPING = 1121;
 
+    //예약 정보 가져오기
+    public static final int GET_RESERVATION_INFO = 1122;
+
+    //카메라 접근 권한 변수
+    public static int permissionCheck_Camera;
+    public static int permissionCheck_Write;
+    public static int permissionCheck_Read;
+
+
+    //사용자 정보 수정
+    public static final int MODIFY_USER_INFO = 1123;
     //Camera 클래스
     public static final int CAMERA_CODE = 1000;
     public static final int GALLERY_CODE = 1001;

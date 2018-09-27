@@ -78,7 +78,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_centerInParent="true"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:onClick="modify_profile"/>
+
                         <!-- 프로필 이미지 수정 버튼 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_profile_change_btn"
@@ -98,6 +100,8 @@
                             android:id="@+id/mypage_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:maxLength="15"
                             android:textColor="#5D5D5D"
                             android:textSize="20dp" />
                         <!-- 수정 이미지 -->
@@ -208,7 +212,9 @@
                         android:id="@+id/mypage_password"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"/>
+                        android:layout_weight="8"
+                        android:maxLines="1"
+                        android:maxLength="16"/>
                 </LinearLayout>
 
                 <!-- 비밀번호 -->
@@ -234,6 +240,8 @@
                     <EditText
                         android:id="@+id/mypage_password_check"
                         android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:maxLength="16"
                         android:layout_height="50dp"
                         android:layout_weight="8" />
                 </LinearLayout>

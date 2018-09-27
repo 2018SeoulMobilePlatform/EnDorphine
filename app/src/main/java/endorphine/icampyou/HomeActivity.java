@@ -35,6 +35,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Set;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
@@ -73,6 +78,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
     private ImageView nav_header;
+
+    //이미지 변환
+    ImageConversion imageConversion;
 
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -127,6 +135,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setContentView(R.layout.activity_home);
 
+        imageConversion = new ImageConversion();
+
         // 디폴트 프래그먼트 홈화면으로 설정
         homeFragment2 = new HomeFragment2();
         getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
@@ -160,22 +170,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // drawer 네비게이션 바 설정
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+
         drawerBackground = headerView.findViewById(R.id.drawer_background);
         drawerProfileImage = headerView.findViewById(R.id.drawer_user_image);
         drawerNickName = headerView.findViewById(R.id.drawer_user_name);
         drawerEmail = headerView.findViewById(R.id.drawer_email);
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
-        // 프로필 사진 일단 기본으로 설정함
+        GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
+        GlideApp.with(this).load(imageConversion.fromBase64(preferences.getString("profileImage", ""))).into(drawerProfileImage);
         drawerNickName.setText(preferences.getString("nickname", ""));
         drawerEmail.setText(preferences.getString("email", ""));
-        GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
-        GlideApp.with(this).load(R.drawable.user_icon).into(drawerProfileImage);
 
-        // 임의로 QR 코드 설정
-        generateQRCode(preferences.getString("reservationNum", ""));
-        //drawerQrcode.setImageBitmap(qrcodeBitmap);
-        GlideApp.with(this).load(qrcodeBitmap).into(drawerQrcode);
+        // 예약 정보도 저장
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getreservation";
+
+        JSONObject data = getReservationInfo();
+        NetworkTask networkTask = new NetworkTask(HomeActivity.this, url, data, Constant.GET_RESERVATION_INFO,drawerQrcode);
+        networkTask.execute();
     }
 
     @Override
@@ -237,8 +249,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(mypageIntent);
         }
         // 예약 정보 이동
-        else if (id == R.id.nav_reservation_information) {
-            reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
+        else if(id==R.id.nav_reservation_information){
+            Log.e("리뷰리스트 넘어가기","1");
+            reservationInfoListIntent = new Intent(this, endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
         // 로그인 이동
@@ -250,41 +263,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    // QR코드 생성
-    public void generateQRCode(String contents) {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        try {
-            qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
-
-
-            //((ImageView) findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);=======
-            LayoutInflater inflater = getLayoutInflater();
-            ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_qrcode_popup, null);
-
-            GlideApp.with(this).load(qrcodeBitmap).into((ImageView) view.findViewById(R.id.qrcode_popup));
-            //((ImageView)view.findViewById(R.id.qrcode_popup)).setImageBitmap(qrcodeBitmap);
-
-            qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-            qrcodePopupIntent.putExtra("qrcode", qrcodeBitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // QR코드 이미지 비트맵으로 변환
-    public static Bitmap toBitmap(BitMatrix matrix) {
-        int height = matrix.getHeight();
-        int width = matrix.getWidth();
-        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                bmp.setPixel(x, y, matrix.get(x, y) ? Color.BLACK : Color.WHITE);
-            }
-        }
-        return bmp;
     }
 
     // 상단에 QR코드 아이콘 생성하는 메소드
@@ -308,4 +286,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    //아이디 체크하는 JSON 데이터
+    private JSONObject getReservationInfo(){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("user_id", preferences.getString("email",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }

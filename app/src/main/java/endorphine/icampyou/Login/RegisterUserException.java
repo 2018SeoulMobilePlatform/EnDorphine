@@ -30,7 +30,7 @@ public class RegisterUserException {
 
     //사용자 닉네임 예외처리하는 함수
     public boolean UserNickNameException(String value){
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{2,15}$");
+        Pattern pattern = Pattern.compile("^[a-zA-Z가-힣0-9!@.#$%^&*?_~]{2,15}$");
         Matcher matcher = pattern.matcher(value);
         return matcher.find();
     }

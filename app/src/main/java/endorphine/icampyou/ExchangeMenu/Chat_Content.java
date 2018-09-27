@@ -1,6 +1,7 @@
 package endorphine.icampyou.ExchangeMenu;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,7 +30,7 @@ import endorphine.icampyou.R;
 public class Chat_Content extends AppCompatActivity {
 
     //데이터 변수 선언
-    ImageView m_userPhoto;
+    ImageView need_Photo;
     Spinner camp_kind;
     EditText need_thing;
     EditText lettable_thing;
@@ -37,16 +38,20 @@ public class Chat_Content extends AppCompatActivity {
     Camera camera;
 
     ImageConversion imageConversion;
+
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat__content);
 
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+
         //이미지 넣기
-        m_userPhoto = (ImageView) findViewById(R.id.user_image);
+        need_Photo = (ImageView) findViewById(R.id.user_image);
 
         //카메라 클래스 객체 생성
-        camera = new Camera(this,m_userPhoto);
+        camera = new Camera(this,need_Photo);
 
         imageConversion = new ImageConversion();
 
@@ -66,7 +71,7 @@ public class Chat_Content extends AppCompatActivity {
         save_chat_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) m_userPhoto.getDrawable();
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) need_Photo.getDrawable();
                 Bitmap tempBitmap = bitmapDrawable.getBitmap();
 
                 String camp_name = null;
@@ -120,7 +125,7 @@ public class Chat_Content extends AppCompatActivity {
         new AlertDialog.Builder(Chat_Content.this)
                 .setTitle("업로드할 이미지 선택")
                 .setPositiveButton("사진 촬영", cameraListener)
-                .setNeutralButton("앨번 선택", albumListener)
+                .setNeutralButton("앨범 선택", albumListener)
                 .setNegativeButton("취소", cancelListener).show();
     }
 
@@ -184,13 +189,13 @@ public class Chat_Content extends AppCompatActivity {
 
         JSONObject jsonObject = new JSONObject();
 
-        String encodedImage = imageConversion.toBase64(m_userPhoto);
+        String encodedImage = imageConversion.toBase64(need_Photo);
 
         Log.e("이미지",encodedImage);
 
         try {
             jsonObject.accumulate("image", encodedImage);
-            jsonObject.accumulate("user_id", "허진규멍청이");
+            jsonObject.accumulate("user_id", preferences.getString("nickname",""));
             jsonObject.accumulate("myitem", need_thing.getText().toString());
             jsonObject.accumulate("needitem", lettable_thing.getText().toString());
             jsonObject.accumulate("camp_name", camp_kind.getSelectedItem().toString());

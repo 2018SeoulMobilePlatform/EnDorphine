@@ -271,6 +271,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         JSONObject data = sendJSonData();
 
+
         NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter,campingPlace);
         networkTask.execute();
 
