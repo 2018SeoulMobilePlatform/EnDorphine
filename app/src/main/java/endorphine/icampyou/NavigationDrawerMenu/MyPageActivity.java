@@ -62,7 +62,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         backButton.setOnClickListener(this);
         GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
 
-        GlideApp.with(this).load(R.color.colorPrimary).into((CircleImageView)findViewById(R.id.mypage_profile_borderLine));
         GlideApp.with(this).load(R.drawable.review_plus_icon).into((CircleImageView)findViewById(R.id.mypage_profile_change_btn));
 
         // 유저정보 설정
