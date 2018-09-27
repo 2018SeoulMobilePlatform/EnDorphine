@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
@@ -43,7 +44,7 @@ public class ConfirmPopupActivity extends Activity {
         String price = intent.getStringExtra("price");
         String quantity = intent.getStringExtra("quantity");
 
-        imageView.setImageBitmap(qrcode);
+        GlideApp.with(this).load(qrcode).into(imageView);
         reservationNumView.setText(reservationNum);
         periodView.setText(period);
         campView.setText(campName);

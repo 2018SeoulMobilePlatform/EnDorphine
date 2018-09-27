@@ -17,13 +17,13 @@
         >
 
         <ImageView
+            android:id="@+id/search_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_marginLeft="3dp"
-            android:layout_weight="1"
-            android:src="@drawable/search"/>
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/search"
@@ -111,8 +111,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="10dp"
                             android:background="#FFFFFF"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/review_plus_icon" />
+                            android:scaleType="fitXY" />
 
                     </LinearLayout>
                 </LinearLayout>

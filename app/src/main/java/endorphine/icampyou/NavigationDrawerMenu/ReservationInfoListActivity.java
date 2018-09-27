@@ -4,26 +4,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
-public class ReservationInfoListActivity extends AppCompatActivity {
+public class ReservationInfoListActivity extends AppCompatActivity implements View.OnClickListener{
 
     private LayoutInflater inflater;
     private ViewGroup viewLayout;
     private ListView reservationInfoList;
     private ArrayList<ReservationInfoItem> reservationinfoData;
     private ReservationInfoListViewAdapter adapter;
+    private ImageView backButton;
 
     SharedPreferences preferences;
 
@@ -38,6 +38,11 @@ public class ReservationInfoListActivity extends AppCompatActivity {
         setContentView(viewLayout);
 
         setReservationInfoList();
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.res_info_list_back_btn);
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+        backButton.setOnClickListener(this);
 
         //예약 상세정보 확인
         reservationInfoList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -106,5 +111,15 @@ public class ReservationInfoListActivity extends AppCompatActivity {
     private void addReservationInfoList(String reservationNo, String campingPlace, String date,String tent_type,String tent_number,String total_price){
         ReservationInfoItem reservationInfoItem = new ReservationInfoItem(reservationNo, campingPlace, date,tent_type,tent_number,total_price);
         reservationinfoData.add(reservationInfoItem);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.res_info_list_back_btn:
+                finish();
+            default:
+                break;
+        }
     }
 }

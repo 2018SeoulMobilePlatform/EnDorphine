@@ -1,13 +1,16 @@
 package endorphine.icampyou;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -79,17 +82,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //이미지 변환
     ImageConversion imageConversion;
 
-    // Back키 이벤트 인터페이스
-    public interface onKeyBackPressedListener {
-        public void onBack();
-    }
-
-    private onKeyBackPressedListener mOnKeyBackPressedListener;
-
-    public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
-        mOnKeyBackPressedListener = listener;
-    }
-
     // 하단바 클릭 이벤트
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -101,24 +93,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.navigation_guide:
                     // 예약 프래그먼트1로 변경
                     guideFragment1 = new GuideFragment1();
+                    eventFragment1 = null;
+                    homeFragment2 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, guideFragment1).commit();
                     return true;
                 case R.id.navigation_home:
                     // 홈 프래그먼트1로 변경
                     homeFragment2 = new HomeFragment2();
+                    guideFragment1 = null;
+                    eventFragment1 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, homeFragment2).commit();
                     return true;
                 case R.id.navigation_exchange:
                     // 교환 프래그먼트1로 변경
                     chattingList_fragment = new ChattingList_Fragment();
+                    guideFragment1 = null;
+                    eventFragment1 = null;
+                    homeFragment2 = null;
                     fragmentTransaction.replace(R.id.main_frame, chattingList_fragment).commit();
                     return true;
                 case R.id.navigation_event:
                     // 이벤트 프래그먼트1로 변경
                     eventFragment1 = new EventFragment1();
+                    guideFragment1 = null;
+                    homeFragment2 = null;
+                    chattingList_fragment = null;
                     fragmentTransaction.replace(R.id.main_frame, eventFragment1).commit();
                     return true;
             }
+            fragmentTransaction.addToBackStack("TEXT_VIEWER_BACKSTACK").commit();
             return false;
         }
     };
@@ -132,19 +137,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         imageConversion = new ImageConversion();
 
-        // fragment 객체 생성
-        guideFragment1 = new GuideFragment1();
-        chattingList_fragment = new ChattingList_Fragment();
-        eventFragment1 = new EventFragment1();
-        homeFragment2 = new HomeFragment2();
-
         // 디폴트 프래그먼트 홈화면으로 설정
+        homeFragment2 = new HomeFragment2();
         getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
-
-        // intent 설정하기
-        //qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-        //mypageIntent = new Intent(this, MyPageActivity.class);
-        //reservationInfoListIntent = new Intent(this, ReservationInfoListActivity.class);
 
         // Bottom Navigation (하단 네비게이션 바)
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -153,10 +148,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
 
 
-//        // Navigation Drawer (옆구리 네비게이션 바)
+        // Navigation Drawer (옆구리 네비게이션 바)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -174,7 +169,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.addHeaderView(headerView);
 
         // drawer 네비게이션 바 설정
-
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
         drawerBackground = headerView.findViewById(R.id.drawer_background);
@@ -183,9 +177,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerEmail = headerView.findViewById(R.id.drawer_email);
         drawerQrcode = headerView.findViewById(R.id.drawer_qrcode);
 
-        // 프로필 사진 일단 기본으로 설정함
-
-        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage", "")));
+        GlideApp.with(this).load(R.drawable.drawer_background).into(drawerBackground);
+        GlideApp.with(this).load(imageConversion.fromBase64(preferences.getString("profileImage", ""))).into(drawerProfileImage);
         drawerNickName.setText(preferences.getString("nickname", ""));
         drawerEmail.setText(preferences.getString("email", ""));
 
@@ -195,7 +188,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         JSONObject data = getReservationInfo();
         NetworkTask networkTask = new NetworkTask(HomeActivity.this, url, data, Constant.GET_RESERVATION_INFO,drawerQrcode);
         networkTask.execute();
-
     }
 
     @Override
@@ -216,10 +208,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }
+        else if(getFragmentManager().getBackStackEntryCount() == 0){
+            AlertDialog.Builder finishDialog = new AlertDialog.Builder(this);
+            finishDialog.setMessage("정말로 종료하시겠습니까?");
+
+            finishDialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            finishDialog.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finishAffinity();
+                }
+            });
+            finishDialog.setIcon(R.drawable.app_icon3);
+            finishDialog.setTitle(R.string.app_name);
+            AlertDialog alert = finishDialog.create();
+            alert.show();
+        }
+        else{
+            getFragmentManager().popBackStack();
         }
     }
 
@@ -230,7 +244,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // 내 정보 이동
-        if(id==R.id.nav_mypage){
+        if (id == R.id.nav_mypage) {
             mypageIntent = new Intent(this, MyPageActivity.class);
             startActivity(mypageIntent);
         }
@@ -241,7 +255,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(reservationInfoListIntent);
         }
         // 로그인 이동
-        else if(id==R.id.nav_logout){
+        else if (id == R.id.nav_logout) {
             logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
         }
