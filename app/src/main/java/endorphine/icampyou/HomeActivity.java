@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -267,6 +270,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             // QR코드 팝업창 띄우기
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
+            Drawable temp  = drawerQrcode.getDrawable();
+            qrcodePopupIntent.putExtra("qrCode", (Parcelable) ((BitmapDrawable)temp).getBitmap());
             startActivity(qrcodePopupIntent);
             return true;
         }

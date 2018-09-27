@@ -73,7 +73,7 @@ public class PricePopupActivity extends Activity {
         int reservationNum = random.nextInt();
         if(reservationNum < 0)
             reservationNum = reservationNum * (-1);
-
+        SharedPreferences.Editor editor = preferences.edit();
         //서버 연동
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";
 
