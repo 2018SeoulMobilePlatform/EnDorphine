@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -35,12 +36,11 @@ public class QrcodePopupActivity extends Activity {
     SharedPreferences preferences;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        preferences =getSharedPreferences("preferences", MODE_PRIVATE);
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
         Set<String> reservationNum = preferences.getStringSet("reservationNum", new HashSet<String>());
         Set<String> campingPlace = preferences.getStringSet("campingPlace", new HashSet<String>());
@@ -66,27 +66,34 @@ public class QrcodePopupActivity extends Activity {
         setContentView(R.layout.activity_qrcode_popup);
 
         //UI 객체 생성
-        imageView = (ImageView)findViewById(R.id.qrcode_popup);
-        reservationNum_textView = (TextView)findViewById(R.id.reservation_number);
-        campingPlace_textView = (TextView)findViewById(R.id.reservation_camping);
+        imageView = (ImageView) findViewById(R.id.qrcode_popup);
+        reservationNum_textView = (TextView) findViewById(R.id.reservation_number);
+        campingPlace_textView = (TextView) findViewById(R.id.reservation_camping);
         date_textView = (TextView) findViewById(R.id.reservation_date);
         tentType_View = (TextView) findViewById(R.id.reservation_tent);
 
+        if (arrayList_reservationNum.size() == 0) {
 
+        } else {
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            Bitmap qrcode = null;
+            try {
+                qrcode = toBitmap(qrCodeWriter.encode(arrayList_reservationNum.get(0), BarcodeFormat.QR_CODE,500, 500));
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
 
-        reservationNum_textView.setText(arrayList_reservationNum.get(0));
-        campingPlace_textView.setText(arrayList_campingPlace.get(0));
-        date_textView.setText(arrayList_date.get(0));
-        tentType_View.setText(arrayList_tentType.get(0));
+            reservationNum_textView.setText(arrayList_reservationNum.get(0));
+            campingPlace_textView.setText(arrayList_campingPlace.get(0));
+            date_textView.setText(arrayList_date.get(0));
+            tentType_View.setText(arrayList_tentType.get(0));
 
-        Intent intent = getIntent();
-
-        Bitmap qrcode = intent.getParcelableExtra("qrCode");
-        imageView.setImageBitmap(qrcode);
-    }
+            imageView.setImageBitmap(qrcode);
+        }
+}
 
     //확인 버튼 클릭
-    public void mOnClose(View v){
+    public void mOnClose(View v) {
         //액티비티(팝업) 닫기
         finish();
     }
@@ -94,7 +101,7 @@ public class QrcodePopupActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
-        if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;

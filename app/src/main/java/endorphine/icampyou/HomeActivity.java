@@ -38,6 +38,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,6 +51,8 @@ import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
 import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
+
+import static endorphine.icampyou.NavigationDrawerMenu.ReservationInfoActivity.toBitmap;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     // fragment 교체를 위한 변수들
@@ -270,8 +274,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             // QR코드 팝업창 띄우기
             qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
-            Drawable temp  = drawerQrcode.getDrawable();
-            qrcodePopupIntent.putExtra("qrCode", (Parcelable) ((BitmapDrawable)temp).getBitmap());
             startActivity(qrcodePopupIntent);
             return true;
         }
