@@ -14,7 +14,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventInfoFragment;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 public class ReservationInfoListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,7 +40,7 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
 
         // back 버튼 설정
         backButton = findViewById(R.id.res_info_list_back_btn);
-        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
         backButton.setOnClickListener(this);
     }
 
@@ -51,10 +53,11 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         // 유저정보 가져오기
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         String userId = preferences.getString("email","");
+
         // 서버에서 해당하는 유저 아이디의 예약정보 가져와서 리스트아이템 추가 (지금은 예시로 임의로 추가함)
-        addReservationInfoList("DSAFQQWR1523","서울대공원캠핑장","2018-09-11 목 ~ 2018-09-15 토");
-        addReservationInfoList("GVGH12334DAS","초안산캠핑장","2018-10-11 월 ~ 2018-11-12 화");
-        addReservationInfoList("BVQ2312GFDQ5","중랑캠핑장","2018-11-02 화 ~ 2018-11-12 수");
+//        addReservationInfoList("DSAFQQWR1523","서울대공원캠핑장","2018-09-11 목 ~ 2018-09-15 토");
+//        addReservationInfoList("GVGH12334DAS","초안산캠핑장","2018-10-11 월 ~ 2018-11-12 화");
+//        addReservationInfoList("BVQ2312GFDQ5","중랑캠핑장","2018-11-02 화 ~ 2018-11-12 수");
 
         // 어댑터로 예약정보 리스트에 아이템 뿌려주기
         adapter = new ReservationInfoListViewAdapter(inflater, R.layout.reservation_info_listview_item, reservationinfoData);
@@ -70,8 +73,6 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
             }
         });
     }
-
-    //
 
     // 예약정보 리스트
     private void addReservationInfoList(String reservationNo, String campingPlace, String date){

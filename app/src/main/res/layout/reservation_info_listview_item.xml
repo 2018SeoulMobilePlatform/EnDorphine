@@ -15,7 +15,6 @@
         android:layout_height="55dp"
         android:layout_marginRight="20dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/tent1"
         android:layout_weight="2"/>
 
     <LinearLayout

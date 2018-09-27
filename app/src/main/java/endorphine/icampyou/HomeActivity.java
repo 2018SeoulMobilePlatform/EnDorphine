@@ -215,7 +215,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     finishAffinity();
                 }
             });
-            finishDialog.setIcon(R.drawable.app_icon5);
+            finishDialog.setIcon(R.drawable.app_icon3);
             finishDialog.setTitle(R.string.app_name);
             AlertDialog alert = finishDialog.create();
             alert.show();

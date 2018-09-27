@@ -33,6 +33,7 @@ import java.util.Locale;
 
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -107,12 +108,11 @@ public class ChattingList_Fragment extends BaseFragment {
             }
         });
 
-
-
-
+        GlideApp.with(view).load(R.drawable.search).into((ImageView)view.findViewById(R.id.search_image));
 
         //채팅방 목록 생성하는 버튼
         FloatingActionButton add_chatlist_btn = (FloatingActionButton) view.findViewById(R.id.make_chatlist_button);
+        GlideApp.with(view).load(R.drawable.review_plus_icon).into(add_chatlist_btn);
         add_chatlist_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -283,12 +283,12 @@ public class ChattingList_Fragment extends BaseFragment {
         if(text.equals("캠핑장 채팅"))
         {
             img = (ImageView) view.findViewById(R.id.tabs_image);
-            img.setImageDrawable(getResources().getDrawable(R.drawable.tent1));
+            GlideApp.with(view).load(R.drawable.tent1).into(img);
         }
         else if(text.equals("나의 채팅"))
         {
             img = (ImageView)view.findViewById(R.id.tabs_image);
-            img.setImageDrawable(getResources().getDrawable(R.drawable.tent2));
+            GlideApp.with(view).load(R.drawable.tent2).into(img);
         }
 
         TextView tv = (TextView) view.findViewById(R.id.tabs_text);

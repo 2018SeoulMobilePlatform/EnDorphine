@@ -16,6 +16,7 @@ import android.widget.Toast;
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 public class MyPageActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,8 +49,11 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         // back 버튼 설정
         backButton = findViewById(R.id.mypage_back_btn);
-        backButton.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.back_btn));
         backButton.setOnClickListener(this);
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+
+        GlideApp.with(this).load(R.color.colorPrimary).into((CircleImageView)findViewById(R.id.mypage_profile_borderLine));
+        GlideApp.with(this).load(R.drawable.review_plus_icon).into((CircleImageView)findViewById(R.id.mypage_profile_change_btn));
 
         // 유저정보 설정
         userImage = findViewById(R.id.mypage_user_image);
@@ -62,7 +66,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
-        userImage.setImageResource(R.drawable.user_icon);
+        GlideApp.with(this).load(R.drawable.user_icon).into(userImage);
         nickname.setText(preferences.getString("nickname",""));
         email.setText(preferences.getString("email",""));
         name.setText(preferences.getString("name",""));

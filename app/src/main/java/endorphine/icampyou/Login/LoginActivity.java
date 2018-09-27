@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kakao.auth.ErrorCode;
@@ -32,6 +34,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import endorphine.icampyou.Constant;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
@@ -83,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
 
+        GlideApp.with(this).load(R.drawable.camp_night).into((ImageView) findViewById(R.id.login_background));
     }
 
     @Override

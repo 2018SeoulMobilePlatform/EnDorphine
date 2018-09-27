@@ -38,7 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.StatusBar"
         tools:replace="android:icon,android:theme,android:label"
-        android:icon="@drawable/app_icon5">
+        android:icon="@drawable/app_icon3">
 
     <!--
     tools:replace="android:theme"

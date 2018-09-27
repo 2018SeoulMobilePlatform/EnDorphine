@@ -68,24 +68,22 @@
                         android:layout_centerInParent="true">
                         <!-- 프로필 이미지 테두리-->
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/mypage_profile_borderLine"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
-                            android:layout_centerInParent="true"
-                            android:src="@color/colorPrimary" />
+                            android:layout_centerInParent="true"/>
                         <!-- 프로필 이미지 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_user_image"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:src="@drawable/user_icon" />
+                            android:layout_gravity="center" />
                         <!-- 프로필 이미지 수정 버튼 -->
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/mypage_profile_change_btn"
                             android:layout_width="29dp"
                             android:layout_height="29dp"
-                            android:src="@drawable/review_plus_icon"
                             android:onClick="modify_profile"/>
                     </RelativeLayout>
 
@@ -100,7 +98,6 @@
                             android:id="@+id/mypage_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="배챙이"
                             android:textColor="#5D5D5D"
                             android:textSize="20dp" />
                         <!-- 수정 이미지 -->
@@ -140,8 +137,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="8"
-                        android:editable="false"
-                        android:text="dain6912@naver.com" />
+                        android:editable="false"/>
                 </LinearLayout>
 
                 <!-- 이름 -->
@@ -163,8 +159,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="8"
-                        android:editable="false"
-                        android:text="배진영" />
+                        android:editable="false" />
                 </LinearLayout>
 
                 <!-- 폰번호 -->
@@ -186,8 +181,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="8"
-                        android:editable="false"
-                        android:text="010-8215-8282" />
+                        android:editable="false"/>
                 </LinearLayout>
 
                 <!-- 비밀번호 -->
@@ -214,8 +208,7 @@
                         android:id="@+id/mypage_password"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
-                        android:text="******" />
+                        android:layout_weight="8"/>
                 </LinearLayout>
 
                 <!-- 비밀번호 -->
@@ -242,8 +235,7 @@
                         android:id="@+id/mypage_password_check"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="8"
-                        android:text="******" />
+                        android:layout_weight="8" />
                 </LinearLayout>
 
 

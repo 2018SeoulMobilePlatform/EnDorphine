@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 public class ChatList_Adapter extends BaseAdapter{
@@ -50,7 +51,7 @@ public class ChatList_Adapter extends BaseAdapter{
 
         Chat_Item item = (Chat_Item)getItem(position);
 
-        imageView.setImageBitmap(item.getImage());
+        GlideApp.with(convertView).load(item.getImage()).into(imageView);
         user.setText(item.getUser_id());
         camp.setText(item.getCamping_name());
         need.setText(item.getNeed_thing());
