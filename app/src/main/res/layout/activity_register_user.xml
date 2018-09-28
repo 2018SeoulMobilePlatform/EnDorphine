@@ -48,7 +48,7 @@
             android:textAlignment="center"
             android:layout_marginTop="20dp"
             android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="#d3d3d3"
             android:textSize="15dp"
             android:layout_weight="1"/>
 
@@ -65,7 +65,7 @@
             android:inputType="textPassword"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="#d3d3d3"
             android:textSize="15dp"
             android:layout_weight="1"/>
 
@@ -81,7 +81,7 @@
             android:maxLength="15"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="#d3d3d3"
             android:textSize="15dp"
             android:layout_weight="1"/>
 
@@ -97,7 +97,7 @@
             android:maxLength="15"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="#d3d3d3"
             android:textSize="15dp"
             android:layout_weight="1"/>
 
@@ -113,7 +113,7 @@
             android:maxLength="11"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="#d3d3d3"
             android:textSize="15dp"
             android:layout_weight="1"/>
 
