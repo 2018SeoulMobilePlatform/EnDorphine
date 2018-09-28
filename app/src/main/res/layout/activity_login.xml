@@ -124,7 +124,7 @@
                 android:id="@+id/register_user_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Sing Up"
+                android:text="Sign Up"
                 android:textColor="#FFFFFF"
                 android:textSize="25dp"
                 android:textStyle="bold" />

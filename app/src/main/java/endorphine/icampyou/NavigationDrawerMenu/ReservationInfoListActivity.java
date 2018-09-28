@@ -74,7 +74,7 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         String[] tentType = preferences.getString("tentType",  "").split(",");
         String[] tentNum = preferences.getString("tentNum",  "").split(",");
         String[] price = preferences.getString("price", "").split(",");
-        
+
         for(int i=0;i<reservationNum.length;i++){
             addReservationInfoList(reservationNum[i],
                     campingPlace[i], date[i],

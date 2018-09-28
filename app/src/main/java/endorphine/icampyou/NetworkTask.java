@@ -493,7 +493,11 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
                             resultObject = resultObjectArray.getJSONObject(i);
-                            Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                            Bitmap image;
+                            if(resultObject.getString("image").equals("null"))
+                                image = null;
+                            else
+                                image = imageConversion.fromBase64(resultObject.getString("image"));
                             String nickname = resultObject.getString("nickname");
                             String camp_name = resultObject.getString("camp_name");
                             String point = resultObject.getString("point");
