@@ -10,5 +10,6 @@
     <color name="colorAccent">#13B9A5</color>
     <color name="colorGrey">#1A000000</color>
     <color name="colorBrown">#5A4D44</color>
+    <color name="colorPrimaryWhite">#1A13B9A5</color>
 
 </resources>
