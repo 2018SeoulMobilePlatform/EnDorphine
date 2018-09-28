@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
@@ -43,7 +45,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
     ImageConversion imageConversion;
 
-    RegisterUserException exception ;
+    RegisterUserException exception;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         backButton.setOnClickListener(this);
         GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
 
-        GlideApp.with(this).load(R.drawable.review_plus_icon).into((CircleImageView)findViewById(R.id.mypage_profile_change_btn));
+        GlideApp.with(this).load(R.drawable.review_plus_icon).into((CircleImageView) findViewById(R.id.mypage_profile_change_btn));
 
         // 유저정보 설정
         userImage = findViewById(R.id.mypage_user_image);
@@ -78,7 +80,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         editor = preferences.edit();
 
-        GlideApp.with(this).load(imageConversion.fromBase64(preferences.getString("profileImage",""))).into(userImage);
+        GlideApp.with(this).load(imageConversion.fromBase64(preferences.getString("profileImage", ""))).into(userImage);
         nickname.setText(preferences.getString("nickname", ""));
         email.setText(preferences.getString("email", ""));
         name.setText(preferences.getString("name", ""));
@@ -89,8 +91,8 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         nickname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    if(nickname.getText().length() != 0){
+                if (!hasFocus) {
+                    if (nickname.getText().length() != 0) {
                         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/user/checknickname";
 
                         JSONObject data = null;
@@ -100,9 +102,9 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
 
-                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_EMAIL,nickname);
+                        NetworkTask networkTask = new NetworkTask(MyPageActivity.this, url, data, Constant.DUPLICATED_EMAIL, nickname);
                         networkTask.execute();
-                    } else{
+                    } else {
                         nickname.setBackgroundResource(R.drawable.rounded_login);
                     }
                 }
@@ -123,10 +125,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void afterTextChanged(Editable editable) {
                 String edit = editable.toString();
-                if(exception.UserPassWordExcepiton(edit)){
+                if (exception.UserPassWordExcepiton(edit)) {
                     password.setBackgroundResource(R.drawable.check_edittext);
-                } else{
-                    if(edit.length() != 0)
+                } else {
+                    if (edit.length() != 0)
                         password.setBackgroundResource(R.drawable.uncheck_edittext);
                     else
                         password.setBackgroundResource(R.drawable.rounded_login);
@@ -149,10 +151,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void afterTextChanged(Editable editable) {
                 String edit = editable.toString();
-                if(exception.UserPassWordExcepiton(edit)){
+                if (exception.UserPassWordExcepiton(edit)) {
                     passwordCheck.setBackgroundResource(R.drawable.check_edittext);
-                } else{
-                    if(edit.length() != 0)
+                } else {
+                    if (edit.length() != 0)
                         passwordCheck.setBackgroundResource(R.drawable.uncheck_edittext);
                     else
                         passwordCheck.setBackgroundResource(R.drawable.rounded_login);
@@ -226,8 +228,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
             JSONObject data = sendJSONdata();
 
-            NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
+            NetworkTask networkTask = new NetworkTask(MyPageActivity.this, url, data, Constant.MODIFY_USER_INFO);
             networkTask.execute();
+        } else if (v.getId() == R.id.mypage_back_btn) {
+            finish();
         }
     }
 
@@ -265,10 +269,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.accumulate("id", preferences.getString("email",""));
-            jsonObject.accumulate("image",imageConversion.toBase64(userImage));
-            jsonObject.accumulate("nickname",nickname.getText().toString());
-            jsonObject.accumulate("password",password.getText().toString());
+            jsonObject.accumulate("id", preferences.getString("email", ""));
+            jsonObject.accumulate("image", imageConversion.toBase64(userImage));
+            jsonObject.accumulate("nickname", nickname.getText().toString());
+            jsonObject.accumulate("password", password.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -280,7 +284,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
     private JSONObject checkJSonNickname() throws JSONException {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.accumulate("nickname",nickname.getText().toString());
+        jsonObject.accumulate("nickname", nickname.getText().toString());
 
         return jsonObject;
     }
