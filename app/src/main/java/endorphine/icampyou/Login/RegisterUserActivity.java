@@ -84,9 +84,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         password_editText = (EditText)findViewById(R.id.password);
         password_editText.setPrivateImeOptions("defaultInputmode=english;");
         name_editText = (EditText)findViewById(R.id.user_name);
-        name_editText.setPrivateImeOptions("defaultInputmode=english;");
+        name_editText.setPrivateImeOptions("defaultInputmode=korea;");
         nickName_editText = (EditText)findViewById(R.id.user_nickname);
-        nickName_editText.setPrivateImeOptions("defaultInputmode=english;");
+        nickName_editText.setPrivateImeOptions("defaultInputmode=korea;");
         phoneNumber_editText = (EditText)findViewById(R.id.user_phone);
         phoneNumber_editText.setPrivateImeOptions("defaultInputmode=english;");
         user_profile = (CircleImageView)findViewById(R.id.profile_image);

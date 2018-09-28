@@ -75,14 +75,18 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
             // 작성완료 버튼 누를 시 이벤트
             case R.id.completing_review_button:
                 //서버 연동
-                String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
+                if(reviewEditText.getText().toString().equals("")){
+                    Toast.makeText(this,"후기를 글귀를 작성해주세요",Toast.LENGTH_LONG);
+                } else{
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/add";
 
-                JSONObject data = null;
-                data = sendJSonData();
+                    JSONObject data = null;
+                    data = sendJSonData();
 
-                endorphine.icampyou.NetworkTask networkTask =
-                        new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, Constant.MAKE_REVIEWLIST);
-                networkTask.execute();
+                    endorphine.icampyou.NetworkTask networkTask =
+                            new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, Constant.MAKE_REVIEWLIST);
+                    networkTask.execute();
+                }
                 break;
         }
     }

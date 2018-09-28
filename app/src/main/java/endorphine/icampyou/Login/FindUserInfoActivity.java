@@ -47,7 +47,7 @@ public class FindUserInfoActivity extends AppCompatActivity {
         findPassword_email_editText = (EditText)findViewById(R.id.find_email);
         findPassword_email_editText.setPrivateImeOptions("defaultInputmode=english;");
         findPassword_name_editText = (EditText)findViewById(R.id.find_name2);
-        findPassword_name_editText.setPrivateImeOptions("defaultInputmode=english;");
+        findPassword_name_editText.setPrivateImeOptions("defaultInputmode=korea;");
         findPassword_phone_editText = (EditText)findViewById(R.id.find_phone);
         findPassword_phone_editText.setPrivateImeOptions("defaultInputmode=english;");
 
