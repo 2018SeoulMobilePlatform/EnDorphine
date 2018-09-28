@@ -8,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -30,15 +27,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
@@ -47,7 +37,6 @@ import endorphine.icampyou.GuideMenu.GuideFragment1;
 import endorphine.icampyou.HomeMenu.HomeFragment2;
 import endorphine.icampyou.Login.LoginActivity;
 import endorphine.icampyou.NavigationDrawerMenu.MyPageActivity;
-import endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity;
 import endorphine.icampyou.QRcode.QrcodePopupActivity;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -280,6 +269,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.action_settings) {
             // QR코드 팝업창 띄우기
+            qrcodePopupIntent = new Intent(this, QrcodePopupActivity.class);
             startActivity(qrcodePopupIntent);
             return true;
         }

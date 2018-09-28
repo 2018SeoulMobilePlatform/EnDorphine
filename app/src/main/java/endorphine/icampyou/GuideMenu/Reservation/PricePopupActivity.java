@@ -13,7 +13,9 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import endorphine.icampyou.Constant;
 import endorphine.icampyou.R;
@@ -73,6 +75,28 @@ public class PricePopupActivity extends Activity {
         int reservationNum = random.nextInt();
         if(reservationNum < 0)
             reservationNum = reservationNum * (-1);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Set<String> reservationNum_Set = preferences.getStringSet("reservationNum",new HashSet<String>());
+        Set<String> campingPlace_Set = preferences.getStringSet("campingPlace",new HashSet<String>());
+        Set<String> date_Set = preferences.getStringSet("date",new HashSet<String>());
+        Set<String> tentType_Set = preferences.getStringSet("tentType",new HashSet<String>());
+        Set<String> tentNum_Set = preferences.getStringSet("tentNum",new HashSet<String>());
+        Set<String> price_Set = preferences.getStringSet("price",new HashSet<String>());
+
+        reservationNum_Set.add(String.valueOf(reservationNum));
+        campingPlace_Set.add(campName);
+        date_Set.add(period);
+        tentType_Set.add(tentName);
+        tentNum_Set.add(quantity);
+        price_Set.add(price);
+
+        editor.putStringSet("reservationNum", reservationNum_Set);
+        editor.putStringSet("campingPlace", campingPlace_Set);
+        editor.putStringSet("date", date_Set);
+        editor.putStringSet("tentType", tentType_Set);
+        editor.putStringSet("tentNum", tentNum_Set);
+        editor.putStringSet("price", price_Set);
 
         //서버 연동
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";

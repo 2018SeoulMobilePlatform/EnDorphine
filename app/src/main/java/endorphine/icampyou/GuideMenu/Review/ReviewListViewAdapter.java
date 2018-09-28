@@ -59,6 +59,9 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
         ReviewListItem reviewListItem= reviewData.get(position);
 
+        profileImage= (ImageView)convertView.findViewById(R.id.review_profile_image);
+        profileImage.setImageBitmap(reviewListItem.getProfile_image());
+
         nickName=(TextView)convertView.findViewById(R.id.review_nickname);
         nickName.setText(reviewListItem.getNickName());
 

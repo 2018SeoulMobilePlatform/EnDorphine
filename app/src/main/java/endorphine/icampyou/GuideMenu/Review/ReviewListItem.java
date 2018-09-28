@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
  */
 public class ReviewListItem {
 
+    private Bitmap profile_image;
     private String nickName;  // 유저 닉네임
     private float star;  // 별점
     private Bitmap reviewImage;    //리뷰 이미지
@@ -17,7 +18,8 @@ public class ReviewListItem {
 
 
     // 생성자
-    public ReviewListItem(String campingPlace, String nickName, float star, Bitmap reviewImage, String reviewContent) {
+    public ReviewListItem(Bitmap profile_image,String campingPlace, String nickName, float star, Bitmap reviewImage, String reviewContent) {
+        this.profile_image = profile_image;
         this.campingPlace = campingPlace;
         this.nickName = nickName;
         this.star = star;
@@ -41,4 +43,6 @@ public class ReviewListItem {
     public String getReviewContent() {return reviewContent;}
 
     public String getCampingPlace() {return campingPlace;}
+
+    public Bitmap getProfile_image() { return profile_image;}
 }
