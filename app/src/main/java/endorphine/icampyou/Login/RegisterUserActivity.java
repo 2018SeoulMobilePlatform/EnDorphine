@@ -259,6 +259,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         jsonObject.accumulate("name", name_editText.getText().toString());
         jsonObject.accumulate("nickname", nickName_editText.getText().toString());
         jsonObject.accumulate("phonenumber", phoneNumber_editText.getText().toString());
+        jsonObject.accumulate("flag","0");
 
         return jsonObject;
     }

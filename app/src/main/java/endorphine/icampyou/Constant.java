@@ -51,11 +51,19 @@ public class Constant {
     //채팅방 정보 불러오기
     public static final int GET_CHATTINGMESSAGELIST = 1125;
 
+    //사용자 채팅방 삭제
+    public static final int REMOVE_CHATTINGLIST = 1126;
+
+    //채팅 상대방 설정
+    public static final int SET_OPPONENT = 1127;
+
+    //채팅 상대방 값 가져오기
+    public static final int GET_OPPONENT = 1128;
+
     //카메라 접근 권한 변수
     public static int permissionCheck_Camera;
     public static int permissionCheck_Write;
     public static int permissionCheck_Read;
-
 
     //Camera 클래스
     public static final int CAMERA_CODE = 1000;

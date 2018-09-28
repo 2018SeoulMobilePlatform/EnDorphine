@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class ChattingList_Fragment extends BaseFragment {
     final int save_info = 1;
 
     ArrayList<Chat_Item> copy;
+    ArrayList<Chat_Item> copy2;
     ChatList_Adapter campList_adapter;
     ChatList_Adapter myList_adapter;
     ListView chatlist_listView;
@@ -74,7 +76,7 @@ public class ChattingList_Fragment extends BaseFragment {
 
         JSONObject data = sendJSonData();
 
-        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy,myList_adapter);
+        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy,myList_adapter,copy2);
         networkTask.execute();
     }
 
@@ -136,35 +138,39 @@ public class ChattingList_Fragment extends BaseFragment {
         chatlist_listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
-//                if(preferences.getString("nickname","").equals(
-//                        ((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString())){
-//                    Toast toast = Toast.makeText(getActivity(),
-//                            "사용자가 만든 채팅방입니다", Toast.LENGTH_SHORT);
-//                    toast.show();
-//                } else{
-//                    FragmentManager manager= getFragmentManager();
-//                    ChattingMessage_Fragment chattingMessage_fragment = new ChattingMessage_Fragment();
-//                    Bundle args = new Bundle();
-//                    args.putString("other",((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString());
-//                    chattingMessage_fragment.setArguments(args);
-//                    FragmentTransaction transaction = manager.beginTransaction();
-//                    transaction.replace(R.id.chattinglist_page,chattingMessage_fragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                }
+                if(((Chat_Item)campList_adapter.getItem(position)).getNickname().equals(preferences.getString("nickname",""))){
+                    Log.e("1","1");
+                    Intent intent = new Intent(getActivity(), ChattingMessageActivity.class);
+                    intent.putExtra("number",((Chat_Item)campList_adapter.getItem(position)).getNumber());
+                    intent.putExtra("opponent","null");
+                    startActivity(intent);
+                }
+                else if(((Chat_Item)campList_adapter.getItem(position)).getFlag().equals("0")){
+                    Log.e("2","2");
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update/chatroomflag";
+                    JSONObject data = setOtherJSONdata(((Chat_Item)campList_adapter.getItem(position)).getNumber(),preferences.getString("nickname",""));
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.SET_OPPONENT,((Chat_Item)campList_adapter.getItem(position)).getNumber(),((Chat_Item)campList_adapter.getItem(position)).getNickname());
+                    networkTask.execute();
+                } else{
+                    Log.e("3","3");
+                    String url2 = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getflag";
+
+                    JSONObject data2 = getOpponentData(((Chat_Item)campList_adapter.getItem(position)).getNumber());
+
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url2,data2,Constant.GET_OPPONENT,true,
+                            ((Chat_Item)campList_adapter.getItem(position)).getNumber(),((Chat_Item)campList_adapter.getItem(position)).getNickname());
+                    networkTask.execute();
+                }
+            }
+        });
+
+        mylist_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ChattingMessageActivity.class);
                 intent.putExtra("other",((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString());
                 startActivity(intent);
-
-//                FragmentManager manager= getFragmentManager();
-//                ChattingMessage_Fragment chattingMessage_fragment = new ChattingMessage_Fragment();
-//                Bundle args = new Bundle();
-//                args.putString("other",((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString());
-//                chattingMessage_fragment.setArguments(args);
-//                FragmentTransaction transaction = manager.beginTransaction();
-//                transaction.replace(R.id.chattinglist_page,chattingMessage_fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
             }
         });
 
@@ -177,7 +183,11 @@ public class ChattingList_Fragment extends BaseFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(preferences.getString("nickname","").equals(
-                                ((Chat_Item)campList_adapter.getItem(position)).getUser_id().toString())) {
+                                ((Chat_Item)campList_adapter.getItem(position)).getNickname().toString())) {
+                            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/remove";
+                            JSONObject data = removeJSONDate(((Chat_Item)campList_adapter.getItem(position)).getNumber());
+                            NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.REMOVE_CHATTINGLIST);
+                            networkTask.execute();
                             copy.remove(position);
                             campList_adapter.removeItem(position);
                             campList_adapter.notifyDataSetChanged();
@@ -211,7 +221,8 @@ public class ChattingList_Fragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable edit) {
                 String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
-                search(text);
+                search(text,campList_adapter,copy);
+                search(text,myList_adapter,copy2);
             }
 
             @Override
@@ -251,19 +262,20 @@ public class ChattingList_Fragment extends BaseFragment {
         mylist_listView.setAdapter(myList_adapter);
 
         copy = new ArrayList<>();
+        copy2 = new ArrayList<>();
 
     }
 
     // 검색을 수행하는 메소드
-    public void search(String charText) {
+    public void search(String charText,ChatList_Adapter adapter,ArrayList<Chat_Item> copy) {
 
         // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        campList_adapter.removeAllitem();
+        adapter.removeAllitem();
 
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length() == 0) {
             for(Chat_Item mItem : copy){
-                campList_adapter.addItem(mItem);
+                adapter.addItem(mItem);
             }
         }
         // 문자 입력을 할때..
@@ -279,12 +291,12 @@ public class ChattingList_Fragment extends BaseFragment {
                         copy.get(i).getLettable_thing().toLowerCase().contains(charText))
                 {
                     // 검색된 데이터를 리스트에 추가한다.
-                    campList_adapter.addItem(copy.get(i));
+                    adapter.addItem(copy.get(i));
                 }
             }
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        campList_adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     // Tab에 나타날 View를 구성
@@ -317,5 +329,44 @@ public class ChattingList_Fragment extends BaseFragment {
         JSONObject jsonObject = new JSONObject();
 
         return jsonObject;
+    }
+
+    //채팅 목록 삭제 요청 데이터
+    private JSONObject removeJSONDate(String number){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("number",number);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    //채팅방에 아이디 설정
+    private JSONObject setOtherJSONdata(String number,String other){
+        JSONObject data = new JSONObject();
+
+        try {
+            data.accumulate("number",number);
+            data.accumulate("flag","1");
+            data.accumulate("opponent",other);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    //채팅방 상대방 가져오기
+    private JSONObject getOpponentData(String number){
+        JSONObject data = new JSONObject();
+
+        try {
+            data.accumulate("number",number);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }

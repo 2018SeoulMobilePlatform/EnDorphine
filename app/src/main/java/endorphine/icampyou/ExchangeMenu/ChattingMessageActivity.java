@@ -1,6 +1,7 @@
 package endorphine.icampyou.ExchangeMenu;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import endorphine.icampyou.Constant;
@@ -35,7 +37,7 @@ public class ChattingMessageActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
 
-    String other;
+    ArrayList<String> opponent;
 
     //서버
     Socket mSocket = null;
@@ -79,19 +81,21 @@ public class ChattingMessageActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
-        if(getIntent() != null){
-            other = getIntent().getStringExtra("other");
-            setTitle(other);
-        }
-
         m_chatmessage_adapter = new ChatMessage_Adapter();
 
-        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
+        opponent = new ArrayList<>();
 
-        JSONObject data = sendJSonData();
+        Intent intent = getIntent();
+        if(intent.getStringExtra("opponent").equals("null")){
+            String url2 = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getflag";
 
-        NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this,url,data,Constant.GET_CHATTINGMESSAGELIST,m_chatmessage_adapter);
-        networkTask.execute();
+            JSONObject data2 = JSONData(getIntent().getStringExtra("number"));
+
+            NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this,url2,data2,Constant.GET_OPPONENT,opponent,false);
+            networkTask.execute();
+        } else{
+            opponent.add(intent.getStringExtra("opponent"));
+        }
 
         mSocket.on("new_private_message", onNewMessage);
         mSocket.connect();
@@ -117,11 +121,17 @@ public class ChattingMessageActivity extends AppCompatActivity {
                     attemptSend();
                     send_message.setText("");
                     m_chatmessage_adapter.notifyDataSetChanged();
-
                 }
             }
         });
 
+        //어싱크테스크 속도 못따라옴
+//        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
+//
+//        JSONObject data = sendJSonData();
+//
+//        NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this,url,data,Constant.GET_CHATTINGMESSAGELIST,m_chatmessage_adapter);
+//        networkTask.execute();
     }
 
     //로그인했다는 표시
@@ -140,18 +150,18 @@ public class ChattingMessageActivity extends AppCompatActivity {
         JSONObject data = new JSONObject();
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String getTime = sdf.format(date);
+        Log.e("Time",getTime);
 
         try {
-            data.put("to_username", other);
+            data.put("to_username", opponent.get(0));
             data.put("from_username",preferences.getString("nickname",""));
             data.put("message", message);
             data.put("datetime",getTime);
             mSocket.emit("private_message", data);
         } catch(JSONException e) {
             e.printStackTrace();
-
         }
     }
 
@@ -159,15 +169,39 @@ public class ChattingMessageActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            Log.e("from_id",preferences.getString("nickname",""));
-            Log.e("to_id",other);
             jsonObject.accumulate("from_id",preferences.getString("nickname",""));
-            jsonObject.accumulate("to_id",other);
+            jsonObject.accumulate("to_id",opponent.get(0));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return jsonObject;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+
+    private JSONObject JSONData(String number){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("number",number);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+        mSocket.off("new message", onNewMessage);
     }
 
 }

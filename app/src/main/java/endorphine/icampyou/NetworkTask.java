@@ -33,6 +33,7 @@ import java.util.Set;
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
+import endorphine.icampyou.ExchangeMenu.ChattingMessageActivity;
 import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
@@ -61,11 +62,15 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ArrayList<ReviewListItem> reviewData;
     String campingPlace;
     ArrayList<Chat_Item> copy;
+    ArrayList<Chat_Item> copy2;
     RatingBar totalReviewStar;
     TextView totalReviewStarScore;
     ImageView drawerQrCode;
     TextView check_textView;
-
+    ArrayList<String> opponent;
+    String number;
+    String other;
+    boolean check;
     //예약부분
     String contents;
     String price;
@@ -97,7 +102,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter, ArrayList<Chat_Item> copy, ChatList_Adapter _adpater2) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter, ArrayList<Chat_Item> copy, ChatList_Adapter _adpater2, ArrayList<Chat_Item> copy2) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -106,6 +111,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.copy = copy;
         asyncDialog = new ProgressDialog(_context);
         this.chatList_adapter2 = _adpater2;
+        this.copy2 =copy2;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter, String _campingPlace) {
@@ -125,6 +131,27 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.chatMessage_adapter = chatMessage_adapter;
+    }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ArrayList<String> opponent,Boolean check) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.opponent = opponent;
+        this.check = check;
+    }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION,Boolean check,String number,String other) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.check = check;
+        this.number = number;
+        this.other = other;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
@@ -159,6 +186,17 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.drawerQrCode = drawerQrCode;
         this.exception = new RegisterUserException();
     }
+
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, String number,String other) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.number = number;
+        this.other = other;
+    }
+
 
     @Override
     protected void onPreExecute() {
@@ -205,6 +243,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.GET_CHATTINGMESSAGELIST:
                 asyncDialog.setMessage("메세지를 불러오는 중 입니다..");
+                break;
+            case Constant.REMOVE_CHATTINGLIST:
+                asyncDialog.setMessage("채팅방 목록 삭제 중 입니다..");
+                break;
+            case Constant.SET_OPPONENT:
+                asyncDialog.setMessage("상대방 설정 중 입니다..");
+                break;
+            case Constant.GET_OPPONENT:
                 break;
             default:
                 break;
@@ -345,11 +391,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.USER_FIND_INFO:
                 try {
-                    if (result == null) {
-                        Log.e("다인이", "돼지새끼");
-                    } else {
-                        Log.e("다뚱이", "돼지새끼");
-                    }
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (!real_result.equals("fail")) {
@@ -440,18 +481,22 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
+                            Log.e("GET","CHATROOM");
                             resultObject = resultObjectArray.getJSONObject(i);
                             Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                            String number = resultObject.getString("number");
                             String user_id = resultObject.getString("user_id");
+                            String nickname = resultObject.getString("nickname");
                             String camp_name = resultObject.getString("camp_name");
                             String myitem = resultObject.getString("myitem");
                             String needitem = resultObject.getString("needitem");
-                            Chat_Item item = new Chat_Item(image, user_id, myitem, needitem, camp_name);
+                            String flag = resultObject.getString("flag");
+                            Chat_Item item = new Chat_Item(number,image, user_id, nickname,myitem, needitem, camp_name,flag);
                             chatList_adpater.addItem(item);
                             copy.add(item);
-
-                            if (user_id.equals(preferences1.getString("nickname", ""))) {
+                            if (user_id.equals(preferences1.getString("email", ""))) {
                                 chatList_adapter2.addItem(item);
+                                copy2.add(item);
                             }
                         }
                         chatList_adpater.notifyDataSetChanged();
@@ -484,7 +529,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
-                        Log.e("success", "성공");
                         intent = new Intent(context, GuideActivity.class);
                         intent.putExtra("캠핑장 이름", data.getString("camp_name"));
                         ((Activity) context).startActivity(intent);
@@ -561,6 +605,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String to = resultObject.getString("to_id");
                             String text = resultObject.getString("message");
                             String date = resultObject.getString("datetime");
+                            Log.e("from_id",from);
+                            Log.e("to_id",to);
                             if(from.equals(preferences3.getString("nickname",""))){
                                 chatMessage_adapter.add(text,1);
                             } else{
@@ -570,6 +616,63 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         chatMessage_adapter.notifyDataSetChanged();
                     }else{
                         Toast.makeText(context,"대화한 내용이 없습니다",Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.REMOVE_CHATTINGLIST:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        Toast.makeText(context,"삭제 성공하였습니다",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "삭제 실패하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.SET_OPPONENT:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        Intent intent = new Intent(context, ChattingMessageActivity.class);
+                        intent.putExtra("number",number);
+                        intent.putExtra("opponent",other);
+                        context.startActivity(intent);
+                        Toast.makeText(context,"상대방 설정 완료",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "상대방 설정 실패", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.GET_OPPONENT:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (!real_result.equals("fail")) {
+                        JSONObject data = new JSONObject(real_result);
+                        if(check){
+                            Log.e("ture","true");
+                            SharedPreferences preferences4 = context.getSharedPreferences("preferences", MODE_PRIVATE);
+                            if(preferences4.getString("nickname","").equals(data.getString("opponent"))){
+                                Intent intent = new Intent(context, ChattingMessageActivity.class);
+                                intent.putExtra("number",number);
+                                intent.putExtra("opponent",other);
+                                context.startActivity(intent);
+                            } else{
+                                Toast.makeText(context,"현재 대화중인 채팅방입니다",Toast.LENGTH_LONG).show();
+                            }
+                        } else{
+                            Log.e("false","false");
+                            opponent.add(data.getString("opponent"));
+                            opponent.add(data.getString("flag"));
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
