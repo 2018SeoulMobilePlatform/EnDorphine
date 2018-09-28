@@ -14,6 +14,8 @@ import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.R;
 
+import static android.view.View.GONE;
+
 /**
  * 리뷰 리스트뷰 어댑터 클래스
  */
@@ -69,7 +71,11 @@ public class ReviewListViewAdapter extends BaseAdapter {
         star.setRating(reviewListItem.getStar());
 
         reviewImage = (ImageView)convertView.findViewById(R.id.review_image);
-        GlideApp.with(convertView).load(reviewListItem.getReviewImage()).into(reviewImage);
+        if(reviewData.get(position).getReviewImage() == null){
+            reviewImage.setVisibility(GONE);
+        } else{
+            GlideApp.with(convertView).load(reviewListItem.getReviewImage()).into(reviewImage);
+        }
 
         reviewContent = convertView.findViewById(R.id.review_content);
         reviewContent.setText(reviewListItem.getReviewContent());
