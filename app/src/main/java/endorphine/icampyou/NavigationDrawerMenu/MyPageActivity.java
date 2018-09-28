@@ -113,6 +113,7 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
                         NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.DUPLICATED_NICKNAME2,nickname,check_nickname);
                         networkTask.execute();
+                        
                     } else{
                         check_nickname.setVisibility(View.INVISIBLE);
 

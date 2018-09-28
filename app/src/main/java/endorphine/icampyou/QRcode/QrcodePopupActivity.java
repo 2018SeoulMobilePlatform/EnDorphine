@@ -42,24 +42,10 @@ public class QrcodePopupActivity extends Activity {
 
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
-        Set<String> reservationNum = preferences.getStringSet("reservationNum", new HashSet<String>());
-        Set<String> campingPlace = preferences.getStringSet("campingPlace", new HashSet<String>());
-        Set<String> date = preferences.getStringSet("date", new HashSet<String>());
-        Set<String> tentType = preferences.getStringSet("tentType", new HashSet<String>());
-
-        ArrayList<String> arrayList_reservationNum = new ArrayList<>();
-        ArrayList<String> arrayList_campingPlace = new ArrayList<>();
-        ArrayList<String> arrayList_date = new ArrayList<>();
-        ArrayList<String> arrayList_tentType = new ArrayList<>();
-
-        for (String str : reservationNum)
-            arrayList_reservationNum.add(str);
-        for (String str : campingPlace)
-            arrayList_campingPlace.add(str);
-        for (String str : date)
-            arrayList_date.add(str);
-        for (String str : tentType)
-            arrayList_tentType.add(str);
+        String[] reservationNum = preferences.getString("reservationNum","").split(",");
+        String[] campingPlace = preferences.getString("campingPlace","").split(",");
+        String[] date = preferences.getString("date","").split(",");
+        String[] tentType = preferences.getString("tentType","").split(",");
 
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -72,21 +58,21 @@ public class QrcodePopupActivity extends Activity {
         date_textView = (TextView) findViewById(R.id.reservation_date);
         tentType_View = (TextView) findViewById(R.id.reservation_tent);
 
-        if (arrayList_reservationNum.size() == 0) {
+        if (reservationNum.length == 0) {
 
         } else {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             Bitmap qrcode = null;
             try {
-                qrcode = toBitmap(qrCodeWriter.encode(arrayList_reservationNum.get(0), BarcodeFormat.QR_CODE, 500, 500));
+                qrcode = toBitmap(qrCodeWriter.encode(reservationNum[0], BarcodeFormat.QR_CODE, 500, 500));
             } catch (WriterException e) {
                 e.printStackTrace();
             }
 
-            reservationNum_textView.setText(arrayList_reservationNum.get(0));
-            campingPlace_textView.setText(arrayList_campingPlace.get(0));
-            date_textView.setText(arrayList_date.get(0));
-            tentType_View.setText(arrayList_tentType.get(0));
+            reservationNum_textView.setText(reservationNum[0]);
+            campingPlace_textView.setText(campingPlace[0]);
+            date_textView.setText(date[0]);
+            tentType_View.setText(tentType[0]);
 
             imageView.setImageBitmap(qrcode);
         }

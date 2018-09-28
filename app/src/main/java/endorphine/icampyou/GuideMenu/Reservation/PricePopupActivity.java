@@ -77,26 +77,21 @@ public class PricePopupActivity extends Activity {
             reservationNum = reservationNum * (-1);
         SharedPreferences.Editor editor = preferences.edit();
 
-        Set<String> reservationNum_Set = preferences.getStringSet("reservationNum",new HashSet<String>());
-        Set<String> campingPlace_Set = preferences.getStringSet("campingPlace",new HashSet<String>());
-        Set<String> date_Set = preferences.getStringSet("date",new HashSet<String>());
-        Set<String> tentType_Set = preferences.getStringSet("tentType",new HashSet<String>());
-        Set<String> tentNum_Set = preferences.getStringSet("tentNum",new HashSet<String>());
-        Set<String> price_Set = preferences.getStringSet("price",new HashSet<String>());
+        String reservationNum_Builder = preferences.getString("reservationNum","");
+        String campingPlace_Builder = preferences.getString("campingPlace","");
+        String date_Builder = preferences.getString("date","");
+        String tentType_Builder= preferences.getString("tentType","");
+        String tentNum_Builder = preferences.getString("tentNum","");
+        String price_Builder = preferences.getString("price","");
 
-        reservationNum_Set.add(String.valueOf(reservationNum));
-        campingPlace_Set.add(campName);
-        date_Set.add(period);
-        tentType_Set.add(tentName);
-        tentNum_Set.add(quantity);
-        price_Set.add(price);
+        editor.putString("reservationNum", reservationNum_Builder+String.valueOf(reservationNum)+",");
+        editor.putString("campingPlace", campingPlace_Builder + campName +",");
+        editor.putString("date", date_Builder+period+",");
+        editor.putString("tentType", tentType_Builder+tentName+",");
+        editor.putString("tentNum", tentNum_Builder+quantity+",");
+        editor.putString("price", price_Builder+price+",");
 
-        editor.putStringSet("reservationNum", reservationNum_Set);
-        editor.putStringSet("campingPlace", campingPlace_Set);
-        editor.putStringSet("date", date_Set);
-        editor.putStringSet("tentType", tentType_Set);
-        editor.putStringSet("tentNum", tentNum_Set);
-        editor.putStringSet("price", price_Set);
+        editor.commit();
 
         //서버 연동
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";

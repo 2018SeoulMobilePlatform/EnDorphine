@@ -283,23 +283,23 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     String resultResponse = jsonObject.getString("result");
                     JSONArray resultObjectArray = new JSONArray(resultResponse);
 
-                    Set<String> reservationNum_Set = new HashSet<String>();
-                    Set<String> campingPlace_Set = new HashSet<String>();
-                    Set<String> date_Set = new HashSet<String>();
-                    Set<String> tentType_Set = new HashSet<String>();
-                    Set<String> tentNum_Set = new HashSet<String>();
-                    Set<String> price_Set = new HashSet<String>();
+                    StringBuilder reservationNum_Builder = new StringBuilder();
+                    StringBuilder campingPlace_Builder = new StringBuilder();
+                    StringBuilder date_Builder = new StringBuilder();
+                    StringBuilder tentType_Builder = new StringBuilder();
+                    StringBuilder tentNum_Builder = new StringBuilder();
+                    StringBuilder price_Builder = new StringBuilder();
 
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for(int i=0;i<resultObjectArray.length();i++){
                             resultObject = resultObjectArray.getJSONObject(i);
-                            reservationNum_Set.add(resultObject.getString("reservation_number"));
-                            campingPlace_Set.add(resultObject.getString("camp_name"));
-                            date_Set.add(resultObject.getString("date"));
-                            tentType_Set.add(resultObject.getString("tent_type"));
-                            tentNum_Set.add(resultObject.getString("count"));
-                            price_Set.add(resultObject.getString("price"));
+                            reservationNum_Builder.append(resultObject.getString("reservation_number")).append(",");
+                            campingPlace_Builder.append(resultObject.getString("camp_name")).append(",");
+                            date_Builder.append(resultObject.getString("date")).append(",");
+                            tentType_Builder.append(resultObject.getString("tent_type")).append(",");
+                            tentNum_Builder.append(resultObject.getString("count")).append(",");
+                            price_Builder.append(resultObject.getString("price")).append(",");
                             if(i ==0 ) {
                                 QRCodeWriter qrCodeWriter = new QRCodeWriter();
                                 contents = resultObject.getString("reservation_number");
@@ -312,12 +312,19 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             }
                         }
 
-                        editor.putStringSet("reservationNum", reservationNum_Set);
-                        editor.putStringSet("campingPlace", campingPlace_Set);
-                        editor.putStringSet("date", date_Set);
-                        editor.putStringSet("tentType", tentType_Set);
-                        editor.putStringSet("tentNum", tentNum_Set);
-                        editor.putStringSet("price", price_Set);
+                        Log.e("reservationNum", reservationNum_Builder.toString());
+                        Log.e("campingPlace", campingPlace_Builder.toString());
+                        Log.e("date", date_Builder.toString());
+                        Log.e("tentType", tentType_Builder.toString());
+                        Log.e("tentNum", tentNum_Builder.toString());
+                        Log.e("price", price_Builder.toString());
+
+                        editor.putString("reservationNum", reservationNum_Builder.toString());
+                        editor.putString("campingPlace", campingPlace_Builder.toString());
+                        editor.putString("date", date_Builder.toString());
+                        editor.putString("tentType", tentType_Builder.toString());
+                        editor.putString("tentNum", tentNum_Builder.toString());
+                        editor.putString("price", price_Builder.toString());
 
                         editor.commit();
 
@@ -486,7 +493,11 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
                             resultObject = resultObjectArray.getJSONObject(i);
-                            Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
+                            Bitmap image;
+                            if(resultObject.getString("image").equals("null"))
+                                image = null;
+                            else
+                                image = imageConversion.fromBase64(resultObject.getString("image"));
                             String nickname = resultObject.getString("nickname");
                             String camp_name = resultObject.getString("camp_name");
                             String point = resultObject.getString("point");
