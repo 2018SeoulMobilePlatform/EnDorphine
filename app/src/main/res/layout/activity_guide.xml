@@ -243,6 +243,7 @@
                         android:layout_height="wrap_content">
                         <!-- 지도 이미지 -->
                         <ImageView
+                            android:paddingTop="30dp"
                             android:id="@+id/map_image"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
