@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/find_email"
-            android:hint="Email Address"
+            android:hint="Email address"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
 
         <EditText
             android:id="@+id/find_phone"
-            android:hint="Phone Number"
+            android:hint="Phone number"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:maxLines="1"

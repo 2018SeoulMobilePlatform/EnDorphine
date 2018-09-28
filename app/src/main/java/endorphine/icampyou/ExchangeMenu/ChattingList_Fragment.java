@@ -70,7 +70,7 @@ public class ChattingList_Fragment extends BaseFragment {
         campList_adapter.removeAllitem();
         myList_adapter.removeAllitem();
 
-        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getmyroom";
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getallroom";
 
         JSONObject data = sendJSonData();
 
@@ -303,12 +303,6 @@ public class ChattingList_Fragment extends BaseFragment {
     private JSONObject sendJSonData()  {
 
         JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject.accumulate("user_id", preferences.getString("nickname",""));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         return jsonObject;
     }
