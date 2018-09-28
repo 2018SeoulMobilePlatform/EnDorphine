@@ -79,7 +79,7 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         String[] price = preferences.getString("price", "").split(",");
 
         if(preferences.getString("reservationNum", "").equals("")){
-            Toast.makeText(this,"예약 정보가 비어있습니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"예약 정보가 없습니다.",Toast.LENGTH_LONG).show();
         } else{
             for(int i=0;i<reservationNum.length;i++){
                 addReservationInfoList(reservationNum[i],
