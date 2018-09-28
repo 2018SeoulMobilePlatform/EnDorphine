@@ -126,8 +126,10 @@
         <activity
             android:name=".NavigationDrawerMenu.ReservationInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Login.FindUserInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Login.FindUserInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ExchangeMenu.ChattingMessageActivity"></activity>
     </application>
 
 </manifest>

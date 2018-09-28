@@ -441,12 +441,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         JSONObject jsonObject = new JSONObject();
 
-//        try {
-//            jsonObject.accumulate("image", encodedImage);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
         return jsonObject;
     }
 }

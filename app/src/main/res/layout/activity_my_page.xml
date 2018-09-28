@@ -236,6 +236,7 @@
                         android:layout_weight="8"
                         android:maxLength="16"
                         android:maxLines="1"
+                        android:inputType="textPassword"
                         android:text="******" />
 
                     <TextView
@@ -279,8 +280,8 @@
                         android:layout_height="50dp"
                         android:layout_weight="8"
                         android:maxLength="16"
-                        android:maxLines="1"
-                        android:text="******" />
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
 
                     <TextView
                         android:id="@+id/check_confimPassword"

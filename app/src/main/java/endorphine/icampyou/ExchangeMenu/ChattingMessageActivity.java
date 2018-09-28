@@ -1,35 +1,29 @@
 package endorphine.icampyou.ExchangeMenu;
 
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.github.nkzawa.emitter.Emitter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
-
-
-import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class ChattingMessage_Fragment extends BaseFragment {
+public class ChattingMessageActivity extends AppCompatActivity {
 
     ListView m_chatMessage_listView;
     ChatMessage_Adapter m_chatmessage_adapter;
-    View view;
 
     EditText send_message;
 
@@ -41,7 +35,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
     Socket mSocket = null;
     {
         try {
-            mSocket = IO.socket("http://192.168.1.67:8000");
+            mSocket = IO.socket("http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000");
         } catch (URISyntaxException e) {}
     }
 
@@ -50,7 +44,7 @@ public class ChattingMessage_Fragment extends BaseFragment {
 
         @Override
         public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
@@ -72,29 +66,30 @@ public class ChattingMessage_Fragment extends BaseFragment {
         }
     };
 
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_chatmessage,container,false);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chatting_message);
 
         mSocket.on("new_private_message", onNewMessage);
         mSocket.connect();
 
-        if(getArguments() != null){
-            other = getArguments().getString("other");
+        if(getIntent() != null){
+            other = getIntent().getStringExtra("other");
         }
+
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
         attemptLoginSignal();
 
-        preferences = getActivity().getSharedPreferences("preferences",MODE_PRIVATE);
-
         m_chatmessage_adapter = new ChatMessage_Adapter();
-        m_chatMessage_listView = (ListView)view.findViewById(R.id.chatmessage_listView);
+        m_chatMessage_listView = (ListView)findViewById(R.id.chatmessage_listView);
 
         m_chatMessage_listView.setAdapter(m_chatmessage_adapter);
 
-        send_message = (EditText)view.findViewById(R.id.editText1);
+        send_message = (EditText)findViewById(R.id.editText1);
 
-        view.findViewById(R.id.send_btn).setOnClickListener(new Button.OnClickListener(){
+        findViewById(R.id.send_btn).setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
                 if(send_message.length() == 0){
@@ -110,7 +105,6 @@ public class ChattingMessage_Fragment extends BaseFragment {
             }
         });
 
-        return view;
     }
 
     //로그인했다는 표시
@@ -138,11 +132,4 @@ public class ChattingMessage_Fragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        mSocket.disconnect();
-        mSocket.off("new message", onNewMessage);
-    }
 }

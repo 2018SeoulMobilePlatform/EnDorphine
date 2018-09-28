@@ -176,18 +176,21 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         Bitmap temp_reviewImage = ((BitmapDrawable)reviewImage).getBitmap();
         Bitmap temp_cameraImage = ((BitmapDrawable)cameraImage).getBitmap();
 
-        String encodedImage;
+        String encodedImage_content;
         if(temp_reviewImage.equals(temp_cameraImage)){
-            encodedImage = "null";
+            encodedImage_content = "null";
         } else{
-            encodedImage = imageConversion.toBase64(reviewImageView);
+            encodedImage_content = imageConversion.toBase64(reviewImageView);
         }
+
+        String profile_image = preferences.getString("profileImage","");
 
         starNum = (float) ratingBar.getRating();
 
         try {
 
-            jsonObject.accumulate("image", encodedImage);
+            jsonObject.accumulate("user_image",profile_image);
+            jsonObject.accumulate("image", encodedImage_content);
             jsonObject.accumulate("number", "1");
             jsonObject.accumulate("camp_name", campingPlace);
             jsonObject.accumulate("nickname", preferences.getString("nickname",""));

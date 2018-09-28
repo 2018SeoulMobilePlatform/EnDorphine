@@ -312,13 +312,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             }
                         }
 
-                        Log.e("reservationNum", reservationNum_Builder.toString());
-                        Log.e("campingPlace", campingPlace_Builder.toString());
-                        Log.e("date", date_Builder.toString());
-                        Log.e("tentType", tentType_Builder.toString());
-                        Log.e("tentNum", tentNum_Builder.toString());
-                        Log.e("price", price_Builder.toString());
-
                         editor.putString("reservationNum", reservationNum_Builder.toString());
                         editor.putString("campingPlace", campingPlace_Builder.toString());
                         editor.putString("date", date_Builder.toString());
@@ -507,12 +500,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                                 image = null;
                             else
                                 image = imageConversion.fromBase64(resultObject.getString("image"));
+
+                            Bitmap profile_Image = imageConversion.fromBase64(resultObject.getString("user_image"));
                             String nickname = resultObject.getString("nickname");
                             String camp_name = resultObject.getString("camp_name");
                             String point = resultObject.getString("point");
                             String content = resultObject.getString("content");
                             if (camp_name.equals(campingPlace)) {
-                                reviewList_adapter.addItem(new ReviewListItem(imageConversion.fromBase64(preferences2.getString("profileImage","")),
+                                reviewList_adapter.addItem(new ReviewListItem(profile_Image,
                                         camp_name, nickname, Float.parseFloat(point), image, content));
                             }
                         }
