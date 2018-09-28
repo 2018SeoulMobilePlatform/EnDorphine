@@ -49,7 +49,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_user_button = findViewById(R.id.register_user_button);
 
         user_email_editText = findViewById(R.id.user_email_login);
+        user_email_editText.setPrivateImeOptions("defaultInputmode=english;");
         user_password_editText = findViewById(R.id.user_password_login);
+        user_password_editText.setPrivateImeOptions("defaultInputmode=english;");
+
 
         password_find_button.setOnClickListener(this);
         register_user_button.setOnClickListener(this);

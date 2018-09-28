@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -42,11 +43,6 @@ public class QrcodePopupActivity extends Activity {
 
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
-        String[] reservationNum = preferences.getString("reservationNum","").split(",");
-        String[] campingPlace = preferences.getString("campingPlace","").split(",");
-        String[] date = preferences.getString("date","").split(",");
-        String[] tentType = preferences.getString("tentType","").split(",");
-
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_qrcode_popup);
@@ -57,10 +53,15 @@ public class QrcodePopupActivity extends Activity {
         campingPlace_textView = (TextView) findViewById(R.id.reservation_camping);
         date_textView = (TextView) findViewById(R.id.reservation_date);
         tentType_View = (TextView) findViewById(R.id.reservation_tent);
+        Log.e("걍","찍는당");
+        if(preferences.getString("reservationNum","").equals("")){
 
-        if (reservationNum.length == 0) {
+        } else{
+            String[] reservationNum = preferences.getString("reservationNum","").split(",");
+            String[] campingPlace = preferences.getString("campingPlace","").split(",");
+            String[] date = preferences.getString("date","").split(",");
+            String[] tentType = preferences.getString("tentType","").split(",");
 
-        } else {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             Bitmap qrcode = null;
             try {
@@ -76,6 +77,7 @@ public class QrcodePopupActivity extends Activity {
 
             imageView.setImageBitmap(qrcode);
         }
+        Log.e("걍","zz");
     }
 
     //확인 버튼 클릭

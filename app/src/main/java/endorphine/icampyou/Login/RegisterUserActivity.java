@@ -80,10 +80,15 @@ public class RegisterUserActivity extends AppCompatActivity {
         });
 
         email_editText = (EditText)findViewById(R.id.user_email);
+        email_editText.setPrivateImeOptions("defaultInputmode=english;");
         password_editText = (EditText)findViewById(R.id.password);
+        password_editText.setPrivateImeOptions("defaultInputmode=english;");
         name_editText = (EditText)findViewById(R.id.user_name);
+        name_editText.setPrivateImeOptions("defaultInputmode=english;");
         nickName_editText = (EditText)findViewById(R.id.user_nickname);
+        nickName_editText.setPrivateImeOptions("defaultInputmode=english;");
         phoneNumber_editText = (EditText)findViewById(R.id.user_phone);
+        phoneNumber_editText.setPrivateImeOptions("defaultInputmode=english;");
         user_profile = (CircleImageView)findViewById(R.id.profile_image);
 
         camera = new Camera(RegisterUserActivity.this,user_profile);

@@ -111,7 +111,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.copy = copy;
         asyncDialog = new ProgressDialog(_context);
         this.chatList_adapter2 = _adpater2;
-        this.copy2 =copy2;
+        this.copy2 = copy2;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter, String _campingPlace) {
@@ -133,7 +133,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.chatMessage_adapter = chatMessage_adapter;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ArrayList<String> opponent,Boolean check) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ArrayList<String> opponent, Boolean check) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -143,7 +143,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.check = check;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION,Boolean check,String number,String other) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, Boolean check, String number, String other) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -187,7 +187,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.exception = new RegisterUserException();
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, String number,String other) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, String number, String other) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -352,34 +352,44 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
-                        for (int i = 0; i < resultObjectArray.length(); i++) {
-                            resultObject = resultObjectArray.getJSONObject(i);
-                            reservationNum_Builder.append(resultObject.getString("reservation_number")).append(",");
-                            campingPlace_Builder.append(resultObject.getString("camp_name")).append(",");
-                            date_Builder.append(resultObject.getString("date")).append(",");
-                            tentType_Builder.append(resultObject.getString("tent_type")).append(",");
-                            tentNum_Builder.append(resultObject.getString("count")).append(",");
-                            price_Builder.append(resultObject.getString("price")).append(",");
-                            if (i == 0) {
-                                QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                                contents = resultObject.getString("reservation_number");
-                                try {
-                                    qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
-                                } catch (WriterException e) {
-                                    e.printStackTrace();
+                        if (resultObjectArray.length() != 0) {
+                            for (int i = 0; i < resultObjectArray.length(); i++) {
+                                resultObject = resultObjectArray.getJSONObject(i);
+                                reservationNum_Builder.append(resultObject.getString("reservation_number")).append(",");
+                                campingPlace_Builder.append(resultObject.getString("camp_name")).append(",");
+                                date_Builder.append(resultObject.getString("date")).append(",");
+                                tentType_Builder.append(resultObject.getString("tent_type")).append(",");
+                                tentNum_Builder.append(resultObject.getString("count")).append(",");
+                                price_Builder.append(resultObject.getString("price")).append(",");
+                                if (i == 0) {
+                                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                                    contents = resultObject.getString("reservation_number");
+                                    try {
+                                        qrcodeBitmap = toBitmap(qrCodeWriter.encode(contents, BarcodeFormat.QR_CODE, 500, 500));
+                                    } catch (WriterException e) {
+                                        e.printStackTrace();
+                                    }
+                                    drawerQrCode.setImageBitmap(qrcodeBitmap);
                                 }
-                                drawerQrCode.setImageBitmap(qrcodeBitmap);
                             }
+                            editor.putString("reservationNum", reservationNum_Builder.toString());
+                            editor.putString("campingPlace", campingPlace_Builder.toString());
+                            editor.putString("date", date_Builder.toString());
+                            editor.putString("tentType", tentType_Builder.toString());
+                            editor.putString("tentNum", tentNum_Builder.toString());
+                            editor.putString("price", price_Builder.toString());
+
+
+                        }else{
+                            editor.putString("reservationNum", "");
+                            editor.putString("campingPlace", "");
+                            editor.putString("date", "");
+                            editor.putString("tentType", "");
+                            editor.putString("tentNum","");
+                            editor.putString("price", "");
                         }
-
-                        editor.putString("reservationNum", reservationNum_Builder.toString());
-                        editor.putString("campingPlace", campingPlace_Builder.toString());
-                        editor.putString("date", date_Builder.toString());
-                        editor.putString("tentType", tentType_Builder.toString());
-                        editor.putString("tentNum", tentNum_Builder.toString());
-                        editor.putString("price", price_Builder.toString());
-
                         editor.commit();
+
 
                     }
                 } catch (JSONException e) {
@@ -481,7 +491,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
-                            Log.e("GET","CHATROOM");
+                            Log.e("GET", "CHATROOM");
                             resultObject = resultObjectArray.getJSONObject(i);
                             Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
                             String number = resultObject.getString("number");
@@ -491,7 +501,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String myitem = resultObject.getString("myitem");
                             String needitem = resultObject.getString("needitem");
                             String flag = resultObject.getString("flag");
-                            Chat_Item item = new Chat_Item(number,image, user_id, nickname,myitem, needitem, camp_name,flag);
+                            Chat_Item item = new Chat_Item(number, image, user_id, nickname, myitem, needitem, camp_name, flag);
                             chatList_adpater.addItem(item);
                             copy.add(item);
                             if (user_id.equals(preferences1.getString("email", ""))) {
@@ -605,17 +615,17 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String to = resultObject.getString("to_id");
                             String text = resultObject.getString("message");
                             String date = resultObject.getString("datetime");
-                            Log.e("from_id",from);
-                            Log.e("to_id",to);
-                            if(from.equals(preferences3.getString("nickname",""))){
-                                chatMessage_adapter.add(text,1);
-                            } else{
-                                chatMessage_adapter.add(text,0);
+                            Log.e("from_id", from);
+                            Log.e("to_id", to);
+                            if (from.equals(preferences3.getString("nickname", ""))) {
+                                chatMessage_adapter.add(text, 1);
+                            } else {
+                                chatMessage_adapter.add(text, 0);
                             }
                         }
                         chatMessage_adapter.notifyDataSetChanged();
-                    }else{
-                        Toast.makeText(context,"대화한 내용이 없습니다",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "대화한 내용이 없습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -626,7 +636,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
-                        Toast.makeText(context,"삭제 성공하였습니다",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "삭제 성공하였습니다", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, "삭제 실패하였습니다", Toast.LENGTH_LONG).show();
                     }
@@ -640,10 +650,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
                         Intent intent = new Intent(context, ChattingMessageActivity.class);
-                        intent.putExtra("number",number);
-                        intent.putExtra("opponent",other);
+                        intent.putExtra("number", number);
+                        intent.putExtra("opponent", other);
                         context.startActivity(intent);
-                        Toast.makeText(context,"상대방 설정 완료",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "상대방 설정 완료", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, "상대방 설정 실패", Toast.LENGTH_LONG).show();
                     }
@@ -657,19 +667,19 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     String real_result = jsonObject.getString("result");
                     if (!real_result.equals("fail")) {
                         JSONObject data = new JSONObject(real_result);
-                        if(check){
-                            Log.e("ture","true");
+                        if (check) {
+                            Log.e("ture", "true");
                             SharedPreferences preferences4 = context.getSharedPreferences("preferences", MODE_PRIVATE);
-                            if(preferences4.getString("nickname","").equals(data.getString("opponent"))){
+                            if (preferences4.getString("nickname", "").equals(data.getString("opponent"))) {
                                 Intent intent = new Intent(context, ChattingMessageActivity.class);
-                                intent.putExtra("number",number);
-                                intent.putExtra("opponent",other);
+                                intent.putExtra("number", number);
+                                intent.putExtra("opponent", other);
                                 context.startActivity(intent);
-                            } else{
-                                Toast.makeText(context,"현재 대화중인 채팅방입니다",Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(context, "현재 대화중인 채팅방입니다", Toast.LENGTH_LONG).show();
                             }
-                        } else{
-                            Log.e("false","false");
+                        } else {
+                            Log.e("false", "false");
                             opponent.add(data.getString("opponent"));
                             opponent.add(data.getString("flag"));
                         }
