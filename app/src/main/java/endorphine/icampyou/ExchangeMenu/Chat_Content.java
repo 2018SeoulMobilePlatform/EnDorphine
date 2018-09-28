@@ -93,7 +93,6 @@ public class Chat_Content extends AppCompatActivity {
                     networkTask.execute();
 
                     finish();
-
                 }
             }
         });

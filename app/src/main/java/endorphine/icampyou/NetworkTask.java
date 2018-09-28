@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
+import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
@@ -56,6 +57,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ChatList_Adapter chatList_adpater;
     ChatList_Adapter chatList_adapter2;
     ReviewListViewAdapter reviewList_adapter;
+    ChatMessage_Adapter chatMessage_adapter;
     ArrayList<ReviewListItem> reviewData;
     String campingPlace;
     ArrayList<Chat_Item> copy;
@@ -95,7 +97,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         asyncDialog = new ProgressDialog(_context);
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter,ArrayList<Chat_Item> copy,ChatList_Adapter _adpater2) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatList_Adapter _adapter, ArrayList<Chat_Item> copy, ChatList_Adapter _adpater2) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -116,6 +118,15 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.campingPlace = _campingPlace;
     }
 
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatMessage_Adapter chatMessage_adapter) {
+        this.context = _context;
+        this.url = url;
+        this.data = data;
+        this.select = ACTION;
+        asyncDialog = new ProgressDialog(_context);
+        this.chatMessage_adapter = chatMessage_adapter;
+    }
+
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert) {
         this.context = _context;
         this.url = url;
@@ -127,7 +138,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.insert_value = insert.getText().toString();
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert,TextView _textView) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, EditText _insert, TextView _textView) {
         this.context = _context;
         this.url = url;
         this.data = data;
@@ -191,6 +202,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.MODIFY_USER_INFO:
                 asyncDialog.setMessage("사용자 정보 수정 중 입니다..");
+                break;
+            case Constant.GET_CHATTINGMESSAGELIST:
+                asyncDialog.setMessage("메세지를 불러오는 중 입니다..");
                 break;
             default:
                 break;
@@ -292,7 +306,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
-                        for(int i=0;i<resultObjectArray.length();i++){
+                        for (int i = 0; i < resultObjectArray.length(); i++) {
                             resultObject = resultObjectArray.getJSONObject(i);
                             reservationNum_Builder.append(resultObject.getString("reservation_number")).append(",");
                             campingPlace_Builder.append(resultObject.getString("camp_name")).append(",");
@@ -300,7 +314,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             tentType_Builder.append(resultObject.getString("tent_type")).append(",");
                             tentNum_Builder.append(resultObject.getString("count")).append(",");
                             price_Builder.append(resultObject.getString("price")).append(",");
-                            if(i ==0 ) {
+                            if (i == 0) {
                                 QRCodeWriter qrCodeWriter = new QRCodeWriter();
                                 contents = resultObject.getString("reservation_number");
                                 try {
@@ -328,14 +342,13 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 }
 
 
-
                 break;
             case Constant.USER_FIND_INFO:
                 try {
-                    if(result == null){
-                        Log.e("다인이","돼지새끼");
-                    } else{
-                        Log.e("다뚱이","돼지새끼");
+                    if (result == null) {
+                        Log.e("다인이", "돼지새끼");
+                    } else {
+                        Log.e("다뚱이", "돼지새끼");
                     }
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
@@ -343,8 +356,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         Intent intent = new Intent((Activity) context, PasswordPopupActivity.class);
                         intent.putExtra("password", real_result);
                         ((Activity) context).startActivity(intent);
-                    } else{
-                        Toast.makeText(context, "일치하는 사용자 정보가 없습니다",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "일치하는 사용자 정보가 없습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -437,7 +450,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             chatList_adpater.addItem(item);
                             copy.add(item);
 
-                            if(user_id.equals(preferences1.getString("nickname",""))){
+                            if (user_id.equals(preferences1.getString("nickname", ""))) {
                                 chatList_adapter2.addItem(item);
                             }
                         }
@@ -496,7 +509,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         for (int i = 0; i < resultObjectArray.length(); i++) {
                             resultObject = resultObjectArray.getJSONObject(i);
                             Bitmap image;
-                            if(resultObject.getString("image").equals("null"))
+                            if (resultObject.getString("image").equals("null"))
                                 image = null;
                             else
                                 image = imageConversion.fromBase64(resultObject.getString("image"));
@@ -521,7 +534,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.MODIFY_USER_INFO:
                 try {
-                    Log.e("result",result);
+                    Log.e("result", result);
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
@@ -534,9 +547,37 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
                 break;
+            case Constant.GET_CHATTINGMESSAGELIST:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String resultResponse = jsonObject.getString("result");
+                    JSONArray resultObjectArray = new JSONArray(resultResponse);
+                    SharedPreferences preferences3 = context.getSharedPreferences("preferences", MODE_PRIVATE);
+                    if (!resultResponse.equals("fail")) {
+                        JSONObject resultObject;
+                        for (int i = 0; i < resultObjectArray.length(); i++) {
+                            resultObject = resultObjectArray.getJSONObject(i);
+                            String from = resultObject.getString("from_id");
+                            String to = resultObject.getString("to_id");
+                            String text = resultObject.getString("message");
+                            String date = resultObject.getString("datetime");
+                            if(from.equals(preferences3.getString("nickname",""))){
+                                chatMessage_adapter.add(text,1);
+                            } else{
+                                chatMessage_adapter.add(text,0);
+                            }
+                        }
+                        chatMessage_adapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(context,"대화한 내용이 없습니다",Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
             default:
                 break;
-    }
+        }
 
         //다이얼로그 종료
         asyncDialog.dismiss();
@@ -582,13 +623,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     //사용자 예약 정보 데이터 가져오는 JSON 함수
 
 
-
     // 총 별점 평균 구해서 ratingBar 설정하는 메소드
     public void setTotalStarScore(ArrayList<ReviewListItem> reviewData) {
         float totalStar = 0;
 
-        totalReviewStar = ((Activity)context).findViewById(R.id.review_total_star);
-        totalReviewStarScore = ((Activity)context).findViewById(R.id.total_star_score);
+        totalReviewStar = ((Activity) context).findViewById(R.id.review_total_star);
+        totalReviewStarScore = ((Activity) context).findViewById(R.id.total_star_score);
 
         for (ReviewListItem review : reviewData) {
             totalStar += review.getStar();

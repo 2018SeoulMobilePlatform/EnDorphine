@@ -1,9 +1,11 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import endorphine.icampyou.Constant;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 public class ChattingMessageActivity extends AppCompatActivity {
@@ -71,18 +77,29 @@ public class ChattingMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting_message);
 
-        mSocket.on("new_private_message", onNewMessage);
-        mSocket.connect();
+        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
 
         if(getIntent() != null){
             other = getIntent().getStringExtra("other");
+            setTitle(other);
         }
 
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        m_chatmessage_adapter = new ChatMessage_Adapter();
+
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
+
+        JSONObject data = sendJSonData();
+
+        NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this,url,data,Constant.GET_CHATTINGMESSAGELIST,m_chatmessage_adapter);
+        networkTask.execute();
+
+        mSocket.on("new_private_message", onNewMessage);
+        mSocket.connect();
+
+
 
         attemptLoginSignal();
 
-        m_chatmessage_adapter = new ChatMessage_Adapter();
         m_chatMessage_listView = (ListView)findViewById(R.id.chatmessage_listView);
 
         m_chatMessage_listView.setAdapter(m_chatmessage_adapter);
@@ -121,15 +138,36 @@ public class ChattingMessageActivity extends AppCompatActivity {
         String message = send_message.getText().toString();
 
         JSONObject data = new JSONObject();
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String getTime = sdf.format(date);
+
         try {
             data.put("to_username", other);
             data.put("from_username",preferences.getString("nickname",""));
             data.put("message", message);
+            data.put("datetime",getTime);
             mSocket.emit("private_message", data);
         } catch(JSONException e) {
             e.printStackTrace();
 
         }
+    }
+
+    private JSONObject sendJSonData(){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            Log.e("from_id",preferences.getString("nickname",""));
+            Log.e("to_id",other);
+            jsonObject.accumulate("from_id",preferences.getString("nickname",""));
+            jsonObject.accumulate("to_id",other);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
 }

@@ -1,7 +1,5 @@
 package endorphine.icampyou.EventMenu;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,13 +8,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.github.nkzawa.thread.EventThread;
-
 import java.util.ArrayList;
 
 import endorphine.icampyou.BaseFragment;
-import endorphine.icampyou.ExchangeMenu.ChattingMessage_Fragment;
-import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
 /**

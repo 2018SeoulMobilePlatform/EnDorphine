@@ -1,5 +1,7 @@
 package endorphine.icampyou;
 
+import com.github.nkzawa.socketio.client.Socket;
+
 public class Constant {
 
     //NetworkTask 클래스
@@ -45,6 +47,9 @@ public class Constant {
 
     //닉네임 중복되는 경우2
     public static final int DUPLICATED_NICKNAME2 = 1124;
+
+    //채팅방 정보 불러오기
+    public static final int GET_CHATTINGMESSAGELIST = 1125;
 
     //카메라 접근 권한 변수
     public static int permissionCheck_Camera;
