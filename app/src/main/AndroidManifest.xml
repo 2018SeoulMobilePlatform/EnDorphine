@@ -32,18 +32,19 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
+        android:icon="@drawable/app_icon3"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.StatusBar"
-        tools:replace="android:icon,android:theme,android:label"
-        android:icon="@drawable/app_icon3">
+        tools:replace="android:icon,android:theme,android:label">
 
-    <!--
+        <!--
     tools:replace="android:theme"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         -->
+
 
         <!--
               The API key for Google Maps-based APIs is defined as a string resource.
@@ -76,6 +77,7 @@
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -88,7 +90,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".QRcode.QrcodePopupActivity"
             android:theme="@android:style/Theme.Dialog" />
@@ -124,7 +126,8 @@
         <activity
             android:name=".NavigationDrawerMenu.ReservationInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".Login.FindUserInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
