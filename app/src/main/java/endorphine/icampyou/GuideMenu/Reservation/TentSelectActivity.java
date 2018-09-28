@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -77,7 +78,7 @@ public class TentSelectActivity extends AppCompatActivity
         numberButton.setNumber("1");
 
 
-        RelativeLayout paymentButton = (RelativeLayout) findViewById(R.id.payment);
+        Button paymentButton = (Button) findViewById(R.id.payment);
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
