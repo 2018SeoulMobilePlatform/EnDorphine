@@ -339,11 +339,20 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.USER_FIND_INFO:
                 try {
+                    if(result == null){
+                        Log.e("다인이","돼지새끼");
+                    } else{
+                        Log.e("다뚱이","돼지새끼");
+                    }
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
-                    Intent intent = new Intent((Activity) context, PasswordPopupActivity.class);
-                    intent.putExtra("password", real_result);
-                    ((Activity) context).startActivity(intent);
+                    if (!real_result.equals("fail")) {
+                        Intent intent = new Intent((Activity) context, PasswordPopupActivity.class);
+                        intent.putExtra("password", real_result);
+                        ((Activity) context).startActivity(intent);
+                    } else{
+                        Toast.makeText(context, "일치하는 사용자 정보가 없습니다",Toast.LENGTH_LONG).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

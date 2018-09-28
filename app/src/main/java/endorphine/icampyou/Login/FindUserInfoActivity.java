@@ -70,13 +70,11 @@ public class FindUserInfoActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != RESULT_OK){
-            Log.e("1","1");
             return ;
         }
         if(data.getStringExtra("result").equals("fail")){
 
         } else{
-            Log.e("2","2");
             Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
             this.finish();
