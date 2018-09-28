@@ -78,7 +78,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/activity_navi_drawer"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        app:itemTextColor="#FFFFFF"
+        app:itemIconTint="#FFFFFF">
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
