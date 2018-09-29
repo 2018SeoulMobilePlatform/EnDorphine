@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,17 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.ExchangeMenu.ChattingMessageActivity;
-import endorphine.icampyou.GuideMenu.GuideActivity;
 import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
@@ -80,8 +75,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     String campName;
     String period;
     Bitmap qrcodeBitmap;
-    long startTime;
-    long endTime;
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION) {
         this.context = _context;
@@ -271,11 +264,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         String result = null;
 
-        startTime = System.nanoTime();
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, data);
-        endTime = System.nanoTime();
-        Log.e("시간측정", "elapsedTime : " + (endTime - startTime));
 
         return result;
     }
@@ -316,7 +306,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
                         String user_flag = jsonObject.getJSONObject("result").getString("flag");
 
-                        Log.e("flag", user_flag);
 
                         SharedPreferences preferences = context.getSharedPreferences("preferences", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -484,7 +473,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
-                        Log.e("success", "성공");
                         Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
                         ((Activity) context).finish();
                     } else {
@@ -648,8 +636,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String text = resultObject.getString("message");
                             String date = resultObject.getString("datetime");
                             ChattingMessageVO chattingMessageVO = new ChattingMessageVO(from, to, text, date);
-                            Log.e("from_id", from);
-                            Log.e("to_id", to);
                             message.add(chattingMessageVO);
                         }
 
