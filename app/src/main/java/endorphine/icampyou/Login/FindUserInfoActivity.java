@@ -1,6 +1,7 @@
 package endorphine.icampyou.Login;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,9 @@ public class FindUserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_user_info);
 
         Button find_password = (Button)findViewById(R.id.find_password);
+        Drawable alpha = (find_password).getBackground();
+        alpha.setAlpha(90);
+
         find_password.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 //데이터베이스에서 비밀번호 찾아오기,로그인 화면으로

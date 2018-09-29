@@ -69,12 +69,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
-
-        Drawable alpha = ((Button)findViewById(R.id.login_button)).getBackground();
+        Drawable alpha = (loginButton).getBackground();
         alpha.setAlpha(90);
 
-        GlideApp.with(this).load(R.drawable.fiter).into((ImageView) findViewById(R.id.login_background));
-        //GlideApp.with(this).load(R.drawable.camp_night).into((ImageView) findViewById(R.id.login_background));
+        GlideApp.with(this).load(R.drawable.login_background).into((ImageView) findViewById(R.id.login_background));
     }
 
     @Override
