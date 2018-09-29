@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         alpha.setAlpha(90);
 
         GlideApp.with(this).load(R.drawable.login_background).into((ImageView) findViewById(R.id.login_background));
+        GlideApp.with(this).load(R.drawable.app_logo2).into((ImageView) findViewById(R.id.login_app_logo));
     }
 
     @Override
