@@ -1,8 +1,11 @@
 package endorphine.icampyou;
 
+import android.renderscript.ScriptGroup;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -22,7 +25,8 @@ public class RequestHttpURLConnection {
             conn.setConnectTimeout(15000); // 접속하는 커넥션 타임 15초동안 접속안되면 접속 안되는 것으로 간주
 
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Accept-Charset", "UTF-8"); // Accept-Charset ����. //character set을 utf-8로 선언
+            conn.setRequestProperty("Cache-Control", "no-cache");
+            conn.setRequestProperty("Accept", "text/html");
             conn.setRequestProperty("Content-Type", "application/json"); //서버로 보내는 패킷이 어떤타입인지 선언
 
             conn.setDoInput(true);
@@ -31,18 +35,24 @@ public class RequestHttpURLConnection {
             OutputStream outputStream = conn.getOutputStream();
             outputStream.write(data.toString().getBytes());
 
-            int resCode = conn.getResponseCode();
+            InputStream stream = conn.getInputStream();
 
-            InputStreamReader InputStream = new InputStreamReader(conn.getInputStream(), "UTF-8");
-            BufferedReader Reader = new BufferedReader(InputStream);
-            StringBuilder builder = new StringBuilder();
+            reader = new BufferedReader(new InputStreamReader(stream));
+            StringBuffer buffer = new StringBuffer();
 
-            while ((result = Reader.readLine()) != null) {
-                builder.append(result + "\n");
+            String line ="";
+
+            while ((line = reader.readLine()) != null)
+                buffer.append(line);
+
+            if(reader != null) {
+                reader.close(); //버퍼를 닫아줌
             }
 
-            result = builder.toString();
+            result = buffer.toString();
 
+            if(conn != null)
+                conn.disconnect();
             return result;
         } catch (Exception e) {
             e.printStackTrace();

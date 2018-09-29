@@ -2,14 +2,25 @@ package endorphine.icampyou.GuideMenu;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Network;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import endorphine.icampyou.BaseFragment;
+import endorphine.icampyou.Constant;
 import endorphine.icampyou.GlideApp;
+import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
+import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
+import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
 /*
@@ -32,6 +43,8 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // 먼저 view에 xml 설정
         view = inflater.inflate(R.layout.fragment_guide_1, container, false);
+
+        ViewGroup guideView = (ViewGroup)inflater.inflate(R.layout.activity_guide, null);
 
         // 각 xml에 맞는 버튼들 연결해줌
         nanji = (ImageView) view.findViewById(R.id.nanji);
@@ -100,4 +113,16 @@ public class GuideFragment1 extends BaseFragment implements View.OnClickListener
         view = null;
         intent = null;
     }
+
+    private JSONObject campDataJSON(String camp_name) {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("camp_name", camp_name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
 }

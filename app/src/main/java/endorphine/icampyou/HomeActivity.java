@@ -244,7 +244,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
-            Log.e("리뷰리스트 넘어가기","1");
             reservationInfoListIntent = new Intent(this, endorphine.icampyou.NavigationDrawerMenu.ReservationInfoListActivity.class);
             startActivity(reservationInfoListIntent);
         }
@@ -300,7 +299,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage", "")));
         drawerNickName.setText(preferences.getString("nickname",""));
-        Log.e("nicknmae",preferences.getString("nickname",""));
     }
 
     public BottomNavigationView getNavigation(){

@@ -73,4 +73,6 @@ public class ChatList_Adapter extends BaseAdapter{
     public int countItme(){
         return items.size();
     }
+
+    public void removeObject(Chat_Item chat_item){ items.remove(chat_item);}
 }

@@ -61,20 +61,6 @@ public class ChattingList_Fragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        campList_adapter.removeAllitem();
-//        myList_adapter.removeAllitem();
-//
-//        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getallroom";
-//
-//        JSONObject data = sendJSonData();
-//
-//        NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.GET_CHATTINGLIST,campList_adapter,copy,myList_adapter,copy2);
-//        networkTask.execute();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -197,8 +183,10 @@ public class ChattingList_Fragment extends BaseFragment {
                             NetworkTask networkTask = new NetworkTask(getActivity(), url, data, Constant.REMOVE_CHATTINGLIST);
                             networkTask.execute();
                             copy.remove(position);
+                            myList_adapter.removeObject(((Chat_Item)campList_adapter.getItem(position)));
                             campList_adapter.removeItem(position);
                             campList_adapter.notifyDataSetChanged();
+                            myList_adapter.notifyDataSetChanged();
                         } else {
                             Toast toast = Toast.makeText(getActivity(),
                                     "사용자가 생성한 채팅방만 삭제할 수 있습니다", Toast.LENGTH_SHORT);

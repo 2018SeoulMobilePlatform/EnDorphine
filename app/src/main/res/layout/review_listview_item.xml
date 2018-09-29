@@ -50,10 +50,11 @@
             <!-- 리뷰 이미지 -->
             <ImageView
                 android:id="@+id/review_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="10dp"
-                android:adjustViewBounds="true" />
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
     </LinearLayout>

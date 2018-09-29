@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 배경 -->
     <item
-        android:drawable="@drawable/splash2"
+        android:drawable="@drawable/splash"
         android:scaleType="fitXY"/>
     <!-- 로고 -->
     <!--

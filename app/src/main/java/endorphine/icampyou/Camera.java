@@ -171,7 +171,7 @@ public class Camera {
         //회전 각도 셋팅
         matrix.postRotate(degree);
         // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth()/4, src.getHeight()/4, matrix, true);
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
     }
 
     //URI 실제 경로 얻는 함수

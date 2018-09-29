@@ -45,7 +45,6 @@ public class QrcodePopupActivity extends Activity {
         campingPlace_textView = (TextView) findViewById(R.id.reservation_camping);
         date_textView = (TextView) findViewById(R.id.reservation_date);
         tentType_View = (TextView) findViewById(R.id.reservation_tent);
-        Log.e("걍","찍는당");
         if(preferences.getString("reservationNum","").equals("")){
 
         } else{

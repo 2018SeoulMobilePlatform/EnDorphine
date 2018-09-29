@@ -206,7 +206,7 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        Log.e("서버 끊기","냥냥");
         mSocket.disconnect();
         mSocket.off("new message", onNewMessage);
     }
