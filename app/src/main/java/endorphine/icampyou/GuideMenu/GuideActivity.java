@@ -300,6 +300,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 후기작성버튼 설정
         reviewAddButton = findViewById(R.id.review_add_button);
         reviewAddButton.setOnClickListener(this);
+        GlideApp.with(this).load(R.drawable.review_plus_icon).into(reviewAddButton);
     }
 
     // 캠핑장 별로 다르게 정보 설정해주기

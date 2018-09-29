@@ -69,8 +69,8 @@
                         android:layout_centerInParent="true">
                         <!-- 이미지 테두리-->
                         <ImageView
-                            android:layout_width="160dp"
-                            android:layout_height="160dp"
+                            android:layout_width="163dp"
+                            android:layout_height="163dp"
                             android:layout_centerInParent="true"
                             android:src="@color/colorPrimary" />
                         <!-- QR code 이미지 -->
