@@ -8,8 +8,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
 import endorphine.icampyou.R;
 
 

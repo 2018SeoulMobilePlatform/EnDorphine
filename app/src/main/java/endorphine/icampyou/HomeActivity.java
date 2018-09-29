@@ -31,6 +31,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.EventMenu.EventFragment1;
 import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
@@ -236,7 +238,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // 내 정보 이동
         if (id == R.id.nav_mypage) {
             mypageIntent = new Intent(this, MyPageActivity.class);
-            startActivityForResult(mypageIntent,1);
+            startActivity(mypageIntent);
         }
         // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
@@ -292,14 +294,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            String encodeImage = data.getStringExtra("profile");
-            drawerProfileImage.setImageBitmap(imageConversion.fromBase64(encodeImage));
-            drawerNickName.setText(data.getStringExtra("nickname"));
-            Log.e("encodeImage!!!",encodeImage);
-            Log.e("nickname!!!",data.getStringExtra("nickname"));
-        }
+    protected void onResume() {
+        super.onResume();
+        drawerProfileImage.setImageBitmap(imageConversion.fromBase64(preferences.getString("profileImage", "")));
+        drawerNickName.setText(preferences.getString("nickname",""));
+        Log.e("nicknmae",preferences.getString("nickname",""));
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode == RESULT_OK){
+//            Bitmap bmp = null;
+//            String filename = getIntent().getStringExtra("profile");
+//            try {
+//                FileInputStream is = this.openFileInput(filename);
+//                bmp = BitmapFactory.decodeStream(is);
+//                is.close();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            drawerProfileImage.setImageBitmap(bmp);
+//            drawerNickName.setText(data.getStringExtra("nickname"));
+//        }
+//    }
 }

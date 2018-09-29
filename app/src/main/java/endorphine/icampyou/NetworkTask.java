@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,17 +26,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Collator;
 import java.util.ArrayList;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import endorphine.icampyou.ExchangeMenu.ChatList_Adapter;
 import endorphine.icampyou.ExchangeMenu.ChatMessage_Adapter;
 import endorphine.icampyou.ExchangeMenu.Chat_Item;
 import endorphine.icampyou.ExchangeMenu.ChattingMessageActivity;
-import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.GuideActivity;
+import endorphine.icampyou.GuideMenu.Reservation.ConfirmPopupActivity;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.GuideMenu.Review.ReviewListViewAdapter;
 import endorphine.icampyou.Login.LoginActivity;
@@ -67,7 +69,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     TextView totalReviewStarScore;
     ImageView drawerQrCode;
     TextView check_textView;
-    ArrayList<String> opponent;
+
     String number;
     String other;
     boolean check;
@@ -133,13 +135,12 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.chatMessage_adapter = chatMessage_adapter;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ArrayList<String> opponent, Boolean check) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, Boolean check) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
-        this.opponent = opponent;
         this.check = check;
     }
 
@@ -196,7 +197,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.number = number;
         this.other = other;
     }
-
 
     @Override
     protected void onPreExecute() {
@@ -258,6 +258,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         }
 
         asyncDialog.show();
+        asyncDialog.setCanceledOnTouchOutside(false);
         super.onPreExecute();
     }
 
@@ -527,7 +528,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         ((Activity) context).startActivity(intent);
                         Toast.makeText(context, "결제 완료", Toast.LENGTH_LONG).show();
                         ((Activity) context).finish();
-                    } else {
+                    } else if(real_result.equals("countfail")){
+                        Toast.makeText(context, "예악 가능 횟수를 초과하였습니다", Toast.LENGTH_LONG).show();
+                    }
+                    else {
                         Toast.makeText(context, "결제 실패하였습니다", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
@@ -606,7 +610,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String resultResponse = jsonObject.getString("result");
                     JSONArray resultObjectArray = new JSONArray(resultResponse);
+                    ArrayList<ChattingMessageVO> message = new ArrayList<>();
                     SharedPreferences preferences3 = context.getSharedPreferences("preferences", MODE_PRIVATE);
+                    Log.e("resultResponse",resultResponse);
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
@@ -615,12 +621,24 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String to = resultObject.getString("to_id");
                             String text = resultObject.getString("message");
                             String date = resultObject.getString("datetime");
+                            ChattingMessageVO chattingMessageVO = new ChattingMessageVO(from,to,text,date);
                             Log.e("from_id", from);
                             Log.e("to_id", to);
-                            if (from.equals(preferences3.getString("nickname", ""))) {
-                                chatMessage_adapter.add(text, 1);
+                            message.add(chattingMessageVO);
+                        }
+
+                        Collections.sort(message, new Comparator() {
+                            @Override
+                            public int compare(Object o, Object t1) {
+                                return ((ChattingMessageVO)o).getDatetime().compareTo(((ChattingMessageVO)t1).getDatetime());
+                            }
+                        });
+
+                        for(ChattingMessageVO chattingMessageVO : message){
+                            if (chattingMessageVO.getFrom_id().equals(preferences3.getString("nickname", ""))) {
+                                chatMessage_adapter.add(chattingMessageVO.getMessage(), 1);
                             } else {
-                                chatMessage_adapter.add(text, 0);
+                                chatMessage_adapter.add(chattingMessageVO.getMessage(), 0);
                             }
                         }
                         chatMessage_adapter.notifyDataSetChanged();
@@ -668,7 +686,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (!real_result.equals("fail")) {
                         JSONObject data = new JSONObject(real_result);
                         if (check) {
-                            Log.e("ture", "true");
                             SharedPreferences preferences4 = context.getSharedPreferences("preferences", MODE_PRIVATE);
                             if (preferences4.getString("nickname", "").equals(data.getString("opponent"))) {
                                 Intent intent = new Intent(context, ChattingMessageActivity.class);
@@ -679,9 +696,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                                 Toast.makeText(context, "현재 대화중인 채팅방입니다", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Log.e("false", "false");
-                            opponent.add(data.getString("opponent"));
-                            opponent.add(data.getString("flag"));
+                            Intent intent = new Intent(context, ChattingMessageActivity.class);
+                            intent.putExtra("opponent",data.getString("opponent"));
+                            ((Activity)context).startActivity(intent);
                         }
                     }
                 } catch (JSONException e) {
@@ -693,6 +710,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         }
 
         //다이얼로그 종료
+        asyncDialog.setCanceledOnTouchOutside(true);
         asyncDialog.dismiss();
 
     }
@@ -750,6 +768,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         totalReviewStar.setRating((float) totalStar / reviewData.size());
         totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
+
 
 }
 

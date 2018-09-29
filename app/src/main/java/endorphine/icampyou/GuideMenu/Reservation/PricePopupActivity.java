@@ -13,9 +13,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import endorphine.icampyou.Constant;
 import endorphine.icampyou.R;

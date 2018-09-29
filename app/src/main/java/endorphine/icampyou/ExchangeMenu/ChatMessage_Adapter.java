@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import endorphine.icampyou.R;
 
 public class ChatMessage_Adapter extends BaseAdapter {

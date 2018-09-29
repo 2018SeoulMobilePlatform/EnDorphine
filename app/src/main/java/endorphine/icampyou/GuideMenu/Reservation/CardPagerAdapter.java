@@ -11,10 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.GlideApp;
-import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
-import endorphine.icampyou.GuideMenu.Reservation.CardItem;
 import endorphine.icampyou.R;
 
 
