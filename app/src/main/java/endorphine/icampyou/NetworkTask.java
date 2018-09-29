@@ -135,13 +135,14 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.chatMessage_adapter = chatMessage_adapter;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, Boolean check) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, Boolean check,String number) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.check = check;
+        this.number = number;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, Boolean check, String number, String other) {
@@ -251,6 +252,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 asyncDialog.setMessage("상대방 설정 중 입니다..");
                 break;
             case Constant.GET_OPPONENT:
+                asyncDialog.setMessage("로딩 중..");
+                break;
+            case Constant.SET_FLAG:
+                asyncDialog.setMessage("로딩 중..");
                 break;
             default:
                 break;
@@ -306,6 +311,8 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         String user_password = jsonObject.getJSONObject("result").getString("password");
                         String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
                         String user_flag = jsonObject.getJSONObject("result").getString("flag");
+
+                        Log.e("flag",user_flag);
 
                         SharedPreferences preferences = context.getSharedPreferences("preferences", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -396,7 +403,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
                     }
                 } catch (JSONException e) {
-                    Log.e("exception", e.toString());
                     e.printStackTrace();
                 }
 
@@ -496,7 +502,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
-                            Log.e("GET", "CHATROOM");
                             resultObject = resultObjectArray.getJSONObject(i);
                             Bitmap image = imageConversion.fromBase64(resultObject.getString("image"));
                             String number = resultObject.getString("number");
@@ -518,7 +523,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         chatList_adapter2.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
-                    Log.e("exception", e.toString());
                     e.printStackTrace();
                 }
                 break;
@@ -590,13 +594,11 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         setTotalStarScore(reviewList_adapter.getReviewList());
                     }
                 } catch (JSONException e) {
-                    Log.e("exception", e.toString());
                     e.printStackTrace();
                 }
                 break;
             case Constant.MODIFY_USER_INFO:
                 try {
-                    Log.e("result", result);
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
@@ -616,7 +618,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONArray resultObjectArray = new JSONArray(resultResponse);
                     ArrayList<ChattingMessageVO> message = new ArrayList<>();
                     SharedPreferences preferences3 = context.getSharedPreferences("preferences", MODE_PRIVATE);
-                    Log.e("resultResponse",resultResponse);
                     if (!resultResponse.equals("fail")) {
                         JSONObject resultObject;
                         for (int i = 0; i < resultObjectArray.length(); i++) {
@@ -700,10 +701,27 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                                 Toast.makeText(context, "현재 대화중인 채팅방입니다", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Intent intent = new Intent(context, ChattingMessageActivity.class);
-                            intent.putExtra("opponent",data.getString("opponent"));
-                            ((Activity)context).startActivity(intent);
+                            if(data.getString("opponent").equals("")){
+                                Toast.makeText(context,"현재 상대방이 지정되어 있지 않습니다",Toast.LENGTH_LONG).show();
+                            }else{
+                                Intent intent = new Intent(context, ChattingMessageActivity.class);
+                                intent.putExtra("number",number);
+                                intent.putExtra("opponent",data.getString("opponent"));
+                                ((Activity)context).startActivity(intent);
+                            }
+
                         }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            case Constant.SET_FLAG:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        ((Activity)context).finish();
+                    } else {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

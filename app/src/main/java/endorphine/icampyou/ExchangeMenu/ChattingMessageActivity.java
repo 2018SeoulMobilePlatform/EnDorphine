@@ -16,12 +16,15 @@ import android.widget.Toast;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import endorphine.icampyou.Constant;
 import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.NetworkTask;
@@ -39,13 +42,15 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
 
     String opponent;
 
-    Boolean check;
+    String room_number;
     //서버
     Socket mSocket = null;
+
     {
         try {
             mSocket = IO.socket("http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000");
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
     }
 
     //서버에서 전송 된다면
@@ -68,7 +73,7 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
                     }
 
                     // add the message to view
-                    m_chatmessage_adapter.add(message,0);
+                    m_chatmessage_adapter.add(message, 0);
                     m_chatmessage_adapter.notifyDataSetChanged();
                 }
             });
@@ -80,39 +85,34 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting_message);
 
-        check = true;
-
-        preferences = getSharedPreferences("preferences",MODE_PRIVATE);
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
 
         m_chatmessage_adapter = new ChatMessage_Adapter();
 
 
         Intent intent = getIntent();
-        if(intent.getStringExtra("opponent").equals("")){
-            Toast.makeText(this,"현재 상대방이 지정되어 있지 않습니다",Toast.LENGTH_LONG).show();
-        } else{
-            opponent = intent.getStringExtra("opponent");
-        }
+
+        opponent = intent.getStringExtra("opponent");
+        room_number = intent.getStringExtra("number");
 
         mSocket.on("new_private_message", onNewMessage);
         mSocket.connect();
 
         attemptLoginSignal();
 
-        m_chatMessage_listView = (ListView)findViewById(R.id.chatmessage_listView);
+        m_chatMessage_listView = (ListView) findViewById(R.id.chatmessage_listView);
 
         m_chatMessage_listView.setAdapter(m_chatmessage_adapter);
 
-        send_message = (EditText)findViewById(R.id.editText1);
+        send_message = (EditText) findViewById(R.id.editText1);
 
-        findViewById(R.id.send_btn).setOnClickListener(new Button.OnClickListener(){
+        findViewById(R.id.send_btn).setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onClick(View view){
-                if(send_message.length() == 0){
-                    return ;
-                }
-                else{
-                    m_chatmessage_adapter.add(send_message.getText().toString(),1);
+            public void onClick(View view) {
+                if (send_message.length() == 0) {
+                    return;
+                } else {
+                    m_chatmessage_adapter.add(send_message.getText().toString(), 1);
                     attemptSend();
                     send_message.setText("");
                     m_chatmessage_adapter.notifyDataSetChanged();
@@ -124,30 +124,22 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
         backButton = findViewById(R.id.chat_message_back_btn);
         backButton.setOnClickListener(this);
         GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(check){
-            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
 
-            JSONObject data = sendJSonData();
+        JSONObject data = sendJSonData();
 
-            NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this,url,data,Constant.GET_CHATTINGMESSAGELIST,m_chatmessage_adapter);
-            networkTask.execute();
-
-            check= false;
-        }
+        NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this, url, data, Constant.GET_CHATTINGMESSAGELIST, m_chatmessage_adapter);
+        networkTask.execute();
     }
 
     //로그인했다는 표시
-    private void attemptLoginSignal(){
-        String user_id = preferences.getString("nickname","");
+    private void attemptLoginSignal() {
+        String user_id = preferences.getString("nickname", "");
         if (TextUtils.isEmpty(user_id)) {
             return;
         }
-        mSocket.emit("username",user_id);
+        mSocket.emit("username", user_id);
     }
 
     //채팅 전송
@@ -159,27 +151,40 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
         Date date = new Date(now);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String getTime = sdf.format(date);
-        Log.e("Time",getTime);
+        Log.e("Time", getTime);
 
         try {
             data.put("to_username", opponent);
-            data.put("from_username",preferences.getString("nickname",""));
+            data.put("from_username", preferences.getString("nickname", ""));
             data.put("message", message);
-            data.put("datetime",getTime);
+            data.put("datetime", getTime);
+            data.put("number",room_number);
             mSocket.emit("private_message", data);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private JSONObject sendJSonData(){
+    private JSONObject sendJSonData() {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.accumulate("from_id",preferences.getString("nickname",""));
-            jsonObject.accumulate("to_id",opponent);
-            Log.e("from_id",preferences.getString("nickname",""));
-            Log.e("to_id",opponent);
+            jsonObject.accumulate("from_id", preferences.getString("nickname", ""));
+            jsonObject.accumulate("to_id", opponent);
+            jsonObject.accumulate("number",room_number);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    private JSONObject setFlagData() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("nickname", preferences.getString("nickname", ""));
+            jsonObject.accumulate("flag", "0");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -189,7 +194,13 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onBackPressed() {
-        finish();
+
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update/userflag";
+
+        JSONObject data = setFlagData();
+
+        NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this, url, data, Constant.SET_FLAG);
+        networkTask.execute();
     }
 
     @Override

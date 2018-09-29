@@ -58,6 +58,9 @@ public class Constant {
     //채팅 상대방 값 가져오기
     public static final int GET_OPPONENT = 1128;
 
+    //사용자 플래그 설정하기
+    public static final int SET_FLAG = 1129;
+
     //카메라 접근 권한 변수
     public static int permissionCheck_Camera;
     public static int permissionCheck_Write;
