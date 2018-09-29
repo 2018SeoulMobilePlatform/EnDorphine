@@ -213,7 +213,7 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.mypage_back_btn) {
+        if (v.getId() == R.id.chat_message_back_btn) {
             finish();
         }
     }
