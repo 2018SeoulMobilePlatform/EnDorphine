@@ -25,6 +25,7 @@ import java.util.Random;
 
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -51,6 +52,8 @@ public class Chat_Content extends AppCompatActivity {
 
         //이미지 넣기
         need_Photo = (ImageView) findViewById(R.id.user_image);
+
+        GlideApp.with(this).load(R.drawable.image).into(need_Photo);
 
         //카메라 클래스 객체 생성
         camera = new Camera(this,need_Photo);

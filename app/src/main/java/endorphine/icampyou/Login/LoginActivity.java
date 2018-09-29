@@ -1,9 +1,17 @@
 package endorphine.icampyou.Login;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -62,7 +70,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(this);
 
-        GlideApp.with(this).load(R.drawable.camp_night).into((ImageView) findViewById(R.id.login_background));
+        Drawable alpha = ((Button)findViewById(R.id.login_button)).getBackground();
+        alpha.setAlpha(90);
+
+        GlideApp.with(this).load(R.drawable.fiter).into((ImageView) findViewById(R.id.login_background));
+        //GlideApp.with(this).load(R.drawable.camp_night).into((ImageView) findViewById(R.id.login_background));
     }
 
     @Override

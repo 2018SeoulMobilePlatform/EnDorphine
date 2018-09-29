@@ -2,25 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="1dp"
-    >
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/need_pic"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
-        android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF"/>
+        android:background="#00000000"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="4"
-        android:paddingLeft="10dp">
+        android:layout_margin="10dp">
 
 
         <LinearLayout
@@ -33,11 +28,13 @@
                 android:id="@+id/user_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:text="user_name"
-                android:textSize="15dp"
                 android:textStyle="bold"
-                android:layout_weight="4"/>
+                android:textSize="15dp"
+                android:layout_weight="4"
+                android:layout_marginLeft="5dp"
+                android:textColor="#828282"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -47,14 +44,13 @@
 
                 <TextView
                     android:id="@+id/camping_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_vertical|right"
                     android:text="camp_name"
                     android:textSize="13dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:paddingRight="5dp"/>
+                    android:layout_marginRight="10dp"
+                    android:textColor="#828282"/>
 
             </LinearLayout>
 
@@ -62,6 +58,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -71,8 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="#빌리고 싶은 물건"
-                android:textColor="#FF1237"
+                android:text="빌리고 싶은 물건 "
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="10dp" />
 
@@ -99,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:textStyle="bold"
-                android:text="#빌려줄수 있는 물건"
-                android:textColor="#883212"
+                android:text="빌려줄 수 있는 물건 "
+                android:textColor="#288EAC"
                 android:textSize="10dp"
                 />
 

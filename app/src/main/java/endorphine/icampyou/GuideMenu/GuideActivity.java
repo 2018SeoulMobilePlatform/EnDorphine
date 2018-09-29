@@ -332,7 +332,7 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
             case "노을 캠핑장":
                 campingName.setText("노을 캠핑장");
                 campingAddress.setText("서울특별시 마포구 상암동 478-1");
-                GlideApp.with(this).load(R.drawable.info_nanji).into(campingInfoImage);
+                GlideApp.with(this).load(R.drawable.info_noeul).into(campingInfoImage);
                 GlideApp.with(this).load(R.drawable.map_noeul).into(mapImage);
                 break;
             case "중랑 캠핑장":

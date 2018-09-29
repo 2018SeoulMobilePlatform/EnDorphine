@@ -10,7 +10,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/login_background"/>
+        android:id="@+id/login_background"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"

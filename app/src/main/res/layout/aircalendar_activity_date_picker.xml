@@ -34,25 +34,6 @@
                     android:layout_marginLeft="15dp"
                     android:src="@drawable/aricalendar_btn_back" />
 
-                <RelativeLayout
-                    android:id="@+id/rl_reset_btn"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true" />
-
-                <TextView
-                    android:id="@+id/tv_reset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:text="재설정"
-                    android:textColor="@color/colorTest"
-                    android:textSize="17sp" />
-
-
             </RelativeLayout>
 
             <RelativeLayout

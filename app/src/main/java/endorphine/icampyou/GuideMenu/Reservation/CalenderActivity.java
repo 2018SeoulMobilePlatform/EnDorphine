@@ -45,7 +45,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
     private TextView tv_end_date;
     private TextView tv_popup_msg;
     private RelativeLayout rl_done_btn;
-    private RelativeLayout rl_reset_btn;
     private RelativeLayout rl_popup_select_checkout_info_ok;
     private RelativeLayout rl_checkout_select_info_popup;
     private RelativeLayout rl_iv_back_btn_bg;
@@ -100,7 +99,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
         tv_end_date = findViewById(R.id.tv_end_date);
         tv_popup_msg = findViewById(R.id.tv_popup_msg);
         rl_checkout_select_info_popup = findViewById(R.id.rl_checkout_select_info_popup);
-        rl_reset_btn = findViewById(R.id.rl_reset_btn);
         rl_popup_select_checkout_info_ok = findViewById(R.id.rl_popup_select_checkout_info_ok);
         rl_checkout_select_info_popup = findViewById(R.id.rl_checkout_select_info_popup);
         rl_iv_back_btn_bg = findViewById(R.id.rl_iv_back_btn_bg);
@@ -175,16 +173,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
                 setResult(RESULT_OK , resultIntent);
                 startActivity(resultIntent);
                 //finish();
-            }
-        });
-
-        rl_reset_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SELECT_START_DATE = "";
-                SELECT_END_DATE = "";
-                setContentView(R.layout.aicalendar_activity_date_picker);
-                init();
             }
         });
 

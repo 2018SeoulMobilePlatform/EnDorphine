@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.GuideMenu.Review.ReviewListItem;
 import endorphine.icampyou.R;
@@ -25,7 +26,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
     private ArrayList<ReviewListItem> reviewData;
     private int layout;
 
-    private ImageView profileImage;
+    private CircleImageView profileImage;
     private TextView nickName;
     private RatingBar star;
     private ImageView reviewImage;
@@ -61,7 +62,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
 
         ReviewListItem reviewListItem= reviewData.get(position);
 
-        profileImage= (ImageView)convertView.findViewById(R.id.review_profile_image);
+        profileImage= (CircleImageView)convertView.findViewById(R.id.review_profile_image);
         profileImage.setImageBitmap(reviewListItem.getProfile_image());
 
         nickName=(TextView)convertView.findViewById(R.id.review_nickname);

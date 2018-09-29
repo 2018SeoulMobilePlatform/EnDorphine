@@ -12,7 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,9 +29,9 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:src="@drawable/camera2"
+                android:src="@drawable/image"
                 android:foregroundGravity="center_vertical"
-                android:background="@drawable/border" />
+                android:onClick="put_image"/>
 
             <Button
                 android:id="@+id/select_img_btn"
@@ -50,18 +52,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:text="#캠핑장"
-            android:textSize="15dp"
+            android:text="캠핑장"
+            android:textSize="17dp"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/camp_combobox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:background="@drawable/border"/>
 
@@ -70,23 +73,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:text="#빌리고 싶은 물건"
-            android:textSize="15dp"
+            android:text="빌리고 싶은 물건"
+            android:textSize="17dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/write_need"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="2"
             android:background="@drawable/border"
             android:gravity="top"
+            android:padding="5dp"
             android:hint="다른 사람에게 빌리고 싶은 물건이 있으신가요?"
-            android:textSize="13dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/lettable"
@@ -94,32 +99,34 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:text="#빌려줄 수 있는 물건"
-            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="빌려줄 수 있는 물건"
+            android:textSize="17dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/write_lettable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/border"
             android:gravity="top"
+            android:padding="5dp"
             android:hint="다른 사람에게 빌려줄 수 있는 물건이 있으신가요?"
             android:layout_weight="2"
-            android:textSize="13dp" />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/save_chat_content"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:background="@color/colorPrimary"
             android:text="채팅방 개설"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

@@ -12,12 +12,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!-- 프로필 이미지 -->
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/review_profile_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="15dp"
-            android:scaleType="fitXY"/>
+            android:layout_marginRight="15dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,17 +27,18 @@
                 android:id="@+id/review_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:textColor="#4C4C4C"
-                android:paddingTop="5dp"/>
+                android:paddingTop="5dp"
+                android:textColor="#4C4C4C" />
+
             <RatingBar
                 android:id="@+id/review_star"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:padding="0dp"
                 android:rating="5"
-                android:stepSize="0.5"
-                style="?android:attr/ratingBarStyleSmall" />
+                android:stepSize="0.5" />
 
             <!-- 리뷰 내용 -->
             <TextView
@@ -52,8 +52,8 @@
                 android:id="@+id/review_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true" />
         </LinearLayout>
 
     </LinearLayout>
