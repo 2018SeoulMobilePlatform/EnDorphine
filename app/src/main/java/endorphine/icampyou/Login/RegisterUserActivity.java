@@ -3,6 +3,7 @@ package endorphine.icampyou.Login;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         imageConversion = new ImageConversion();
 
         Button register_btn = (Button)findViewById(R.id.register_user);
+        Drawable alpha = (register_btn).getBackground();
+        alpha.setAlpha(90);
+
         register_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 if(!exception.EmailException(email_editText.getText().toString()) ||

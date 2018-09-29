@@ -64,6 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView drawerEmail;
     private ImageView drawerQrcode;
 
+    private BottomNavigationView navigation;
+
     private LayoutInflater inflater;
     private View naviHeaderLayout;
     private ViewGroup qrcodePopupLayout;
@@ -73,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ImageConversion imageConversion;
 
     // 하단바 클릭 이벤트
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -132,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getFragmentManager().beginTransaction().replace(R.id.main_frame, homeFragment2).commit();
 
         // Bottom Navigation (하단 네비게이션 바)
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home); // 디폴트 홈메뉴로 지정
@@ -178,6 +180,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         JSONObject data = getReservationInfo();
         NetworkTask networkTask = new NetworkTask(HomeActivity.this, url, data, Constant.GET_RESERVATION_INFO,drawerQrcode);
         networkTask.execute();
+
+        // 앱 로고 설정
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.app_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
     @Override
@@ -301,5 +308,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Log.e("encodeImage!!!",encodeImage);
             Log.e("nickname!!!",data.getStringExtra("nickname"));
         }
+    }
+
+    public BottomNavigationView getNavigation(){
+        return navigation;
     }
 }

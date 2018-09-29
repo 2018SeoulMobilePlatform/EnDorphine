@@ -24,10 +24,10 @@
             android:scaleType="fitXY" />
 
         <ImageView
+            android:id="@+id/chat_message"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_gravity="top"
-            android:src="@drawable/chat_message1"
-            android:padding="10dp"/>
+            android:padding="10dp" />
     </FrameLayout>
 </LinearLayout>

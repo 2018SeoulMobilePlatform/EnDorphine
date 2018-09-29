@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="※ 캠핑장에 따라 추가 요금이 발생할 수 있습니다"
+                android:text="※ 캠핑장에 따라 추가 요금이 발생할 수 있습니다\n※ 텐트는 최대 5개까지 예약 가능합니다."
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15dp" />

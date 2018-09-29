@@ -91,18 +91,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:transcriptMode="alwaysScroll"/>
-                    </FrameLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:orientation="horizontal"
-                        android:scrollbars="none"
-                        android:visibility="visible"
-                        android:gravity="right"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="30dp"
-                        android:weightSum="1">
 
                         <com.melnykov.fab.FloatingActionButton
                             android:id="@+id/make_chatlist_button"
@@ -112,9 +100,9 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="10dp"
                             android:background="#FFFFFF"
-                            android:scaleType="fitXY" />
-
-                    </LinearLayout>
+                            android:scaleType="fitXY"
+                            android:layout_margin="30dp"/>
+                    </FrameLayout>
                 </LinearLayout>
 
 

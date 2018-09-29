@@ -539,9 +539,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");
                     if (real_result.equals("success")) {
-                        intent = new Intent(context, GuideActivity.class);
+                        intent = new Intent();
                         intent.putExtra("캠핑장 이름", data.getString("camp_name"));
-                        ((Activity) context).startActivity(intent);
+                        ((Activity) context).setResult(1234, intent);
                         Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
                         ((Activity) context).finish();
                     } else {
