@@ -291,7 +291,7 @@ public class ChattingList_Fragment extends BaseFragment {
         else if(text.equals("나의 채팅"))
         {
             img = (ImageView)view.findViewById(R.id.tabs_image);
-            GlideApp.with(view).load(R.drawable.tent2).into(img);
+            GlideApp.with(view).load(R.drawable.tent1_2).into(img);
         }
 
         TextView tv = (TextView) view.findViewById(R.id.tabs_text);

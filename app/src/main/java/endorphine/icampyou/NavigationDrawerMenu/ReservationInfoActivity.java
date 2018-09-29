@@ -17,9 +17,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
-public class ReservationInfoActivity extends AppCompatActivity {
+public class ReservationInfoActivity extends AppCompatActivity implements View.OnClickListener{
 
     ImageView qrcode;
     TextView reservationNum;
@@ -30,6 +31,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
     TextView price;
     Bitmap qrcodeBitmap;
     Button confirmButton;
+    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,11 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tentNum = (TextView)findViewById(R.id.res_info_tent_num);
         price = (TextView)findViewById(R.id.res_info_total_price);
         confirmButton = (Button)findViewById(R.id.res_info_confirm);
+
+        // back 버튼 설정
+        backButton = findViewById(R.id.res_info_back_btn);
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+        backButton.setOnClickListener(this);
 
         //인텐트로 정보 가져오기
         Intent intent = getIntent();
@@ -89,6 +96,14 @@ public class ReservationInfoActivity extends AppCompatActivity {
         return bmp;
     }
 
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.res_info_back_btn:
+                finish();
+            default:
+                break;
+        }
+    }
 
 }
