@@ -64,6 +64,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:itemIconTint="@color/bottom_bar_item_selector"
+                app:itemTextColor="@color/bottom_bar_item_selector"
                 app:menu="@menu/navigation" />
         </LinearLayout>
 
