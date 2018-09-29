@@ -149,7 +149,7 @@
                                     android:layout_marginTop="18dp"
                                     android:isIndicator="true"
                                     android:numStars="5"
-                                    android:rating="3.5"
+                                    android:rating="0.0"
                                     android:stepSize="0.5"
                                     android:theme="@style/CustomRatingStar" />
 
@@ -159,7 +159,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginTop="18dp"
-                                    android:text="3.5"
+                                    android:text="0.0"
                                     android:textColor="#F9BE4F"
                                     android:textStyle="bold" />
 

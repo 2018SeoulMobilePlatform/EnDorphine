@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -92,7 +93,6 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
 
         if(intent.getStringExtra("캠핑장 이름") != null) {
             campingPlace = intent.getStringExtra("캠핑장 이름");
-            Log.e("캠핑장 이름", campingPlace);
         }
 
         // 캠핑장 종류에 맞게 정보 페이지뷰에 사진 페이지 저장
@@ -155,6 +155,20 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         // 구글맵 연동
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+                adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+
+        reviewData.clear();
+
+        reviewList.setAdapter(adapter);
+
+        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
+
+        JSONObject data = campingJSonData(campingPlace);
+
+        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter);
+        networkTask.execute();
+
     }
 
     @Override
@@ -244,45 +258,27 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
                 // 후기 작성 버튼 누르면 후기 작성 액티비티 시작됨
                 intent = new Intent(GuideActivity.this, ReviewWriteActivity.class);
                 intent.putExtra("캠핑장 이름",campingPlace);
-                startActivity(intent);
-                break;
+                switch (campingPlace) {
+                    case "난지 캠핑장":
+                        startActivityForResult(intent, Constant.NANJI);
+                        break;
+                    case "서울대공원 캠핑장":
+                        startActivityForResult(intent, Constant.SEOUL);
+                        break;
+                    case "노을 캠핑장":
+                        startActivityForResult(intent, Constant.NOEUL);
+                        break;
+                    case "중랑 캠핑장":
+                        startActivityForResult(intent, Constant.JUNGRANG);
+                        break;
+                    case "초안산 캠핑장":
+                        startActivityForResult(intent, Constant.CHOANSAN);
+                        break;
+                    case "강동 캠핑장":
+                        startActivityForResult(intent, Constant.GANGDONG);
+                        break;
+                }
         }
-    }
-
-    // 리뷰 액티비티 갔다가 끝나면 여기로
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
-
-        reviewData.clear();
-
-        reviewList.setAdapter(adapter);
-
-        String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
-
-        JSONObject data = sendJSonData();
-
-        NetworkTask networkTask = new NetworkTask(this,url,data, Constant.GET_REVIEWLIST,adapter,campingPlace);
-        networkTask.execute();
-
-        setTotalStarScore();
-    }
-
-    // 총 별점 평균 구해서 ratingBar 설정하는 메소드
-    public void setTotalStarScore() {
-        float totalStar = 0;
-
-        totalReviewStar = findViewById(R.id.review_total_star);
-        totalReviewStarScore = findViewById(R.id.total_star_score);
-
-        for (ReviewListItem review : reviewData) {
-            totalStar += review.getStar();
-        }
-
-        totalReviewStar.setRating((float) totalStar / reviewData.size());
-        totalReviewStarScore.setText("" + totalReviewStar.getRating());
     }
 
     // 리뷰페이지 설정하는 메소드
@@ -430,11 +426,60 @@ public class GuideActivity extends Activity implements View.OnClickListener, OnM
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
     }
 
-    //POST 요청 JSON 데이터 형식 사용
-    private JSONObject sendJSonData()  {
-
+    //캠핑장 별로 데이터 요청
+    private JSONObject campingJSonData(String camp_name){
         JSONObject jsonObject = new JSONObject();
 
+        try {
+            jsonObject.accumulate("camp_name",camp_name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return jsonObject;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("시발","시발아알");
+        Log.e("result",String.valueOf(resultCode));
+        if(resultCode != 0){
+
+            adapter = new ReviewListViewAdapter(inflater, R.layout.review_listview_item, reviewData);
+
+            reviewData.clear();
+
+            reviewList.setAdapter(adapter);
+
+            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/postscript/getinfo";
+
+            JSONObject data2=null;
+
+            switch (resultCode) {
+                case Constant.NANJI:
+                    data2 = campingJSonData("난지 캠핑장");
+                    break;
+                case Constant.SEOUL:
+                    data2 = campingJSonData("서울대공원 캠핑장");
+                    break;
+                case Constant.NOEUL:
+                    data2 = campingJSonData("노을 캠핑장");
+                    break;
+                case Constant.JUNGRANG:
+                    data2 = campingJSonData("중랑 캠핑장");
+                    break;
+                case Constant.CHOANSAN:
+                    data2 = campingJSonData("초안산 캠핑장");
+                    break;
+                case Constant.GANGDONG:
+                    data2 = campingJSonData("강동 캠핑장");
+                    break;
+            }
+
+            NetworkTask networkTask = new NetworkTask(this,url,data2, Constant.GET_REVIEWLIST,adapter);
+            networkTask.execute();
+
+        }
     }
 }

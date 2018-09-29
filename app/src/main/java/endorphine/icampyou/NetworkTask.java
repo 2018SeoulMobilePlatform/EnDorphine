@@ -62,7 +62,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
     ReviewListViewAdapter reviewList_adapter;
     ChatMessage_Adapter chatMessage_adapter;
     ArrayList<ReviewListItem> reviewData;
-    String campingPlace;
     ArrayList<Chat_Item> copy;
     ArrayList<Chat_Item> copy2;
     RatingBar totalReviewStar;
@@ -118,14 +117,13 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         this.copy2 = copy2;
     }
 
-    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter, String _campingPlace) {
+    public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ReviewListViewAdapter _adapter) {
         this.context = _context;
         this.url = url;
         this.data = data;
         this.select = ACTION;
         asyncDialog = new ProgressDialog(_context);
         this.reviewList_adapter = _adapter;
-        this.campingPlace = _campingPlace;
     }
 
     public NetworkTask(Context _context, String url, JSONObject data, int ACTION, ChatMessage_Adapter chatMessage_adapter) {
@@ -558,7 +556,26 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     if (real_result.equals("success")) {
                         intent = new Intent();
                         intent.putExtra("캠핑장 이름", data.getString("camp_name"));
-                        ((Activity) context).setResult(1234, intent);
+                        switch (data.getString("camp_name")) {
+                            case "난지 캠핑장":
+                                ((Activity) context).setResult(Constant.NANJI, intent);
+                                break;
+                            case "서울대공원 캠핑장":
+                                ((Activity) context).setResult(Constant.SEOUL, intent);
+                                break;
+                            case "노을 캠핑장":
+                                ((Activity) context).setResult(Constant.NOEUL, intent);
+                                break;
+                            case "중랑 캠핑장":
+                                ((Activity) context).setResult(Constant.JUNGRANG, intent);
+                                break;
+                            case "초안산 캠핑장":
+                                ((Activity) context).setResult(Constant.CHOANSAN, intent);
+                                break;
+                            case "강동 캠핑장":
+                                ((Activity) context).setResult(Constant.GANGDONG, intent);
+                                break;
+                        }
                         Toast.makeText(context, "후기 작성 완료", Toast.LENGTH_LONG).show();
                         ((Activity) context).finish();
                     } else {
@@ -570,7 +587,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                 break;
             case Constant.GET_REVIEWLIST:
                 SharedPreferences preferences2 = context.getSharedPreferences("preferences", MODE_PRIVATE);
-
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String resultResponse = jsonObject.getString("result");
@@ -590,10 +606,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                             String camp_name = resultObject.getString("camp_name");
                             String point = resultObject.getString("point");
                             String content = resultObject.getString("content");
-                            if (camp_name.equals(campingPlace)) {
-                                reviewList_adapter.addItem(new ReviewListItem(profile_Image,
-                                        camp_name, nickname, Float.parseFloat(point), image, content));
-                            }
+
+                            reviewList_adapter.addItem(new ReviewListItem(profile_Image,
+                                    camp_name, nickname, Float.parseFloat(point), image, content));
+
                         }
                         reviewList_adapter.notifyDataSetChanged();
                         setTotalStarScore(reviewList_adapter.getReviewList());

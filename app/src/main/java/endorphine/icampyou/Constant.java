@@ -72,4 +72,12 @@ public class Constant {
     public static final int REQUEST_PERMISSION_CODE_CAMERA = 2000;
     public static final int REQUEST_PERMISSION_CODE_GALLERY = 2001;
 
+    //캠핑장 종류별 요청 코드
+    public static final int NANJI = 1;
+    public static final int SEOUL = 2;
+    public static final int NOEUL = 3;
+    public static final int JUNGRANG= 4;
+    public static final int CHOANSAN = 5;
+    public static final int GANGDONG= 6;
+
 }

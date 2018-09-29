@@ -34,7 +34,7 @@ public class RequestHttpURLConnection {
 
             OutputStream outputStream = conn.getOutputStream();
             outputStream.write(data.toString().getBytes());
-            
+
             InputStream stream = conn.getInputStream();
 
             reader = new BufferedReader(new InputStreamReader(stream));

@@ -87,7 +87,6 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
                             new endorphine.icampyou.NetworkTask(ReviewWriteActivity.this,url,data, Constant.MAKE_REVIEWLIST);
                     networkTask.execute();
                 }
-                break;
         }
     }
 
@@ -206,5 +205,12 @@ public class ReviewWriteActivity extends AppCompatActivity implements View.OnCli
         }
 
         return jsonObject;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(0);
+        finish();
     }
 }
