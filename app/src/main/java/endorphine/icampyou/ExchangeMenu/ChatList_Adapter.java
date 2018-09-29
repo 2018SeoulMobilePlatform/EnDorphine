@@ -52,7 +52,7 @@ public class ChatList_Adapter extends BaseAdapter{
         Chat_Item item = (Chat_Item)getItem(position);
 
         GlideApp.with(convertView).load(item.getImage()).into(imageView);
-        user.setText(item.getUser_id());
+        user.setText(item.getNickname());
         camp.setText(item.getCamping_name());
         need.setText(item.getNeed_thing());
         lettable.setText(item.getLettable_thing());

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,6 +70,7 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         // 예약정보 데이터 설정
         reservationinfoData = new ArrayList<>();
 
+
         String[] reservationNum = preferences.getString("reservationNum", "").split(",");
         String[] campingPlace = preferences.getString("campingPlace",  "").split(",");
         String[] date = preferences.getString("date", "").split(",");
@@ -75,12 +78,17 @@ public class ReservationInfoListActivity extends AppCompatActivity implements Vi
         String[] tentNum = preferences.getString("tentNum",  "").split(",");
         String[] price = preferences.getString("price", "").split(",");
 
-        for(int i=0; i<reservationNum.length; i++){
-            addReservationInfoList(reservationNum[i],
-                    campingPlace[i], date[i],
-                    tentType[i], tentNum[i],
-                    price[i]);
+        if(preferences.getString("reservationNum", "").equals("")){
+            Toast.makeText(this,"예약 정보가 없습니다.",Toast.LENGTH_LONG).show();
+        } else{
+            for(int i=0;i<reservationNum.length;i++){
+                addReservationInfoList(reservationNum[i],
+                        campingPlace[i], date[i],
+                        tentType[i], tentNum[i],
+                        price[i]);
+            }
         }
+
 
         // 어댑터로 예약정보 리스트에 아이템 뿌려주기
         adapter = new ReservationInfoListViewAdapter(inflater, R.layout.reservation_info_listview_item, reservationinfoData);

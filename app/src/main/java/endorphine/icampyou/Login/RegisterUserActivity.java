@@ -80,10 +80,15 @@ public class RegisterUserActivity extends AppCompatActivity {
         });
 
         email_editText = (EditText)findViewById(R.id.user_email);
+        email_editText.setPrivateImeOptions("defaultInputmode=english;");
         password_editText = (EditText)findViewById(R.id.password);
+        password_editText.setPrivateImeOptions("defaultInputmode=english;");
         name_editText = (EditText)findViewById(R.id.user_name);
+        name_editText.setPrivateImeOptions("defaultInputmode=korea;");
         nickName_editText = (EditText)findViewById(R.id.user_nickname);
+        nickName_editText.setPrivateImeOptions("defaultInputmode=korea;");
         phoneNumber_editText = (EditText)findViewById(R.id.user_phone);
+        phoneNumber_editText.setPrivateImeOptions("defaultInputmode=english;");
         user_profile = (CircleImageView)findViewById(R.id.profile_image);
 
         camera = new Camera(RegisterUserActivity.this,user_profile);
@@ -259,6 +264,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         jsonObject.accumulate("name", name_editText.getText().toString());
         jsonObject.accumulate("nickname", nickName_editText.getText().toString());
         jsonObject.accumulate("phonenumber", phoneNumber_editText.getText().toString());
+        jsonObject.accumulate("flag","0");
 
         return jsonObject;
     }

@@ -121,7 +121,7 @@ public class PricePopupActivity extends Activity {
         return;
     }
 
-    //후기 데이터 서버에 보내기 위한 JSON 형식 데이터
+    //예약정보 데이터 넘기는 JSON
     private JSONObject sendJSonData(int reservationNumber) {
 
         JSONObject jsonObject = new JSONObject();

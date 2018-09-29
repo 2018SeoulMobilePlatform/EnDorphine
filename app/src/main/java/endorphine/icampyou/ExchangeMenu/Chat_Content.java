@@ -21,6 +21,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
 import endorphine.icampyou.GlideApp;
@@ -96,7 +98,6 @@ public class Chat_Content extends AppCompatActivity {
                     networkTask.execute();
 
                     finish();
-
                 }
             }
         });
@@ -194,14 +195,21 @@ public class Chat_Content extends AppCompatActivity {
 
         String encodedImage = imageConversion.toBase64(need_Photo);
 
-        Log.e("이미지",encodedImage);
+        Random random = new Random();
+        int reservationNum = random.nextInt();
+        if(reservationNum < 0)
+            reservationNum = reservationNum * (-1);
 
         try {
+            jsonObject.accumulate("number",String.valueOf(reservationNum));
             jsonObject.accumulate("image", encodedImage);
-            jsonObject.accumulate("user_id", preferences.getString("nickname",""));
+            jsonObject.accumulate("user_id", preferences.getString("email",""));
+            jsonObject.accumulate("nickname",preferences.getString("nickname",""));
             jsonObject.accumulate("myitem", need_thing.getText().toString());
             jsonObject.accumulate("needitem", lettable_thing.getText().toString());
             jsonObject.accumulate("camp_name", camp_kind.getSelectedItem().toString());
+            jsonObject.accumulate("flag","0");
+            jsonObject.accumulate("opponent","");
         } catch (JSONException e) {
             e.printStackTrace();
         }

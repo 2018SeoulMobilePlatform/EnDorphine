@@ -30,8 +30,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginButton;
     private TextView password_find_button;
     private TextView register_user_button;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
 
     private EditText user_email_editText;
     private EditText user_password_editText;
@@ -59,7 +57,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_user_button = findViewById(R.id.register_user_button);
 
         user_email_editText = findViewById(R.id.user_email_login);
+        user_email_editText.setPrivateImeOptions("defaultInputmode=english;");
         user_password_editText = findViewById(R.id.user_password_login);
+        user_password_editText.setPrivateImeOptions("defaultInputmode=english;");
+
 
         password_find_button.setOnClickListener(this);
         register_user_button.setOnClickListener(this);
@@ -92,16 +93,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.password_find_button:
-                FindUserInfo_Fragment findUserInfo_fragment = new FindUserInfo_Fragment();
-                fragmentManager = getFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.login, findUserInfo_fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent find_password_intent = new Intent(this,FindUserInfoActivity.class);
+                startActivity(find_password_intent);
                 break;
             case R.id.register_user_button:
-                Intent intent = new Intent(this,RegisterUserActivity.class);
-                startActivity(intent);
+                Intent register_intent = new Intent(this,RegisterUserActivity.class);
+                startActivity(register_intent);
 
                 break;
             default:

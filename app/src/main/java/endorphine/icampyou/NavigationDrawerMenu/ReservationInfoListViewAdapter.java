@@ -45,19 +45,20 @@ public class ReservationInfoListViewAdapter extends BaseAdapter {
             convertView=inflater.inflate(layout,parent,false);
         }
 
-        GlideApp.with(convertView).load(R.drawable.tent1).into((ImageView)convertView.findViewById(R.id.res_info_item_tent_image));
+        if(reservationInfoData.size() !=0 ) {
+            GlideApp.with(convertView).load(R.drawable.tent1).into((ImageView) convertView.findViewById(R.id.res_info_item_tent_image));
 
-        ReservationInfoItem reservationInfoItem = reservationInfoData.get(position);
+            ReservationInfoItem reservationInfoItem = reservationInfoData.get(position);
 
-        reservationNo = (TextView)convertView.findViewById(R.id.res_info_item_res_num);
-        reservationNo.setText(reservationInfoItem.getReservationNo());
+            reservationNo = (TextView) convertView.findViewById(R.id.res_info_item_res_num);
+            reservationNo.setText(reservationInfoItem.getReservationNo());
 
-        campingPlace = (TextView)convertView.findViewById(R.id.res_info_item_camping_place);
-        campingPlace.setText(reservationInfoItem.getCampingPlace());
+            campingPlace = (TextView) convertView.findViewById(R.id.res_info_item_camping_place);
+            campingPlace.setText(reservationInfoItem.getCampingPlace());
 
-        date = (TextView)convertView.findViewById(R.id.res_info_item_date);
-        date.setText(reservationInfoItem.getDate());
-
+            date = (TextView) convertView.findViewById(R.id.res_info_item_date);
+            date.setText(reservationInfoItem.getDate());
+        }
         return convertView;
     }
 }

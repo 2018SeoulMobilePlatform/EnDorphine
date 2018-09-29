@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -235,7 +236,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // 내 정보 이동
         if (id == R.id.nav_mypage) {
             mypageIntent = new Intent(this, MyPageActivity.class);
-            startActivity(mypageIntent);
+            startActivityForResult(mypageIntent,1);
         }
         // 예약 정보 이동
         else if(id==R.id.nav_reservation_information){
@@ -247,6 +248,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_logout) {
             logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -287,5 +289,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return jsonObject;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            String encodeImage = data.getStringExtra("profile");
+            drawerProfileImage.setImageBitmap(imageConversion.fromBase64(encodeImage));
+            drawerNickName.setText(data.getStringExtra("nickname"));
+            Log.e("encodeImage!!!",encodeImage);
+            Log.e("nickname!!!",data.getStringExtra("nickname"));
+        }
     }
 }
