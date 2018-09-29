@@ -183,8 +183,10 @@ public class ChattingList_Fragment extends BaseFragment {
                             NetworkTask networkTask = new NetworkTask(getActivity(), url, data, Constant.REMOVE_CHATTINGLIST);
                             networkTask.execute();
                             copy.remove(position);
+                            myList_adapter.removeObject(((Chat_Item)campList_adapter.getItem(position)));
                             campList_adapter.removeItem(position);
                             campList_adapter.notifyDataSetChanged();
+                            myList_adapter.notifyDataSetChanged();
                         } else {
                             Toast toast = Toast.makeText(getActivity(),
                                     "사용자가 생성한 채팅방만 삭제할 수 있습니다", Toast.LENGTH_SHORT);
