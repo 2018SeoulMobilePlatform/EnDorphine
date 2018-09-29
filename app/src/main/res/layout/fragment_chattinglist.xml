@@ -86,6 +86,7 @@
                         <ListView
                             android:id="@+id/camp_chat_listview"
                             android:listSelector="@color/colorPrimaryWhite"
+                            android:cacheColorHint="#00000000"
                             android:dividerHeight="1dp"
                             android:divider="@color/colorGrey"
                             android:layout_width="match_parent"
