@@ -68,11 +68,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private BottomNavigationView navigation;
 
-    private LayoutInflater inflater;
-    private View naviHeaderLayout;
-    private ViewGroup qrcodePopupLayout;
-    private ImageView nav_header;
-
     //이미지 변환
     ImageConversion imageConversion;
 
@@ -226,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     finishAffinity();
                 }
             });
-            finishDialog.setIcon(R.drawable.app_icon3);
+            finishDialog.setIcon(R.drawable.app_icon6);
             finishDialog.setTitle(R.string.app_name);
             AlertDialog alert = finishDialog.create();
             alert.show();
