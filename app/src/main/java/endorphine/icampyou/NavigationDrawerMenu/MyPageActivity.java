@@ -1,17 +1,17 @@
 package endorphine.icampyou.NavigationDrawerMenu;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Parcelable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,7 +25,9 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
@@ -229,6 +231,11 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
         // 확인버튼 누르면 예외처리 후 수정됨
         if (v.getId() == R.id.mypage_confirm) {
             if(password.getText().toString().equals(passwordCheck.getText().toString())){
+
+                // 이미지 수정
+                editor.remove("profileImage");
+                editor.putString("profileImage", imageConversion.toBase64(userImage));
+
                 // 닉네임 수정
                 editor.remove("nickname");
                 editor.putString("nickname", nickname.getText().toString());
@@ -237,16 +244,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
                 editor.putString("password", password.getText().toString());
                 editor.commit();
 
-                Intent intent = new Intent();
-
-                intent.putExtra("profile",imageConversion.toBase64(userImage));
-                intent.putExtra("nickname",nickname.getText().toString());
-
-                setResult(RESULT_OK,intent);
-
-                Log.e("profile",imageConversion.toBase64(userImage));
-                Log.e("nickname",nickname.getText().toString());
-
                 // 수정된 정보 서버에 전달해서 서버에서도 수정하는 부분 구현해야함
                 String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update";
 
@@ -254,7 +251,6 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
                 NetworkTask networkTask = new NetworkTask(MyPageActivity.this,url,data,Constant.MODIFY_USER_INFO);
                 networkTask.execute();
-
 
             } else{
                 Toast.makeText(this,"비밀번호를 확인해주세요",Toast.LENGTH_LONG).show();
@@ -318,4 +314,10 @@ public class MyPageActivity extends AppCompatActivity implements View.OnClickLis
 
         return jsonObject;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 }

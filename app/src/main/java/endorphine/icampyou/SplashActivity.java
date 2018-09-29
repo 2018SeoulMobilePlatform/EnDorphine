@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
 
         // 인트로 화면 테스트를 위해 임의로 sleep 걸었음
         try {
-            sleep(1000);
+            sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

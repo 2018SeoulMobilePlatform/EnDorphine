@@ -1,8 +1,5 @@
 package endorphine.icampyou.HomeMenu;
 
-import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import endorphine.icampyou.BaseFragment;
-import endorphine.icampyou.EventMenu.EventInfoFragment;
-import endorphine.icampyou.ExchangeMenu.ChattingList_Fragment;
 import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;

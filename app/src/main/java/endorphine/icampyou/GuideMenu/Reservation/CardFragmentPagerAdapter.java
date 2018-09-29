@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import endorphine.icampyou.GuideMenu.Reservation.CardAdapter;
-import endorphine.icampyou.GuideMenu.Reservation.CardFragment;
-
 public class CardFragmentPagerAdapter extends FragmentPagerAdapter implements CardAdapter {
     private List<CardFragment> mFragments;
     private float mBaseElevation;

@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.R;
 

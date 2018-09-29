@@ -1,7 +1,6 @@
 package endorphine.icampyou.QRcode;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,13 +17,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.R;
 
 public class QrcodePopupActivity extends Activity {

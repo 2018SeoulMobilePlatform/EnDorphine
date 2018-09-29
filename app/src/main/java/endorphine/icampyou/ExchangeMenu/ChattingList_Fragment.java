@@ -1,13 +1,9 @@
 package endorphine.icampyou.ExchangeMenu;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,24 +22,17 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.melnykov.fab.FloatingActionButton;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Locale;
-
 import endorphine.icampyou.BaseFragment;
 import endorphine.icampyou.Constant;
 import endorphine.icampyou.GlideApp;
-import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
-import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ChattingList_Fragment extends BaseFragment {
@@ -58,6 +47,7 @@ public class ChattingList_Fragment extends BaseFragment {
     ChatList_Adapter myList_adapter;
     ListView chatlist_listView;
     ListView mylist_listView;
+
 
     SharedPreferences preferences;
 
@@ -139,20 +129,19 @@ public class ChattingList_Fragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view ,int position,long id){
                 if(((Chat_Item)campList_adapter.getItem(position)).getNickname().equals(preferences.getString("nickname",""))){
-                    Log.e("1","1");
-                    Intent intent = new Intent(getActivity(), ChattingMessageActivity.class);
-                    intent.putExtra("number",((Chat_Item)campList_adapter.getItem(position)).getNumber());
-                    intent.putExtra("opponent","null");
-                    startActivity(intent);
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getflag";
+
+                    JSONObject data = JSONData(((Chat_Item)campList_adapter.getItem(position)).getNumber());
+
+                    NetworkTask networkTask = new NetworkTask(getActivity(),url,data,Constant.GET_OPPONENT,false);
+                    networkTask.execute();
                 }
                 else if(((Chat_Item)campList_adapter.getItem(position)).getFlag().equals("0")){
-                    Log.e("2","2");
                     String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update/chatroomflag";
                     JSONObject data = setOtherJSONdata(((Chat_Item)campList_adapter.getItem(position)).getNumber(),preferences.getString("nickname",""));
                     NetworkTask networkTask = new NetworkTask(getActivity(),url,data, Constant.SET_OPPONENT,((Chat_Item)campList_adapter.getItem(position)).getNumber(),((Chat_Item)campList_adapter.getItem(position)).getNickname());
                     networkTask.execute();
                 } else{
-                    Log.e("3","3");
                     String url2 = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/chatroom/getflag";
 
                     JSONObject data2 = getOpponentData(((Chat_Item)campList_adapter.getItem(position)).getNumber());
@@ -285,7 +274,7 @@ public class ChattingList_Fragment extends BaseFragment {
             for(int i = 0;i < copy.size(); i++)
             {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                if (copy.get(i).getUser_id().toLowerCase().contains(charText) ||
+                if (copy.get(i).getNickname().toLowerCase().contains(charText) ||
                         copy.get(i).getNeed_thing().toLowerCase().contains(charText) ||
                         copy.get(i).getCamping_name().toLowerCase().contains(charText) ||
                         copy.get(i).getLettable_thing().toLowerCase().contains(charText))
@@ -368,5 +357,17 @@ public class ChattingList_Fragment extends BaseFragment {
             e.printStackTrace();
         }
         return data;
+    }
+
+    private JSONObject JSONData(String number){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("number",number);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

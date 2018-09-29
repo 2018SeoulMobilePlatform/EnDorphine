@@ -1,7 +1,5 @@
 package endorphine.icampyou;
 
-import com.github.nkzawa.socketio.client.Socket;
-
 public class Constant {
 
     //NetworkTask 클래스

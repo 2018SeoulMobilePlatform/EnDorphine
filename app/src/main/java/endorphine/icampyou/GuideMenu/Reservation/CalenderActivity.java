@@ -8,15 +8,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yongbeom.aircalendar.core.AirMonthAdapter;
 import com.yongbeom.aircalendar.core.DatePickerController;
 import com.yongbeom.aircalendar.core.DayPickerView;
 import com.yongbeom.aircalendar.core.SelectModel;
 import com.yongbeom.aircalendar.core.util.AirCalendarUtils;
-
 import org.joda.time.DateTime;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
