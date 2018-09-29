@@ -305,6 +305,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         String user_nickname = jsonObject.getJSONObject("result").getString("nickname");
                         String user_password = jsonObject.getJSONObject("result").getString("password");
                         String user_phonenumber = jsonObject.getJSONObject("result").getString("phonenumber");
+                        String user_flag = jsonObject.getJSONObject("result").getString("flag");
 
                         SharedPreferences preferences = context.getSharedPreferences("preferences", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -321,6 +322,7 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         editor.putString("nickname", user_nickname);
                         editor.putString("profileImage", user_image);
                         editor.putString("phoneNumber", user_phonenumber);
+                        editor.putString("flag",user_flag);
 
                         editor.commit();
 
@@ -476,8 +478,10 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                         Toast.makeText(context, "채팅방 개설", Toast.LENGTH_LONG).show();
                         ((Activity) context).finish();
                     } else {
-                        Log.e("실패", "실패");
+                        Toast.makeText(context, "이미 개설된 채팅방이 있습니다", Toast.LENGTH_LONG).show();
+                        ((Activity) context).finish();
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
