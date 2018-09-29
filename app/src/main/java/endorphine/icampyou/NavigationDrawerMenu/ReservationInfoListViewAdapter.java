@@ -47,7 +47,6 @@ public class ReservationInfoListViewAdapter extends BaseAdapter {
 
         if(reservationInfoData.size() !=0 ) {
             GlideApp.with(convertView).load(R.drawable.tent1).into((ImageView) convertView.findViewById(R.id.res_info_item_tent_image));
-
             ReservationInfoItem reservationInfoItem = reservationInfoData.get(position);
 
             reservationNo = (TextView) convertView.findViewById(R.id.res_info_item_res_num);

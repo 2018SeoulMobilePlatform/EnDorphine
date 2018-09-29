@@ -93,6 +93,8 @@ public class Chat_Content extends AppCompatActivity {
                     NetworkTask networkTask = new NetworkTask(Chat_Content.this,url,data, Constant.MAKE_CHATTINGLIST);
                     networkTask.execute();
 
+                    setResult(1);
+
                     finish();
                 }
             }

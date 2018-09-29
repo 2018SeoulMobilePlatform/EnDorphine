@@ -63,7 +63,7 @@ public class ReviewListViewAdapter extends BaseAdapter {
         ReviewListItem reviewListItem= reviewData.get(position);
 
         profileImage= (CircleImageView)convertView.findViewById(R.id.review_profile_image);
-        profileImage.setImageBitmap(reviewListItem.getProfile_image());
+        GlideApp.with(convertView).load(reviewListItem.getProfile_image()).into(profileImage);
 
         nickName=(TextView)convertView.findViewById(R.id.review_nickname);
         nickName.setText(reviewListItem.getNickName());

@@ -18,7 +18,7 @@ public class ImageConversion {
         Bitmap tempBitmap = bitmapDrawable.getBitmap();
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        tempBitmap.compress(Bitmap.CompressFormat.JPEG,100,bos);
+        tempBitmap.compress(Bitmap.CompressFormat.JPEG,70,bos);
         byte[] data = bos.toByteArray();
         String encodedImage = Base64.encodeToString(data, Base64.DEFAULT);
         return encodedImage;
