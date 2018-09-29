@@ -1,63 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    >
+    android:orientation="vertical">
+
+    <!-- 상단 타이틀바 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="100dp" />
+
+        <ImageView
+            android:id="@+id/mypage_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:id="@+id/mypage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="물물교환 채팅방"
+            android:textColor="#FFFFFF"
+            android:textSize="21dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
 
     <LinearLayout
-        android:layout_width="fill_parent"
         android:id="@+id/im1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
+
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <ListView
                 android:id="@+id/chatmessage_listView"
-                android:listSelector="#00000000"
-                android:cacheColorHint="#00000000"
-                android:divider="#000000"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:transcriptMode="alwaysScroll"/>
+                android:cacheColorHint="#00000000"
+                android:divider="#000000"
+                android:listSelector="#00000000"
+                android:transcriptMode="alwaysScroll" />
         </FrameLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittext_border"
         android:layout_below="@id/im1"
-        android:orientation="horizontal"
-        >
+        android:background="@drawable/edittext_border"
+        android:orientation="horizontal">
 
         <EditText
-            android:hint="메세지 쓰기"
-            android:layout_marginLeft="10dp"
             android:id="@+id/editText1"
-            android:maxLines="4"
             android:layout_width="0dp"
-            android:textColor="#000000"
-            android:background="@null"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:textCursorDrawable="@null"
+            android:layout_weight="8"
+            android:background="@null"
+            android:hint="메세지 쓰기"
+            android:maxLines="4"
             android:padding="5dp"
-            android:layout_weight="8"/>
+            android:textColor="#000000"
+            android:textCursorDrawable="@null" />
 
         <Button
             android:id="@+id/send_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:background="#13B9A5"
-            android:textColor="#ffff"
             android:layout_weight="2"
-            android:text="전송" />
+            android:background="#13B9A5"
+            android:gravity="center"
+            android:text="전송"
+            android:textColor="#ffff" />
     </LinearLayout>
 </LinearLayout>

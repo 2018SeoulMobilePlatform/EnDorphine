@@ -130,7 +130,9 @@
         <activity
             android:name=".Login.FindUserInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ExchangeMenu.ChattingMessageActivity"></activity>
+        <activity
+            android:name=".ExchangeMenu.ChattingMessageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
