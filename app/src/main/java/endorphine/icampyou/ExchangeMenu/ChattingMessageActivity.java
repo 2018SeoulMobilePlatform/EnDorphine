@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,11 +26,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
 
-public class ChattingMessageActivity extends AppCompatActivity {
+public class ChattingMessageActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ImageView backButton;
     ListView m_chatMessage_listView;
     ChatMessage_Adapter m_chatmessage_adapter;
 
@@ -117,6 +120,11 @@ public class ChattingMessageActivity extends AppCompatActivity {
             }
         });
 
+        // back 버튼 설정
+        backButton = findViewById(R.id.chat_message_back_btn);
+        backButton.setOnClickListener(this);
+        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
 
         JSONObject data = sendJSonData();
@@ -203,4 +211,10 @@ public class ChattingMessageActivity extends AppCompatActivity {
         mSocket.off("new message", onNewMessage);
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.mypage_back_btn) {
+            finish();
+        }
+    }
 }

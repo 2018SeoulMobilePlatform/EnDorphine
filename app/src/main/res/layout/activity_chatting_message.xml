@@ -13,10 +13,12 @@
 
         <RelativeLayout
             android:layout_width="50dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
         <ImageView
-            android:id="@+id/mypage_back_btn"
+            android:id="@+id/chat_message_back_btn"
             android:layout_width="25dp"
             android:layout_height="16dp"
             android:layout_alignParentLeft="true"
