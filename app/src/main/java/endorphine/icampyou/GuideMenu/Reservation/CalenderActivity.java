@@ -76,9 +76,8 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
 
         CampingName = getData.getStringExtra("title");
 
-        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 1);
+        maxActivieMonth = getData.getIntExtra(EXTRA_ACTIVE_MONTH_NUM , 2);
         maxYear = getData.getIntExtra(EXTRA_MAX_YEAR , 2018);
-
 
         if(sYear == 0 || sMonth == 0 || sDay == 0
                 || eYear == 0 || eMonth == 0 || eDay == 0){
@@ -87,7 +86,6 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
         }
 
         init();
-
     }
 
     private void init(){

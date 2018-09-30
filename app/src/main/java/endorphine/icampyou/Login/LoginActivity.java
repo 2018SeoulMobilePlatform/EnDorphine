@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user_password_editText = findViewById(R.id.user_password_login);
         user_password_editText.setPrivateImeOptions("defaultInputmode=english;");
 
-
         password_find_button.setOnClickListener(this);
         register_user_button.setOnClickListener(this);
 

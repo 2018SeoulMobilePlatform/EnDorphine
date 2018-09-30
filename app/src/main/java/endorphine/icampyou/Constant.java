@@ -61,6 +61,9 @@ public class Constant {
     //사용자 플래그 설정하기
     public static final int SET_FLAG = 1129;
 
+    //채팅방 플래그 설정
+    public static  final int SET_CHATTINGFLAG = 1130;
+
     //카메라 접근 권한 변수
     public static int permissionCheck_Camera;
     public static int permissionCheck_Write;

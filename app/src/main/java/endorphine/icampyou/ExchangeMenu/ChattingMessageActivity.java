@@ -1,8 +1,10 @@
 package endorphine.icampyou.ExchangeMenu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -123,7 +125,7 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
         // back 버튼 설정
         backButton = findViewById(R.id.chat_message_back_btn);
         backButton.setOnClickListener(this);
-        GlideApp.with(this).load(R.drawable.back_btn).into(backButton);
+        GlideApp.with(this).load(R.drawable.chat_out).into(backButton);
 
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/getchat";
 
@@ -192,6 +194,20 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
         return jsonObject;
     }
 
+    private JSONObject setChatRoomFlag(){
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.accumulate("number", room_number);
+            jsonObject.accumulate("flag", "0");
+            jsonObject.accumulate("opponent","");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
     @Override
     public void onBackPressed() {
 
@@ -214,7 +230,30 @@ public class ChattingMessageActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.chat_message_back_btn) {
-            finish();
+
+            DialogInterface.OnClickListener positiveListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/update/chatroomflag";
+
+                    JSONObject data = setChatRoomFlag();
+
+                    NetworkTask networkTask = new NetworkTask(ChattingMessageActivity.this, url, data,Constant.SET_CHATTINGFLAG);
+                    networkTask.execute();
+                }
+            };
+
+            DialogInterface.OnClickListener nagetiveListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            };
+
+            new AlertDialog.Builder(ChattingMessageActivity.this)
+                    .setTitle("채팅방을 나가시겠습니까?")
+                    .setPositiveButton("예", positiveListener)
+                    .setNegativeButton("취소", nagetiveListener).show();
         }
     }
 }
