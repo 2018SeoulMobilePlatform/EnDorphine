@@ -250,6 +250,9 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
             case Constant.SET_FLAG:
                 asyncDialog.setMessage("로딩 중..");
                 break;
+            case Constant.SET_CHATTINGFLAG:
+                asyncDialog.setMessage("로딩 중..");
+                break;
             default:
                 break;
 
@@ -723,6 +726,18 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
                     e.printStackTrace();
                 }
             case Constant.SET_FLAG:
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String real_result = jsonObject.getString("result");
+                    if (real_result.equals("success")) {
+                        ((Activity) context).finish();
+                    } else {
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case Constant.SET_CHATTINGFLAG:
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String real_result = jsonObject.getString("result");

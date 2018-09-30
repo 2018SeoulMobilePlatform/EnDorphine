@@ -53,6 +53,7 @@ public class RequestHttpURLConnection {
 
             if(conn != null)
                 conn.disconnect();
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();

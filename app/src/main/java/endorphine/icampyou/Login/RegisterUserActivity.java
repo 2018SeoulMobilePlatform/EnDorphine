@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 import de.hdodenhof.circleimageview.CircleImageView;
 import endorphine.icampyou.Camera;
 import endorphine.icampyou.Constant;
+import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.ImageConversion;
 import endorphine.icampyou.NetworkTask;
 import endorphine.icampyou.R;
@@ -45,6 +47,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GlideApp.with(this).load(R.drawable.register_background).into((ImageView) findViewById(R.id.register_background));
         setContentView(R.layout.activity_register_user);
 
         exception = new RegisterUserException();
@@ -96,6 +99,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         user_profile = (CircleImageView)findViewById(R.id.profile_image);
 
         camera = new Camera(RegisterUserActivity.this,user_profile);
+
 
         //emailText 포커스 변동
         email_editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
