@@ -47,8 +47,9 @@ public class RegisterUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GlideApp.with(this).load(R.drawable.register_background).into((ImageView) findViewById(R.id.register_background));
         setContentView(R.layout.activity_register_user);
+
+        GlideApp.with(this).load(R.drawable.register_background).into((ImageView) findViewById(R.id.register_background));
 
         exception = new RegisterUserException();
 
