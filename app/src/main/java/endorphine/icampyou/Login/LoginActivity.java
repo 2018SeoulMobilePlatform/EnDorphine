@@ -1,8 +1,10 @@
 package endorphine.icampyou.Login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -26,20 +28,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText user_email_editText;
     private EditText user_password_editText;
-
-    // shared preference에 유저정보 저장
-    private String email;
-    private String password;
-    private String name;
-    private String nickname;
-    private String phoneNumber;
-    private String profileImage;
-    private String campingPlace;
-    private String date;
-    private String tentType;
-    private String reservationNum;
-    private String tentNum;
-    private String price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,5 +95,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    // Back키 누르면 종료
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder finishDialog = new AlertDialog.Builder(this);
+        finishDialog.setMessage("정말로 종료하시겠습니까?");
+
+        finishDialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        finishDialog.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+        finishDialog.setIcon(R.drawable.app_icon7);
+        finishDialog.setTitle(R.string.app_name);
+        AlertDialog alert = finishDialog.create();
+        alert.show();
     }
 }

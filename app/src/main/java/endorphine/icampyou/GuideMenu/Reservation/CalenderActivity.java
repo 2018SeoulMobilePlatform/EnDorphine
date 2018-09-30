@@ -288,6 +288,5 @@ public class CalenderActivity extends AppCompatActivity implements DatePickerCon
 
     public void onPause() {
         super.onPause();
-        finish();
     }
 }

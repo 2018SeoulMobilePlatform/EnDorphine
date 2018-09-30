@@ -50,6 +50,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
 
         GlideApp.with(this).load(R.drawable.register_background).into((ImageView) findViewById(R.id.register_background));
+        GlideApp.with(this).load(R.drawable.review_plus_icon).into((ImageView) findViewById(R.id.register_profile_change_btn));
+        GlideApp.with(this).load(R.drawable.round_user).into((CircleImageView) findViewById(R.id.profile_image));
 
         exception = new RegisterUserException();
 
