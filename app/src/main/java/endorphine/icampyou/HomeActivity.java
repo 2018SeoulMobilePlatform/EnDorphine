@@ -1,5 +1,6 @@
 package endorphine.icampyou;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -251,6 +252,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_logout) {
             logoutIntent = new Intent(this, LoginActivity.class);
             startActivity(logoutIntent);
+            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor autoLogin = auto.edit();
+            autoLogin.clear();
+            autoLogin.commit();
             finish();
         }
 

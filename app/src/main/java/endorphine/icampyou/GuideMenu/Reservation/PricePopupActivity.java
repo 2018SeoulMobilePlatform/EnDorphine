@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -82,17 +83,21 @@ public class PricePopupActivity extends Activity {
         String tentNum_Builder = preferences.getString("tentNum","");
         String price_Builder = preferences.getString("price","");
 
-        editor.putString("reservationNum", reservationNum_Builder+String.valueOf(reservationNum)+",");
-        editor.putString("campingPlace", campingPlace_Builder + campName +",");
-        editor.putString("date", date_Builder+period+",");
-        editor.putString("tentType", tentType_Builder+tentName+",");
-        editor.putString("tentNum", tentNum_Builder+quantity+",");
-        editor.putString("price", price_Builder+price+",");
-
-        editor.commit();
+        String[] reservationNum_array = preferences.getString("reservationNum", "").split(",");
+        Log.e("size",String.valueOf(reservationNum_array.length));
+        if(reservationNum_array.length < 3){
+            editor.putString("reservationNum", reservationNum_Builder+String.valueOf(reservationNum)+",");
+            editor.putString("campingPlace", campingPlace_Builder + campName +",");
+            editor.putString("date", date_Builder+period+",");
+            editor.putString("tentType", tentType_Builder+tentName+",");
+            editor.putString("tentNum", tentNum_Builder+quantity+",");
+            editor.putString("price", price_Builder+price+",");
+            editor.commit();
+        }
 
         //서버 연동
         String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/addreservation";
+
 
         JSONObject data = null;
         data = sendJSonData(reservationNum);
@@ -100,8 +105,6 @@ public class PricePopupActivity extends Activity {
                 new endorphine.icampyou.NetworkTask(PricePopupActivity.this,url,data, Constant.RESERVATION_CAMPING
                 ,Integer.toString(reservationNum),price,quantity,tentName,campName,period);
         networkTask.execute();
-
-
     }
 
     @Override

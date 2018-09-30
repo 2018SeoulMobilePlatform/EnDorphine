@@ -60,8 +60,7 @@ public class EventInfoFragment extends BaseFragment {
                 eventContent.setText("안녕하세요? 서울대공원입니다.\n" + "선선한 가을바람 부는 계절! 캠핑하기 좋은 계절!\n" +
                         "서울동물원에서 가족과 함께 특별한 캠핑에 참여하세요!\n" + "선착순접수이오니 서둘러 신청바랍니다.\n" + "\n" + "\n" + "\n" +
                         "○ 1차 9.22(토)~23(일), 2차 9.29(토)~30(일)\n" + "○ 3차 10.6(토)~7(일), 4차 10.8(월)~9(화)");
-                eventImage.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.event_info1));
-                //GlideApp.with(this).load(R.drawable.event_info1).into(eventImage);
+                GlideApp.with(this).load(R.drawable.event_info1).into(eventImage);
                 break;
             case 1:
                 eventTitle.setText("즐거운 추석행사 '동물원 한가위 한마당' 개최");

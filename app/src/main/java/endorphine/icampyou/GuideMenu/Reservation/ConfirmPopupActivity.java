@@ -14,6 +14,8 @@ import endorphine.icampyou.GlideApp;
 import endorphine.icampyou.HomeActivity;
 import endorphine.icampyou.R;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class ConfirmPopupActivity extends Activity {
     ImageView imageView;
 
@@ -58,6 +60,7 @@ public class ConfirmPopupActivity extends Activity {
         //액티비티(팝업) 닫기
         finish();
         Intent homeIntent = new Intent(ConfirmPopupActivity.this, HomeActivity.class);
+        homeIntent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
     }
 

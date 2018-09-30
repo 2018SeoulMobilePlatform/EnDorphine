@@ -32,18 +32,33 @@
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:onClick="put_profile"
-                android:src="@drawable/round_user"
-                android:textAlignment="center"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:onClick="put_profile"
+                    android:src="@drawable/round_user"
+                    android:textAlignment="center"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="3dp" />
+
+                <!-- 프로필 이미지 수정 버튼 -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/register_profile_change_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="put_profile"
+                    android:layout_gravity="bottom|right" />
+
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/user_email"
