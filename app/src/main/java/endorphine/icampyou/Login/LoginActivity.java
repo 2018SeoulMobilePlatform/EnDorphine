@@ -1,13 +1,17 @@
 package endorphine.icampyou.Login;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,10 +33,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText user_email_editText;
     private EditText user_password_editText;
 
+    //자동 로그인
+    private CheckBox autoCheck;
+    String loginId, loginPwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //자동 로그인
+        autoCheck = (CheckBox) findViewById(R.id.auto_login);
 
         password_find_button = findViewById(R.id.password_find_button);
         register_user_button = findViewById(R.id.register_user_button);
@@ -54,6 +65,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         GlideApp.with(this).load(R.drawable.login_background).into((ImageView) findViewById(R.id.login_background));
         GlideApp.with(this).load(R.drawable.app_logo2).into((ImageView) findViewById(R.id.login_app_logo));
+
+        //자동 로그인
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        loginId = auto.getString("inputId", null);
+        loginPwd = auto.getString("inputPwd", null);
+        if(auto.getBoolean("autoLogin", false))
+            autoCheck.setChecked(true);
+
+
+        if(loginId != null && loginPwd != null && autoCheck.isChecked()) {
+
+            //서버에서 로그인 정보 확인
+            String url = "http://ec2-18-188-238-220.us-east-2.compute.amazonaws.com:8000/login";
+
+            //서버에 보낼 아이디,비밀번호 데이터
+            JSONObject jsonObject = sendAutoObject(loginId, loginPwd);
+
+            NetworkTask networkTask = new NetworkTask(this, url, jsonObject, Constant.USER_LOGIN);
+            networkTask.execute();
+        }
+
+        //자동 로그인
+        autoCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autoLogin = auto.edit();
+                if(autoCheck.isChecked())
+                    autoLogin.putBoolean("autoLogin", true);
+                else
+                    autoLogin.putBoolean("autoLogin", false);
+                autoLogin.commit();
+            }
+        });
+
     }
 
     @Override
@@ -91,6 +137,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             jsonObject.accumulate("id", user_email_editText.getText().toString());
             jsonObject.accumulate("password", user_password_editText.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    //자동 로그인
+    private JSONObject sendAutoObject(String id, String pwd){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("id", id);
+            jsonObject.accumulate("password", pwd);
         } catch (JSONException e) {
             e.printStackTrace();
         }

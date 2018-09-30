@@ -329,6 +329,13 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
 
                         editor.commit();
 
+                        SharedPreferences auto = context.getSharedPreferences("auto", MODE_PRIVATE);
+                        SharedPreferences.Editor autoLogin = auto.edit();
+
+                        autoLogin.putString("inputId", user_email);
+                        autoLogin.putString("inputPwd", user_password);
+                        autoLogin.commit();
+
                         context.startActivity(new Intent(context, HomeActivity.class));
                         ((Activity) context).finish();
 

@@ -74,6 +74,32 @@
             android:textSize="20dp"
             android:layout_weight="1"/>
 
+
+        <!--자동 로그인 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="자동 로그인"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:gravity="center_vertical"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/auto_login"
+                android:buttonTint="#d3d3d3" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
