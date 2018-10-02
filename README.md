@@ -31,7 +31,7 @@
   <img src="./image/home.jpg" width="22%" >
   <img src="./image/camplist.jpg" width="22%" >
   <img src="./image/chattinglist.jpg" width="22%" >
-  <img src="./image/eventlist.jpg" width="22%" >
+  <img src="./image/event_list.jpg" width="22%" >
 </div>
 
 <hr>
