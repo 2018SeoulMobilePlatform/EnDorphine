@@ -55,11 +55,6 @@
 서비스 내용
 
 - 로그인
-
-<html>
-
-  <img src = "C:\Users\Seyoung\AppData\Local\Temp\1538501287650.png" width = "100"  height = "100">
-
-</html>
+<img src = "C:\Users\Seyoung\AppData\Local\Temp\1538501287650.png" width = "100"  height = "100">
 
 
