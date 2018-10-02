@@ -37,7 +37,7 @@
 <hr>
 
 - 구성 
-<div>
+<div align="center">
   <img src="./image/home.jpg" width="22%" >
   <img src="./image/camplist.jpg" width="22%" >
   <img src="./image/chattinglist.jpg" width="22%" >
@@ -47,7 +47,7 @@
 <hr>
 
 - 사이드바 
-<div>
+<div align="center">
   <img src="./image/side_bar.jpg" width="22%" >
   <img src="./image/modify_user_info.jpg" width="22%" >
   <img src="./image/user_reservationlist.jpg" width="22%" >
@@ -57,7 +57,7 @@
 <hr>
 
 - 캠핑장 소개
-<div>
+<div align="center">
   <img src="./image/camp_info.jpg" width="22%" >
   <img src="./image/camp_review2.jpg" width="22%" >
   <img src="./image/map.jpg" width="22%" >
@@ -66,7 +66,7 @@
 <hr>
 
 - 캠핑장 예약 
-<div>
+<div align="center">
   <img src="./image/reservation_date.jpg" width="22%" >
   <img src="./image/reservation_tent.jpg" width="22%" >
   <img src="./image/check_reservation.jpg" width="22%" >
@@ -75,7 +75,7 @@
 <hr>
 
 - 채팅방
-<div>
+<div align="center">
   <img src="./image/chatting.jpg" width="22%" >
   <img src="./image/make_chattinglist.jpg" width="22%" >
 </div>
@@ -83,7 +83,7 @@
 <hr>
 
 - 이벤트 상세정보
-<div>
+<div align="center">
   <img src="./image/event.jpg" width="22%" >
 
 </div>
