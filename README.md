@@ -53,10 +53,7 @@
 - 캠핑장 소개
 <div>
   <img src="./image/camp_info.jpg" width="25%" >
-  <img src="./image/camp_review.jpg" width="25%" >
   <img src="./image/camp_review2.jpg" width="25%" >
-  <img src="./image/camp_review3.jpg" width="25%" >
-  <img src="./image/camp_review4.jpg" width="25%" >
   <img src="./image/map.jpg" width="25%" >
 </div>
 
