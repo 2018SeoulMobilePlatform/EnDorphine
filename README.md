@@ -29,10 +29,12 @@
 
 - 로그인
 <div>
-  <img src="./image/login.jpg" width="25%" >
-  <img src="./image/register_user.jpg" width="25%" >
-  <img src="./image/find_password.jpg" width="25%" >
+  <img src="./image/login.jpg" width="22%" >
+  <img src="./image/register_user.jpg" width="22%" >
+  <img src="./image/find_password.jpg" width="22%" >
 </div>
+
+<hr>
 
 - 구성 
 <div>
@@ -42,6 +44,8 @@
   <img src="./image/eventlist.jpg" width="22%" >
 </div>
 
+<hr>
+
 - 사이드바 
 <div>
   <img src="./image/side_bar.jpg" width="22%" >
@@ -50,28 +54,38 @@
   <img src="./image/reservation_detail_info.jpg" width="22%" >
 </div>
 
+<hr>
+
 - 캠핑장 소개
 <div>
-  <img src="./image/camp_info.jpg" width="25%" >
-  <img src="./image/camp_review2.jpg" width="25%" >
-  <img src="./image/map.jpg" width="25%" >
+  <img src="./image/camp_info.jpg" width="22%" >
+  <img src="./image/camp_review2.jpg" width="22%" >
+  <img src="./image/map.jpg" width="22%" >
 </div>
+
+<hr>
 
 - 캠핑장 예약 
 <div>
-  <img src="./image/reservation_date.jpg" width="25%" >
-  <img src="./image/reservation_tent.jpg" width="25%" >
-  <img src="./image/check_reservation.jpg" width="25%" >
+  <img src="./image/reservation_date.jpg" width="22%" >
+  <img src="./image/reservation_tent.jpg" width="22%" >
+  <img src="./image/check_reservation.jpg" width="22%" >
 </div>
+
+<hr>
 
 - 채팅방
 <div>
-  <img src="./image/chatting.jpg" width="25%" >
-  <img src="./image/make_chattinglist.jpg" width="25%" >
+  <img src="./image/chatting.jpg" width="22%" >
+  <img src="./image/make_chattinglist.jpg" width="22%" >
 </div>
+
+<hr>
 
 - 이벤트 상세정보
 <div>
-  <img src="./image/event.jpg" width="25%" >
+  <img src="./image/event.jpg" width="22%" >
 
 </div>
+
+<hr>
