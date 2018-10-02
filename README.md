@@ -51,6 +51,7 @@
   <img src="./image/camp_info.jpg" width="22%" >
   <img src="./image/camp_review2.jpg" width="22%" >
   <img src="./image/map.jpg" width="22%" >
+  <img src="./image/event_list.jpg" width="22%" >
 </div>
 
 <hr>
@@ -75,7 +76,7 @@
 - 이벤트 상세정보
 <div align="center">
   <img src="./image/event.jpg" width="22%" >
-
+  <img src="./image/event2.jpg" width="22%" >
 </div>
 
 <hr>
