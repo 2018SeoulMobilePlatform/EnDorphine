@@ -55,5 +55,9 @@
 서비스 내용
 
 - 로그인
-![Login](./image/login.jpg)
+<div>
+  <img src="./image/login.jpg" width="30%" >
+  <img src="./image/login.jpg" width="30%" >
+  <img src="./image/login.jpg" width="30%" >
+</div>
 
