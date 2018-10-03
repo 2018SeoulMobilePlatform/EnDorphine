@@ -51,7 +51,6 @@
   <img src="./image/camp_info.jpg" width="22%" >
   <img src="./image/camp_review2.jpg" width="22%" >
   <img src="./image/map.jpg" width="22%" >
-  <img src="./image/event_list.jpg" width="22%" >
 </div>
 
 <hr>
