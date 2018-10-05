@@ -20,7 +20,8 @@
 - 로그인
   <div align="center">
 
-  <img src="./image/splash.jpg" width="22%" ><img src="./image/login.jpg" width="22%" >
+  <img src="./image/splash.jpg" width="22%" >
+  <img src="./image/login.jpg" width="22%" >
   <img src="./image/register_user.jpg" width="22%" >
   <img src="./image/find_password.jpg" width="22%" >
   </div>
